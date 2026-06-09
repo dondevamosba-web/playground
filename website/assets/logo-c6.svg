@@ -1,0 +1,26 @@
+<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" width="200" height="100">
+  <defs>
+    <style><![CDATA[@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Inter:wght@400&display=swap');]]></style>
+    <linearGradient id="g1" x1="8" y1="0" x2="172" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0369A1"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+    <clipPath id="oc">
+      <ellipse cx="36" cy="40" rx="14" ry="18"/>
+    </clipPath>
+  </defs>
+
+  <!-- Orange wave lines clipped to O's inner counter -->
+  <g clip-path="url(#oc)">
+    <path d="M 21,37 C 26,29 31,45 36,37 C 41,29 46,45 51,37" stroke="#F97316" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 21,46 C 26,38 31,54 36,46 C 41,38 46,54 51,46" stroke="#F97316" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- OLA: O stroked with gradient, LA filled with gradient -->
+  <text y="68" font-family="'Plus Jakarta Sans', sans-serif" font-size="80" font-weight="800">
+    <tspan x="8" fill="none" stroke="url(#g1)" stroke-width="3" stroke-linejoin="round">O</tspan><tspan fill="url(#g1)">LA</tspan>
+  </text>
+
+  <!-- Digital subtitle -->
+  <text x="11" y="93" font-family="Inter, sans-serif" font-size="18" font-weight="400" fill="#94A3B8" letter-spacing="1">Digital</text>
+</svg>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Render Stage — OLA Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="animations.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; background: #0A0F1E; overflow: hidden; }
+    #root { width: 100%; height: 100%; display: flex; align-items: flex-start; justify-content: flex-start; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- React -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- Babel standalone to compile JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- All source files -->
+  <script type="text/babel" src="logos.jsx"></script>
+  <script type="text/babel" src="posts.jsx"></script>
+  <script type="text/babel" src="feed2.jsx"></script>
+  <script type="text/babel" src="carousels2.jsx"></script>
+  <script type="text/babel" src="reel.jsx"></script>
+  <script type="text/babel" src="stories-extras.jsx"></script>
+  <script type="text/babel" src="motion-spec.jsx"></script>
+  <script type="text/babel" src="june-series.jsx"></script>
+  <script type="text/babel" src="july-series.jsx"></script>
+
+  <script>
+    // renderComp is called by Puppeteer for each frame
+    // comp: string name of the React component
+    // w, h: intended pixel dimensions (viewport is already set before calling)
+    window.renderComp = function(comp, w, h) {
+      const Comp = window[comp];
+      if (!Comp) {
+        document.getElementById('root').innerHTML =
+          '<div style="color:red;font-family:monospace;padding:16px">Unknown component: ' + comp + '</div>';
+        return;
+      }
+      const root = document.getElementById('root');
+      root.style.width  = w + 'px';
+      root.style.height = h + 'px';
+
+      // Unmount previous tree if any, then render new one
+      if (window.__reactRoot) {
+        window.__reactRoot.render(React.createElement(Comp));
+      } else {
+        window.__reactRoot = ReactDOM.createRoot(root);
+        window.__reactRoot.render(React.createElement(Comp));
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>OLA Digital — Descargar todo</title>
+<meta name="viewport" content="width=1100, initial-scale=1" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="animations.css" />
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+<style>
+  :root { --bg:#0A0F1E; --ink:#FFFFFF; --muted:#94A3B8; --blue:#0EA5E9; --orange:#F97316; --line:#1E293B; --surface:#111827; --green:#22c55e; }
+  html,body { margin:0; padding:0; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; }
+  * { box-sizing:border-box; }
+
+  .shell { max-width:1200px; margin:0 auto; padding:56px 32px 80px; }
+  h1 { font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:44px; letter-spacing:-0.02em; line-height:1.05; margin:0; }
+  .sub { color:var(--muted); margin-top:8px; font-size:16px; }
+
+  .panel { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:28px; margin-top:32px; }
+  .row { display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:20px; }
+
+  .btn {
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--orange); color:#FFFFFF; border:none;
+    padding:16px 28px; border-radius:999px;
+    font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:18px; letter-spacing:-0.01em;
+    cursor:pointer; box-shadow:0 14px 30px -10px rgba(249,115,22,.6);
+    transition:transform .12s ease;
+  }
+  .btn:hover { transform:translateY(-1px); }
+  .btn:disabled { opacity:.45; cursor:not-allowed; transform:none; }
+
+  .progress { height:8px; background:#0F172A; border-radius:999px; overflow:hidden; border:1px solid var(--line); }
+  .progress > div { height:100%; background:linear-gradient(90deg,var(--blue),#06B6D4); width:0%; transition:width .2s ease; }
+  .progress-label { margin-top:10px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--muted); letter-spacing:.12em; }
+  #status { color:var(--muted); font-size:14px; }
+
+  .section-label {
+    font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:12px;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--blue);
+    padding:16px 0 10px; border-top:1px solid var(--line); margin-top:24px;
+  }
+  .section-label:first-child { border-top:none; margin-top:0; padding-top:0; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; }
+  .thumb { background:#0F172A; border:1px solid var(--line); border-radius:10px; padding:8px; transition:border-color .2s; }
+  .thumb img,.thumb .placeholder { width:100%; border-radius:6px; display:block; background:#0F172A; object-fit:cover; }
+  .thumb .placeholder { display:flex; align-items:center; justify-content:center; color:#475569; font-family:'JetBrains Mono',monospace; font-size:11px; }
+  .thumb .name { margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:.05em; word-break:break-all; line-height:1.4; }
+  .thumb.done { border-color:var(--green); }
+  .thumb.active { border-color:var(--blue); }
+
+  .render-stage { position:fixed; top:0; left:-3000px; overflow:hidden; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <h1>Descargar todo · OLA Digital</h1>
+  <div class="sub">Logos · Feed posts · Carouseles · Reels · Stories · Serie de Junio · Serie de Julio</div>
+
+  <div class="panel">
+    <div class="row">
+      <button class="btn" id="previewBtn" disabled>⟳ Generar previews</button>
+      <button class="btn" id="goBtn" disabled>⬇ Descargar todo (.zip)</button>
+      <span id="status">Cargando componentes…</span>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <div class="progress-label" id="progressLabel">—</div>
+    <div id="allGrids"></div>
+  </div>
+</div>
+
+<div id="renderStage" class="render-stage"></div>
+
+<script type="text/babel" src="logos.jsx"></script>
+<script type="text/babel" src="posts.jsx"></script>
+<script type="text/babel" src="reel.jsx"></script>
+<script type="text/babel" src="feed2.jsx"></script>
+<script type="text/babel" src="carousels2.jsx"></script>
+<script type="text/babel" src="stories-extras.jsx"></script>
+<script type="text/babel" src="motion-spec.jsx"></script>
+<script type="text/babel" src="june-series.jsx"></script>
+<script type="text/babel" src="july-series.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+// ── Complete manifest of all brand assets ──────────────────────────────────
+const MANIFEST = [
+  // ── LOGOS (600×400) ──────────────────────────────────────────────────────
+  { section:"Logos · 4 conceptos × 3 contextos", name:"logo-01-neon-dark",        w:600,  h:400,  Comp:()=><LogoNeonDark /> },
+  { name:"logo-01-neon-gradiente",  w:600,  h:400,  Comp:()=><LogoNeonOnGrad /> },
+  { name:"logo-01-neon-mono",       w:600,  h:400,  Comp:()=><LogoNeonMono /> },
+  { name:"logo-02-wordmark-claro",  w:600,  h:400,  Comp:()=><LogoMinimalLight /> },
+  { name:"logo-02-wordmark-oscuro", w:600,  h:400,  Comp:()=><LogoMinimalDark /> },
+  { name:"logo-02-wordmark-reversed",w:600, h:400,  Comp:()=><LogoMinimalReversed /> },
+  { name:"logo-03-gradiente-claro", w:600,  h:400,  Comp:()=><LogoGradLight /> },
+  { name:"logo-03-gradiente-oscuro",w:600,  h:400,  Comp:()=><LogoGradDark /> },
+  { name:"logo-03-gradiente-reversed",w:600,h:400,  Comp:()=><LogoGradReversed /> },
+  { name:"logo-04-badge-claro",     w:600,  h:400,  Comp:()=><LogoBadgeLight /> },
+  { name:"logo-04-badge-oscuro",    w:600,  h:400,  Comp:()=><LogoBadgeDark /> },
+  { name:"logo-04-badge-gradiente", w:600,  h:400,  Comp:()=><LogoBadgeOnGrad /> },
+
+  // ── LOGOS · uso específico ────────────────────────────────────────────────
+  { section:"Logos · variantes de uso específico", name:"logo-05-whatsapp-dp",  w:600,  h:600,  Comp:()=><LogoWhatsAppDP /> },
+  { name:"logo-06-email-signature", w:900,  h:400,  Comp:()=><LogoEmailSig /> },
+  { name:"logo-07-favicon-512px",   w:800,  h:500,  Comp:()=><LogoFavicon /> },
+  { name:"logo-08-powered-by",      w:600,  h:500,  Comp:()=><LogoPoweredBy /> },
+
+  // ── FEED POSTS · tanda 1 (1080×1350) ────────────────────────────────────
+  { section:"Feed posts · tanda 1 · 1080×1350", name:"feed-01-seo-local",       w:1080, h:1350, Comp:()=><Feed1 /> },
+  { name:"feed-02-redes-sociales",  w:1080, h:1350, Comp:()=><Feed2 /> },
+  { name:"feed-03-sitios-web",      w:1080, h:1350, Comp:()=><Feed3 /> },
+
+  // ── FEED POSTS · tanda 2 (1080×1350, animados) ──────────────────────────
+  { section:"Feed posts · tanda 2 · 1080×1350", name:"feed-04-sin-web",          w:1080, h:1350, Comp:()=><Feed4 /> },
+  { name:"feed-05-google-ads",      w:1080, h:1350, Comp:()=><Feed5 /> },
+  { name:"feed-06-instagram-competencia", w:1080, h:1350, Comp:()=><Feed6 /> },
+  { name:"feed-07-email-marketing", w:1080, h:1350, Comp:()=><Feed7 /> },
+  { name:"feed-08-reputacion-online",w:1080,h:1350, Comp:()=><Feed8 /> },
+
+  // ── CAROUSEL A · 5 errores ───────────────────────────────────────────────
+  { section:"Carrusel A · 5 errores · 1080×1080", name:"carA-1-cover",           w:1080, h:1080, Comp:()=><Carousel1 /> },
+  { name:"carA-2-error-01",         w:1080, h:1080, Comp:()=><Carousel2 /> },
+  { name:"carA-3-error-02",         w:1080, h:1080, Comp:()=><Carousel3 /> },
+  { name:"carA-4-error-03",         w:1080, h:1080, Comp:()=><Carousel4 /> },
+  { name:"carA-5-cta",              w:1080, h:1080, Comp:()=><Carousel5 /> },
+
+  // ── CAROUSEL B · aparecer en Google ─────────────────────────────────────
+  { section:"Carrusel B · Aparecer en Google · 1080×1080", name:"carB-1-cover",  w:1080, h:1080, Comp:()=><CarBCover /> },
+  { name:"carB-2-paso-01",          w:1080, h:1080, Comp:()=><CarB2 /> },
+  { name:"carB-3-paso-02",          w:1080, h:1080, Comp:()=><CarB3 /> },
+  { name:"carB-4-paso-03",          w:1080, h:1080, Comp:()=><CarB4 /> },
+  { name:"carB-5-cta",              w:1080, h:1080, Comp:()=><CarB5 /> },
+
+  // ── CAROUSEL C · antes y después ────────────────────────────────────────
+  { section:"Carrusel C · Antes y después · 1080×1080", name:"carC-1-cover",     w:1080, h:1080, Comp:()=><CarCCover /> },
+  { name:"carC-2-panaderia",        w:1080, h:1080, Comp:()=><CarC2 /> },
+  { name:"carC-3-estudio-contable", w:1080, h:1080, Comp:()=><CarC3 /> },
+  { name:"carC-4-casa-hogar",       w:1080, h:1080, Comp:()=><CarC4 /> },
+  { name:"carC-5-cta",              w:1080, h:1080, Comp:()=><CarC5 /> },
+
+  // ── CAROUSEL D · costo de no estar online ───────────────────────────────
+  { section:"Carrusel D · Costo de no estar online · 1080×1080", name:"carD-1-cover", w:1080, h:1080, Comp:()=><CarDCover /> },
+  { name:"carD-2-costo-01",         w:1080, h:1080, Comp:()=><CarD2 /> },
+  { name:"carD-3-costo-02",         w:1080, h:1080, Comp:()=><CarD3 /> },
+  { name:"carD-4-costo-03",         w:1080, h:1080, Comp:()=><CarD4 /> },
+  { name:"carD-5-cta",              w:1080, h:1080, Comp:()=><CarD5 /> },
+
+  // ── REEL · 4 escenas (1080×1920) ────────────────────────────────────────
+  { section:"Reel · 15s · 4 escenas · 1080×1920", name:"reel-01-hook",           w:1080, h:1920, Comp:()=><Reel1 /> },
+  { name:"reel-02-stat-cards",      w:1080, h:1920, Comp:()=><Reel2 /> },
+  { name:"reel-03-wave-build",      w:1080, h:1920, Comp:()=><Reel3 /> },
+  { name:"reel-04-logo-cta",        w:1080, h:1920, Comp:()=><Reel4 /> },
+
+  // ── STORIES (1080×1920) ──────────────────────────────────────────────────
+  { section:"Stories · 1080×1920", name:"story-01-countdown",                    w:1080, h:1920, Comp:()=><Story1 /> },
+  { name:"story-02-encuesta",       w:1080, h:1920, Comp:()=><Story2 /> },
+  { name:"story-03-testimonio",     w:1080, h:1920, Comp:()=><Story3 /> },
+  { name:"story-04-tip-del-dia",    w:1080, h:1920, Comp:()=><Story4 /> },
+  { name:"story-05-behind-scenes",  w:1080, h:1920, Comp:()=><Story5 /> },
+
+  // ── EMAIL HEADERS (1080×540) ─────────────────────────────────────────────
+  { section:"Email headers · 1080×540", name:"email-01-newsletter",              w:1080, h:540,  Comp:()=><Email1 /> },
+  { name:"email-02-oferta",         w:1080, h:540,  Comp:()=><Email2 /> },
+  { name:"email-03-reporte",        w:1080, h:540,  Comp:()=><Email3 /> },
+
+  // ── MOTION SPEC (1080×1400) ──────────────────────────────────────────────
+  { section:"Motion spec · 1080×1400", name:"motion-spec-animations",            w:1080, h:1400, Comp:()=><MotionSpec /> },
+
+  // ── JUNIO · 9 single posts (1080×1080) ──────────────────────────────────
+  { section:"Junio · Single posts · 1080×1080", name:"jun-A-de-2-a-15-reservas",  w:1080, h:1080, Comp:()=><PostA /> },
+  { name:"jun-B-google-my-business",w:1080, h:1080, Comp:()=><PostB /> },
+  { name:"jun-C-dato-89",           w:1080, h:1080, Comp:()=><PostC /> },
+  { name:"jun-D-reels-publico",     w:1080, h:1080, Comp:()=><PostD /> },
+  { name:"jun-E-perfil-vidriera",   w:1080, h:1080, Comp:()=><PostE /> },
+  { name:"jun-F-dato-87",           w:1080, h:1080, Comp:()=><PostF /> },
+  { name:"jun-G-cero-a-agenda",     w:1080, h:1080, Comp:()=><PostG /> },
+  { name:"jun-H-consistencia",      w:1080, h:1080, Comp:()=><PostH /> },
+  { name:"jun-I-cierre-dramatico",  w:1080, h:1080, Comp:()=><PostI /> },
+
+  // ── JUNIO · Carrusel 1 ───────────────────────────────────────────────────
+  { section:"Junio · Carrusel 1 · 5 pasos · 1080×1080", name:"jun-C1-1-cover",   w:1080, h:1080, Comp:()=><C1S1 /> },
+  { name:"jun-C1-2-paso-01",        w:1080, h:1080, Comp:()=><C1S2 /> },
+  { name:"jun-C1-3-paso-02",        w:1080, h:1080, Comp:()=><C1S3 /> },
+  { name:"jun-C1-4-cta",            w:1080, h:1080, Comp:()=><C1S4 /> },
+
+  // ── JUNIO · Carrusel 2 ───────────────────────────────────────────────────
+  { section:"Junio · Carrusel 2 · Competencia en redes · 1080×1080", name:"jun-C2-1-cover", w:1080, h:1080, Comp:()=><C2S1 /> },
+  { name:"jun-C2-2-diferencia",     w:1080, h:1080, Comp:()=><C2S2 /> },
+  { name:"jun-C2-3-rubros",         w:1080, h:1080, Comp:()=><C2S3 /> },
+  { name:"jun-C2-4-cta",            w:1080, h:1080, Comp:()=><C2S4 /> },
+
+  // ── JUNIO · Carrusel 3 ───────────────────────────────────────────────────
+  { section:"Junio · Carrusel 3 · 3 errores · 1080×1080", name:"jun-C3-1-cover", w:1080, h:1080, Comp:()=><C3S1 /> },
+  { name:"jun-C3-2-error-01",       w:1080, h:1080, Comp:()=><C3S2 /> },
+  { name:"jun-C3-3-error-02",       w:1080, h:1080, Comp:()=><C3S3 /> },
+  { name:"jun-C3-4-cta",            w:1080, h:1080, Comp:()=><C3S4 /> },
+
+  // ── JUNIO · Carrusel 4 ───────────────────────────────────────────────────
+  { section:"Junio · Carrusel 4 · Crece o estanca · 1080×1080", name:"jun-C4-1-cover", w:1080, h:1080, Comp:()=><C4S1 /> },
+  { name:"jun-C4-2-sintoma-causa",  w:1080, h:1080, Comp:()=><C4S2 /> },
+  { name:"jun-C4-3-insight",        w:1080, h:1080, Comp:()=><C4S3 /> },
+  { name:"jun-C4-4-cta",            w:1080, h:1080, Comp:()=><C4S4 /> },
+
+  // ── JUNIO · Carrusel 5 ───────────────────────────────────────────────────
+  { section:"Junio · Carrusel 5 · 3 pasos Instagram · 1080×1080", name:"jun-C5-1-cover", w:1080, h:1080, Comp:()=><C5S1 /> },
+  { name:"jun-C5-2-paso-01",        w:1080, h:1080, Comp:()=><C5S2 /> },
+  { name:"jun-C5-3-paso-02",        w:1080, h:1080, Comp:()=><C5S3 /> },
+  { name:"jun-C5-4-cta",            w:1080, h:1080, Comp:()=><C5S4 /> },
+
+  // ── JUNIO · Carrusel 6 ───────────────────────────────────────────────────
+  { section:"Junio · Carrusel 6 · Mejor cliente · 1080×1080", name:"jun-C6-1-cover", w:1080, h:1080, Comp:()=><C6S1 /> },
+  { name:"jun-C6-2-journey",        w:1080, h:1080, Comp:()=><C6S2 /> },
+  { name:"jun-C6-3-resultados",     w:1080, h:1080, Comp:()=><C6S3 /> },
+  { name:"jun-C6-4-cta",            w:1080, h:1080, Comp:()=><C6S4 /> },
+
+  // ── JULIO · 10 single posts (1080×1080) ─────────────────────────────────
+  { section:"Julio · Single posts · 1080×1080", name:"jul-J-sin-google-maps",     w:1080, h:1080, Comp:()=><PostJ /> },
+  { name:"jul-K-73pct-reviews",     w:1080, h:1080, Comp:()=><PostK /> },
+  { name:"jul-L-respuesta-30s",     w:1080, h:1080, Comp:()=><PostL /> },
+  { name:"jul-M-instagram-nunca-cierra", w:1080, h:1080, Comp:()=><PostM /> },
+  { name:"jul-N-caso-estudio-contable", w:1080, h:1080, Comp:()=><PostN /> },
+  { name:"jul-O-3-cosas-bio",       w:1080, h:1080, Comp:()=><PostO /> },
+  { name:"jul-P-si-no-en-google",   w:1080, h:1080, Comp:()=><PostP /> },
+  { name:"jul-Q-5-segundos",        w:1080, h:1080, Comp:()=><PostQ /> },
+  { name:"jul-R-web-lenta-vs-rapida",w:1080,h:1080, Comp:()=><PostR /> },
+  { name:"jul-S-que-se-vea",        w:1080, h:1080, Comp:()=><PostS /> },
+];
+
+const TOTAL = MANIFEST.length;
+
+// ── DOM refs ──────────────────────────────────────────────────────────────
+const stage    = document.getElementById('renderStage');
+const allGrids = document.getElementById('allGrids');
+const bar      = document.getElementById('bar');
+const label    = document.getElementById('progressLabel');
+const status   = document.getElementById('status');
+const previewBtn = document.getElementById('previewBtn');
+const goBtn    = document.getElementById('goBtn');
+const root     = ReactDOM.createRoot(stage);
+
+// ── Build section grid structure ─────────────────────────────────────────
+let currentSection = null;
+let currentGrid    = null;
+MANIFEST.forEach((item, i) => {
+  if (item.section) {
+    const h = document.createElement('div');
+    h.className = 'section-label';
+    h.textContent = item.section;
+    allGrids.appendChild(h);
+    currentGrid = document.createElement('div');
+    currentGrid.className = 'grid';
+    allGrids.appendChild(currentGrid);
+  }
+  const ar = item.h / item.w;
+  const wrap = document.createElement('div');
+  wrap.className = 'thumb';
+  wrap.id = `thumb-${i}`;
+  wrap.innerHTML = `
+    <div class="placeholder" style="aspect-ratio:${item.w}/${item.h};">${String(i+1).padStart(3,'0')}</div>
+    <div class="name">${item.name}</div>`;
+  currentGrid.appendChild(wrap);
+});
+
+// ── Render helpers ────────────────────────────────────────────────────────
+function renderSlide(i) {
+  const { Comp, w, h } = MANIFEST[i];
+  stage.style.width  = w + 'px';
+  stage.style.height = h + 'px';
+  return new Promise(resolve => {
+    root.render(<Comp />);
+    requestAnimationFrame(() => setTimeout(resolve, 380));
+  });
+}
+
+async function captureBlob(w, h) {
+  return htmlToImage.toBlob(stage, {
+    width: w, height: h, pixelRatio: 1,
+    cacheBust: true, backgroundColor: '#0A0F1E',
+  });
+}
+
+async function captureDataUrl(w, h) {
+  return htmlToImage.toPng(stage, {
+    width: w, height: h, pixelRatio: 0.28,
+    cacheBust: false, backgroundColor: '#0A0F1E',
+  });
+}
+
+// ── Preview ───────────────────────────────────────────────────────────────
+async function buildPreviews() {
+  previewBtn.disabled = true;
+  goBtn.disabled = true;
+  status.textContent = 'Generando previews…';
+  for (let i = 0; i < TOTAL; i++) {
+    const { name, w, h } = MANIFEST[i];
+    await renderSlide(i);
+    const url = await captureDataUrl(w, h);
+    const t = document.getElementById(`thumb-${i}`);
+    t.innerHTML = `<img src="${url}" style="aspect-ratio:${w}/${h};" alt="${name}" /><div class="name">${name}</div>`;
+    bar.style.width = ((i+1)/TOTAL*100) + '%';
+    label.textContent = `previews ${i+1} / ${TOTAL}`;
+  }
+  bar.style.width = '0%';
+  label.textContent = `0 / ${TOTAL}`;
+  status.textContent = `Listo — ${TOTAL} piezas. Cliqueá para descargar el ZIP a resolución completa.`;
+  goBtn.disabled = false;
+  root.render(<></>);
+}
+
+// ── Download ZIP ──────────────────────────────────────────────────────────
+goBtn.addEventListener('click', async () => {
+  goBtn.disabled = true;
+  previewBtn.disabled = true;
+  const zip = new JSZip();
+
+  // create folders in the ZIP
+  const folders = {};
+  const getFolder = (name) => {
+    if (!folders[name]) folders[name] = zip.folder(name);
+    return folders[name];
+  };
+
+  let currentFolder = 'logos';
+  for (let i = 0; i < TOTAL; i++) {
+    const { name, w, h, section } = MANIFEST[i];
+    if (section) {
+      if (section.startsWith('Logos · variantes'))   currentFolder = 'logos';
+      else if (section.startsWith('Feed posts · tanda 1')) currentFolder = 'feed-posts';
+      else if (section.startsWith('Feed posts · tanda 2')) currentFolder = 'feed-posts';
+      else if (section.startsWith('Carrusel A'))     currentFolder = 'carruseles';
+      else if (section.startsWith('Carrusel B'))     currentFolder = 'carruseles';
+      else if (section.startsWith('Carrusel C'))     currentFolder = 'carruseles';
+      else if (section.startsWith('Carrusel D'))     currentFolder = 'carruseles';
+      else if (section.startsWith('Reel'))           currentFolder = 'reels';
+      else if (section.startsWith('Stories'))        currentFolder = 'stories';
+      else if (section.startsWith('Email'))          currentFolder = 'email-headers';
+      else if (section.startsWith('Motion'))         currentFolder = 'motion-spec';
+      else if (section.startsWith('Junio · Single')) currentFolder = 'junio-singles';
+      else if (section.startsWith('Junio · Carrusel 1')) currentFolder = 'junio-carruseles';
+      else if (section.startsWith('Junio · Carrusel 2')) currentFolder = 'junio-carruseles';
+      else if (section.startsWith('Junio · Carrusel 3')) currentFolder = 'junio-carruseles';
+      else if (section.startsWith('Junio · Carrusel 4')) currentFolder = 'junio-carruseles';
+      else if (section.startsWith('Junio · Carrusel 5')) currentFolder = 'junio-carruseles';
+      else if (section.startsWith('Junio · Carrusel 6')) currentFolder = 'junio-carruseles';
+      else if (section.startsWith('Julio'))          currentFolder = 'julio-singles';
+    }
+
+    // mark active
+    document.getElementById(`thumb-${i}`)?.classList.add('active');
+    await renderSlide(i);
+    const blob = await captureBlob(w, h);
+    getFolder(currentFolder).file(`${String(i+1).padStart(3,'0')}-${name}.png`, blob);
+
+    // update thumb
+    const url = URL.createObjectURL(blob);
+    const t = document.getElementById(`thumb-${i}`);
+    if (t) {
+      t.classList.remove('active');
+      t.classList.add('done');
+      t.querySelector('img,div.placeholder').src = url;
+    }
+
+    bar.style.width = ((i+1)/TOTAL*100) + '%';
+    label.textContent = `${i+1} / ${TOTAL} — ${name}`;
+  }
+
+  status.textContent = 'Empacando ZIP…';
+  const zipBlob = await zip.generateAsync({ type:'blob' }, m => {
+    label.textContent = `ZIP ${Math.round(m.percent)}%`;
+  });
+  saveAs(zipBlob, 'OLA-Digital-brand-assets-completo.zip');
+  status.textContent = `✓ ${TOTAL} piezas descargadas. Click para volver a descargar.`;
+  goBtn.disabled = false;
+  previewBtn.disabled = false;
+  root.render(<></>);
+});
+
+previewBtn.addEventListener('click', buildPreviews);
+
+// ── Auto-start after fonts settle ────────────────────────────────────────
+setTimeout(() => {
+  status.textContent = `${TOTAL} piezas listas. Generá previews o descargá directo.`;
+  previewBtn.disabled = false;
+  goBtn.disabled = false;
+}, 800);
+</script>
+</body>
+</html>

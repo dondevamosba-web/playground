@@ -1,0 +1,59 @@
+{
+  "aesthetic": {
+    "apple": {
+      "tone": "minimalista, premium, aspiracional. Frases cortas. Calidad sobre cantidad.",
+      "image_style": "fondo blanco o negro, producto centrado, luz natural, sin ruido visual",
+      "cta": "Consultá precio y disponibilidad por WhatsApp"
+    },
+    "samsung": {
+      "tone": "bold, feature-driven, joven. Mostrá specs. Hablá de lo que puede hacer.",
+      "image_style": "fondo dinámico, colores vibrantes, specs superpuestos, energía joven",
+      "cta": "Cotizá por WhatsApp"
+    },
+    "playstation": {
+      "tone": "gaming, hype, comunidad. Apelá al gamer. Hablar de experiencia, no solo del hardware.",
+      "image_style": "fondo oscuro, luces de gaming, screenshot de juegos populares, ambiente",
+      "cta": "Precio y stock por WhatsApp"
+    }
+  },
+  "schedule": {
+    "posts_per_week": 4,
+    "slots": [
+      {"weekday": 1, "time": "12:00"},
+      {"weekday": 3, "time": "19:00"},
+      {"weekday": 5, "time": "11:00"},
+      {"weekday": 6, "time": "18:00"}
+    ]
+  },
+  "products": [
+    {"brand": "apple", "product": "iPhone 17 Pro Max 256GB", "type": "launch", "weight": 5},
+    {"brand": "apple", "product": "iPhone 17 Pro 128GB", "type": "launch", "weight": 4},
+    {"brand": "apple", "product": "iPhone Air", "type": "launch", "weight": 4},
+    {"brand": "apple", "product": "iPhone 17 128GB", "type": "offer", "weight": 3},
+    {"brand": "apple", "product": "iPhone 16 Pro Max 256GB", "type": "offer", "weight": 3},
+    {"brand": "apple", "product": "iPhone 16 Pro 128GB", "type": "offer", "weight": 2},
+    {"brand": "apple", "product": "iPhone 16 128GB", "type": "offer", "weight": 2},
+    {"brand": "apple", "product": "MacBook Air M3 13\"", "type": "feature", "weight": 2},
+    {"brand": "apple", "product": "MacBook Pro M4 14\"", "type": "feature", "weight": 2},
+    {"brand": "apple", "product": "AirPods Pro 2da Gen", "type": "offer", "weight": 2},
+    {"brand": "apple", "product": "AirPods Max", "type": "feature", "weight": 2},
+    {"brand": "apple", "product": "iPad Air M2 11\"", "type": "feature", "weight": 2},
+    {"brand": "apple", "product": "iPad Air M2 13\"", "type": "offer", "weight": 1},
+    {"brand": "apple", "product": "Apple Watch Series 10 45mm", "type": "offer", "weight": 2},
+    {"brand": "apple", "product": "Apple Watch Ultra 2", "type": "feature", "weight": 1},
+    {"brand": "apple", "product": "iMac M4 24\"", "type": "launch", "weight": 2},
+    {"brand": "apple", "product": "Mac Mini M4", "type": "feature", "weight": 2},
+    {"brand": "apple", "type": "meme", "product": "", "weight": 2},
+    {"brand": "samsung", "product": "Galaxy S25 Ultra", "type": "offer", "weight": 3},
+    {"brand": "samsung", "product": "Galaxy S25+", "type": "offer", "weight": 2},
+    {"brand": "samsung", "product": "Galaxy S25", "type": "offer", "weight": 2},
+    {"brand": "samsung", "product": "Galaxy Tab S10+", "type": "feature", "weight": 1},
+    {"brand": "samsung", "product": "Galaxy Buds3 Pro", "type": "offer", "weight": 1},
+    {"brand": "samsung", "type": "meme", "product": "", "weight": 1},
+    {"brand": "playstation", "product": "PS5 Slim + 2 DualSense", "type": "offer", "weight": 3},
+    {"brand": "playstation", "product": "PS5 Slim", "type": "offer", "weight": 2},
+    {"brand": "playstation", "product": "DualSense Edge", "type": "feature", "weight": 2},
+    {"brand": "playstation", "product": "PS5 Slim + God of War Ragnarök", "type": "launch", "weight": 1},
+    {"brand": "playstation", "type": "meme", "product": "", "weight": 2}
+  ]
+}

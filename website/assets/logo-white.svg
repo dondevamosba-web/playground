@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 248 64" fill="none">
+  <defs>
+    <linearGradient id="badgeGradW" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.30)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.12)"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="4" width="56" height="56" rx="14" fill="url(#badgeGradW)" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+  <path d="M8,20 C13,15 17,15 22,20 C27,25 31,25 36,20 C41,15 45,15 50,20"
+        stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.45"/>
+  <path d="M8,32 C13,27 17,27 22,32 C27,37 31,37 36,32 C41,27 45,27 50,32"
+        stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.72"/>
+  <path d="M8,44 C13,39 17,39 22,44 C27,49 31,49 36,44 C41,39 45,39 50,44"
+        stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  <text x="68" y="42"
+        font-family="Plus Jakarta Sans, Arial Black, sans-serif"
+        font-weight="800" font-size="38" fill="white">OLA</text>
+  <text x="70" y="57"
+        font-family="Inter, Arial, sans-serif"
+        font-weight="600" font-size="12"
+        letter-spacing="4" fill="rgba(255,255,255,0.70)">DIGITAL</text>
+</svg>

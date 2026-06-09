@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bgGrad)"/>
+  <path
+    d="M 10,20 C 12.75,16 18.25,16 21,20 C 23.75,24 29.25,24 32,20 C 34.75,16 40.25,16 43,20 C 45.75,24 51.25,24 54,20"
+    fill="none"
+    stroke="white"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.40"
+  />
+  <path
+    d="M 10,32 C 12.75,25 18.25,25 21,32 C 23.75,39 29.25,39 32,32 C 34.75,25 40.25,25 43,32 C 45.75,39 51.25,39 54,32"
+    fill="none"
+    stroke="white"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.70"
+  />
+  <path
+    d="M 10,44 C 12.75,34 18.25,34 21,44 C 23.75,54 29.25,54 32,44 C 34.75,34 40.25,34 43,44 C 45.75,54 51.25,54 54,44"
+    fill="none"
+    stroke="white"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="1.00"
+  />
+  <text
+    x="32"
+    y="59"
+    text-anchor="middle"
+    font-family="'Plus Jakarta Sans', sans-serif"
+    font-size="8"
+    font-weight="800"
+    fill="white"
+    opacity="0.5"
+    letter-spacing="2"
+  >OLA</text>
+</svg>

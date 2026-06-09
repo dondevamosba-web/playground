@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💰 Cash Assets</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #1A1A2E;
+      color: #FFF;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      padding: 24px 16px 48px;
+    }
+    .nav {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .nav a {
+      flex: 1;
+      text-align: center;
+      padding: 9px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: #0F3460;
+      color: #AAAACC;
+    }
+    .nav a.active { background: #F5A623; color: #1A1A2E; }
+    .card {
+      background: #16213E;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 1.3rem; font-weight: 700; color: #F5A623; text-align: center; margin-bottom: 6px; }
+    .total-line { text-align: center; font-size: 0.85rem; color: #888; margin-bottom: 20px; }
+    .total-usd { font-size: 1.1rem; font-weight: 700; color: #27AE60; }
+
+    .asset-row {
+      background: #1A1A2E;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .asset-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .asset-name { font-size: 0.95rem; font-weight: 600; }
+    .asset-value { font-size: 1rem; font-weight: 700; color: #F5A623; }
+    .asset-notes { font-size: 0.72rem; color: #666; margin-bottom: 8px; }
+    .asset-updated { font-size: 0.7rem; color: #555; margin-top: 4px; }
+
+    .adj-row { display: flex; gap: 6px; align-items: center; }
+    .adj-input {
+      flex: 1;
+      padding: 7px 10px;
+      background: #0F3460;
+      border: 1px solid #2A2A50;
+      border-radius: 6px;
+      color: #FFF;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .adj-input:focus { border-color: #F5A623; }
+    .btn-add, .btn-sub {
+      padding: 7px 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-add { background: #27AE60; color: #FFF; }
+    .btn-sub { background: #E74C3C; color: #FFF; }
+    .btn-add:hover, .btn-sub:hover { opacity: 0.82; }
+    .btn-add:disabled, .btn-sub:disabled { opacity: 0.4; cursor: default; }
+
+    .loading { text-align: center; color: #555; padding: 40px; }
+    .feedback { font-size: 0.75rem; margin-top: 4px; min-height: 14px; }
+    .feedback.ok  { color: #27AE60; }
+    .feedback.err { color: #E74C3C; }
+  </style>
+</head>
+<body>
+
+<div class="nav" style="max-width:480px;margin:0 auto 20px;">
+  <a href="/expenses/">📋 Log</a>
+  <a href="/expenses/month.html">📅 Mes</a>
+  <a href="/expenses/assets.html" class="active">💰 Assets</a>
+</div>
+
+<div class="card">
+  <h1>💰 CASH ASSETS</h1>
+  <div class="total-line">Total: <span class="total-usd" id="total">—</span></div>
+  <div id="list"><p class="loading">Cargando...</p></div>
+</div>
+
+<script>
+  let assets = [];
+
+  async function load() {
+    const res  = await fetch("/.netlify/functions/get-data?type=assets");
+    assets     = await res.json();
+    render();
+  }
+
+  function fmt(v) {
+    if (v === null || v === undefined || v === "") return "—";
+    return "$" + Number(v).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  }
+
+  function render() {
+    let total = 0;
+    assets.forEach(a => { if (a.value !== null) total += a.value; });
+    document.getElementById("total").textContent = fmt(total);
+
+    document.getElementById("list").innerHTML = assets.map((a, i) => `
+      <div class="asset-row" id="row-${i}">
+        <div class="asset-header">
+          <span class="asset-name">${a.asset}</span>
+          <span class="asset-value" id="val-${i}">${fmt(a.value)}</span>
+        </div>
+        ${a.notes ? `<div class="asset-notes">${a.notes}</div>` : ""}
+        <div class="adj-row">
+          <input class="adj-input" id="amt-${i}" type="number" min="0" step="any" placeholder="amount" />
+          <button class="btn-add" onclick="adjust(${i},'add')">+ Add</button>
+          <button class="btn-sub" onclick="adjust(${i},'sub')">− Sub</button>
+        </div>
+        <div class="feedback" id="fb-${i}"></div>
+        ${a.lastUpdated ? `<div class="asset-updated">Updated: ${a.lastUpdated}</div>` : ""}
+      </div>
+    `).join("");
+  }
+
+  async function adjust(i, op) {
+    const amt = parseFloat(document.getElementById(`amt-${i}`).value);
+    if (!amt || amt <= 0) {
+      setFeedback(i, "Ingresá un monto válido", "err");
+      return;
+    }
+    const addBtn = document.querySelector(`#row-${i} .btn-add`);
+    const subBtn = document.querySelector(`#row-${i} .btn-sub`);
+    addBtn.disabled = subBtn.disabled = true;
+
+    const res = await fetch("/.netlify/functions/update-asset", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ asset: assets[i].asset, operation: op, amount: amt }),
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      assets[i].value = data.newVal;
+      document.getElementById(`val-${i}`).textContent = fmt(data.newVal);
+      document.getElementById(`amt-${i}`).value = "";
+      let total = 0;
+      assets.forEach(a => { if (a.value !== null) total += a.value; });
+      document.getElementById("total").textContent = fmt(total);
+      setFeedback(i, op === "add" ? `+${fmt(amt)} ✓` : `−${fmt(amt)} ✓`, "ok");
+    } else {
+      setFeedback(i, "Error al guardar", "err");
+    }
+    addBtn.disabled = subBtn.disabled = false;
+  }
+
+  function setFeedback(i, msg, cls) {
+    const el = document.getElementById(`fb-${i}`);
+    el.textContent = msg;
+    el.className = `feedback ${cls}`;
+    setTimeout(() => { el.textContent = ""; el.className = "feedback"; }, 3000);
+  }
+
+  load();
+</script>
+</body>
+</html>

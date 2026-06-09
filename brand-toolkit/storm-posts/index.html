@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storm Digital — IG Feed (20 posts)</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --canvas:#1f1633; --night:#150f23; --lime:#c2ef4e; --muted:rgba(255,255,255,0.72);
+    --hairline:#362d59;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#0c0817;color:#fff;font-family:'Rubik',system-ui,sans-serif;}
+  .wrap{max-width:1180px;margin:0 auto;padding:64px 40px 100px;}
+  header{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:44px;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand .name{font-size:18px;letter-spacing:0.16em;text-transform:uppercase;}
+  .brand .name b{font-weight:700;} .brand .name span{font-weight:400;color:var(--muted);}
+  .lede{font-size:14px;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:0.02em;}
+  h1{font-size:34px;font-weight:600;letter-spacing:-0.01em;margin:0 0 6px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:40px;}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .cell{display:block;text-decoration:none;color:inherit;}
+  .frame{position:relative;width:100%;aspect-ratio:1/1;border-radius:14px;overflow:hidden;border:1px solid var(--hairline);background:var(--canvas);}
+  .frame iframe{position:absolute;top:0;left:0;width:1080px;height:1080px;border:0;transform-origin:top left;pointer-events:none;}
+  .cap{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:12px;}
+  .cap .n{font-family:'Space Mono',monospace;font-size:13px;color:var(--lime);}
+  .cap .t{font-size:14px;color:var(--muted);}
+  .cell:hover .frame{border-color:var(--lime);}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <svg width="17" height="23" viewBox="0 0 17 23" fill="none"><path d="M10.5 0L0 13h6.2l-2.4 10L17 8.5H9.3L12 0z" fill="#c2ef4e"/></svg>
+        <span class="name"><b>Storm</b>&nbsp;<span>Digital</span></span>
+      </div>
+      <div class="lede">instagram feed · 1080 × 1080 · 5 posts</div>
+    </header>
+
+    <h1>Lead-gen feed set</h1>
+    <div class="sub">Violet-midnight + electric-lime · 13 posts. Click any to open full-size.</div>
+
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <script>
+    var posts = [
+      {n:'01', t:'CPL Stat',        f:'01 CPL Stat.html'},
+      {n:'02', t:'Myth vs Reality', f:'02 Myth vs Reality.html'},
+      {n:'03', t:'Testimonial',     f:'03 Testimonial.html'},
+      {n:'04', t:'How It Works',    f:'04 How It Works.html'},
+      {n:'05', t:'Manifesto',       f:'05 Manifesto.html'},
+      {n:'06', t:'HVAC Result',     f:'06 HVAC Result.html'},
+      {n:'07', t:'Review Power',    f:'07 Review Power.html'},
+      {n:'08', t:'Verticals',       f:'08 Verticals.html'},
+      {n:'09', t:'Free Audit CTA',  f:'09 Free Audit CTA.html'},
+      {n:'10', t:'Fee Comparison',  f:'10 Fee Comparison.html'},
+      {n:'11', t:'Three Truths',    f:'11 Three Truths.html'},
+      {n:'12', t:'Client Win Stat', f:'12 Client Win Stat.html'},
+      {n:'13', t:'Client Quote',    f:'13 Client Quote.html'},
+      {n:'14', t:'ROI Multiple',    f:'14 ROI Multiple.html'},
+      {n:'15', t:'Speed Stat',      f:'15 Speed Stat.html'},
+      {n:'16', t:'Budget Leak',     f:'16 Budget Leak.html'},
+      {n:'17', t:'Close Rate',      f:'17 Close Rate.html'},
+      {n:'18', t:'Before After',    f:'18 Before After.html'},
+      {n:'19', t:'Obsessed',        f:'19 Obsessed.html'},
+      {n:'20', t:'Reviews Stat',    f:'20 Reviews Stat.html'},
+    ];
+    var grid = document.getElementById('grid');
+    posts.forEach(function(p){
+      var a = document.createElement('a');
+      a.className='cell'; a.href=encodeURI(p.f); a.target='_blank';
+      a.innerHTML =
+        '<div class="frame"><iframe scrolling="no" src="'+encodeURI(p.f)+'"></iframe></div>'+
+        '<div class="cap"><span class="n">'+p.n+' / 05</span><span class="t">'+p.t+'</span></div>';
+      grid.appendChild(a);
+    });
+    // Scale each 1080 iframe to fit its cell
+    function scaleFrames(){
+      document.querySelectorAll('.frame').forEach(function(fr){
+        var s = fr.clientWidth/1080;
+        fr.querySelector('iframe').style.transform='scale('+s+')';
+      });
+    }
+    window.addEventListener('resize', scaleFrames);
+    window.addEventListener('load', scaleFrames);
+    setTimeout(scaleFrames, 60);
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 72" width="230" height="72">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&amp;family=Inter:wght@600&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Arc 3 — largest, r=26, cyan, opacity 0.35 -->
+  <path d="M 43 17.48 A 26 26 0 0 1 43 62.52"
+        fill="none"
+        stroke="#06B6D4"
+        stroke-width="2"
+        stroke-linecap="round"
+        opacity="0.35"/>
+
+  <!-- Arc 2 — medium, r=18, sky blue, opacity 0.65 -->
+  <path d="M 39 24.41 A 18 18 0 0 1 39 55.59"
+        fill="none"
+        stroke="#0EA5E9"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        opacity="0.65"/>
+
+  <!-- Arc 1 — smallest, r=10, sky blue, opacity 1.0 -->
+  <path d="M 35 31.34 A 10 10 0 0 1 35 48.66"
+        fill="none"
+        stroke="#0EA5E9"
+        stroke-width="3"
+        stroke-linecap="round"
+        opacity="1"/>
+
+  <!-- Origin dot — orange accent -->
+  <circle cx="30" cy="40" r="4" fill="#F97316"/>
+
+  <!-- OLA wordmark -->
+  <text x="62" y="44"
+        font-family="'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif"
+        font-size="36"
+        font-weight="800"
+        fill="#0F172A">OLA</text>
+
+  <!-- DIGITAL submark -->
+  <text x="63" y="56"
+        font-family="'Inter', 'Helvetica Neue', Arial, sans-serif"
+        font-size="11"
+        font-weight="600"
+        letter-spacing="4"
+        fill="#94A3B8">DIGITAL</text>
+</svg>

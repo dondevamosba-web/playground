@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 58" width="260" height="58">
+  <defs>
+    <linearGradient id="olaGrad" x1="10" y1="0" x2="96" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0369A1"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+  <text x="10" y="40" font-family="'Plus Jakarta Sans', system-ui, sans-serif">
+    <tspan font-size="42" font-weight="800" fill="url(#olaGrad)" letter-spacing="-1">OLA</tspan><tspan font-size="28" font-weight="400" fill="#334155" font-family="'Inter', system-ui, sans-serif" letter-spacing="0"> Digital</tspan>
+  </text>
+  <path
+    d="M 8,48 C 14,42 20,42 25,48 S 37,54 42,48 S 54,42 59,48 S 71,54 76,48 S 88,42 93,48"
+    stroke="#F97316"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"/>
+</svg>

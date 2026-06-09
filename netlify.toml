@@ -1,0 +1,6 @@
+[build]
+  publish = "deploy"
+  command = "cd netlify/functions && npm install"
+
+[functions]
+  directory = "netlify/functions"

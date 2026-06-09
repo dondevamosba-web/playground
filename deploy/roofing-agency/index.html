@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Storm Digital — Exclusive Roofing Leads via Meta & Google Ads</title>
+  <meta name="description" content="We run Meta and Google Ads exclusively for roofing companies. Exclusive leads, no contracts, guaranteed results.">
+  <style>
+    :root {
+      --ink: #0E1116;
+      --ink-soft: #3A3F47;
+      --paper: #F7F5F0;
+      --paper-warm: #EFEAE0;
+      --accent: #E8420A;
+      --accent-dark: #C23508;
+      --muted: #6b7280;
+      --line: rgba(14,17,22,0.1);
+      --green: #16a34a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* NAV */
+    nav { padding: 20px 0; border-bottom: 1px solid var(--line); }
+    nav .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 800; font-size: 20px; letter-spacing: -0.03em; }
+    .logo span { color: var(--accent); }
+    .nav-cta {
+      background: var(--ink);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .nav-cta:hover { background: var(--accent); }
+
+    /* HERO */
+    .hero { padding: 88px 0 72px; }
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      max-width: 780px;
+      margin-bottom: 24px;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero p {
+      font-size: 19px;
+      color: var(--ink-soft);
+      max-width: 560px;
+      margin-bottom: 36px;
+      line-height: 1.65;
+    }
+    .btn-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 15px 28px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-secondary {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 1px;
+    }
+
+    /* TRUST BAR */
+    .trust { padding: 32px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper-warm); }
+    .trust-grid { display: flex; gap: 48px; flex-wrap: wrap; align-items: center; justify-content: center; }
+    .trust-item { text-align: center; }
+    .trust-item .num { font-size: 28px; font-weight: 900; letter-spacing: -0.02em; color: var(--ink); }
+    .trust-item .label { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+    /* PROBLEM */
+    .section { padding: 80px 0; }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+    }
+    .section h2 {
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: 1.12;
+      max-width: 640px;
+      margin-bottom: 20px;
+    }
+    .section p { font-size: 17px; color: var(--ink-soft); max-width: 600px; line-height: 1.7; }
+
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .pain-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 24px;
+    }
+    .pain-card .icon { font-size: 22px; margin-bottom: 12px; }
+    .pain-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .pain-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* HOW IT WORKS */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-top: 48px; }
+    .step { position: relative; }
+    .step-num {
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--paper-warm);
+      line-height: 1;
+      margin-bottom: 12px;
+      -webkit-text-stroke: 2px var(--line);
+    }
+    .step h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .step p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* PRICING */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+      align-items: start;
+    }
+    .pricing-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 32px 28px;
+      position: relative;
+    }
+    .pricing-card.featured {
+      border: 2px solid var(--accent);
+      transform: translateY(-8px);
+    }
+    .badge {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .plan-name { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+    .plan-price { font-size: 44px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; margin-bottom: 4px; }
+    .plan-price span { font-size: 18px; font-weight: 500; color: var(--muted); }
+    .plan-adspend { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .plan-leads {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--green);
+    }
+    .plan-features { list-style: none; margin-bottom: 28px; }
+    .plan-features li {
+      font-size: 14px;
+      color: var(--ink-soft);
+      padding: 7px 0;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .plan-features li:last-child { border-bottom: none; }
+    .plan-features li::before { content: "✓"; color: var(--green); font-weight: 700; flex-shrink: 0; }
+    .plan-cta {
+      display: block;
+      text-align: center;
+      background: var(--ink);
+      color: #fff;
+      padding: 13px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      transition: background 0.15s;
+    }
+    .plan-cta:hover { background: var(--accent); }
+    .pricing-card.featured .plan-cta { background: var(--accent); }
+    .pricing-card.featured .plan-cta:hover { background: var(--accent-dark); }
+
+    /* GUARANTEE */
+    .guarantee {
+      background: var(--ink);
+      color: #fff;
+      padding: 64px 0;
+      text-align: center;
+    }
+    .guarantee h2 { font-size: clamp(28px, 3.5vw, 40px); font-weight: 900; letter-spacing: -0.025em; margin-bottom: 16px; }
+    .guarantee p { font-size: 17px; color: rgba(255,255,255,0.7); max-width: 560px; margin: 0 auto 12px; line-height: 1.65; }
+    .guarantee .fine { font-size: 13px; color: rgba(255,255,255,0.4); max-width: 480px; margin: 0 auto; }
+
+    /* COMPARISON */
+    .compare-table { width: 100%; border-collapse: collapse; margin-top: 40px; font-size: 15px; }
+    .compare-table th {
+      text-align: left;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 12px 16px;
+      border-bottom: 2px solid var(--line);
+    }
+    .compare-table th.us { color: var(--accent); }
+    .compare-table td { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table td:first-child { font-weight: 600; }
+    .check { color: var(--green); font-weight: 700; }
+    .cross { color: #ef4444; }
+
+    /* FAQ */
+    .faq-list { margin-top: 40px; max-width: 700px; }
+    .faq-item { border-bottom: 1px solid var(--line); padding: 20px 0; }
+    .faq-item h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .faq-item p { font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
+
+    /* FINAL CTA */
+    .final-cta { padding: 96px 0; text-align: center; }
+    .final-cta h2 { font-size: clamp(30px, 4vw, 48px); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .final-cta p { font-size: 18px; color: var(--muted); margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+    /* CONTACT FORM */
+    .contact-form { max-width: 480px; margin: 40px auto 0; text-align: left; }
+    .contact-form .field { margin-bottom: 14px; }
+    .contact-form input, .contact-form textarea {
+      width: 100%; padding: 12px 14px; border: 1px solid var(--line);
+      border-radius: 6px; font-size: 15px; font-family: inherit;
+      background: #fff; color: var(--ink); outline: none; box-sizing: border-box;
+    }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: var(--accent); }
+    .contact-form textarea { resize: vertical; min-height: 80px; }
+    .contact-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .contact-form .submit { width: 100%; margin-top: 6px; }
+    .form-divider { display: flex; align-items: center; gap: 12px; margin: 32px auto; max-width: 480px; color: var(--muted); font-size: 13px; }
+    .form-divider::before, .form-divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+    /* FOOTER */
+    footer { padding: 32px 0; border-top: 1px solid var(--line); }
+    footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    footer p { font-size: 13px; color: var(--muted); }
+
+    @media (max-width: 640px) {
+      .trust-grid { gap: 28px; }
+      .pricing-card.featured { transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <div class="logo">Storm<span>Digital</span></div>
+      <a href="#pricing" class="nav-cta">See Pricing</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">Roofing Lead Generation</div>
+      <h1>More jobs. <em>Exclusive</em> leads.<br>No HomeAdvisor.</h1>
+      <p>We run Meta and Google Ads exclusively for roofing contractors. Every lead goes only to you — not to 5 competitors at the same time.</p>
+      <div class="btn-row">
+        <a href="#pricing" class="btn-primary">Get Your Lead Guarantee →</a>
+        <a href="#how-it-works" class="btn-secondary">How it works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <section class="trust">
+    <div class="container">
+      <div class="trust-grid">
+        <div class="trust-item">
+          <div class="num">100%</div>
+          <div class="label">Exclusive leads</div>
+        </div>
+        <div class="trust-item">
+          <div class="num">60-day</div>
+          <div class="label">Results guarantee</div>
+        </div>
+        <div class="trust-item">
+          <div class="num">$0</div>
+          <div class="label">Setup fee</div>
+        </div>
+        <div class="trust-item">
+          <div class="num">Month-to-month</div>
+          <div class="label">No contracts</div>
+        </div>
+        <div class="trust-item">
+          <div class="num">Roofing only</div>
+          <div class="label">We don't work with plumbers</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="section">
+    <div class="container">
+      <div class="section-label">The Problem</div>
+      <h2>Most roofers are tired of paying for the same lead 5 other guys already got.</h2>
+      <p>HomeAdvisor, Angi, and Thumbtack sell the same lead to every contractor in your zip code. By the time you call, the homeowner has already heard from three of your competitors.</p>
+      <div class="pain-grid">
+        <div class="pain-card">
+          <div class="icon">📞</div>
+          <h3>Shared leads = race to the bottom</h3>
+          <p>When 5 contractors call the same homeowner, the one who wins is usually the cheapest — not the best.</p>
+        </div>
+        <div class="pain-card">
+          <div class="icon">💸</div>
+          <h3>$100–$250 per lead, shared</h3>
+          <p>Lead aggregators charge a premium, then sell that lead to your competition. You pay for the privilege of competing against yourself.</p>
+        </div>
+        <div class="pain-card">
+          <div class="icon">📉</div>
+          <h3>No ads = invisible in your market</h3>
+          <p>While you rely on referrals, local competitors are locking up homeowners at the top of the funnel before they start asking around.</p>
+        </div>
+        <div class="pain-card">
+          <div class="icon">🤷</div>
+          <h3>Generic agencies don't know roofing</h3>
+          <p>An agency that also runs ads for gyms and dentists doesn't know your seasonality, storm triggers, or what a residential re-roof conversion looks like.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how-it-works" style="background: var(--paper-warm); padding-top: 80px; padding-bottom: 80px;">
+    <div class="container">
+      <div class="section-label">How It Works</div>
+      <h2>From setup to booked jobs in under 2 weeks.</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Strategy call</h3>
+          <p>We learn your target area, job types (residential, commercial, storm), and what a booked job is worth to you. Takes 30 minutes.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>We build your campaigns</h3>
+          <p>Custom landing pages, ad copy, and targeting built for roofers — not recycled templates from the last client. Ready in 5–7 days.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Leads come in exclusively</h3>
+          <p>Every lead routes directly to you — your phone, your CRM. No middlemen. Name, number, address, what they need.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h3>We optimize every month</h3>
+          <p>Monthly reports, campaign adjustments, and a call to review what's working. We chase the cost per booked job, not just CPL.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-label">Pricing</div>
+      <h2>Straightforward plans. No surprises.</h2>
+      <p>Ad spend is separate and goes directly into your ad accounts — we never touch it. The fee below is purely for management.</p>
+
+      <div class="pricing-grid">
+
+        <!-- STARTER -->
+        <div class="pricing-card">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price">$997<span>/mo</span></div>
+          <div class="plan-adspend">+ $1,500 min ad spend (yours)</div>
+          <div class="plan-leads">10–15 exclusive leads/month</div>
+          <ul class="plan-features">
+            <li>Meta Ads (Facebook + Instagram)</li>
+            <li>Custom landing page</li>
+            <li>Lead routing to your phone/email</li>
+            <li>Monthly performance report</li>
+            <li>Monthly strategy call</li>
+            <li>You own all accounts & data</li>
+          </ul>
+          <a href="#contact" class="plan-cta">Get Started</a>
+        </div>
+
+        <!-- GROWTH (FEATURED) -->
+        <div class="pricing-card featured">
+          <div class="badge">Most Popular</div>
+          <div class="plan-name">Growth</div>
+          <div class="plan-price">$1,497<span>/mo</span></div>
+          <div class="plan-adspend">+ $2,500 min ad spend (yours)</div>
+          <div class="plan-leads">20–30 exclusive leads/month</div>
+          <ul class="plan-features">
+            <li>Meta + Google Ads</li>
+            <li>Custom landing page + A/B testing</li>
+            <li>Retargeting campaigns</li>
+            <li>Lead routing + CRM integration</li>
+            <li>Bi-weekly calls</li>
+            <li>Seasonal campaign adjustments</li>
+            <li>You own all accounts & data</li>
+          </ul>
+          <a href="#contact" class="plan-cta">Get Started</a>
+        </div>
+
+        <!-- SCALE -->
+        <div class="pricing-card">
+          <div class="plan-name">Scale</div>
+          <div class="plan-price">$2,497<span>/mo</span></div>
+          <div class="plan-adspend">+ $4,000 min ad spend (yours)</div>
+          <div class="plan-leads">40–60 exclusive leads/month</div>
+          <ul class="plan-features">
+            <li>Meta + Google + YouTube Ads</li>
+            <li>Multiple landing pages by job type</li>
+            <li>Full retargeting stack</li>
+            <li>CRM setup + automation</li>
+            <li>Weekly strategy calls</li>
+            <li>Dedicated account manager</li>
+            <li>Storm / seasonal surge campaigns</li>
+            <li>You own all accounts & data</li>
+          </ul>
+          <a href="#contact" class="plan-cta">Get Started</a>
+        </div>
+
+      </div>
+
+      <p style="text-align:center; margin-top: 28px; font-size: 14px; color: var(--muted);">
+        Not sure which plan fits? <a href="#contact" style="color: var(--accent); font-weight: 600;">Tell us your monthly job target</a> and we'll tell you exactly which one makes sense.
+      </p>
+    </div>
+  </section>
+
+  <!-- GUARANTEE -->
+  <section class="guarantee">
+    <div class="container">
+      <h2>60-Day Lead Guarantee</h2>
+      <p>If we don't hit your contracted lead target in the first 60 days, we keep working — for free — until we do.</p>
+      <p class="fine">We're confident enough in our process to put our fee on the line. No workarounds, no fine print. Miss the target, we work free.</p>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="section">
+    <div class="container">
+      <div class="section-label">Why Not HomeAdvisor?</div>
+      <h2>We're not a lead marketplace. We're your marketing team.</h2>
+      <div style="overflow-x: auto;">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th class="us">Storm Digital</th>
+              <th>HomeAdvisor / Angi</th>
+              <th>Generic Agency</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Leads exclusive to you</td>
+              <td class="check">✓ Always</td>
+              <td class="cross">✗ Sold to 5 contractors</td>
+              <td class="cross">✗ Depends</td>
+            </tr>
+            <tr>
+              <td>You own the ad account</td>
+              <td class="check">✓ Yes</td>
+              <td class="cross">✗ No account</td>
+              <td class="cross">✗ Usually agency-owned</td>
+            </tr>
+            <tr>
+              <td>Roofing-specific campaigns</td>
+              <td class="check">✓ Always</td>
+              <td class="cross">✗ Generic</td>
+              <td class="cross">✗ Generic templates</td>
+            </tr>
+            <tr>
+              <td>Lead cost (approx.)</td>
+              <td class="check">$50–$120 exclusive</td>
+              <td class="cross">$100–$250 shared</td>
+              <td>Varies wildly</td>
+            </tr>
+            <tr>
+              <td>No long-term contract</td>
+              <td class="check">✓ Month-to-month</td>
+              <td>Monthly subscription</td>
+              <td class="cross">✗ 6–12 mo contracts common</td>
+            </tr>
+            <tr>
+              <td>Results guarantee</td>
+              <td class="check">✓ 60-day guarantee</td>
+              <td class="cross">✗ No guarantee</td>
+              <td class="cross">✗ Rarely offered</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" style="background: var(--paper-warm); padding-top: 80px; padding-bottom: 80px;">
+    <div class="container">
+      <div class="section-label">FAQ</div>
+      <h2>Common questions.</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>How quickly will I start getting leads?</h3>
+          <p>Most clients see their first leads within 7–10 days of campaign launch. We target an initial ramp of 2 weeks from strategy call to live ads.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Do I need to have run ads before?</h3>
+          <p>No. We set up everything from scratch — ad accounts, pages, landing pages. All you need is a business and a target area.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What's the difference between the ad spend and the management fee?</h3>
+          <p>The management fee is what you pay us. The ad spend goes directly to Facebook/Google — it never passes through us. You get full transparency on what's being spent and where.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What if I only want Meta ads, not Google?</h3>
+          <p>The Starter plan is Meta-only. You can add Google at any point — just upgrade to Growth when you're ready to scale.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I cancel anytime?</h3>
+          <p>Yes. Month-to-month means you can cancel with 30 days notice. No cancellation fees, no "early termination" clauses.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Do you work with commercial roofers too?</h3>
+          <p>Yes — though commercial lead gen requires a different strategy (longer sales cycles, different platforms). Tell us on the call and we'll scope accordingly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta" id="contact">
+    <div class="container">
+      <h2>Ready for leads that are actually yours?</h2>
+      <p>Book a free 15-minute call. We'll tell you exactly what's realistic for your market — no pitch, no pressure.</p>
+      <a href="https://cal.com/guido-carminatti-wvudqi/demo" class="btn-primary" style="font-size: 17px; padding: 17px 32px;">Book a Free Call →</a>
+
+      <div class="form-divider">or tell us about your business</div>
+
+      <form class="contact-form" name="roofing-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="roofing-contact" />
+        <p style="display:none;"><input name="bot-field" /></p>
+        <div class="row">
+          <div class="field"><input type="text" name="name" placeholder="Your name" required /></div>
+          <div class="field"><input type="text" name="company" placeholder="Company name" /></div>
+        </div>
+        <div class="row">
+          <div class="field"><input type="text" name="city" placeholder="City, State" /></div>
+          <div class="field"><input type="tel" name="phone" placeholder="Phone number" /></div>
+        </div>
+        <div class="field"><input type="email" name="email" placeholder="Email address" required /></div>
+        <div class="field"><textarea name="message" placeholder="Anything you want us to know? (optional)"></textarea></div>
+        <button type="submit" class="btn-primary submit">Send — we'll be in touch within 24h →</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="logo" style="font-size: 16px;">Ridge<span>Digital</span></div>
+      <p>© 2026 Storm Digital. Roofing lead generation specialists.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

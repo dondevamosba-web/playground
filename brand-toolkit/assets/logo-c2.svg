@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80" width="300" height="80">
+  <defs>
+    <style><![CDATA[
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Inter:wght@600&display=swap');
+    ]]></style>
+    <filter id="textGlow" x="-10%" y="-30%" width="120%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="lineGlow" x="-5%" y="-400%" width="110%" height="900%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="accentGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="300" height="80" fill="#080C18"/>
+
+  <!-- Hex dot grid texture -->
+  <g fill="#1E3A5F" opacity="0.5">
+    <!-- Row 1 y=7 -->
+    <circle cx="5"   cy="7"  r="0.8"/>
+    <circle cx="35"  cy="7"  r="0.8"/>
+    <circle cx="65"  cy="7"  r="0.8"/>
+    <circle cx="95"  cy="7"  r="0.8"/>
+    <circle cx="125" cy="7"  r="0.8"/>
+    <circle cx="155" cy="7"  r="0.8"/>
+    <circle cx="185" cy="7"  r="0.8"/>
+    <circle cx="215" cy="7"  r="0.8"/>
+    <circle cx="245" cy="7"  r="0.8"/>
+    <circle cx="275" cy="7"  r="0.8"/>
+    <!-- Row 2 y=33 (offset +15) -->
+    <circle cx="20"  cy="33" r="0.8"/>
+    <circle cx="50"  cy="33" r="0.8"/>
+    <circle cx="80"  cy="33" r="0.8"/>
+    <circle cx="110" cy="33" r="0.8"/>
+    <circle cx="140" cy="33" r="0.8"/>
+    <circle cx="170" cy="33" r="0.8"/>
+    <circle cx="200" cy="33" r="0.8"/>
+    <circle cx="230" cy="33" r="0.8"/>
+    <circle cx="260" cy="33" r="0.8"/>
+    <circle cx="290" cy="33" r="0.8"/>
+    <!-- Row 3 y=59 -->
+    <circle cx="5"   cy="59" r="0.8"/>
+    <circle cx="35"  cy="59" r="0.8"/>
+    <circle cx="65"  cy="59" r="0.8"/>
+    <circle cx="95"  cy="59" r="0.8"/>
+    <circle cx="125" cy="59" r="0.8"/>
+    <circle cx="155" cy="59" r="0.8"/>
+    <circle cx="185" cy="59" r="0.8"/>
+    <circle cx="215" cy="59" r="0.8"/>
+    <circle cx="245" cy="59" r="0.8"/>
+    <circle cx="275" cy="59" r="0.8"/>
+  </g>
+
+  <!-- OLA — white with subtle glow -->
+  <text
+    x="150" y="46"
+    text-anchor="middle"
+    font-family="'Plus Jakarta Sans', sans-serif"
+    font-size="48"
+    font-weight="800"
+    fill="white"
+    filter="url(#textGlow)">OLA</text>
+
+  <!-- Neon cyan underline -->
+  <line x1="90" y1="52" x2="210" y2="52"
+    stroke="#06B6D4" stroke-width="1.5"
+    filter="url(#lineGlow)"/>
+
+  <!-- DIGITAL subtitle -->
+  <text
+    x="150" y="68"
+    text-anchor="middle"
+    font-family="'Inter', sans-serif"
+    font-size="10"
+    font-weight="600"
+    letter-spacing="7"
+    fill="white"
+    fill-opacity="0.40">DIGITAL</text>
+
+  <!-- Orange diamond accents -->
+  <rect x="46" y="38" width="4" height="4"
+    fill="#F97316"
+    transform="rotate(45 48 40)"
+    filter="url(#accentGlow)"/>
+  <rect x="250" y="38" width="4" height="4"
+    fill="#F97316"
+    transform="rotate(45 252 40)"
+    filter="url(#accentGlow)"/>
+</svg>

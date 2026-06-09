@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📅 Mes Actual</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #1A1A2E;
+      color: #FFF;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      padding: 24px 16px 48px;
+    }
+    .nav {
+      display: flex;
+      gap: 8px;
+      max-width: 520px;
+      margin: 0 auto 20px;
+    }
+    .nav a {
+      flex: 1;
+      text-align: center;
+      padding: 9px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: #0F3460;
+      color: #AAAACC;
+    }
+    .nav a.active { background: #F5A623; color: #1A1A2E; }
+    .card {
+      background: #16213E;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 1.3rem; font-weight: 700; color: #F5A623; text-align: center; margin-bottom: 4px; }
+    .subtitle { text-align: center; font-size: 0.85rem; color: #888; margin-bottom: 20px; }
+
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 6px 0 6px;
+      margin: 14px 0 6px;
+      border-bottom: 1px solid #2A2A50;
+    }
+    .section-daily  { color: #F5A623; }
+    .section-fixed  { color: #E74C3C; }
+    .section-income { color: #27AE60; }
+
+    .entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid #1A1A2E;
+      gap: 8px;
+    }
+    .entry:last-child { border-bottom: none; }
+    .entry-left { flex: 1; }
+    .entry-desc { font-size: 0.92rem; font-weight: 500; }
+    .entry-meta { font-size: 0.72rem; color: #666; margin-top: 2px; }
+    .entry-amount { font-size: 0.92rem; font-weight: 700; white-space: nowrap; }
+    .amt-ars { color: #AAAACC; }
+    .amt-usd { color: #F5A623; }
+
+    .totals {
+      background: #1A1A2E;
+      border-radius: 8px;
+      padding: 14px;
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      text-align: center;
+    }
+    .tot-label { font-size: 0.7rem; color: #666; text-transform: uppercase; margin-bottom: 4px; }
+    .tot-val   { font-size: 0.95rem; font-weight: 700; }
+    .tot-income { color: #27AE60; }
+    .tot-fixed  { color: #E74C3C; }
+    .tot-daily  { color: #F5A623; }
+
+    .empty { text-align: center; color: #444; padding: 30px 0; font-size: 0.9rem; }
+    .loading { text-align: center; color: #555; padding: 40px; }
+  </style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="/expenses/">📋 Log</a>
+  <a href="/expenses/month.html" class="active">📅 Mes</a>
+  <a href="/expenses/assets.html">💰 Assets</a>
+</div>
+
+<div class="card">
+  <h1>📅 MES ACTUAL</h1>
+  <div class="subtitle" id="month-label">Cargando...</div>
+  <div id="content"><p class="loading">Cargando...</p></div>
+</div>
+
+<script>
+  function fmt(v, type) {
+    if (v === null || v === undefined) return null;
+    const n = Number(v);
+    return (type === "usd" ? "USD " : "ARS ") + n.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }
+
+  function buildSection(title, rows, cls, amtFn) {
+    if (!rows.length) return "";
+    const items = rows.map(r => {
+      const ars = r.ars ? fmt(r.ars, "ars") : null;
+      const usd = r.usd ? fmt(r.usd, "usd") : null;
+      const amtHtml = usd
+        ? `<span class="entry-amount amt-usd">${usd}</span>`
+        : ars
+        ? `<span class="entry-amount amt-ars">${ars}</span>`
+        : `<span class="entry-amount" style="color:#444">—</span>`;
+      const meta = [r.day ? `día ${r.day}` : "", r.category, r.payment, r.status].filter(Boolean).join(" · ");
+      return `<div class="entry">
+        <div class="entry-left">
+          <div class="entry-desc">${r.desc}</div>
+          ${meta ? `<div class="entry-meta">${meta}</div>` : ""}
+        </div>
+        ${amtHtml}
+      </div>`;
+    }).join("");
+    return `<div class="section-title ${cls}">${title}</div>${items}`;
+  }
+
+  async function load() {
+    const res  = await fetch("/.netlify/functions/get-data?type=month");
+    const data = await res.json();
+    document.getElementById("month-label").textContent = data.month;
+
+    const daily  = data.rows.filter(r => r.type === "daily");
+    const fixed  = data.rows.filter(r => r.type === "fixed");
+    const income = data.rows.filter(r => r.type === "income");
+
+    if (!data.rows.length) {
+      document.getElementById("content").innerHTML = `<p class="empty">Sin entradas este mes aún.<br><a href="/expenses/" style="color:#F5A623">+ Agregar</a></p>`;
+      return;
+    }
+
+    const sumArs = arr => arr.reduce((s, r) => s + (r.ars || 0), 0);
+    const sumUsd = arr => arr.reduce((s, r) => s + (r.usd || 0), 0);
+
+    const totals = `
+      <div class="totals">
+        <div>
+          <div class="tot-label">Ingresos</div>
+          <div class="tot-val tot-income">${sumUsd(income) ? "USD " + sumUsd(income).toLocaleString() : "ARS " + sumArs(income).toLocaleString()}</div>
+        </div>
+        <div>
+          <div class="tot-label">Fijos</div>
+          <div class="tot-val tot-fixed">${sumUsd(fixed) ? "USD " + sumUsd(fixed).toLocaleString() : "ARS " + sumArs(fixed).toLocaleString()}</div>
+        </div>
+        <div>
+          <div class="tot-label">Gastos</div>
+          <div class="tot-val tot-daily">${sumUsd(daily) ? "USD " + sumUsd(daily).toLocaleString() : "ARS " + sumArs(daily).toLocaleString()}</div>
+        </div>
+      </div>`;
+
+    document.getElementById("content").innerHTML =
+      buildSection("▲ Ingresos",    income, "section-income") +
+      buildSection("▼ Fijos",       fixed,  "section-fixed")  +
+      buildSection("📋 Gastos",     daily,  "section-daily")  +
+      totals;
+  }
+
+  load();
+</script>
+</body>
+</html>

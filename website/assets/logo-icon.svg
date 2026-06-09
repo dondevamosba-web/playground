@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="iconGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#iconGrad)"/>
+  <!-- 3 waves, vertically centred in 64×64 -->
+  <path d="M10,22 C17,16 23,16 30,22 C37,28 43,28 54,22"
+        stroke="white" stroke-width="2.8" stroke-linecap="round" fill="none" opacity="0.45"/>
+  <path d="M10,32 C17,26 23,26 30,32 C37,38 43,38 54,32"
+        stroke="white" stroke-width="2.8" stroke-linecap="round" fill="none" opacity="0.72"/>
+  <path d="M10,42 C17,36 23,36 30,42 C37,48 43,48 54,42"
+        stroke="white" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+</svg>

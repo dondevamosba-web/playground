@@ -1,0 +1,16 @@
+<svg width="240" height="64" viewBox="0 0 240 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Inter:wght@600&display=swap');</style>
+    <clipPath id="badge-clip">
+      <rect x="4" y="4" width="56" height="56" rx="14"/>
+    </clipPath>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.20)" stroke-width="1"/>
+  <g clip-path="url(#badge-clip)" fill="none" stroke="white" stroke-linecap="round">
+    <path d="M10,20 C18,15 24,15 32,20 C40,25 46,25 54,20" stroke-width="2.2" stroke-opacity="0.4"/>
+    <path d="M10,32 C18,27 24,27 32,32 C40,37 46,37 54,32" stroke-width="2.2" stroke-opacity="0.7"/>
+    <path d="M10,44 C18,39 24,39 32,44 C40,49 46,49 54,44" stroke-width="2.2" stroke-opacity="1"/>
+  </g>
+  <text x="76" y="40" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="38" fill="white">OLA</text>
+  <text x="76" y="54" font-family="'Inter', sans-serif" font-weight="600" font-size="11" fill="rgba(255,255,255,0.60)" letter-spacing="4">DIGITAL</text>
+</svg>

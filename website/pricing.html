@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ola Digital — Marketing Digital con Resultados | Olavarría</title>
+  <meta name="description" content="Agencia de marketing digital en Olavarría. Planes mensuales con reportes claros: más clientes para tu negocio, sin promesas vacías.">
+  <style>
+    :root {
+      --ink: #0E1116;
+      --ink-soft: #3A3F47;
+      --paper: #F7F5F0;
+      --paper-warm: #EFEAE0;
+      --accent: #FF5A1F;
+      --accent-dark: #D94A14;
+      --line: #1f242c;
+      --muted: #6b7280;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    nav {
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(14,17,22,0.08);
+    }
+    nav .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 800; font-size: 22px; letter-spacing: -0.02em; }
+    .logo span { color: var(--accent); }
+    nav a { color: var(--ink); text-decoration: none; font-weight: 500; margin-left: 28px; font-size: 15px; }
+    nav a:hover { color: var(--accent); }
+
+    /* Hero */
+    .hero { padding: 96px 0 80px; }
+    .eyebrow {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: clamp(40px, 6vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      font-weight: 800;
+      max-width: 900px;
+      margin-bottom: 24px;
+    }
+    h1 .accent { color: var(--accent); }
+    .hero-sub {
+      font-size: 20px;
+      color: var(--ink-soft);
+      max-width: 640px;
+      margin-bottom: 40px;
+    }
+    .cta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: 16px 28px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(14,17,22,0.18); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--ink);
+    }
+    .btn-secondary:hover { background: var(--ink); color: var(--paper); }
+
+    /* Trust strip */
+    .trust {
+      padding: 32px 0;
+      border-top: 1px solid rgba(14,17,22,0.08);
+      border-bottom: 1px solid rgba(14,17,22,0.08);
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .trust-item { text-align: center; }
+    .trust-item strong { display: block; color: var(--ink); font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+
+    /* Plans */
+    .plans { padding: 96px 0; }
+    .section-head { text-align: center; max-width: 720px; margin: 0 auto 64px; }
+    .section-head h2 {
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .section-head p { font-size: 18px; color: var(--ink-soft); }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .plan {
+      background: white;
+      border: 1px solid rgba(14,17,22,0.1);
+      border-radius: 24px;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+    .plan.featured {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+      position: relative;
+    }
+    .plan-tag {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      align-self: flex-start;
+      margin-bottom: 16px;
+    }
+    .plan h3 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .plan-for {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .plan.featured .plan-for { color: rgba(247,245,240,0.7); }
+    .plan-price {
+      font-size: 44px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+    .plan-price span { font-size: 16px; color: var(--muted); font-weight: 500; }
+    .plan.featured .plan-price span { color: rgba(247,245,240,0.7); }
+    .plan-meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+    .plan.featured .plan-meta { color: rgba(247,245,240,0.6); }
+    .plan ul {
+      list-style: none;
+      margin-bottom: 32px;
+      flex-grow: 1;
+    }
+    .plan li {
+      padding: 10px 0;
+      padding-left: 28px;
+      position: relative;
+      font-size: 15px;
+      border-top: 1px solid rgba(14,17,22,0.06);
+    }
+    .plan.featured li { border-top-color: rgba(247,245,240,0.1); }
+    .plan li:first-child { border-top: none; }
+    .plan li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .plan .btn {
+      width: 100%;
+      text-align: center;
+    }
+    .plan .btn-primary { background: var(--accent); }
+    .plan .btn-primary:hover { background: var(--accent-dark); }
+    .plan.featured .btn-primary { background: var(--accent); color: white; }
+
+    /* How it works */
+    .how { padding: 96px 0; background: var(--paper-warm); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .step-num {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .step h4 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .step p { color: var(--ink-soft); font-size: 15px; }
+
+    /* FAQ */
+    .faq { padding: 96px 0; }
+    .faq-list { max-width: 760px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid rgba(14,17,22,0.1);
+      padding: 24px 0;
+    }
+    .faq-q {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .faq-a { color: var(--ink-soft); font-size: 16px; }
+
+    /* Final CTA */
+    .final-cta {
+      padding: 96px 0;
+      background: var(--ink);
+      color: var(--paper);
+      text-align: center;
+    }
+    .final-cta h2 {
+      font-size: clamp(32px, 4vw, 48px);
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      font-weight: 800;
+    }
+    .final-cta p {
+      font-size: 18px;
+      color: rgba(247,245,240,0.7);
+      max-width: 560px;
+      margin: 0 auto 32px;
+    }
+    .final-cta .btn-primary { background: var(--accent); }
+    .final-cta .btn-primary:hover { background: var(--accent-dark); }
+
+    /* Footer */
+    footer {
+      padding: 32px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 64px 0 48px; }
+      .plan { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <div class="logo">Ola<span>.</span></div>
+      <div>
+        <a href="#planes">Planes</a>
+        <a href="#como">Cómo trabajamos</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">Marketing digital · Olavarría</div>
+      <h1>Más clientes para tu negocio.<br><span class="accent">Sin promesas vacías.</span></h1>
+      <p class="hero-sub">Planes mensuales con reporte claro de lo que funciona y lo que no. Trabajamos con comercios y servicios de Olavarría que quieren crecer en serio.</p>
+      <div class="cta-row">
+        <a href="#planes" class="btn btn-primary">Ver planes</a>
+        <a href="https://wa.me/5492284000000" class="btn btn-secondary">Hablar por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="trust">
+    <div class="container">
+      <div class="trust-grid">
+        <div class="trust-item"><strong>+25</strong>clientes activos en Olavarría</div>
+        <div class="trust-item"><strong>3.2x</strong>retorno promedio en Meta Ads</div>
+        <div class="trust-item"><strong>14 días</strong>de lanzamiento a primera campaña</div>
+        <div class="trust-item"><strong>100%</strong>reportes mensuales</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANS -->
+  <section class="plans" id="planes">
+    <div class="container">
+      <div class="section-head">
+        <h2>Dos planes. Cero confusión.</h2>
+        <p>Elegí según el tamaño de tu negocio. Mismo equipo, mismo reporte mensual, distintas escalas.</p>
+      </div>
+
+      <div class="plan-grid">
+
+        <div class="plan">
+          <span class="plan-tag">Para empezar</span>
+          <h3>Plan Crecimiento</h3>
+          <p class="plan-for">Comercios y servicios chicos que quieren presencia digital seria.</p>
+          <div class="plan-price">AR$ 250.000<span> /mes</span></div>
+          <div class="plan-meta">Contrato mínimo 6 meses · Ajuste por inflación trimestral</div>
+          <ul>
+            <li>Gestión de Instagram y Facebook (8 posts + 4 reels/mes)</li>
+            <li>Atención de mensajes y WhatsApp Business</li>
+            <li>Campañas de Meta Ads (presupuesto cliente aparte)</li>
+            <li>Reporte mensual con métricas clave (alcance, leads, conversiones)</li>
+            <li>Una reunión mensual de revisión (30 min)</li>
+          </ul>
+          <a href="https://wa.me/5492284000000?text=Hola,%20quiero%20info%20del%20Plan%20Crecimiento" class="btn btn-primary">Empezar este mes</a>
+        </div>
+
+        <div class="plan featured">
+          <span class="plan-tag">Más elegido</span>
+          <h3>Plan Performance</h3>
+          <p class="plan-for">Negocios que ya venden y quieren escalar con resultados medibles.</p>
+          <div class="plan-price">AR$ 600.000<span> /mes</span></div>
+          <div class="plan-meta">Contrato mínimo 6 meses · Ajuste por inflación trimestral</div>
+          <ul>
+            <li>Todo lo del Plan Crecimiento</li>
+            <li>Estrategia de embudo: anuncios → WhatsApp → venta</li>
+            <li>Landing page optimizada (incluida, una por trimestre)</li>
+            <li>Producción de video corto (2 reels editados/mes)</li>
+            <li>Reporte con CPL, ROAS y proyecciones</li>
+            <li>Reunión quincenal de revisión (45 min)</li>
+            <li>Acceso directo por WhatsApp al equipo</li>
+          </ul>
+          <a href="https://wa.me/5492284000000?text=Hola,%20quiero%20info%20del%20Plan%20Performance" class="btn btn-primary">Hablar con nosotros</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="how" id="como">
+    <div class="container">
+      <div class="section-head">
+        <h2>Cómo trabajamos</h2>
+        <p>Sin agendas eternas. Empezamos rápido y reportamos lo que pasa.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">01</span>
+          <h4>Reunión inicial</h4>
+          <p>30 minutos por WhatsApp o presencial. Entendemos tu negocio, números actuales y objetivos.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <h4>Plan a 90 días</h4>
+          <p>Te pasamos un documento corto: qué vamos a hacer, cuándo, y qué métricas vamos a mover.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <h4>Lanzamiento en 14 días</h4>
+          <p>Configuración de cuentas, primera tanda de contenido, primera campaña activa. Sin demoras.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">04</span>
+          <h4>Reporte mensual</h4>
+          <p>El día 5 de cada mes, recibís un reporte claro: qué funcionó, qué no, y qué cambia el mes siguiente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <h2>Preguntas frecuentes</h2>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <div class="faq-q">¿El presupuesto de publicidad va aparte del plan?</div>
+          <div class="faq-a">Sí. Nosotros gestionamos las campañas, vos pagás el presupuesto directo a Meta/Google. Recomendamos empezar con AR$ 200.000/mes en pauta para ver tracción real.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">¿Por qué el contrato mínimo es de 6 meses?</div>
+          <div class="faq-a">Porque el marketing digital no funciona en 30 días. Los primeros 60 son de aprender qué le habla a tu cliente. Recién en el mes 3-4 se ven resultados consistentes. Trabajar por menos tiempo es regalarte un mal resultado.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">¿Trabajan con cualquier rubro?</div>
+          <div class="faq-a">Tenemos más experiencia en gastronomía, retail, salud (consultorios, estética) y servicios profesionales. Si no encajás, te lo decimos en la primera llamada.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">¿Hacen sitios web?</div>
+          <div class="faq-a">Sí, pero solo dentro del Plan Performance o como proyecto aparte. No vendemos sitios sueltos: un sitio sin tráfico es un cartel en el desierto.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">¿Qué pasa si no funciona?</div>
+          <div class="faq-a">En el mes 3 hacemos una revisión honesta. Si los números no están donde acordamos, te damos un mes extra sin cargo para corregir. Si tampoco funciona, te dejamos ir sin penalidad.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="container">
+      <h2>¿Listo para crecer?</h2>
+      <p>Una llamada de 30 minutos para ver si tu negocio encaja. Sin compromiso.</p>
+      <a href="https://wa.me/5492284000000?text=Hola,%20quiero%20agendar%20una%20llamada" class="btn btn-primary">Agendar llamada por WhatsApp</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Ola Digital · Olavarría, Buenos Aires · hola@oladigital.com.ar
+    </div>
+  </footer>
+
+</body>
+</html>

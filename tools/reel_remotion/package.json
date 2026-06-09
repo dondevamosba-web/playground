@@ -1,0 +1,19 @@
+{
+  "name": "reel_remotion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "render": "remotion render src/index.js OlaDigitalReel ../../.tmp/reels/option_c.mp4",
+    "studio": "remotion studio src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@remotion/cli": "4.0.464",
+    "@remotion/renderer": "4.0.464",
+    "remotion": "4.0.464"
+  }
+}

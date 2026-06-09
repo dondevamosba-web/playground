@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>OLA · Descarga · 33 piezas de Junio</title>
+<meta name="viewport" content="width=1100, initial-scale=1" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="animations.css" />
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+<style>
+  :root { --bg: #0A0F1E; --ink: #FFFFFF; --muted: #94A3B8; --blue: #0EA5E9; --orange: #F97316; --line: #1E293B; --surface: #111827; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; min-height: 100vh; }
+  * { box-sizing: border-box; }
+
+  .shell { max-width: 1100px; margin: 0 auto; padding: 56px 32px 80px; }
+
+  h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 44px; letter-spacing: -0.02em; line-height: 1.05; margin: 0; }
+  .sub { color: var(--muted); margin-top: 8px; font-size: 16px; }
+
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 28px; margin-top: 32px; }
+  .row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--orange); color: #FFFFFF; border: none;
+    padding: 16px 26px; border-radius: 999px;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.01em;
+    cursor: pointer; box-shadow: 0 14px 30px -10px rgba(249,115,22,.6);
+    transition: transform .12s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+  .btn.ghost { background: transparent; border: 1.5px solid var(--blue); color: var(--blue); box-shadow: none; }
+
+  .progress { margin-top: 24px; height: 8px; background: #0F172A; border-radius: 999px; overflow: hidden; border: 1px solid var(--line); }
+  .progress > div { height: 100%; background: linear-gradient(90deg, var(--blue), #06B6D4); width: 0%; transition: width .25s ease; }
+  .progress-label { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); letter-spacing: 0.12em; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; margin-top: 24px; }
+  .thumb { background: #0F172A; border: 1px solid var(--line); border-radius: 10px; padding: 8px; }
+  .thumb canvas, .thumb img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 6px; display: block; background: #0F172A; }
+  .thumb .name { margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.06em; word-break: break-all; }
+  .thumb.done { border-color: var(--blue); }
+
+  /* offscreen render stage at exact 1080×1080 */
+  .render-stage { position: fixed; top: 0; left: -2400px; width: 1080px; height: 1080px; }
+</style>
+</head>
+<body>
+  <div class="shell">
+    <h1>Descargar 33 piezas de junio</h1>
+    <div class="sub">Single posts (A–I) + 6 carruseles × 4 slides · 1080×1080 PNG · empacados en un .zip</div>
+
+    <div class="panel">
+      <div class="row">
+        <button class="btn" id="goBtn">⬇ Generar y descargar ZIP</button>
+        <span id="status" style="color: var(--muted); font-size: 14px;">Listo. Tardará ~45 segundos.</span>
+      </div>
+      <div class="progress"><div id="bar"></div></div>
+      <div class="progress-label" id="progressLabel">0 / 33</div>
+      <div id="grid" class="grid"></div>
+    </div>
+  </div>
+
+  <div id="renderStage" class="render-stage"></div>
+
+  <script type="text/babel" src="logos.jsx"></script>
+  <script type="text/babel" src="posts.jsx"></script>
+  <script type="text/babel" src="june-series.jsx"></script>
+
+  <script type="text/babel" data-presets="react">
+    const SLIDES = [
+      ["junio-A-de-2-a-15-reservas",        () => <PostA />],
+      ["junio-B-google-my-business",        () => <PostB />],
+      ["junio-C-dato-89",                   () => <PostC />],
+      ["junio-D-reels-publico-correcto",    () => <PostD />],
+      ["junio-E-perfil-vidriera",           () => <PostE />],
+      ["junio-F-dato-87",                   () => <PostF />],
+      ["junio-G-de-cero-a-agenda",          () => <PostG />],
+      ["junio-H-consistencia-tip",          () => <PostH />],
+      ["junio-I-cierre-dramatico",          () => <PostI />],
+
+      ["junio-C1-1-cover",       () => <C1S1 />],
+      ["junio-C1-2-paso-01",     () => <C1S2 />],
+      ["junio-C1-3-paso-02",     () => <C1S3 />],
+      ["junio-C1-4-cta",         () => <C1S4 />],
+
+      ["junio-C2-1-cover",       () => <C2S1 />],
+      ["junio-C2-2-diferencia",  () => <C2S2 />],
+      ["junio-C2-3-rubros",      () => <C2S3 />],
+      ["junio-C2-4-cta",         () => <C2S4 />],
+
+      ["junio-C3-1-cover",       () => <C3S1 />],
+      ["junio-C3-2-error-01",    () => <C3S2 />],
+      ["junio-C3-3-error-02",    () => <C3S3 />],
+      ["junio-C3-4-cta",         () => <C3S4 />],
+
+      ["junio-C4-1-cover",          () => <C4S1 />],
+      ["junio-C4-2-sintoma-causa",  () => <C4S2 />],
+      ["junio-C4-3-insight",        () => <C4S3 />],
+      ["junio-C4-4-cta",            () => <C4S4 />],
+
+      ["junio-C5-1-cover",       () => <C5S1 />],
+      ["junio-C5-2-paso-01",     () => <C5S2 />],
+      ["junio-C5-3-paso-02",     () => <C5S3 />],
+      ["junio-C5-4-cta",         () => <C5S4 />],
+
+      ["junio-C6-1-cover",       () => <C6S1 />],
+      ["junio-C6-2-journey",     () => <C6S2 />],
+      ["junio-C6-3-resultados",  () => <C6S3 />],
+      ["junio-C6-4-cta",         () => <C6S4 />],
+    ];
+
+    const stage = document.getElementById('renderStage');
+    const root = ReactDOM.createRoot(stage);
+    const grid = document.getElementById('grid');
+    const bar = document.getElementById('bar');
+    const progressLabel = document.getElementById('progressLabel');
+    const status = document.getElementById('status');
+    const goBtn = document.getElementById('goBtn');
+
+    // build thumbnail placeholders
+    SLIDES.forEach((s, i) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'thumb';
+      wrap.id = `thumb-${i}`;
+      wrap.innerHTML = `<div style="aspect-ratio:1/1;background:#0F172A;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#475569;font-family:'JetBrains Mono',monospace;font-size:11px;">${(i+1).toString().padStart(2,'0')}</div><div class="name">${s[0]}</div>`;
+      grid.appendChild(wrap);
+    });
+
+    // Auto-render previews on load so the user sees all 33 immediately.
+    async function renderPreviews() {
+      status.textContent = 'Generando previews…';
+      for (let i = 0; i < SLIDES.length; i++) {
+        const [name] = SLIDES[i];
+        await renderSlide(i);
+        // smaller pixel ratio for fast thumbnails; still crisp at the displayed size
+        const dataUrl = await htmlToImage.toPng(stage, {
+          width: 1080, height: 1080, pixelRatio: 0.35,
+          cacheBust: false, backgroundColor: '#0F172A',
+        });
+        const t = document.getElementById(`thumb-${i}`);
+        t.innerHTML = `<img src="${dataUrl}" alt="${name}" /><div class="name">${name}</div>`;
+        bar.style.width = (((i + 1) / SLIDES.length) * 100) + '%';
+        progressLabel.textContent = `previews ${i+1} / ${SLIDES.length}`;
+      }
+      // reset progress UI for the download step
+      bar.style.width = '0%';
+      progressLabel.textContent = `0 / ${SLIDES.length}`;
+      status.textContent = 'Listo. Click para descargar el ZIP a tamaño real (1080×1080).';
+      goBtn.disabled = false;
+      root.render(<></>);
+    }
+
+    // disable the button until previews finish to avoid races
+    goBtn.disabled = true;
+    // wait a tick for fonts/babel to be ready
+    setTimeout(renderPreviews, 400);
+
+    function renderSlide(i) {
+      return new Promise(resolve => {
+        const [name, Comp] = SLIDES[i];
+        root.render(<Comp />);
+        // wait one frame, then a bit more to let fonts/images settle
+        requestAnimationFrame(() => setTimeout(resolve, 350));
+      });
+    }
+
+    async function captureCurrent() {
+      // capture the 1080×1080 root element
+      // pixelRatio 1 → output is 1080×1080
+      return await htmlToImage.toBlob(stage, {
+        width: 1080,
+        height: 1080,
+        pixelRatio: 1,
+        cacheBust: true,
+        backgroundColor: '#0F172A',
+      });
+    }
+
+    goBtn.addEventListener('click', async () => {
+      goBtn.disabled = true;
+      status.textContent = 'Generando…';
+      const zip = new JSZip();
+
+      for (let i = 0; i < SLIDES.length; i++) {
+        const [name] = SLIDES[i];
+        await renderSlide(i);
+        const blob = await captureCurrent();
+        zip.file(`${(i+1).toString().padStart(2,'0')}-${name}.png`, blob);
+
+        // update thumbnail
+        const url = URL.createObjectURL(blob);
+        const t = document.getElementById(`thumb-${i}`);
+        t.classList.add('done');
+        t.innerHTML = `<img src="${url}" alt="${name}" /><div class="name">${name}</div>`;
+
+        // progress
+        const pct = ((i + 1) / SLIDES.length) * 100;
+        bar.style.width = pct + '%';
+        progressLabel.textContent = `${i+1} / ${SLIDES.length}`;
+      }
+
+      status.textContent = 'Empacando ZIP…';
+      const zipBlob = await zip.generateAsync({ type: 'blob' }, (m) => {
+        progressLabel.textContent = `ZIP ${Math.round(m.percent)}%`;
+      });
+      saveAs(zipBlob, 'OLA-Digital-junio-33-piezas.zip');
+      status.textContent = '✓ Descargado. Si necesitás de nuevo, click otra vez.';
+      goBtn.disabled = false;
+
+      // clear stage to free memory
+      root.render(<></>);
+    });
+  </script>
+</body>
+</html>

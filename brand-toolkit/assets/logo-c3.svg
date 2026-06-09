@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80" width="300" height="80">
+  <defs>
+    <linearGradient id="olaG" x1="0" y1="13" x2="0" y2="47" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+    <filter id="glow1" x="-25%" y="-60%" width="150%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow2" x="-8%" y="-700%" width="116%" height="1500%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="c"><rect width="300" height="80"/></clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="300" height="80" fill="#060D1F"/>
+
+  <!-- Grid: radial + horizontal lines -->
+  <g clip-path="url(#c)">
+    <!-- 9 radial lines through vanishing point (150, 42), angles 20°–160° in steps of 17.5° -->
+    <g stroke="#3730A3" stroke-width="0.6" opacity="0.35">
+      <line x1="-320" y1="-129" x2="620" y2="213"/>
+      <line x1="-247" y1="-262" x2="547" y2="346"/>
+      <line x1="-137" y1="-368" x2="437" y2="452"/>
+      <line x1="0"    y1="-435" x2="300" y2="519"/>
+      <line x1="150"  y1="-458" x2="150" y2="542"/>
+      <line x1="300"  y1="-435" x2="0"   y2="519"/>
+      <line x1="437"  y1="-368" x2="-137" y2="452"/>
+      <line x1="547"  y1="-262" x2="-247" y2="346"/>
+      <line x1="620"  y1="-129" x2="-320" y2="213"/>
+    </g>
+    <!-- 8 horizontal lines, denser at bottom, opacity 0.05→0.65 top→bottom -->
+    <line x1="0" y1="46.0" x2="300" y2="46.0" stroke="#3730A3" stroke-width="0.6" opacity="0.05"/>
+    <line x1="0" y1="54.5" x2="300" y2="54.5" stroke="#3730A3" stroke-width="0.6" opacity="0.14"/>
+    <line x1="0" y1="61.8" x2="300" y2="61.8" stroke="#3730A3" stroke-width="0.6" opacity="0.22"/>
+    <line x1="0" y1="67.9" x2="300" y2="67.9" stroke="#3730A3" stroke-width="0.6" opacity="0.31"/>
+    <line x1="0" y1="72.7" x2="300" y2="72.7" stroke="#3730A3" stroke-width="0.6" opacity="0.39"/>
+    <line x1="0" y1="76.3" x2="300" y2="76.3" stroke="#3730A3" stroke-width="0.6" opacity="0.48"/>
+    <line x1="0" y1="78.7" x2="300" y2="78.7" stroke="#3730A3" stroke-width="0.6" opacity="0.56"/>
+    <line x1="0" y1="80.0" x2="300" y2="80.0" stroke="#3730A3" stroke-width="0.6" opacity="0.65"/>
+  </g>
+
+  <!-- OLA — rendered before orange line so glow sits beneath it -->
+  <text x="150" y="47"
+    text-anchor="middle"
+    font-family="'Plus Jakarta Sans', system-ui, sans-serif"
+    font-size="46" font-weight="800"
+    fill="url(#olaG)" filter="url(#glow1)">OLA</text>
+
+  <!-- Orange accent line at y=52, on top of OLA glow -->
+  <line x1="70" y1="52" x2="230" y2="52" stroke="#F97316" stroke-width="1" filter="url(#glow2)"/>
+
+  <!-- DIGITAL subtitle -->
+  <text x="147" y="67"
+    text-anchor="middle"
+    font-family="Inter, system-ui, sans-serif"
+    font-size="10" font-weight="600"
+    letter-spacing="6" fill="#38BDF8">DIGITAL</text>
+</svg>

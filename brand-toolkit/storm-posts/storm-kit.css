@@ -1,0 +1,191 @@
+/* ===================================================================
+   STORM DIGITAL — violet-midnight / electric-lime brand kit
+   Shared system for the Instagram post set (1080×1080)
+   =================================================================== */
+
+:root {
+  /* Surfaces */
+  --surface-canvas-dark: #1f1633;
+  --surface-night:       #150f23;
+  --primary:             #150f23;
+  --ink-deep:            #1f1633;
+
+  /* Accents */
+  --accent-lime:         #c2ef4e;
+  --accent-pink:         #fa7faa;
+  --accent-violet:       #6a5fc1;
+  --accent-violet-deep:  #422082;
+  --accent-violet-mid:   #79628c;
+
+  /* Text */
+  --on-primary:     #ffffff;
+  --on-dark-muted:  rgba(255,255,255,0.72);
+  --on-dark-faint:  rgba(255,255,255,0.18);
+
+  /* Lines */
+  --hairline-violet: #362d59;
+
+  /* Fonts */
+  --font-display: 'Space Grotesk', 'Rubik', -apple-system, system-ui, sans-serif;
+  --font-ui:      'Rubik', -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-code:    'Space Mono', Monaco, Menlo, 'Ubuntu Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #0c0817;
+  width: 100%;
+  height: 100%;
+}
+
+/* Stage letterboxes the fixed 1080 canvas into any viewport */
+.stage {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ---- The post frame ------------------------------------------------ */
+.post {
+  position: relative;
+  width: 1080px;
+  height: 1080px;
+  flex: none;
+  background: var(--surface-canvas-dark);
+  color: var(--on-primary);
+  font-family: var(--font-ui);
+  padding: 64px;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Starfield texture overlay */
+.post::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/starfield.png');
+  background-size: cover;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.post > * { position: relative; z-index: 1; }
+
+/* ---- Wordmark ------------------------------------------------------ */
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.wordmark svg { display: block; }
+.wordmark .name {
+  font-family: var(--font-ui);
+  font-size: 18px;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--on-primary);
+}
+.wordmark .name b { font-weight: 700; }
+.wordmark .name span { font-weight: 400; color: var(--on-dark-muted); }
+
+/* ---- Typography helpers ------------------------------------------- */
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--on-dark-muted);
+}
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--on-primary);
+}
+.body {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  color: var(--on-dark-muted);
+  text-wrap: pretty;
+}
+
+/* Lime keyword highlight chip — the signature device. One per post. */
+.chip {
+  background: var(--accent-lime);
+  color: var(--ink-deep);
+  border-radius: 4px;
+  padding: 0 0.34em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Accent bar */
+.rule {
+  height: 10px;
+  background: var(--on-dark-faint);
+  border-radius: 2px;
+}
+
+/* ---- Footer marks -------------------------------------------------- */
+.mark-num, .mark-url {
+  position: absolute;
+  bottom: 64px;
+  z-index: 2;
+  font-family: var(--font-code);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--on-dark-muted);
+}
+.mark-num { left: 64px; }
+.mark-url { right: 64px; }
+
+/* Lime squiggle divider above the footer marks */
+.squiggle {
+  position: absolute;
+  left: 64px;
+  right: 64px;
+  bottom: 104px;
+  width: calc(100% - 128px);
+  height: 16px;
+  z-index: 2;
+  overflow: visible;
+}
+.squiggle path {
+  fill: none;
+  stroke: var(--accent-lime);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+/* ---- Mascot sticker layer ----------------------------------------- */
+.mascot {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+.mascot svg { display: block; overflow: visible; }
+/* Hand-drawn outline weight for all sticker shapes */
+.mascot .ink   { stroke: var(--surface-night); stroke-width: 7; stroke-linejoin: round; stroke-linecap: round; }
+.mascot .lime  { fill: var(--accent-lime); }
+.mascot .pink  { fill: var(--accent-pink); }
+.mascot .white { fill: #ffffff; }
+.mascot .night { fill: var(--surface-night); }
+.mascot .violet{ fill: var(--accent-violet); }
+
+/* ---- Night card ---------------------------------------------------- */
+.card-night {
+  background: var(--surface-night);
+  border: 1px solid var(--hairline-violet);
+  border-radius: 18px;
+}

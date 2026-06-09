@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Storm Digital — Circle Logo</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0c0817;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 32px;
+  font-family: monospace;
+}
+p {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: rgba(194,239,78,0.5);
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+
+<!-- 500×500 — right-click → Save image as, or screenshot -->
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Circle background -->
+  <circle cx="250" cy="250" r="250" fill="#1f1633"/>
+
+  <!-- Subtle starfield dots -->
+  <circle cx="80"  cy="70"  r="1.2" fill="rgba(255,255,255,0.25)"/>
+  <circle cx="140" cy="38"  r="0.9" fill="rgba(255,255,255,0.18)"/>
+  <circle cx="310" cy="55"  r="1.4" fill="rgba(255,255,255,0.22)"/>
+  <circle cx="420" cy="90"  r="1.0" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="460" cy="160" r="1.3" fill="rgba(255,255,255,0.18)"/>
+  <circle cx="55"  cy="200" r="1.0" fill="rgba(255,255,255,0.15)"/>
+  <circle cx="430" cy="340" r="1.2" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="70"  cy="380" r="0.9" fill="rgba(255,255,255,0.18)"/>
+  <circle cx="180" cy="450" r="1.1" fill="rgba(255,255,255,0.15)"/>
+  <circle cx="380" cy="440" r="1.4" fill="rgba(255,255,255,0.22)"/>
+  <circle cx="460" cy="420" r="0.8" fill="rgba(255,255,255,0.18)"/>
+  <circle cx="100" cy="130" r="0.8" fill="rgba(255,255,255,0.12)"/>
+  <circle cx="390" cy="200" r="1.0" fill="rgba(255,255,255,0.15)"/>
+
+  <!-- Lightning bolt — centred, large -->
+  <path d="M278 110 L188 268 h58 l-22 92 L322 212 h-60 l22-102z"
+        fill="#c2ef4e"/>
+
+  <!-- "STORM" wordmark below bolt -->
+  <text
+    x="250" y="410"
+    text-anchor="middle"
+    font-family="'Space Grotesk', 'Rubik', system-ui, sans-serif"
+    font-weight="700"
+    font-size="52"
+    letter-spacing="14"
+    fill="#ffffff">STORM</text>
+
+  <!-- "DIGITAL" sub-label -->
+  <text
+    x="253" y="448"
+    text-anchor="middle"
+    font-family="'Space Mono', monospace"
+    font-weight="400"
+    font-size="16"
+    letter-spacing="8"
+    fill="rgba(255,255,255,0.45)">DIGITAL</text>
+
+  <!-- Thin lime ring accent -->
+  <circle cx="250" cy="250" r="244" fill="none" stroke="#c2ef4e" stroke-width="3" opacity="0.35"/>
+
+</svg>
+
+<p>Right-click the logo → Copy image · or screenshot it</p>
+
+</body>
+</html>

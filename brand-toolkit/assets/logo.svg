@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 248 64" fill="none">
+  <defs>
+    <!-- Badge gradient: deep ocean → sky -->
+    <linearGradient id="badgeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0369A1"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+    <!-- OLA text gradient: ocean left → cyan right -->
+    <linearGradient id="olaGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0C4A6E"/>
+      <stop offset="100%" stop-color="#0EA5E9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Wave mark badge -->
+  <rect x="0" y="4" width="56" height="56" rx="14" fill="url(#badgeGrad)"/>
+  <!-- 3 sinusoidal waves (cubic bezier) inside badge -->
+  <path d="M8,20 C13,15 17,15 22,20 C27,25 31,25 36,20 C41,15 45,15 50,20"
+        stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.45"/>
+  <path d="M8,32 C13,27 17,27 22,32 C27,37 31,37 36,32 C41,27 45,27 50,32"
+        stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.72"/>
+  <path d="M8,44 C13,39 17,39 22,44 C27,49 31,49 36,44 C41,39 45,39 50,44"
+        stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+
+  <!-- OLA -->
+  <text x="68" y="42"
+        font-family="Plus Jakarta Sans, Arial Black, sans-serif"
+        font-weight="800" font-size="38"
+        fill="url(#olaGrad)">OLA</text>
+
+  <!-- DIGITAL – spaced small caps feel -->
+  <text x="70" y="57"
+        font-family="Inter, Arial, sans-serif"
+        font-weight="600" font-size="12"
+        letter-spacing="4"
+        fill="#334155">DIGITAL</text>
+</svg>

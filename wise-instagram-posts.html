@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Wise — 4 Instagram Post Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet" />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #d4d7d2;
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: center;
+}
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(14,15,12,0.5);
+  margin-bottom: 12px;
+  align-self: flex-start;
+  width: 1080px;
+}
+.post {
+  width: 1080px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* ── Wise tokens ── */
+:root {
+  --green:       #9fe870;
+  --green-pale:  #e2f6d5;
+  --ink:         #0e0f0c;
+  --canvas:      #ffffff;
+  --canvas-soft: #e8ebe6;
+  --body:        #454745;
+  --mute:        #868685;
+  --orange:      #ffc091;
+  --cyan:        #38c8ff;
+}
+
+/* ─────────────────────────────────────────────
+   POST 1 — Dark hero · stat · "0.43%"
+───────────────────────────────────────────── */
+.p1 { background: var(--ink); }
+
+.p1-inner {
+  position: absolute;
+  inset: 0;
+  padding: 80px 80px 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.p1-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.p1-logo svg { flex-shrink: 0; }
+.p1-logo-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--canvas-soft);
+  letter-spacing: -0.01em;
+}
+
+.p1-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+.p1-eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 28px;
+}
+
+.p1-stat {
+  font-size: 200px;
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  color: var(--green);
+  margin-bottom: 36px;
+}
+
+.p1-headline {
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: rgba(255,255,255,0.75);
+  max-width: 680px;
+}
+.p1-headline strong {
+  color: var(--canvas);
+  font-weight: 600;
+}
+
+.p1-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.p1-cta {
+  background: var(--green);
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 24px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.p1-footnote {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--mute);
+  max-width: 360px;
+  text-align: right;
+  line-height: 1.5;
+}
+
+/* ─────────────────────────────────────────────
+   POST 2 — Sage canvas · comparison card
+───────────────────────────────────────────── */
+.p2 { background: var(--canvas-soft); }
+
+.p2-inner {
+  position: absolute;
+  inset: 0;
+  padding: 72px 72px 64px;
+  display: flex;
+  flex-direction: column;
+}
+
+.p2-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 52px;
+}
+
+.p2-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.p2-logo-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.p2-tag {
+  background: var(--green);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  letter-spacing: -0.01em;
+}
+
+.p2-headline {
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 48px;
+  max-width: 780px;
+}
+
+.p2-cards {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+}
+
+.p2-card {
+  flex: 1;
+  background: var(--canvas);
+  border-radius: 24px;
+  padding: 36px 36px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.p2-card-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 20px;
+}
+
+.p2-card-amount {
+  font-size: 56px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.p2-card-sub {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--body);
+  line-height: 1.4;
+}
+
+.p2-card.wise {
+  background: var(--ink);
+}
+.p2-card.wise .p2-card-label { color: rgba(255,255,255,0.45); }
+.p2-card.wise .p2-card-amount { color: var(--green); }
+.p2-card.wise .p2-card-sub { color: rgba(255,255,255,0.6); }
+
+.p2-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-pale);
+  color: #054d28;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  margin-top: 20px;
+  width: fit-content;
+}
+
+/* ─────────────────────────────────────────────
+   POST 3 — White · feature trio · trust
+───────────────────────────────────────────── */
+.p3 { background: var(--canvas-soft); }
+
+.p3-inner {
+  position: absolute;
+  inset: 0;
+  padding: 72px 72px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.p3-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 56px;
+}
+.p3-logo-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.p3-headline {
+  font-size: 80px;
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin-bottom: 56px;
+}
+
+.p3-items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0;
+}
+
+.p3-item {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 28px 0;
+  border-top: 1px solid rgba(14,15,12,0.1);
+}
+.p3-item:last-child {
+  border-bottom: 1px solid rgba(14,15,12,0.1);
+}
+
+.p3-item-num {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mute);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.p3-item-text {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  flex: 1;
+}
+
+.p3-item-pill {
+  background: var(--green);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────────
+   POST 4 — Ink dark · testimonial quote
+───────────────────────────────────────────── */
+.p4 { background: var(--ink); }
+
+.p4-inner {
+  position: absolute;
+  inset: 0;
+  padding: 80px 80px 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.p4-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.p4-logo-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(232,235,230,0.6);
+}
+
+.p4-quote-mark {
+  font-size: 180px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--green);
+  letter-spacing: -0.06em;
+  margin-bottom: -40px;
+  user-select: none;
+}
+
+.p4-quote {
+  font-size: 58px;
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--canvas);
+  margin-bottom: 40px;
+  max-width: 880px;
+}
+
+.p4-quote em {
+  font-style: normal;
+  color: var(--green);
+}
+
+.p4-attr {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.p4-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 9999px;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.p4-attr-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.p4-attr-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--canvas);
+}
+.p4-attr-sub {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--mute);
+}
+
+.p4-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.p4-cta {
+  background: var(--green);
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 24px;
+  letter-spacing: -0.01em;
+}
+.p4-countries {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--mute);
+  text-align: right;
+  line-height: 1.5;
+}
+</style>
+</head>
+<body>
+
+<!-- POST 1 -->
+<div class="label">01 · Dark · Fee stat — "0.43%"</div>
+<div class="post p1">
+  <div class="p1-inner">
+    <div class="p1-logo">
+      <!-- Wise flag-W logo approximation -->
+      <svg width="28" height="20" viewBox="0 0 28 20" fill="none">
+        <rect width="28" height="20" rx="4" fill="#9fe870"/>
+        <path d="M6 5l3 10 2.5-7 2.5 7 3-10" stroke="#0e0f0c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="p1-logo-text">Wise</span>
+    </div>
+
+    <div class="p1-body">
+      <div class="p1-eyebrow">Transfer fee</div>
+      <div class="p1-stat">0.43%</div>
+      <div class="p1-headline">
+        That's what you pay to send money abroad.<br>
+        <strong>Banks quietly take up to 5%.</strong>
+      </div>
+    </div>
+
+    <div class="p1-footer">
+      <div class="p1-cta">See how much you save →</div>
+      <div class="p1-footnote">Real exchange rate. No markups. No surprises. Fees vary by corridor.</div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 2 -->
+<div class="label">02 · Sage canvas · Side-by-side fee comparison</div>
+<div class="post p2">
+  <div class="p2-inner">
+    <div class="p2-top">
+      <div class="p2-logo">
+        <svg width="28" height="20" viewBox="0 0 28 20" fill="none">
+          <rect width="28" height="20" rx="4" fill="#9fe870"/>
+          <path d="M6 5l3 10 2.5-7 2.5 7 3-10" stroke="#0e0f0c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="p2-logo-text">Wise</span>
+      </div>
+      <div class="p2-tag">Send $1,000 to Mexico</div>
+    </div>
+
+    <div class="p2-headline">What $1,000 actually<br>buys your family.</div>
+
+    <div class="p2-cards">
+      <div class="p2-card">
+        <div>
+          <div class="p2-card-label">Your bank</div>
+          <div class="p2-card-amount">MX$16,240</div>
+          <div class="p2-card-sub">After a 3.5% fee + rate markup hidden in the exchange</div>
+        </div>
+        <div style="font-size:13px; font-weight:600; color:#868685; letter-spacing:-0.01em;">$35–$50 in fees</div>
+      </div>
+
+      <div class="p2-card wise">
+        <div>
+          <div class="p2-card-label">Wise</div>
+          <div class="p2-card-amount">MX$17,841</div>
+          <div class="p2-card-sub">Real mid-market rate. Fee shown upfront before you confirm.</div>
+        </div>
+        <div class="p2-card-badge">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6l3 3 5-5" stroke="#054d28" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          MX$1,601 more
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 3 -->
+<div class="label">03 · Sage canvas · Feature trio — no fluff, just facts</div>
+<div class="post p3">
+  <div class="p3-inner">
+    <div>
+      <div class="p3-logo">
+        <svg width="28" height="20" viewBox="0 0 28 20" fill="none">
+          <rect width="28" height="20" rx="4" fill="#9fe870"/>
+          <path d="M6 5l3 10 2.5-7 2.5 7 3-10" stroke="#0e0f0c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="p3-logo-text">Wise</span>
+      </div>
+      <div class="p3-headline">Three things<br>banks won't<br>tell you.</div>
+    </div>
+
+    <div class="p3-items">
+      <div class="p3-item">
+        <span class="p3-item-num">01</span>
+        <span class="p3-item-text">The "free transfer" markup is hidden in the exchange rate</span>
+        <span class="p3-item-pill">Always</span>
+      </div>
+      <div class="p3-item">
+        <span class="p3-item-num">02</span>
+        <span class="p3-item-text">80% of Wise transfers arrive in under an hour</span>
+        <span class="p3-item-pill">Verified</span>
+      </div>
+      <div class="p3-item">
+        <span class="p3-item-num">03</span>
+        <span class="p3-item-text">One account. 40+ currencies. No monthly fees.</span>
+        <span class="p3-item-pill">Free to open</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 4 -->
+<div class="label">04 · Dark · Testimonial quote</div>
+<div class="post p4">
+  <div class="p4-inner">
+    <div class="p4-logo">
+      <svg width="28" height="20" viewBox="0 0 28 20" fill="none">
+        <rect width="28" height="20" rx="4" fill="#9fe870"/>
+        <path d="M6 5l3 10 2.5-7 2.5 7 3-10" stroke="#0e0f0c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="p4-logo-text">Wise</span>
+    </div>
+
+    <div>
+      <div class="p4-quote-mark">"</div>
+      <div class="p4-quote">
+        Sent $2,000 to my mom in <em>3 minutes.</em><br>
+        My bank would have taken 3 days.
+      </div>
+      <div class="p4-attr">
+        <div class="p4-avatar">R</div>
+        <div class="p4-attr-info">
+          <span class="p4-attr-name">Rafael M.</span>
+          <span class="p4-attr-sub">Sends money to Brazil monthly · Wise user since 2021</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="p4-footer">
+      <div class="p4-cta">Try Wise free →</div>
+      <div class="p4-countries">Available in 80+ countries.<br>No subscription. No hidden fees.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

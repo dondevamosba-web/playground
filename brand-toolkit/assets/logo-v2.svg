@@ -1,0 +1,49 @@
+<svg width="240" height="64" viewBox="0 0 240 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="badgeGrad" x1="28" y1="4" x2="28" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0C4A6E"/>
+      <stop offset="55%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+    <linearGradient id="olaGrad" x1="70" y1="0" x2="162" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0C4A6E"/>
+      <stop offset="100%" stop-color="#0EA5E9"/>
+    </linearGradient>
+    <clipPath id="badgeClip">
+      <rect x="0" y="4" width="56" height="56" rx="14"/>
+    </clipPath>
+  </defs>
+
+  <!-- Badge background -->
+  <rect x="0" y="4" width="56" height="56" rx="14" fill="url(#badgeGrad)"/>
+
+  <!-- Wave marks clipped to badge -->
+  <g clip-path="url(#badgeClip)" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Top wave — highest opacity 1.0, going up first -->
+    <path d="M 0,20 C 4.67,16.5 9.33,16.5 14,20 C 18.67,23.5 23.33,23.5 28,20 C 32.67,16.5 37.33,16.5 42,20 C 46.67,23.5 51.33,23.5 56,20"
+          stroke-opacity="1" stroke-width="2.5"/>
+    <!-- Middle wave — opacity 0.7, going down first for visual rhythm -->
+    <path d="M 0,33 C 4.67,37 9.33,37 14,33 C 18.67,29 23.33,29 28,33 C 32.67,37 37.33,37 42,33 C 46.67,29 51.33,29 56,33"
+          stroke-opacity="0.7" stroke-width="2"/>
+    <!-- Bottom wave — lowest opacity 0.4, going up first -->
+    <path d="M 0,46 C 4.67,41.5 9.33,41.5 14,46 C 18.67,50.5 23.33,50.5 28,46 C 32.67,41.5 37.33,41.5 42,46 C 46.67,50.5 51.33,50.5 56,46"
+          stroke-opacity="0.4" stroke-width="2"/>
+  </g>
+
+  <!-- OLA wordmark with ocean→sky gradient -->
+  <text
+    x="70" y="38"
+    font-family="'Plus Jakarta Sans', sans-serif"
+    font-weight="800"
+    font-size="38"
+    fill="url(#olaGrad)">OLA</text>
+
+  <!-- DIGITAL subtext -->
+  <text
+    x="70" y="51"
+    font-family="'Inter', sans-serif"
+    font-weight="600"
+    font-size="11"
+    letter-spacing="4"
+    fill="#64748B">DIGITAL</text>
+</svg>

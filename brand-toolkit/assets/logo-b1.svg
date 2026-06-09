@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <defs>
+    <filter id="cyan-glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="320" height="80" rx="20" fill="#0A0F1E"/>
+
+  <!-- Signal icon — 3 horizontal lines, orange accent -->
+  <line x1="22" y1="32" x2="42" y2="32" stroke="#F97316" stroke-width="3" stroke-linecap="round"/>
+  <line x1="22" y1="40" x2="42" y2="40" stroke="#F97316" stroke-width="3" stroke-linecap="round"/>
+  <line x1="22" y1="48" x2="42" y2="48" stroke="#F97316" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- OLA — main brand text with cyan glow -->
+  <text
+    x="56"
+    y="52"
+    font-family="'Plus Jakarta Sans', sans-serif"
+    font-size="48"
+    font-weight="800"
+    fill="#38BDF8"
+    filter="url(#cyan-glow)">OLA</text>
+
+  <!-- DIGITAL — subtitle -->
+  <text
+    x="58"
+    y="67"
+    font-family="'Inter', sans-serif"
+    font-size="12"
+    font-weight="600"
+    letter-spacing="5"
+    fill="white"
+    fill-opacity="0.45">DIGITAL</text>
+</svg>

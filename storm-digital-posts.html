@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>STORM DIGITAL · 40 Instagram Posts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<style>
+/* Storm Digital — design tokens */
+:root {
+  --ink: #181d26;
+  --ink-active: #0d1218;
+  --canvas: #ffffff;
+  --surface-soft: #f8fafc;
+  --surface-strong: #e0e2e6;
+  --surface-dark: #181d26;
+  --hairline: #dddddd;
+  --body: #333840;
+  --muted: #41454d;
+  --on-primary: #ffffff;
+
+  --coral: #aa2d00;
+  --forest: #0a2e0e;
+  --cream: #f5e9d4;
+  --storm-blue: #1147e8;
+
+  --peach: #fcab79;
+  --mint: #a8d8c4;
+  --yellow: #f4d35e;
+}
+
+html, body {
+  margin: 0;
+  background: #f0eee9;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+</style>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+/* ============================================================
+   design-canvas.jsx  (copied verbatim from ola-digital-posts.html)
+   ============================================================ */
+
+const DC = {
+  bg: '#f0eee9',
+  grid: 'rgba(0,0,0,0.06)',
+  label: 'rgba(60,50,40,0.7)',
+  title: 'rgba(40,30,20,0.85)',
+  subtitle: 'rgba(60,50,40,0.6)',
+  postitBg: '#fef4a8',
+  postitText: '#5a4a2a',
+  font: '-apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
+};
+
+if (typeof document !== 'undefined' && !document.getElementById('dc-styles')) {
+  const s = document.createElement('style');
+  s.id = 'dc-styles';
+  s.textContent = [
+    '.dc-editable{cursor:text;outline:none;white-space:nowrap;border-radius:3px;padding:0 2px;margin:0 -2px}',
+    '.dc-editable:focus{background:#fff;box-shadow:0 0 0 1.5px #c96442}',
+    '[data-dc-slot]{transition:transform .18s cubic-bezier(.2,.7,.3,1)}',
+    '[data-dc-slot].dc-dragging{transition:none;z-index:10;pointer-events:none}',
+    '[data-dc-slot].dc-dragging .dc-card{box-shadow:0 12px 40px rgba(0,0,0,.25),0 0 0 2px #c96442;transform:scale(1.02)}',
+    '.dc-card{isolation:isolate;transition:box-shadow .15s,transform .15s}',
+    '.dc-card *{scrollbar-width:none}',
+    '.dc-card *::-webkit-scrollbar{display:none}',
+    '.dc-header{position:absolute;bottom:100%;left:-4px;margin-bottom:calc(4px * var(--dc-inv-zoom,1));z-index:2;',
+    '  display:flex;align-items:center;container-type:inline-size}',
+    '.dc-labelrow{display:flex;align-items:center;gap:4px;height:24px;flex:1 1 auto;min-width:0}',
+    '.dc-grip{flex:0 0 auto;cursor:grab;display:flex;align-items:center;padding:5px 4px;border-radius:4px;transition:background .12s,opacity .12s}',
+    '.dc-grip:hover{background:rgba(0,0,0,.08)}',
+    '.dc-grip:active{cursor:grabbing}',
+    '.dc-labeltext{flex:1 1 auto;min-width:0;cursor:pointer;border-radius:4px;padding:3px 6px;',
+    '  display:flex;align-items:center;transition:background .12s;overflow:hidden}',
+    '@container (max-width: 110px){',
+    '  .dc-labeltext{display:none}',
+    '  .dc-grip{opacity:0}',
+    '  [data-dc-slot]:hover .dc-grip{opacity:1}',
+    '}',
+    '.dc-labeltext:hover{background:rgba(0,0,0,.05)}',
+    '.dc-labeltext .dc-editable{overflow:hidden;text-overflow:ellipsis;max-width:100%}',
+    '.dc-labeltext .dc-editable:focus{overflow:visible;text-overflow:clip}',
+    '.dc-btns{flex:0 0 auto;margin-left:auto;display:flex;gap:2px;opacity:0;transition:opacity .12s}',
+    '[data-dc-slot]:hover .dc-btns,.dc-btns:has(.dc-menu){opacity:1}',
+    '.dc-expand,.dc-kebab{width:22px;height:22px;border-radius:5px;border:none;cursor:pointer;padding:0;',
+    '  background:transparent;color:rgba(60,50,40,.7);display:flex;align-items:center;justify-content:center;',
+    '  font:inherit;transition:background .12s,color .12s}',
+    '.dc-expand:hover,.dc-kebab:hover{background:rgba(0,0,0,.06);color:#2a251f}',
+    '[data-dc-slot]:has(.dc-menu){z-index:10}',
+    '.dc-menu{position:absolute;top:100%;right:0;margin-top:4px;background:#fff;border-radius:8px;',
+    '  box-shadow:0 8px 28px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.05);padding:4px;min-width:160px;z-index:10}',
+    '.dc-menu button{display:block;width:100%;padding:7px 10px;border:0;background:transparent;',
+    '  border-radius:5px;font-family:inherit;font-size:13px;font-weight:500;line-height:1.2;',
+    '  color:#29261b;cursor:pointer;text-align:left;transition:background .12s;white-space:nowrap}',
+    '.dc-menu button:hover{background:rgba(0,0,0,.05)}',
+    '.dc-menu hr{border:0;border-top:1px solid rgba(0,0,0,.08);margin:4px 2px}',
+    '.dc-menu .dc-danger{color:#c96442}',
+    '.dc-menu .dc-danger:hover{background:rgba(201,100,66,.1)}',
+    '.dc-header{width:calc((100% + 4px) / var(--dc-inv-zoom,1));',
+    '  transform:scale(var(--dc-inv-zoom,1));transform-origin:bottom left}',
+    '.dc-sectionhead{zoom:var(--dc-inv-zoom,1)}',
+  ].join('\n');
+  document.head.appendChild(s);
+}
+
+const DCCtx = React.createContext(null);
+
+function dcFlatten(children) {
+  const out = [];
+  React.Children.forEach(children, (c) => {
+    if (c && c.type === React.Fragment) out.push(...dcFlatten(c.props.children));
+    else out.push(c);
+  });
+  return out;
+}
+
+const DC_STATE_FILE = '.design-canvas.state.json';
+
+function DesignCanvas({ children, minScale, maxScale, style }) {
+  const [state, setState] = React.useState({ sections: {}, focus: null });
+  const [ready, setReady] = React.useState(false);
+  const didRead = React.useRef(false);
+  const skipNextWrite = React.useRef(false);
+
+  React.useEffect(() => {
+    let off = false;
+    fetch('./' + DC_STATE_FILE)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((saved) => {
+        if (off || !saved || !saved.sections) return;
+        skipNextWrite.current = true;
+        setState((s) => ({ ...s, sections: saved.sections }));
+      })
+      .catch(() => {})
+      .finally(() => { didRead.current = true; if (!off) setReady(true); });
+    const t = setTimeout(() => { if (!off) setReady(true); }, 150);
+    return () => { off = true; clearTimeout(t); };
+  }, []);
+
+  React.useEffect(() => {
+    if (!didRead.current) return;
+    if (skipNextWrite.current) { skipNextWrite.current = false; return; }
+    const t = setTimeout(() => {
+      window.omelette?.writeFile(DC_STATE_FILE, JSON.stringify({ sections: state.sections })).catch(() => {});
+    }, 250);
+    return () => clearTimeout(t);
+  }, [state.sections]);
+
+  const registry = {};
+  const sectionMeta = {};
+  const sectionOrder = [];
+  dcFlatten(children).forEach((sec) => {
+    if (!sec || sec.type !== DCSection) return;
+    const sid = sec.props.id ?? sec.props.title;
+    if (!sid) return;
+    sectionOrder.push(sid);
+    const persisted = state.sections[sid] || {};
+    const abs = [];
+    dcFlatten(sec.props.children).forEach((ab) => {
+      if (!ab || ab.type !== DCArtboard) return;
+      const aid = ab.props.id ?? ab.props.label;
+      if (aid) abs.push([aid, ab]);
+    });
+    const srcKey = abs.map(([k]) => k).join('\x1f');
+    const hidden = persisted.srcKey === srcKey ? (persisted.hidden || []) : [];
+    const srcIds = [];
+    abs.forEach(([aid, ab]) => {
+      if (hidden.includes(aid)) return;
+      registry[`${sid}/${aid}`] = { sectionId: sid, artboard: ab };
+      srcIds.push(aid);
+    });
+    const kept = (persisted.order || []).filter((k) => srcIds.includes(k));
+    sectionMeta[sid] = {
+      title: persisted.title ?? sec.props.title,
+      subtitle: sec.props.subtitle,
+      slotIds: [...kept, ...srcIds.filter((k) => !kept.includes(k))],
+    };
+  });
+
+  const api = React.useMemo(() => ({
+    state,
+    section: (id) => state.sections[id] || {},
+    patchSection: (id, p) => setState((s) => ({
+      ...s,
+      sections: { ...s.sections, [id]: { ...s.sections[id], ...(typeof p === 'function' ? p(s.sections[id] || {}) : p) } },
+    })),
+    setFocus: (slotId) => setState((s) => ({ ...s, focus: slotId })),
+  }), [state]);
+
+  React.useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') api.setFocus(null); };
+    const onPd = (e) => {
+      const ae = document.activeElement;
+      if (ae && ae.isContentEditable && !ae.contains(e.target)) ae.blur();
+    };
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onPd, true);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onPd, true);
+    };
+  }, [api]);
+
+  return (
+    <DCCtx.Provider value={api}>
+      <DCViewport minScale={minScale} maxScale={maxScale} style={style}>{ready && children}</DCViewport>
+      {state.focus && registry[state.focus] && (
+        <DCFocusOverlay entry={registry[state.focus]} sectionMeta={sectionMeta} sectionOrder={sectionOrder} />
+      )}
+    </DCCtx.Provider>
+  );
+}
+
+function DCViewport({ children, minScale = 0.1, maxScale = 8, style = {} }) {
+  const vpRef = React.useRef(null);
+  const worldRef = React.useRef(null);
+  const tf = React.useRef({ x: 0, y: 0, scale: 1 });
+  const tfKey = 'dc-viewport:' + location.pathname;
+  const saveT = React.useRef(0);
+
+  const lastPostedScale = React.useRef();
+  const apply = React.useCallback(() => {
+    const { x, y, scale } = tf.current;
+    const el = worldRef.current;
+    if (!el) return;
+    el.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+    el.style.setProperty('--dc-inv-zoom', String(1 / scale));
+    if (lastPostedScale.current !== scale) {
+      lastPostedScale.current = scale;
+      window.parent.postMessage({ type: '__dc_zoom', scale }, '*');
+    }
+    clearTimeout(saveT.current);
+    saveT.current = setTimeout(() => {
+      try { localStorage.setItem(tfKey, JSON.stringify(tf.current)); } catch {}
+    }, 200);
+  }, [tfKey]);
+
+  React.useLayoutEffect(() => {
+    const flush = () => {
+      clearTimeout(saveT.current);
+      try { localStorage.setItem(tfKey, JSON.stringify(tf.current)); } catch {}
+    };
+    try {
+      const s = JSON.parse(localStorage.getItem(tfKey) || 'null');
+      if (s && Number.isFinite(s.x) && Number.isFinite(s.y) && Number.isFinite(s.scale)) {
+        tf.current = { x: s.x, y: s.y, scale: Math.min(maxScale, Math.max(minScale, s.scale)) };
+        apply();
+      }
+    } catch {}
+    window.addEventListener('pagehide', flush);
+    return () => { window.removeEventListener('pagehide', flush); flush(); };
+  }, []);
+
+  React.useEffect(() => {
+    const vp = vpRef.current;
+    if (!vp) return;
+
+    const zoomAt = (cx, cy, factor) => {
+      const r = vp.getBoundingClientRect();
+      const px = cx - r.left, py = cy - r.top;
+      const t = tf.current;
+      const next = Math.min(maxScale, Math.max(minScale, t.scale * factor));
+      const k = next / t.scale;
+      let marker = null, markerY0 = 0;
+      if (k !== 1) {
+        const hit = document.elementFromPoint(cx, cy);
+        marker = hit && hit.closest ? hit.closest('[data-dc-slot],[data-dc-section]') : null;
+        if (marker) markerY0 = marker.getBoundingClientRect().top;
+      }
+      t.x = px - (px - t.x) * k;
+      t.y = py - (py - t.y) * k;
+      t.scale = next;
+      apply();
+      if (marker) {
+        const drift = marker.getBoundingClientRect().top - (cy + (markerY0 - cy) * k);
+        if (Math.abs(drift) > 0.1) { t.y -= drift; apply(); }
+      }
+    };
+
+    const isMouseWheel = (e) =>
+      e.deltaMode !== 0 ||
+      (e.deltaX === 0 && Number.isInteger(e.deltaY) && Math.abs(e.deltaY) >= 40);
+
+    const onWheel = (e) => {
+      e.preventDefault();
+      if (isGesturing) return;
+      if ((e.ctrlKey || e.metaKey) && !isMouseWheel(e)) {
+        zoomAt(e.clientX, e.clientY, Math.exp(-e.deltaY * 0.01));
+      } else if (isMouseWheel(e)) {
+        zoomAt(e.clientX, e.clientY, Math.exp(-Math.sign(e.deltaY) * 0.18));
+      } else {
+        tf.current.x -= e.deltaX;
+        tf.current.y -= e.deltaY;
+        apply();
+      }
+    };
+
+    let gsBase = 1;
+    let isGesturing = false;
+    const onGestureStart = (e) => { e.preventDefault(); isGesturing = true; gsBase = tf.current.scale; };
+    const onGestureChange = (e) => {
+      e.preventDefault();
+      zoomAt(e.clientX, e.clientY, (gsBase * e.scale) / tf.current.scale);
+    };
+    const onGestureEnd = (e) => { e.preventDefault(); isGesturing = false; };
+
+    let drag = null;
+    const onPointerDown = (e) => {
+      const onBg = !e.target.closest('[data-dc-slot], .dc-editable');
+      if (!(e.button === 1 || (e.button === 0 && onBg))) return;
+      e.preventDefault();
+      vp.setPointerCapture(e.pointerId);
+      drag = { id: e.pointerId, lx: e.clientX, ly: e.clientY };
+      vp.style.cursor = 'grabbing';
+    };
+    const onPointerMove = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      tf.current.x += e.clientX - drag.lx;
+      tf.current.y += e.clientY - drag.ly;
+      drag.lx = e.clientX; drag.ly = e.clientY;
+      apply();
+    };
+    const onPointerUp = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      vp.releasePointerCapture(e.pointerId);
+      drag = null;
+      vp.style.cursor = '';
+    };
+
+    const onHostMsg = (e) => {
+      const d = e.data;
+      if (d && d.type === '__dc_set_zoom' && typeof d.scale === 'number') {
+        const r = vp.getBoundingClientRect();
+        zoomAt(r.left + r.width / 2, r.top + r.height / 2, d.scale / tf.current.scale);
+      } else if (d && d.type === '__dc_probe') {
+        window.parent.postMessage({ type: '__dc_present' }, '*');
+        lastPostedScale.current = undefined;
+        apply();
+      }
+    };
+    window.addEventListener('message', onHostMsg);
+    window.parent.postMessage({ type: '__dc_present' }, '*');
+    lastPostedScale.current = undefined;
+    apply();
+
+    vp.addEventListener('wheel', onWheel, { passive: false });
+    vp.addEventListener('gesturestart', onGestureStart, { passive: false });
+    vp.addEventListener('gesturechange', onGestureChange, { passive: false });
+    vp.addEventListener('gestureend', onGestureEnd, { passive: false });
+    vp.addEventListener('pointerdown', onPointerDown);
+    vp.addEventListener('pointermove', onPointerMove);
+    vp.addEventListener('pointerup', onPointerUp);
+    vp.addEventListener('pointercancel', onPointerUp);
+    return () => {
+      window.removeEventListener('message', onHostMsg);
+      vp.removeEventListener('wheel', onWheel);
+      vp.removeEventListener('gesturestart', onGestureStart);
+      vp.removeEventListener('gesturechange', onGestureChange);
+      vp.removeEventListener('gestureend', onGestureEnd);
+      vp.removeEventListener('pointerdown', onPointerDown);
+      vp.removeEventListener('pointermove', onPointerMove);
+      vp.removeEventListener('pointerup', onPointerUp);
+      vp.removeEventListener('pointercancel', onPointerUp);
+    };
+  }, [apply, minScale, maxScale]);
+
+  const gridSvg = `url("data:image/svg+xml,%3Csvg width='120' height='120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M120 0H0v120' fill='none' stroke='${encodeURIComponent(DC.grid)}' stroke-width='1'/%3E%3C/svg%3E")`;
+  return (
+    <div
+      ref={vpRef}
+      className="design-canvas"
+      style={{
+        height: '100vh', width: '100vw',
+        background: DC.bg,
+        overflow: 'hidden',
+        overscrollBehavior: 'none',
+        touchAction: 'none',
+        position: 'relative',
+        fontFamily: DC.font,
+        boxSizing: 'border-box',
+        ...style,
+      }}
+    >
+      <div
+        ref={worldRef}
+        style={{
+          position: 'absolute', top: 0, left: 0,
+          transformOrigin: '0 0',
+          willChange: 'transform',
+          width: 'max-content', minWidth: '100%',
+          minHeight: '100%',
+          padding: '60px 0 80px',
+        }}
+      >
+        <div style={{ position: 'absolute', inset: -6000, backgroundImage: gridSvg, backgroundSize: '120px 120px', pointerEvents: 'none', zIndex: -1 }} />
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function DCSection({ id, title, subtitle, children, gap = 48 }) {
+  const ctx = React.useContext(DCCtx);
+  const sid = id ?? title;
+  const all = React.Children.toArray(dcFlatten(children));
+  const artboards = all.filter((c) => c && c.type === DCArtboard);
+  const rest = all.filter((c) => !(c && c.type === DCArtboard));
+  const sec = (ctx && sid && ctx.section(sid)) || {};
+  const allIds = artboards.map((a) => a.props.id ?? a.props.label).filter(Boolean);
+  const srcKey = allIds.join('\x1f');
+  const hidden = sec.srcKey === srcKey ? (sec.hidden || []) : [];
+  const srcOrder = allIds.filter((k) => !hidden.includes(k));
+
+  const order = React.useMemo(() => {
+    const kept = (sec.order || []).filter((k) => srcOrder.includes(k));
+    return [...kept, ...srcOrder.filter((k) => !kept.includes(k))];
+  }, [sec.order, srcOrder.join('|')]);
+
+  const byId = Object.fromEntries(artboards.map((a) => [a.props.id ?? a.props.label, a]));
+
+  return (
+    <div data-dc-section={sid}
+      style={{ marginBottom: 'calc(80px * var(--dc-inv-zoom, 1))', position: 'relative' }}>
+      <div style={{ padding: '0 60px' }}>
+        <div className="dc-sectionhead" style={{ paddingBottom: 36 }}>
+          <DCEditable tag="div" value={sec.title ?? title}
+            onChange={(v) => ctx && sid && ctx.patchSection(sid, { title: v })}
+            style={{ fontSize: 28, fontWeight: 600, color: DC.title, letterSpacing: -0.4, marginBottom: 6, display: 'inline-block' }} />
+          {subtitle && <div style={{ fontSize: 16, color: DC.subtitle }}>{subtitle}</div>}
+        </div>
+      </div>
+      <div style={{ display: 'flex', gap, padding: '0 60px', alignItems: 'flex-start', width: 'max-content' }}>
+        {order.map((k) => (
+          <DCArtboardFrame key={k} sectionId={sid} artboard={byId[k]} order={order}
+            label={(sec.labels || {})[k] ?? byId[k].props.label}
+            onRename={(v) => ctx && ctx.patchSection(sid, (x) => ({ labels: { ...x.labels, [k]: v } }))}
+            onReorder={(next) => ctx && ctx.patchSection(sid, { order: next })}
+            onDelete={() => ctx && ctx.patchSection(sid, (x) => ({
+              hidden: [...(x.srcKey === srcKey ? (x.hidden || []) : []), k],
+              srcKey,
+            }))}
+            onFocus={() => ctx && ctx.setFocus(`${sid}/${k}`)} />
+        ))}
+      </div>
+      {rest}
+    </div>
+  );
+}
+
+function DCArtboard() { return null; }
+
+async function dcExport(node, w, h, name, kind) {
+  try { await document.fonts.ready; } catch {}
+  const toDataURL = (url) => fetch(url).then((r) => r.blob()).then((b) => new Promise((res) => {
+    const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = () => res(url); fr.readAsDataURL(b);
+  })).catch(() => url);
+
+  const fontRules = [], pending = [], seen = new Set();
+  const scrapeCss = (href) => {
+    if (seen.has(href)) return; seen.add(href);
+    pending.push(fetch(href).then((r) => r.text()).then((css) => {
+      for (const m of css.match(/@font-face\s*{[^}]*}/g) || []) fontRules.push({ css: m, base: href });
+      for (const m of css.matchAll(/@import\s+(?:url\()?['"]?([^'")\s;]+)/g))
+        scrapeCss(new URL(m[1], href).href);
+    }).catch(() => {}));
+  };
+  const walk = (rules, base) => {
+    for (const r of rules) {
+      if (r.type === CSSRule.FONT_FACE_RULE) fontRules.push({ css: r.cssText, base });
+      else if (r.type === CSSRule.IMPORT_RULE && r.styleSheet) {
+        const ibase = r.styleSheet.href || base;
+        try { walk(r.styleSheet.cssRules, ibase); } catch { scrapeCss(ibase); }
+      } else if (r.cssRules) walk(r.cssRules, base);
+    }
+  };
+  for (const ss of document.styleSheets) {
+    const base = ss.href || location.href;
+    try { walk(ss.cssRules, base); } catch { if (ss.href) scrapeCss(ss.href); }
+  }
+  while (pending.length) await pending.shift();
+  const fontCss = (await Promise.all(fontRules.map(async (rule) => {
+    let out = rule.css, m; const re = /url\((['"]?)([^'")]+)\1\)/g;
+    while ((m = re.exec(rule.css))) {
+      if (m[2].indexOf('data:') === 0) continue;
+      let abs; try { abs = new URL(m[2], rule.base).href; } catch { continue; }
+      out = out.split(m[0]).join('url("' + await toDataURL(abs) + '")');
+    }
+    return out;
+  }))).join('\n');
+
+  const cloneStyled = (src) => {
+    if (src.nodeType === 8 || (src.nodeType === 1 && src.tagName === 'SCRIPT')) return document.createTextNode('');
+    const dst = src.cloneNode(false);
+    if (src.nodeType === 1) {
+      const cs = getComputedStyle(src); let txt = '';
+      for (let i = 0; i < cs.length; i++) txt += cs[i] + ':' + cs.getPropertyValue(cs[i]) + ';';
+      dst.setAttribute('style', txt + 'animation:none;transition:none;');
+      if (src.tagName === 'CANVAS') try { const im = document.createElement('img'); im.src = src.toDataURL(); im.setAttribute('style', txt); return im; } catch {}
+    }
+    for (let c = src.firstChild; c; c = c.nextSibling) dst.appendChild(cloneStyled(c));
+    return dst;
+  };
+  const clone = cloneStyled(node);
+  clone.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
+  clone.style.boxShadow = 'none'; clone.style.borderRadius = '0';
+
+  const jobs = [];
+  clone.querySelectorAll('img').forEach((el) => {
+    const s = el.getAttribute('src');
+    if (s && s.indexOf('data:') !== 0) jobs.push(toDataURL(el.src).then((d) => el.setAttribute('src', d)));
+  });
+  [clone, ...clone.querySelectorAll('*')].forEach((el) => {
+    const bg = el.style.backgroundImage; if (!bg) return;
+    let m; const re = /url\(["']?([^"')]+)["']?\)/g;
+    while ((m = re.exec(bg))) {
+      const tok = m[0], url = m[1];
+      if (url.indexOf('data:') === 0) continue;
+      jobs.push(toDataURL(url).then((d) => { el.style.backgroundImage = el.style.backgroundImage.split(tok).join('url("' + d + '")'); }));
+    }
+  });
+  await Promise.all(jobs);
+
+  const xml = new XMLSerializer().serializeToString(clone);
+  const save = (blob, ext) => {
+    if (!blob) return;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = name + '.' + ext; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+
+  if (kind === 'html') {
+    const html = '<!doctype html><html><head><meta charset="utf-8"><title>' + name + '</title>' +
+      (fontCss ? '<style>' + fontCss + '</style>' : '') +
+      '</head><body style="margin:0">' + xml + '</body></html>';
+    return save(new Blob([html], { type: 'text/html' }), 'html');
+  }
+
+  const px = 3;
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w * px + '" height="' + h * px +
+    '" viewBox="0 0 ' + w + ' ' + h + '"><foreignObject width="' + w + '" height="' + h + '">' +
+    (fontCss ? '<style><![CDATA[' + fontCss + ']]></style>' : '') + xml + '</foreignObject></svg>';
+  const img = new Image();
+  await new Promise((res, rej) => {
+    img.onload = res; img.onerror = () => rej(new Error('svg load failed'));
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  });
+  const cv = document.createElement('canvas');
+  cv.width = w * px; cv.height = h * px;
+  cv.getContext('2d').drawImage(img, 0, 0);
+  cv.toBlob((blob) => save(blob, 'png'), 'image/png');
+}
+
+function DCArtboardFrame({ sectionId, artboard, label, order, onRename, onReorder, onFocus, onDelete }) {
+  const { id: rawId, label: rawLabel, width = 260, height = 480, children, style = {} } = artboard.props;
+  const id = rawId ?? rawLabel;
+  const ref = React.useRef(null);
+  const cardRef = React.useRef(null);
+  const menuRef = React.useRef(null);
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const [confirming, setConfirming] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!menuOpen) { setConfirming(false); return; }
+    const off = (e) => { if (!menuRef.current || !menuRef.current.contains(e.target)) setMenuOpen(false); };
+    document.addEventListener('pointerdown', off, true);
+    return () => document.removeEventListener('pointerdown', off, true);
+  }, [menuOpen]);
+
+  const doExport = (kind) => {
+    setMenuOpen(false);
+    if (!cardRef.current) return;
+    const name = String(label || id || 'artboard').replace(/[^\w\s.-]+/g, '_');
+    dcExport(cardRef.current, width, height, name, kind)
+      .catch((e) => console.error('[design-canvas] export failed:', e));
+  };
+
+  const onGripDown = (e) => {
+    e.preventDefault(); e.stopPropagation();
+    const me = ref.current;
+    const scale = me.getBoundingClientRect().width / me.offsetWidth || 1;
+    const peers = Array.from(document.querySelectorAll(`[data-dc-section="${sectionId}"] [data-dc-slot]`));
+    const homes = peers.map((el) => ({ el, id: el.dataset.dcSlot, x: el.getBoundingClientRect().left }));
+    const slotXs = homes.map((h) => h.x);
+    const startIdx = order.indexOf(id);
+    const startX = e.clientX;
+    let liveOrder = order.slice();
+    me.classList.add('dc-dragging');
+
+    const layout = () => {
+      for (const h of homes) {
+        if (h.id === id) continue;
+        const slot = liveOrder.indexOf(h.id);
+        h.el.style.transform = `translateX(${(slotXs[slot] - h.x) / scale}px)`;
+      }
+    };
+
+    const move = (ev) => {
+      const dx = ev.clientX - startX;
+      me.style.transform = `translateX(${dx / scale}px)`;
+      const cur = homes[startIdx].x + dx;
+      let nearest = 0, best = Infinity;
+      for (let i = 0; i < slotXs.length; i++) {
+        const d = Math.abs(slotXs[i] - cur);
+        if (d < best) { best = d; nearest = i; }
+      }
+      if (liveOrder.indexOf(id) !== nearest) {
+        liveOrder = order.filter((k) => k !== id);
+        liveOrder.splice(nearest, 0, id);
+        layout();
+      }
+    };
+
+    const up = () => {
+      document.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerup', up);
+      const finalSlot = liveOrder.indexOf(id);
+      me.classList.remove('dc-dragging');
+      me.style.transform = `translateX(${(slotXs[finalSlot] - homes[startIdx].x) / scale}px)`;
+      setTimeout(() => {
+        for (const h of homes) { h.el.style.transition = 'none'; h.el.style.transform = ''; }
+        if (liveOrder.join('|') !== order.join('|')) onReorder(liveOrder);
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          for (const h of homes) h.el.style.transition = '';
+        }));
+      }, 180);
+    };
+    document.addEventListener('pointermove', move);
+    document.addEventListener('pointerup', up);
+  };
+
+  return (
+    <div ref={ref} data-dc-slot={id} style={{ position: 'relative', flexShrink: 0 }}>
+      <div className="dc-header" data-omelette-chrome="" style={{ color: DC.label }} onPointerDown={(e) => e.stopPropagation()}>
+        <div className="dc-labelrow">
+          <div className="dc-grip" onPointerDown={onGripDown} title="Drag to reorder">
+            <svg width="9" height="13" viewBox="0 0 9 13" fill="currentColor"><circle cx="2" cy="2" r="1.1"/><circle cx="7" cy="2" r="1.1"/><circle cx="2" cy="6.5" r="1.1"/><circle cx="7" cy="6.5" r="1.1"/><circle cx="2" cy="11" r="1.1"/><circle cx="7" cy="11" r="1.1"/></svg>
+          </div>
+          <div className="dc-labeltext" onClick={onFocus} title="Click to focus">
+            <DCEditable value={label} onChange={onRename} onClick={(e) => e.stopPropagation()}
+              style={{ fontSize: 15, fontWeight: 500, color: DC.label, lineHeight: 1 }} />
+          </div>
+        </div>
+        <div className="dc-btns">
+          <div ref={menuRef} style={{ position: 'relative' }}>
+            <button className="dc-kebab" title="More" onClick={() => setMenuOpen((o) => !o)}>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="2.5" cy="6" r="1.1"/><circle cx="6" cy="6" r="1.1"/><circle cx="9.5" cy="6" r="1.1"/></svg>
+            </button>
+            {menuOpen && (
+              <div className="dc-menu" onPointerDown={(e) => e.stopPropagation()}>
+                <button onClick={() => doExport('png')}>Download PNG</button>
+                <button onClick={() => doExport('html')}>Download HTML</button>
+                <hr />
+                <button className="dc-danger"
+                  onClick={() => { if (confirming) { setMenuOpen(false); onDelete(); } else setConfirming(true); }}>
+                  {confirming ? 'Click again to delete' : 'Delete'}
+                </button>
+              </div>
+            )}
+          </div>
+          <button className="dc-expand" onClick={onFocus} title="Focus">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M7 1h4v4M5 11H1V7M11 1L7.5 4.5M1 11l3.5-3.5"/></svg>
+          </button>
+        </div>
+      </div>
+      <div ref={cardRef} className="dc-card"
+        style={{ borderRadius: 2, boxShadow: '0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06)', overflow: 'hidden', width, height, background: '#fff', ...style }}>
+        {children || <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#bbb', fontSize: 13, fontFamily: DC.font }}>{id}</div>}
+      </div>
+    </div>
+  );
+}
+
+function DCEditable({ value, onChange, style, tag = 'span', onClick }) {
+  const T = tag;
+  return (
+    <T className="dc-editable" contentEditable suppressContentEditableWarning
+      onClick={onClick}
+      onPointerDown={(e) => e.stopPropagation()}
+      onBlur={(e) => onChange && onChange(e.currentTarget.textContent)}
+      onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); e.currentTarget.blur(); } }}
+      style={style}>{value}</T>
+  );
+}
+
+function DCFocusOverlay({ entry, sectionMeta, sectionOrder }) {
+  const ctx = React.useContext(DCCtx);
+  const { sectionId, artboard } = entry;
+  const sec = ctx.section(sectionId);
+  const meta = sectionMeta[sectionId];
+  const peers = meta.slotIds;
+  const aid = artboard.props.id ?? artboard.props.label;
+  const idx = peers.indexOf(aid);
+  const secIdx = sectionOrder.indexOf(sectionId);
+
+  const go = (d) => { const n = peers[(idx + d + peers.length) % peers.length]; if (n) ctx.setFocus(`${sectionId}/${n}`); };
+  const goSection = (d) => {
+    const n = sectionOrder.length;
+    for (let i = 1; i < n; i++) {
+      const ns = sectionOrder[(((secIdx + d * i) % n) + n) % n];
+      const first = sectionMeta[ns] && sectionMeta[ns].slotIds[0];
+      if (first) { ctx.setFocus(`${ns}/${first}`); return; }
+    }
+  };
+
+  React.useEffect(() => {
+    const k = (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+      if (e.key === 'ArrowUp') { e.preventDefault(); goSection(-1); }
+      if (e.key === 'ArrowDown') { e.preventDefault(); goSection(1); }
+    };
+    document.addEventListener('keydown', k);
+    return () => document.removeEventListener('keydown', k);
+  });
+
+  const { width = 260, height = 480, children } = artboard.props;
+  const [vp, setVp] = React.useState({ w: window.innerWidth, h: window.innerHeight });
+  React.useEffect(() => { const r = () => setVp({ w: window.innerWidth, h: window.innerHeight }); window.addEventListener('resize', r); return () => window.removeEventListener('resize', r); }, []);
+  const scale = Math.max(0.1, Math.min((vp.w - 200) / width, (vp.h - 260) / height, 2));
+
+  const [ddOpen, setDd] = React.useState(false);
+  const Arrow = ({ dir, onClick }) => (
+    <button onClick={(e) => { e.stopPropagation(); onClick(); }}
+      style={{ position: 'absolute', top: '50%', [dir]: 28, transform: 'translateY(-50%)',
+        border: 'none', background: 'rgba(255,255,255,.08)', color: 'rgba(255,255,255,.9)',
+        width: 44, height: 44, borderRadius: 22, fontSize: 18, cursor: 'pointer',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .15s' }}
+      onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,.18)')}
+      onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,.08)')}>
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <path d={dir === 'left' ? 'M11 3L5 9l6 6' : 'M7 3l6 6-6 6'} /></svg>
+    </button>
+  );
+
+  return ReactDOM.createPortal(
+    <div onClick={() => ctx.setFocus(null)}
+      onWheel={(e) => e.preventDefault()}
+      style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(24,20,16,.6)', backdropFilter: 'blur(14px)',
+        fontFamily: DC.font, color: '#fff' }}>
+
+      <div onClick={(e) => e.stopPropagation()}
+        style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 72, display: 'flex', alignItems: 'flex-start', padding: '16px 20px 0', gap: 16 }}>
+        <div style={{ position: 'relative' }}>
+          <button onClick={() => setDd((o) => !o)}
+            style={{ border: 'none', background: 'transparent', color: '#fff', cursor: 'pointer', padding: '6px 8px',
+              borderRadius: 6, textAlign: 'left', fontFamily: 'inherit' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: -0.3 }}>{meta.title}</span>
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" style={{ opacity: .7 }}><path d="M2 4l3.5 3.5L9 4"/></svg>
+            </span>
+            {meta.subtitle && <span style={{ display: 'block', fontSize: 13, opacity: .6, fontWeight: 400, marginTop: 2 }}>{meta.subtitle}</span>}
+          </button>
+          {ddOpen && (
+            <div style={{ position: 'absolute', top: '100%', left: 0, marginTop: 4, background: '#2a251f', borderRadius: 8,
+              boxShadow: '0 8px 32px rgba(0,0,0,.4)', padding: 4, minWidth: 200, zIndex: 10 }}>
+              {sectionOrder.filter((sid) => sectionMeta[sid].slotIds.length).map((sid) => (
+                <button key={sid} onClick={() => { setDd(false); const f = sectionMeta[sid].slotIds[0]; if (f) ctx.setFocus(`${sid}/${f}`); }}
+                  style={{ display: 'block', width: '100%', textAlign: 'left', border: 'none', cursor: 'pointer',
+                    background: sid === sectionId ? 'rgba(255,255,255,.1)' : 'transparent', color: '#fff',
+                    padding: '8px 12px', borderRadius: 5, fontSize: 14, fontWeight: sid === sectionId ? 600 : 400, fontFamily: 'inherit' }}>
+                  {sectionMeta[sid].title}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        <div style={{ flex: 1 }} />
+        <button onClick={() => ctx.setFocus(null)}
+          onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,.12)')}
+          onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+          style={{ border: 'none', background: 'transparent', color: 'rgba(255,255,255,.7)', width: 32, height: 32,
+            borderRadius: 16, fontSize: 20, cursor: 'pointer', lineHeight: 1, transition: 'background .12s' }}>×</button>
+      </div>
+
+      <div
+        style={{ position: 'absolute', top: 64, bottom: 56, left: 100, right: 100, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
+        <div onClick={(e) => e.stopPropagation()} style={{ width: width * scale, height: height * scale, position: 'relative' }}>
+          <div style={{ width, height, transform: `scale(${scale})`, transformOrigin: 'top left', background: '#fff', borderRadius: 2, overflow: 'hidden',
+            boxShadow: '0 20px 80px rgba(0,0,0,.4)' }}>
+            {children || <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#bbb' }}>{aid}</div>}
+          </div>
+        </div>
+        <div onClick={(e) => e.stopPropagation()} style={{ fontSize: 14, fontWeight: 500, opacity: .85, textAlign: 'center' }}>
+          {(sec.labels || {})[aid] ?? artboard.props.label}
+          <span style={{ opacity: .5, marginLeft: 10, fontVariantNumeric: 'tabular-nums' }}>{idx + 1} / {peers.length}</span>
+        </div>
+      </div>
+
+      <Arrow dir="left" onClick={() => go(-1)} />
+      <Arrow dir="right" onClick={() => go(1)} />
+
+      <div onClick={(e) => e.stopPropagation()}
+        style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8 }}>
+        {peers.map((p, i) => (
+          <button key={p} onClick={() => ctx.setFocus(`${sectionId}/${p}`)}
+            style={{ border: 'none', padding: 0, cursor: 'pointer', width: 6, height: 6, borderRadius: 3,
+              background: i === idx ? '#fff' : 'rgba(255,255,255,.3)' }} />
+        ))}
+      </div>
+    </div>,
+    document.body,
+  );
+}
+
+function DCPostIt({ children, top, left, right, bottom, rotate = -2, width = 180 }) {
+  return (
+    <div style={{
+      position: 'absolute', top, left, right, bottom, width,
+      background: DC.postitBg, padding: '14px 16px',
+      fontFamily: '"Comic Sans MS", "Marker Felt", "Segoe Print", cursive',
+      fontSize: 14, lineHeight: 1.4, color: DC.postitText,
+      boxShadow: '0 2px 8px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08)',
+      transform: `rotate(${rotate}deg)`,
+      zIndex: 5,
+    }}>{children}</div>
+  );
+}
+
+Object.assign(window, { DesignCanvas, DCSection, DCArtboard, DCPostIt });
+</script>
+
+<script type="text/babel" data-presets="react">
+/* ============================================================
+   tweaks-panel.jsx  (copied verbatim from ola-digital-posts.html)
+   ============================================================ */
+
+const __TWEAKS_STYLE = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
+    transform:scale(var(--dc-inv-zoom,1));transform-origin:bottom right;
+    background:rgba(250,249,247,.78);color:#29261b;
+    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
+    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 8px 10px 14px;cursor:move;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);
+    width:22px;height:22px;border-radius:6px;cursor:default;font-size:13px;line-height:1}
+  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
+  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;
+    overflow-y:auto;overflow-x:hidden;min-height:0;
+    scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+  .twk-body::-webkit-scrollbar{width:8px}
+  .twk-body::-webkit-scrollbar-track{background:transparent;margin:2px}
+  .twk-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:4px;
+    border:2px solid transparent;background-clip:content-box}
+  .twk-body::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.25);
+    border:2px solid transparent;background-clip:content-box}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;
+    color:rgba(41,38,27,.72)}
+  .twk-lbl>span:first-child{font-weight:500}
+  .twk-val{color:rgba(41,38,27,.5);font-variant-numeric:tabular-nums}
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(41,38,27,.45);padding:10px 0 0}
+  .twk-sect:first-child{padding-top:0}
+  .twk-field{appearance:none;box-sizing:border-box;width:100%;min-width:0;height:26px;padding:0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;
+    background:rgba(255,255,255,.6);color:inherit;font:inherit;outline:none}
+  .twk-field:focus{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.85)}
+  select.twk-field{padding-right:22px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='rgba(0,0,0,.5)' d='M0 0h10L5 6z'/></svg>");
+    background-repeat:no-repeat;background-position:right 8px center}
+  .twk-slider{appearance:none;-webkit-appearance:none;width:100%;height:4px;margin:6px 0;
+    border-radius:999px;background:rgba(0,0,0,.12);outline:none}
+  .twk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+    width:14px;height:14px;border-radius:50%;background:#fff;
+    border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
+    background:#fff;border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
+    background:rgba(0,0,0,.06);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
+    background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);
+    transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
+  .twk-seg.dragging .twk-seg-thumb{transition:none}
+  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;
+    background:transparent;color:inherit;font:inherit;font-weight:500;min-height:22px;
+    border-radius:6px;cursor:default;padding:4px 6px;line-height:1.2;
+    overflow-wrap:anywhere}
+  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;
+    background:rgba(0,0,0,.15);transition:background .15s;cursor:default;padding:0}
+  .twk-toggle[data-on="1"]{background:#34c759}
+  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
+  .twk-num{display:flex;align-items:center;box-sizing:border-box;min-width:0;height:26px;padding:0 0 0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;background:rgba(255,255,255,.6)}
+  .twk-num-lbl{font-weight:500;color:rgba(41,38,27,.6);cursor:ew-resize;
+    user-select:none;padding-right:8px}
+  .twk-num input{flex:1;min-width:0;height:100%;border:0;background:transparent;
+    font:inherit;font-variant-numeric:tabular-nums;text-align:right;padding:0 8px 0 0;
+    outline:none;color:inherit;-moz-appearance:textfield}
+  .twk-num input::-webkit-inner-spin-button,.twk-num input::-webkit-outer-spin-button{
+    -webkit-appearance:none;margin:0}
+  .twk-num-unit{padding-right:8px;color:rgba(41,38,27,.45)}
+  .twk-btn{appearance:none;height:26px;padding:0 12px;border:0;border-radius:7px;
+    background:rgba(0,0,0,.78);color:#fff;font:inherit;font-weight:500;cursor:default}
+  .twk-btn:hover{background:rgba(0,0,0,.88)}
+  .twk-btn.secondary{background:rgba(0,0,0,.06);color:inherit}
+  .twk-btn.secondary:hover{background:rgba(0,0,0,.1)}
+  .twk-swatch{appearance:none;-webkit-appearance:none;width:56px;height:22px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:6px;padding:0;cursor:default;
+    background:transparent;flex-shrink:0}
+  .twk-swatch::-webkit-color-swatch-wrapper{padding:0}
+  .twk-swatch::-webkit-color-swatch{border:0;border-radius:5.5px}
+  .twk-swatch::-moz-color-swatch{border:0;border-radius:5.5px}
+  .twk-chips{display:flex;gap:6px}
+  .twk-chip{position:relative;appearance:none;flex:1;min-width:0;height:46px;
+    padding:0;border:0;border-radius:6px;overflow:hidden;cursor:default;
+    box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.06);
+    transition:transform .12s cubic-bezier(.3,.7,.4,1),box-shadow .12s}
+  .twk-chip:hover{transform:translateY(-1px);
+    box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.12)}
+  .twk-chip[data-on="1"]{box-shadow:0 0 0 1.5px rgba(0,0,0,.85),
+    0 2px 6px rgba(0,0,0,.15)}
+  .twk-chip>span{position:absolute;top:0;bottom:0;right:0;width:34%;
+    display:flex;flex-direction:column;box-shadow:-1px 0 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i{flex:1;box-shadow:0 -1px 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i:first-child{box-shadow:none}
+  .twk-chip svg{position:absolute;top:6px;left:6px;width:13px;height:13px;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+`;
+
+function useTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  const setTweak = React.useCallback((keyOrEdits, val) => {
+    const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
+      ? keyOrEdits : { [keyOrEdits]: val };
+    setValues((prev) => ({ ...prev, ...edits }));
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+    window.dispatchEvent(new CustomEvent('tweakchange', { detail: edits }));
+  }, []);
+  return [values, setTweak];
+}
+
+function TweaksPanel({ title = 'Tweaks', children }) {
+  const [open, setOpen] = React.useState(false);
+  const dragRef = React.useRef(null);
+  const offsetRef = React.useRef({ x: 16, y: 16 });
+  const PAD = 16;
+
+  const clampToViewport = React.useCallback(() => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const w = panel.offsetWidth, h = panel.offsetHeight;
+    const maxRight = Math.max(PAD, window.innerWidth - w - PAD);
+    const maxBottom = Math.max(PAD, window.innerHeight - h - PAD);
+    offsetRef.current = {
+      x: Math.min(maxRight, Math.max(PAD, offsetRef.current.x)),
+      y: Math.min(maxBottom, Math.max(PAD, offsetRef.current.y)),
+    };
+    panel.style.right = offsetRef.current.x + 'px';
+    panel.style.bottom = offsetRef.current.y + 'px';
+  }, []);
+
+  React.useEffect(() => {
+    if (!open) return;
+    clampToViewport();
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', clampToViewport);
+      return () => window.removeEventListener('resize', clampToViewport);
+    }
+    const ro = new ResizeObserver(clampToViewport);
+    ro.observe(document.documentElement);
+    return () => ro.disconnect();
+  }, [open, clampToViewport]);
+
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      const t = e?.data?.type;
+      if (t === '__activate_edit_mode') setOpen(true);
+      else if (t === '__deactivate_edit_mode') setOpen(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  const dismiss = () => {
+    setOpen(false);
+    window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+  };
+
+  const onDragStart = (e) => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const r = panel.getBoundingClientRect();
+    const sx = e.clientX, sy = e.clientY;
+    const startRight = window.innerWidth - r.right;
+    const startBottom = window.innerHeight - r.bottom;
+    const move = (ev) => {
+      offsetRef.current = {
+        x: startRight - (ev.clientX - sx),
+        y: startBottom - (ev.clientY - sy),
+      };
+      clampToViewport();
+    };
+    const up = () => {
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseup', up);
+    };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+  };
+
+  if (!open) return null;
+  return (
+    <>
+      <style>{__TWEAKS_STYLE}</style>
+      <div ref={dragRef} className="twk-panel" data-omelette-chrome=""
+           style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
+        <div className="twk-hd" onMouseDown={onDragStart}>
+          <b>{title}</b>
+          <button className="twk-x" aria-label="Close tweaks"
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onClick={dismiss}>✕</button>
+        </div>
+        <div className="twk-body">
+          {children}
+        </div>
+      </div>
+    </>
+  );
+}
+
+function TweakSection({ label, children }) {
+  return (
+    <>
+      <div className="twk-sect">{label}</div>
+      {children}
+    </>
+  );
+}
+
+function TweakRow({ label, value, children, inline = false }) {
+  return (
+    <div className={inline ? 'twk-row twk-row-h' : 'twk-row'}>
+      <div className="twk-lbl">
+        <span>{label}</span>
+        {value != null && <span className="twk-val">{value}</span>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function TweakSlider({ label, value, min = 0, max = 100, step = 1, unit = '', onChange }) {
+  return (
+    <TweakRow label={label} value={`${value}${unit}`}>
+      <input type="range" className="twk-slider" min={min} max={max} step={step}
+             value={value} onChange={(e) => onChange(Number(e.target.value))} />
+    </TweakRow>
+  );
+}
+
+function TweakToggle({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <button type="button" className="twk-toggle" data-on={value ? '1' : '0'}
+              role="switch" aria-checked={!!value}
+              onClick={() => onChange(!value)}><i /></button>
+    </div>
+  );
+}
+
+function TweakRadio({ label, value, options, onChange }) {
+  const trackRef = React.useRef(null);
+  const [dragging, setDragging] = React.useState(false);
+  const valueRef = React.useRef(value);
+  valueRef.current = value;
+
+  const labelLen = (o) => String(typeof o === 'object' ? o.label : o).length;
+  const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
+  const fitsAsSegments = maxLen <= ({ 2: 16, 3: 10 }[options.length] ?? 0);
+  if (!fitsAsSegments) {
+    const resolve = (s) => {
+      const m = options.find((o) => String(typeof o === 'object' ? o.value : o) === s);
+      return m === undefined ? s : typeof m === 'object' ? m.value : m;
+    };
+    return <TweakSelect label={label} value={value} options={options}
+                        onChange={(s) => onChange(resolve(s))} />;
+  }
+  const opts = options.map((o) => (typeof o === 'object' ? o : { value: o, label: o }));
+  const idx = Math.max(0, opts.findIndex((o) => o.value === value));
+  const n = opts.length;
+
+  const segAt = (clientX) => {
+    const r = trackRef.current.getBoundingClientRect();
+    const inner = r.width - 4;
+    const i = Math.floor(((clientX - r.left - 2) / inner) * n);
+    return opts[Math.max(0, Math.min(n - 1, i))].value;
+  };
+
+  const onPointerDown = (e) => {
+    setDragging(true);
+    const v0 = segAt(e.clientX);
+    if (v0 !== valueRef.current) onChange(v0);
+    const move = (ev) => {
+      if (!trackRef.current) return;
+      const v = segAt(ev.clientX);
+      if (v !== valueRef.current) onChange(v);
+    };
+    const up = () => {
+      setDragging(false);
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+
+  return (
+    <TweakRow label={label}>
+      <div ref={trackRef} role="radiogroup" onPointerDown={onPointerDown}
+           className={dragging ? 'twk-seg dragging' : 'twk-seg'}>
+        <div className="twk-seg-thumb"
+             style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`,
+                      width: `calc((100% - 4px) / ${n})` }} />
+        {opts.map((o) => (
+          <button key={o.value} type="button" role="radio" aria-checked={o.value === value}>
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </TweakRow>
+  );
+}
+
+function TweakSelect({ label, value, options, onChange }) {
+  return (
+    <TweakRow label={label}>
+      <select className="twk-field" value={value} onChange={(e) => onChange(e.target.value)}>
+        {options.map((o) => {
+          const v = typeof o === 'object' ? o.value : o;
+          const l = typeof o === 'object' ? o.label : o;
+          return <option key={v} value={v}>{l}</option>;
+        })}
+      </select>
+    </TweakRow>
+  );
+}
+
+function TweakText({ label, value, placeholder, onChange }) {
+  return (
+    <TweakRow label={label}>
+      <input className="twk-field" type="text" value={value} placeholder={placeholder}
+             onChange={(e) => onChange(e.target.value)} />
+    </TweakRow>
+  );
+}
+
+function TweakNumber({ label, value, min, max, step = 1, unit = '', onChange }) {
+  const clamp = (n) => {
+    if (min != null && n < min) return min;
+    if (max != null && n > max) return max;
+    return n;
+  };
+  const startRef = React.useRef({ x: 0, val: 0 });
+  const onScrubStart = (e) => {
+    e.preventDefault();
+    startRef.current = { x: e.clientX, val: value };
+    const decimals = (String(step).split('.')[1] || '').length;
+    const move = (ev) => {
+      const dx = ev.clientX - startRef.current.x;
+      const raw = startRef.current.val + dx * step;
+      const snapped = Math.round(raw / step) * step;
+      onChange(clamp(Number(snapped.toFixed(decimals))));
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+  return (
+    <div className="twk-num">
+      <span className="twk-num-lbl" onPointerDown={onScrubStart}>{label}</span>
+      <input type="number" value={value} min={min} max={max} step={step}
+             onChange={(e) => onChange(clamp(Number(e.target.value)))} />
+      {unit && <span className="twk-num-unit">{unit}</span>}
+    </div>
+  );
+}
+
+function __twkIsLight(hex) {
+  const h = String(hex).replace('#', '');
+  const x = h.length === 3 ? h.replace(/./g, (c) => c + c) : h.padEnd(6, '0');
+  const n = parseInt(x.slice(0, 6), 16);
+  if (Number.isNaN(n)) return true;
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return r * 299 + g * 587 + b * 114 > 148000;
+}
+
+const __TwkCheck = ({ light }) => (
+  <svg viewBox="0 0 14 14" aria-hidden="true">
+    <path d="M3 7.2 5.8 10 11 4.2" fill="none" strokeWidth="2.2"
+          strokeLinecap="round" strokeLinejoin="round"
+          stroke={light ? 'rgba(0,0,0,.78)' : '#fff'} />
+  </svg>
+);
+
+function TweakColor({ label, value, options, onChange }) {
+  if (!options || !options.length) {
+    return (
+      <div className="twk-row twk-row-h">
+        <div className="twk-lbl"><span>{label}</span></div>
+        <input type="color" className="twk-swatch" value={value}
+               onChange={(e) => onChange(e.target.value)} />
+      </div>
+    );
+  }
+  const key = (o) => String(JSON.stringify(o)).toLowerCase();
+  const cur = key(value);
+  return (
+    <TweakRow label={label}>
+      <div className="twk-chips" role="radiogroup">
+        {options.map((o, i) => {
+          const colors = Array.isArray(o) ? o : [o];
+          const [hero, ...rest] = colors;
+          const sup = rest.slice(0, 4);
+          const on = key(o) === cur;
+          return (
+            <button key={i} type="button" className="twk-chip" role="radio"
+                    aria-checked={on} data-on={on ? '1' : '0'}
+                    aria-label={colors.join(', ')} title={colors.join(' · ')}
+                    style={{ background: hero }}
+                    onClick={() => onChange(o)}>
+              {sup.length > 0 && (
+                <span>
+                  {sup.map((c, j) => <i key={j} style={{ background: c }} />)}
+                </span>
+              )}
+              {on && <__TwkCheck light={__twkIsLight(hero)} />}
+            </button>
+          );
+        })}
+      </div>
+    </TweakRow>
+  );
+}
+
+function TweakButton({ label, onClick, secondary = false }) {
+  return (
+    <button type="button" className={secondary ? 'twk-btn secondary' : 'twk-btn'}
+            onClick={onClick}>{label}</button>
+  );
+}
+
+Object.assign(window, {
+  useTweaks, TweaksPanel, TweakSection, TweakRow,
+  TweakSlider, TweakToggle, TweakRadio, TweakSelect,
+  TweakText, TweakNumber, TweakColor, TweakButton,
+});
+</script>
+
+<script type="text/babel" data-presets="react">
+/* ============================================================
+   storm-posts.jsx  — Storm Digital brand + all 40 posts
+   ============================================================ */
+
+// ── Design tokens (mirrors CSS :root, for inline usage) ──
+const T = {
+  ink: '#181d26',
+  canvas: '#ffffff',
+  coral: '#aa2d00',
+  forest: '#0a2e0e',
+  cream: '#f5e9d4',
+  dark: '#181d26',
+  body: '#333840',
+  muted: '#41454d',
+  hairline: '#dddddd',
+  stormBlue: '#1147e8',
+  white: '#ffffff',
+};
+
+// ── Surface config: bg + foreground colors ──
+const SURFACE = {
+  canvas: { bg: T.canvas, fg: T.ink, lede: T.body, eyebrowColor: T.coral, statColor: T.ink, borderColor: T.hairline },
+  coral:  { bg: T.coral,  fg: T.white, lede: 'rgba(255,255,255,0.82)', eyebrowColor: 'rgba(255,255,255,0.7)', statColor: T.white, borderColor: 'rgba(255,255,255,0.25)' },
+  forest: { bg: T.forest, fg: T.white, lede: 'rgba(255,255,255,0.82)', eyebrowColor: 'rgba(255,255,255,0.7)', statColor: T.white, borderColor: 'rgba(255,255,255,0.25)' },
+  dark:   { bg: T.dark,   fg: T.white, lede: 'rgba(255,255,255,0.82)', eyebrowColor: 'rgba(255,255,255,0.7)', statColor: T.white, borderColor: 'rgba(255,255,255,0.25)' },
+  cream:  { bg: T.cream,  fg: T.ink,   lede: T.body, eyebrowColor: T.coral, statColor: T.ink, borderColor: T.hairline },
+};
+
+// ── Storm Digital Wordmark ──
+const LightningBolt = ({ size = 18, color }) => (
+  <svg width={size} height={size * 1.3} viewBox="0 0 14 18" fill="none" style={{ flexShrink: 0 }}>
+    <path d="M8 1L2 10h5l-1 7 7-9H8l1-7z" fill={color || T.stormBlue} stroke="none" />
+  </svg>
+);
+
+const Wordmark = ({ surface = 'dark', small = false }) => {
+  const surf = SURFACE[surface] || SURFACE.dark;
+  const isDark = ['dark','coral','forest'].includes(surface);
+  const textColor = surf.fg;
+  const boltColor = isDark ? T.stormBlue : T.coral;
+  const fontSize = small ? 13 : 18;
+  const gap = small ? 6 : 8;
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap, userSelect: 'none' }}>
+      <LightningBolt size={small ? 12 : 16} color={boltColor} />
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: small ? 5 : 7 }}>
+        <span style={{
+          fontFamily: 'Inter, system-ui, sans-serif',
+          fontWeight: 700,
+          fontSize,
+          letterSpacing: '0.14em',
+          color: textColor,
+          lineHeight: 1,
+        }}>STORM</span>
+        <span style={{
+          fontFamily: 'Inter, system-ui, sans-serif',
+          fontWeight: 400,
+          fontSize,
+          letterSpacing: '0.06em',
+          color: isDark ? 'rgba(255,255,255,0.55)' : T.muted,
+          lineHeight: 1,
+        }}>DIGITAL</span>
+      </div>
+    </div>
+  );
+};
+
+// ── Post shell ──
+const PostShell = ({ surface = 'canvas', children, postNum, totalNum }) => {
+  const surf = SURFACE[surface] || SURFACE.canvas;
+  const isDark = ['dark','coral','forest'].includes(surface);
+  const urlColor = isDark ? 'rgba(255,255,255,0.42)' : T.muted;
+
+  return (
+    <div style={{
+      width: '100%', height: '100%',
+      background: surf.bg,
+      display: 'flex', flexDirection: 'column',
+      fontFamily: 'Inter, system-ui, sans-serif',
+      position: 'relative',
+      overflow: 'hidden',
+      boxSizing: 'border-box',
+    }}>
+      {/* Header */}
+      <div style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '56px 64px 0',
+        flexShrink: 0,
+      }}>
+        <Wordmark surface={surface} small />
+      </div>
+
+      {/* Body */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+        {children}
+      </div>
+
+      {/* Footer */}
+      <div style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 64px 56px',
+        flexShrink: 0,
+      }}>
+        <span style={{ fontSize: 15, fontWeight: 500, color: urlColor, letterSpacing: '0.02em', fontVariantNumeric: 'tabular-nums' }}>
+          {postNum ? String(postNum).padStart(2,'0') + (totalNum ? '/' + String(totalNum).padStart(2,'0') : '') : ''}
+        </span>
+        <span style={{ fontSize: 15, fontWeight: 400, color: urlColor, letterSpacing: '0.04em' }}>
+          storm.mkt.agency
+        </span>
+      </div>
+    </div>
+  );
+};
+
+// ── Template: bold ──
+const TplBold = ({ post, surface }) => {
+  const surf = SURFACE[surface] || SURFACE.canvas;
+  const isDark = ['dark','coral','forest'].includes(surface);
+  const lines = post.headline.split('\n');
+  return (
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 64px' }}>
+      {post.eyebrow && (
+        <div style={{
+          fontSize: 13, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase',
+          color: surf.eyebrowColor, marginBottom: 32,
+        }}>{post.eyebrow}</div>
+      )}
+      <h2 style={{
+        margin: 0,
+        fontSize: 64,
+        fontWeight: 400,
+        lineHeight: 1.08,
+        letterSpacing: '-0.02em',
+        color: surf.fg,
+        textWrap: 'balance',
+      }}>
+        {lines.map((line, i) => <div key={i}>{line}</div>)}
+      </h2>
+      {post.lede && (
+        <p style={{
+          margin: '32px 0 0',
+          fontSize: 20, fontWeight: 400, lineHeight: 1.4,
+          color: surf.lede,
+          letterSpacing: '-0.005em',
+          maxWidth: 840,
+        }}>{post.lede}</p>
+      )}
+    </div>
+  );
+};
+
+// ── Template: stat ──
+const TplStat = ({ post, surface }) => {
+  const surf = SURFACE[surface] || SURFACE.canvas;
+  return (
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 64px' }}>
+      {post.eyebrow && (
+        <div style={{
+          fontSize: 13, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase',
+          color: surf.eyebrowColor, marginBottom: 24,
+        }}>{post.eyebrow}</div>
+      )}
+      <div style={{
+        fontSize: 140, fontWeight: 500, lineHeight: 0.9,
+        letterSpacing: '-0.04em',
+        color: surf.statColor,
+        fontVariantNumeric: 'tabular-nums',
+        display: 'flex', alignItems: 'flex-end', gap: 8,
+        marginBottom: 32,
+      }}>
+        <span>{post.stat}</span>
+        {post.statUnit && <span style={{ fontSize: 56, fontWeight: 400, letterSpacing: '-0.02em', marginBottom: 10 }}>{post.statUnit}</span>}
+      </div>
+      <div style={{
+        fontSize: 28, fontWeight: 400, lineHeight: 1.18,
+        color: surf.fg, maxWidth: 820,
+        letterSpacing: '-0.01em',
+        marginBottom: post.lede ? 20 : 0,
+      }}>{post.headline}</div>
+      {post.lede && (
+        <p style={{
+          margin: 0,
+          fontSize: 18, fontWeight: 400, lineHeight: 1.4,
+          color: surf.lede, maxWidth: 760,
+        }}>{post.lede}</p>
+      )}
+    </div>
+  );
+};
+
+// ── Template: list ──
+const TplList = ({ post, surface }) => {
+  const surf = SURFACE[surface] || SURFACE.canvas;
+  const isDark = ['dark','coral','forest'].includes(surface);
+  return (
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', padding: '48px 64px 0' }}>
+      {post.eyebrow && (
+        <div style={{
+          fontSize: 13, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase',
+          color: surf.eyebrowColor, marginBottom: 20,
+        }}>{post.eyebrow}</div>
+      )}
+      <h2 style={{
+        margin: '0 0 36px',
+        fontSize: 44, fontWeight: 400, lineHeight: 1.1,
+        letterSpacing: '-0.02em',
+        color: surf.fg,
+        maxWidth: 820,
+      }}>{post.headline}</h2>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        {(post.items || []).map((item, i) => (
+          <div key={i} style={{
+            display: 'flex', alignItems: 'flex-start', gap: 24,
+            padding: '18px 0',
+            borderTop: i === 0 ? `1px solid ${surf.borderColor}` : 'none',
+            borderBottom: `1px solid ${surf.borderColor}`,
+          }}>
+            <span style={{
+              fontSize: 13, fontWeight: 700,
+              color: surf.eyebrowColor,
+              letterSpacing: '0.04em',
+              flexShrink: 0,
+              marginTop: 3,
+              minWidth: 24,
+            }}>{String(i + 1).padStart(2,'0')}</span>
+            <span style={{
+              fontSize: 18, fontWeight: 400, lineHeight: 1.45,
+              color: surf.fg,
+              letterSpacing: '-0.005em',
+            }}>{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ── Dispatch ──
+const Post = ({ post, index, total }) => {
+  const surface = post.surface || 'canvas';
+  const BodyTpl = post.template === 'stat' ? TplStat
+                : post.template === 'list' ? TplList
+                : TplBold;
+
+  return (
+    <PostShell surface={surface} postNum={index} totalNum={total}>
+      <BodyTpl post={post} surface={surface} />
+    </PostShell>
+  );
+};
+
+Object.assign(window, { Post });
+
+// ── Data ──
+const SINGLES = [
+  { id: 's01', surface: 'dark', template: 'bold', category: 'BRAND',
+    eyebrow: 'STORM DIGITAL',
+    headline: 'Built for contractors.\nWired for growth.',
+    lede: 'We generate leads for roofers, HVAC companies, window installers, and plumbers. That\'s it. No generalist nonsense.' },
+
+  { id: 's02', surface: 'coral', template: 'bold', category: 'BRAND',
+    eyebrow: 'OUR FOCUS',
+    headline: 'We only work with home service contractors.',
+    lede: 'Deep vertical expertise means better results. We know your seasonality, your CPL benchmarks, your objections.' },
+
+  { id: 's03', surface: 'canvas', template: 'stat', category: 'MARKET',
+    eyebrow: 'SEARCH BEHAVIOR',
+    stat: '97%', statUnit: '',
+    headline: 'of homeowners search online before calling a contractor.',
+    lede: 'If you\'re not on page 1, you\'re invisible to nearly all of them.' },
+
+  { id: 's04', surface: 'coral', template: 'stat', category: 'LEADS',
+    eyebrow: 'COST PER LEAD',
+    stat: '$38', statUnit: '',
+    headline: 'Average CPL for our roofing clients after 90 days.',
+    lede: 'Industry average: $120+. The gap is targeting, landing page quality, and bid strategy.' },
+
+  { id: 's05', surface: 'canvas', template: 'list', category: 'SEO',
+    eyebrow: 'LOCAL SEO',
+    headline: '5 things that kill your Google ranking',
+    items: [
+      'No Google Business Profile (or unclaimed)',
+      'Zero reviews in the past 30 days',
+      'Website not mobile-optimized',
+      'Inconsistent NAP across directories',
+      'No local landing pages per service area',
+    ] },
+
+  { id: 's06', surface: 'forest', template: 'bold', category: 'GOOGLE ADS',
+    eyebrow: 'PAID SEARCH',
+    headline: 'Your Google Ads are probably bleeding money.',
+    lede: 'Wrong match types, no negative keyword list, sending traffic to your homepage. We fix all three in week one.' },
+
+  { id: 's07', surface: 'canvas', template: 'stat', category: 'REVIEWS',
+    eyebrow: 'REVIEW VELOCITY',
+    stat: '4.8★', statUnit: '',
+    headline: 'Average rating across our managed Google profiles.',
+    lede: 'Reviews drive both trust and ranking. We build the system so they come in automatically.' },
+
+  { id: 's08', surface: 'cream', template: 'list', category: 'WEBSITE',
+    eyebrow: 'CONVERSION RATE',
+    headline: '5 things your website must have to convert',
+    items: [
+      'Phone number in the top-right corner, always',
+      'Load time under 2.5 seconds on mobile',
+      'One clear CTA above the fold',
+      'Trust signals: reviews, licenses, insurance',
+      'Service-specific landing pages',
+    ] },
+
+  { id: 's09', surface: 'dark', template: 'stat', category: 'HVAC',
+    eyebrow: 'HVAC CLIENT RESULT',
+    stat: '3×', statUnit: '',
+    headline: 'lead volume increase in 60 days.',
+    lede: 'HVAC company in Phoenix. Google Ads + landing page rebuild. Same budget, triple the output.' },
+
+  { id: 's10', surface: 'coral', template: 'bold', category: 'ROOFING',
+    eyebrow: 'ROOFING',
+    headline: 'Storm season is 8 weeks away.\nIs your pipeline ready?',
+    lede: 'Contractors who invest in SEO and ads before peak season own the market. Those who wait, chase it.' },
+
+  { id: 's11', surface: 'canvas', template: 'stat', category: 'WINDOWS',
+    eyebrow: 'WINDOWS CLIENT',
+    stat: '47', statUnit: 'new',
+    headline: 'qualified leads in the first 30 days.',
+    lede: 'Window replacement company in Dallas. Google Ads with intent-matched landing pages.' },
+
+  { id: 's12', surface: 'forest', template: 'list', category: 'GOOGLE ADS',
+    eyebrow: 'GOOGLE ADS',
+    headline: 'The 4 campaign types that work for contractors',
+    items: [
+      'Search — brand + service + location keywords',
+      'Local Services Ads — pay per verified lead',
+      'Display remarketing — recapture lost visitors',
+      'Performance Max — after search is profitable',
+    ] },
+
+  { id: 's13', surface: 'cream', template: 'list', category: 'SEO',
+    eyebrow: 'LOCAL SEO CHECKLIST',
+    headline: 'Your GBP audit in 60 seconds',
+    items: [
+      'Business name matches your signage exactly',
+      'Primary category set correctly',
+      'At least 10 photos uploaded this quarter',
+      'Responding to every review within 24h',
+      'Posts published at least once per week',
+    ] },
+
+  { id: 's14', surface: 'dark', template: 'bold', category: 'PLUMBING',
+    eyebrow: 'PLUMBING CLIENT',
+    headline: '#1 ranked plumber\nin their city.\n4 months.',
+    lede: 'Local SEO + Google Ads + review strategy. They now turn away work. That\'s a good problem.' },
+
+  { id: 's15', surface: 'canvas', template: 'stat', category: 'MARKET',
+    eyebrow: 'DIGITAL AD SPEND',
+    stat: '$12B', statUnit: '',
+    headline: 'spent by home service companies on digital ads in 2024.',
+    lede: 'Your competitors are spending. The question is whether they\'re spending smart.' },
+
+  { id: 's16', surface: 'coral', template: 'bold', category: 'CTA',
+    eyebrow: 'FREE AUDIT',
+    headline: '15-minute audit.\nNo pitch.\nNo obligation.',
+    lede: 'We\'ll show you exactly where your leads are leaking online. Then you decide if we can help.' },
+
+  { id: 's17', surface: 'forest', template: 'bold', category: 'BRAND',
+    eyebrow: 'HOW WE WORK',
+    headline: 'We scrape the market.\nWe target the gaps.\nYou close the jobs.',
+    lede: 'Data-driven campaign setup, weekly reporting, monthly strategy reviews. You focus on the work.' },
+
+  { id: 's18', surface: 'canvas', template: 'stat', category: 'ROOFING',
+    eyebrow: 'ROOFING GOOGLE ADS',
+    stat: '68%', statUnit: '',
+    headline: 'of roofing leads come from Google Search.',
+    lede: 'Not Facebook. Not referrals (though those help). Google is where intent lives.' },
+
+  { id: 's19', surface: 'cream', template: 'list', category: 'WEBSITE',
+    eyebrow: 'WEBSITE SPEED',
+    headline: 'Why your site speed is costing you leads',
+    items: [
+      '53% of mobile users leave after 3 seconds',
+      'Google uses page speed as a ranking signal',
+      'Slow sites have higher bounce rates from ads',
+      'Each second of delay = ~7% lower conversions',
+      'Fix: compress images, use CDN, upgrade hosting',
+    ] },
+
+  { id: 's20', surface: 'dark', template: 'bold', category: 'CTA',
+    eyebrow: 'STORM DIGITAL',
+    headline: 'More leads.\nLess guesswork.',
+    lede: 'That\'s the job. DM us or visit storm.mkt.agency for a free 15-minute strategy call.' },
+
+  { id: 's21', surface: 'coral', template: 'stat', category: 'RESULTS',
+    eyebrow: 'AVERAGE CLIENT ROI',
+    stat: '8×', statUnit: '',
+    headline: 'return on marketing spend across our client portfolio.',
+    lede: 'Measured by revenue attributed to Storm-managed campaigns. Tracked monthly.' },
+
+  { id: 's22', surface: 'canvas', template: 'list', category: 'HVAC',
+    eyebrow: 'HVAC SEASONALITY',
+    headline: '4 months contractors forget to advertise',
+    items: [
+      'February — plant the seed before spring AC season',
+      'September — prep for winter heating demand',
+      'November — emergency heating campaign window',
+      'January — off-peak = lower CPCs, same intent',
+    ] },
+
+  { id: 's23', surface: 'forest', template: 'stat', category: 'REVIEWS',
+    eyebrow: 'REVIEW IMPACT',
+    stat: '270%', statUnit: '',
+    headline: 'more clicks for businesses with 50+ Google reviews.',
+    lede: 'Reviews are a multiplier. More reviews → higher CTR → better Quality Score → lower ad cost.' },
+
+  { id: 's24', surface: 'cream', template: 'bold', category: 'BRAND',
+    eyebrow: 'STORM MISSION',
+    headline: 'Every contractor deserves a marketing team that knows their trade.',
+    lede: 'Generalist agencies waste your budget learning your business. We already know it.' },
+
+  { id: 's25', surface: 'dark', template: 'bold', category: 'CTA',
+    eyebrow: 'GET STARTED',
+    headline: 'Ready to fill your pipeline?',
+    lede: 'storm.mkt.agency — Free audit. No contracts. No guesswork. Just leads.' },
+];
+
+const CAROUSELS = [
+  {
+    id: 'c1', title: '5 Reasons Contractors Fail Online',
+    slides: [
+      { id: 'c1s1', surface: 'coral', template: 'bold',
+        eyebrow: 'SERIES · 1 OF 5', headline: '5 reasons contractors fail online.\n(And how to fix each one.)', lede: 'Swipe →' },
+      { id: 'c1s2', surface: 'canvas', template: 'list',
+        eyebrow: 'REASON 1', headline: 'Your website isn\'t built to convert.',
+        lede: 'Pretty ≠ effective. Most contractor sites have no clear CTA, slow load time, and zero local trust signals.',
+        items: ['No phone in header', 'No social proof above fold', 'Same page for every city you serve'] },
+      { id: 'c1s3', surface: 'canvas', template: 'list',
+        eyebrow: 'REASON 2', headline: 'You\'re targeting the wrong keywords.',
+        lede: '"HVAC company" gets searches. "HVAC repair Austin TX" gets customers.',
+        items: ['Broad match wastes 40–70% of budget', 'Location qualifiers double intent', 'Negative keywords stop bleeding fast'] },
+      { id: 'c1s4', surface: 'canvas', template: 'list',
+        eyebrow: 'REASONS 3–5', headline: 'Three more that kill pipelines.',
+        items: ['No review system (customers don\'t leave them without a nudge)', 'Ignoring Google Business Profile (free real estate)', 'No remarketing (70% of visitors leave without calling)'] },
+      { id: 'c1s5', surface: 'dark', template: 'bold',
+        eyebrow: 'THE FIX', headline: 'We solve all five.\nIn the first 30 days.', lede: 'storm.mkt.agency — Free audit, no pitch.' },
+    ],
+  },
+  {
+    id: 'c2', title: 'The Full Lead Gen Stack',
+    slides: [
+      { id: 'c2s1', surface: 'forest', template: 'bold',
+        eyebrow: 'THE STACK · 1 OF 5', headline: 'The complete lead gen stack for home service contractors.', lede: 'Each layer multiplies the one below it. →' },
+      { id: 'c2s2', surface: 'canvas', template: 'list',
+        eyebrow: 'LAYER 1 — FOUNDATION', headline: 'Website + Google Business Profile',
+        items: ['Fast, mobile-first site (< 2.5s load)', 'Service-area landing pages', 'GBP fully optimized with weekly posts', '50+ reviews with response cadence'] },
+      { id: 'c2s3', surface: 'canvas', template: 'list',
+        eyebrow: 'LAYER 2 — TRAFFIC', headline: 'Paid + Organic Search',
+        items: ['Google Search Ads on high-intent keywords', 'Local Services Ads (pay per verified lead)', 'SEO targeting city + service combos', 'Negative keyword list updated weekly'] },
+      { id: 'c2s4', surface: 'canvas', template: 'list',
+        eyebrow: 'LAYER 3 — CONVERT + RETAIN', headline: 'Conversion & Retention',
+        items: ['Call tracking with attribution', 'Remarketing to site visitors', 'Email/SMS follow-up sequence', 'Monthly performance review'] },
+      { id: 'c2s5', surface: 'coral', template: 'bold',
+        eyebrow: 'FULL STACK', headline: 'We build and manage all three layers.', lede: 'Most agencies do one or two. We do the whole system.' },
+    ],
+  },
+  {
+    id: 'c3', title: 'How Storm Works',
+    slides: [
+      { id: 'c3s1', surface: 'dark', template: 'bold',
+        eyebrow: 'OUR PROCESS · 1 OF 5', headline: 'How we go from zero to pipeline in 30 days.', lede: 'Step by step. →' },
+      { id: 'c3s2', surface: 'canvas', template: 'list',
+        eyebrow: 'WEEK 1', headline: 'Audit + Setup',
+        items: ['Full website + ads + SEO audit', 'Competitor landscape analysis', 'Campaign architecture built', 'Tracking + analytics installed'] },
+      { id: 'c3s3', surface: 'canvas', template: 'list',
+        eyebrow: 'WEEKS 2–3', headline: 'Launch + Optimize',
+        items: ['Google Ads go live', 'Landing pages deployed', 'GBP and review system activated', 'Daily bid management begins'] },
+      { id: 'c3s4', surface: 'canvas', template: 'list',
+        eyebrow: 'MONTH 2+', headline: 'Scale + Report',
+        items: ['Weekly performance reports', 'Monthly strategy review call', 'Budget reallocation toward what works', 'SEO content + link building ongoing'] },
+      { id: 'c3s5', surface: 'coral', template: 'bold',
+        eyebrow: 'READY?', headline: 'Start with a free 15-min audit.', lede: 'We show you the gaps, you decide if you want us to fill them. storm.mkt.agency' },
+    ],
+  },
+];
+
+// ── Brand Kit components ──
+
+const ColorSwatch = ({ name, hex, dark }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+    <div style={{
+      width: '100%', aspectRatio: '1.5/1', borderRadius: 10,
+      background: hex,
+      border: dark ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.07)',
+      boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+    }} />
+    <div>
+      <div style={{ fontWeight: 700, fontSize: 14, color: '#181d26', letterSpacing: '-0.01em' }}>{name}</div>
+      <div style={{ fontWeight: 400, fontSize: 12, color: '#41454d', fontFamily: 'ui-monospace, SF Mono, monospace', marginTop: 2 }}>{hex}</div>
+    </div>
+  </div>
+);
+
+const BrandIdentityBoard = () => (
+  <div style={{
+    width: '100%', height: '100%',
+    background: '#fafaf8',
+    fontFamily: 'Inter, system-ui, sans-serif',
+    padding: 56,
+    boxSizing: 'border-box',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gridTemplateRows: 'auto auto 1fr',
+    gap: 40,
+    overflow: 'hidden',
+  }}>
+    {/* Header */}
+    <div style={{ gridColumn: '1 / -1', borderBottom: '1px solid #e0e2e6', paddingBottom: 28 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12 }}>
+        <LightningBolt size={28} color={T.stormBlue} />
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
+          <span style={{ fontWeight: 700, fontSize: 32, letterSpacing: '0.14em', color: T.ink }}>STORM</span>
+          <span style={{ fontWeight: 400, fontSize: 32, letterSpacing: '0.06em', color: T.muted }}>DIGITAL</span>
+        </div>
+        <div style={{
+          marginLeft: 12,
+          fontSize: 11, fontWeight: 500, letterSpacing: '0.08em',
+          background: '#f0f0ee', border: '1px solid #dddddd',
+          borderRadius: 999, padding: '4px 10px', color: T.muted,
+        }}>storm.mkt.agency</div>
+      </div>
+      <div style={{ fontSize: 15, color: T.body, maxWidth: 640 }}>
+        <strong>Mission:</strong> Help home service contractors dominate their local market online.<br />
+        <strong>Tagline:</strong> Built for contractors. Wired for growth.
+      </div>
+    </div>
+
+    {/* Color palette */}
+    <div>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: T.muted, marginBottom: 16 }}>Color Palette</div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+        <ColorSwatch name="Ink" hex="#181d26" dark />
+        <ColorSwatch name="Coral" hex="#aa2d00" />
+        <ColorSwatch name="Forest" hex="#0a2e0e" dark />
+        <ColorSwatch name="Canvas" hex="#ffffff" />
+        <ColorSwatch name="Cream" hex="#f5e9d4" />
+        <ColorSwatch name="Storm Blue" hex="#1147e8" />
+      </div>
+    </div>
+
+    {/* Typography */}
+    <div>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: T.muted, marginBottom: 16 }}>Typography — Inter</div>
+      <div style={{ background: '#181d26', borderRadius: 12, padding: '24px 28px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+        <div>
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 4 }}>Display · 400 · 64px</div>
+          <div style={{ fontSize: 36, fontWeight: 400, lineHeight: 1, letterSpacing: '-0.02em', color: '#ffffff' }}>Built for contractors.</div>
+        </div>
+        <div>
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 4 }}>Stat · 500 · 140px</div>
+          <div style={{ fontSize: 52, fontWeight: 500, lineHeight: 0.9, letterSpacing: '-0.04em', color: '#aa2d00' }}>8×</div>
+        </div>
+        <div>
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 4 }}>Body · 400 · 20px</div>
+          <div style={{ fontSize: 15, fontWeight: 400, lineHeight: 1.4, color: 'rgba(255,255,255,0.7)' }}>Average CPL after 90 days. Industry avg: $120+.</div>
+        </div>
+        <div>
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 4 }}>Eyebrow · 700 · 13px</div>
+          <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#1147e8' }}>ROOFING · HVAC · WINDOWS</div>
+        </div>
+      </div>
+    </div>
+
+    {/* Rules */}
+    <div style={{ gridColumn: '1 / -1' }}>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: T.muted, marginBottom: 16 }}>Layout Rules</div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+        <div style={{ background: '#fff', border: '1px solid #e0e2e6', borderRadius: 10, padding: '16px 18px', fontSize: 13, lineHeight: 1.6, color: T.body }}>
+          <strong style={{ color: T.ink }}>Post padding</strong><br />64px sides · 56px top/bottom
+        </div>
+        <div style={{ background: '#fff', border: '1px solid #e0e2e6', borderRadius: 10, padding: '16px 18px', fontSize: 13, lineHeight: 1.6, color: T.body }}>
+          <strong style={{ color: T.ink }}>3 templates</strong><br />bold · stat · list<br />One idea per post
+        </div>
+        <div style={{ background: '#fff', border: '1px solid #e0e2e6', borderRadius: 10, padding: '16px 18px', fontSize: 13, lineHeight: 1.6, color: T.body }}>
+          <strong style={{ color: T.ink }}>Coral = CTAs</strong><br />High-voltage surface for statements + calls to action
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const FacebookCoverBoard = () => (
+  <div style={{
+    width: '100%', height: '100%',
+    background: T.coral,
+    fontFamily: 'Inter, system-ui, sans-serif',
+    display: 'flex', flexDirection: 'column',
+    justifyContent: 'center', alignItems: 'center',
+    position: 'relative',
+    boxSizing: 'border-box',
+  }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+      <LightningBolt size={36} color="rgba(255,255,255,0.9)" />
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
+        <span style={{ fontWeight: 700, fontSize: 52, letterSpacing: '0.14em', color: '#ffffff' }}>STORM</span>
+        <span style={{ fontWeight: 400, fontSize: 52, letterSpacing: '0.06em', color: 'rgba(255,255,255,0.65)' }}>DIGITAL</span>
+      </div>
+    </div>
+    <div style={{ marginTop: 12, fontSize: 18, fontWeight: 400, letterSpacing: '0.04em', color: 'rgba(255,255,255,0.72)' }}>
+      Built for contractors. Wired for growth.
+    </div>
+    <div style={{ position: 'absolute', bottom: 24, right: 32, fontSize: 13, fontWeight: 400, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.04em' }}>
+      storm.mkt.agency
+    </div>
+  </div>
+);
+
+const LinkedInCoverBoard = () => (
+  <div style={{
+    width: '100%', height: '100%',
+    display: 'grid', gridTemplateColumns: '1fr 1fr',
+    fontFamily: 'Inter, system-ui, sans-serif',
+    overflow: 'hidden',
+  }}>
+    {/* Left — ink */}
+    <div style={{
+      background: T.ink,
+      display: 'flex', flexDirection: 'column',
+      justifyContent: 'center', alignItems: 'flex-start',
+      padding: '0 52px',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+        <LightningBolt size={26} color={T.stormBlue} />
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+          <span style={{ fontWeight: 700, fontSize: 32, letterSpacing: '0.14em', color: '#ffffff' }}>STORM</span>
+          <span style={{ fontWeight: 400, fontSize: 32, letterSpacing: '0.06em', color: 'rgba(255,255,255,0.55)' }}>DIGITAL</span>
+        </div>
+      </div>
+      <div style={{ fontSize: 14, fontWeight: 400, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+        Home Services · US Market
+      </div>
+    </div>
+    {/* Right — cream */}
+    <div style={{
+      background: T.cream,
+      display: 'flex', flexDirection: 'column',
+      justifyContent: 'center', alignItems: 'flex-start',
+      padding: '0 52px',
+    }}>
+      <div style={{ fontSize: 22, fontWeight: 400, lineHeight: 1.2, letterSpacing: '-0.01em', color: T.ink, marginBottom: 14 }}>
+        Built for contractors.<br />Wired for growth.
+      </div>
+      <div style={{ fontSize: 14, fontWeight: 400, color: T.muted, letterSpacing: '0.04em' }}>
+        storm.mkt.agency
+      </div>
+    </div>
+  </div>
+);
+
+// ── App ──
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "globalAccent": "auto",
+  "scale": 1
+}/*EDITMODE-END*/;
+
+const App = () => {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  return (
+    <>
+      <DesignCanvas title="STORM DIGITAL — 40 posts" subtitle="Home services · US market · v1">
+
+        {/* Brand Kit */}
+        <DCSection id="brand-kit" title="Brand Kit" subtitle="Logo · Covers · Identity">
+          <DCArtboard id="brand-identity" label="Brand Identity" width={1200} height={800}>
+            <BrandIdentityBoard />
+          </DCArtboard>
+          <DCArtboard id="facebook-cover" label="Facebook Cover · 820×312" width={820} height={312}>
+            <FacebookCoverBoard />
+          </DCArtboard>
+          <DCArtboard id="linkedin-cover" label="LinkedIn Cover · 1584×396" width={1584} height={396}>
+            <LinkedInCoverBoard />
+          </DCArtboard>
+        </DCSection>
+
+        {/* 25 Singles */}
+        <DCSection id="singles" title="25 Feed Posts · 1080×1080" subtitle="bold · stat · list templates across 5 surfaces">
+          {SINGLES.map((post, i) => (
+            <DCArtboard
+              key={post.id}
+              id={post.id}
+              label={`${String(i+1).padStart(2,'0')} · ${post.template.toUpperCase()} · ${post.surface.toUpperCase()}`}
+              width={1080}
+              height={1080}
+            >
+              <div style={{ width: 1080, height: 1080 }}>
+                <Post post={post} index={i+1} total={25} />
+              </div>
+            </DCArtboard>
+          ))}
+        </DCSection>
+
+        {/* 3 Carousels */}
+        {CAROUSELS.map((carousel, ci) => (
+          <DCSection
+            key={carousel.id}
+            id={carousel.id}
+            title={`Carousel ${ci+1} · ${carousel.title}`}
+            subtitle={`1080×1350 · ${carousel.slides.length} slides`}
+          >
+            {carousel.slides.map((slide, si) => (
+              <DCArtboard
+                key={slide.id}
+                id={slide.id}
+                label={`${carousel.id.toUpperCase()} · ${String(si+1).padStart(2,'0')} · ${slide.surface.toUpperCase()}`}
+                width={1080}
+                height={1350}
+              >
+                <div style={{ width: 1080, height: 1350 }}>
+                  <Post post={slide} index={si+1} total={carousel.slides.length} />
+                </div>
+              </DCArtboard>
+            ))}
+          </DCSection>
+        ))}
+
+      </DesignCanvas>
+
+      <TweaksPanel title="Storm Digital · Tweaks">
+        <TweakSection label="Brand">
+          <TweakRadio
+            label="Global accent"
+            value={t.globalAccent}
+            options={[
+              { value: 'auto', label: 'Auto' },
+              { value: 'storm-blue', label: 'Storm Blue' },
+            ]}
+            onChange={(v) => setTweak('globalAccent', v)}
+          />
+        </TweakSection>
+      </TweaksPanel>
+    </>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

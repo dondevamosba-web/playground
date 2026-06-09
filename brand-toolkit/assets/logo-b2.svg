@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 75">
+  <defs>
+    <clipPath id="wc">
+      <circle cx="24" cy="32" r="21.5"/>
+    </clipPath>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&amp;family=Inter:wght@400&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- O glyph: circular ring mark -->
+  <circle cx="24" cy="32" r="24" stroke="#0EA5E9" stroke-width="3" fill="none"/>
+
+  <!-- Water-level wave inside O, clipped to circle interior -->
+  <path d="M 1 32 C 7 24, 17 40, 24 32 C 31 24, 41 40, 47 32"
+        stroke="#06B6D4" stroke-width="2" fill="none"
+        stroke-linecap="round"
+        clip-path="url(#wc)"/>
+
+  <!-- LA — continues the OLA wordmark -->
+  <text x="53" y="54"
+        font-family="'Plus Jakarta Sans', sans-serif"
+        font-size="44"
+        font-weight="800"
+        letter-spacing="-1"
+        fill="#0F172A">LA</text>
+
+  <!-- Thin rule separating brand name from descriptor -->
+  <line x1="0" y1="62" x2="220" y2="62" stroke="#E2E8F0" stroke-width="1"/>
+
+  <!-- Descriptor: Digital -->
+  <text x="2" y="73"
+        font-family="'Inter', sans-serif"
+        font-size="20"
+        font-weight="400"
+        letter-spacing="0.5"
+        fill="#64748B">Digital</text>
+</svg>

@@ -2,6 +2,9 @@
 .env
 credentials.json
 token.json
+token_*.json
+service_account.json
+auth_output.txt
 
 # Temp / intermediates
 .tmp/
@@ -16,3 +19,10 @@ venv/
 
 # macOS
 .DS_Store
+
+# Local Netlify folder
+.netlify
+
+# Dependencies
+node_modules/
+muscle-app/dist/

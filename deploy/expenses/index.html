@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💸 Log Gasto</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1A1A2E;
+      color: #FFFFFF;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 16px 48px;
+    }
+
+    .card {
+      background: #16213E;
+      border-radius: 12px;
+      padding: 28px 24px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 24px;
+      color: #F5A623;
+      letter-spacing: 0.5px;
+    }
+
+    .type-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.15s, transform 0.1s;
+      background: #0F3460;
+      color: #AAAACC;
+    }
+
+    .tab:hover { background: #1a4a80; }
+    .tab.active-daily  { background: #0F3460; color: #FFFFFF; border-bottom: 3px solid #F5A623; }
+    .tab.active-fixed  { background: #3d1a1a; color: #FFFFFF; border-bottom: 3px solid #E74C3C; }
+    .tab.active-income { background: #0f3320; color: #FFFFFF; border-bottom: 3px solid #27AE60; }
+
+    .field { margin-bottom: 16px; }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #AAAACC;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      background: #1A1A2E;
+      border: 1px solid #2A2A50;
+      border-radius: 8px;
+      color: #FFFFFF;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input:focus, select:focus { border-color: #F5A623; }
+
+    select option { background: #1A1A2E; }
+
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .hint {
+      font-size: 0.75rem;
+      color: #666688;
+      margin-top: 4px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.15s, transform 0.1s;
+      letter-spacing: 0.5px;
+    }
+
+    .submit-btn:hover  { opacity: 0.88; }
+    .submit-btn:active { transform: scale(0.98); }
+
+    .btn-daily  { background: #F5A623; color: #1A1A2E; }
+    .btn-fixed  { background: #E74C3C; color: #FFFFFF; }
+    .btn-income { background: #27AE60; color: #FFFFFF; }
+
+    .hidden { display: none !important; }
+
+    #success-msg {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      background: #0f3320;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-size: 1.05rem;
+      color: #27AE60;
+      font-weight: 600;
+    }
+
+    .divider {
+      height: 1px;
+      background: #2A2A50;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+<div class="nav" style="max-width:480px;margin:0 auto 20px;display:flex;gap:8px;">
+  <a href="/expenses/" style="flex:1;text-align:center;padding:9px;border-radius:8px;text-decoration:none;font-size:0.82rem;font-weight:600;background:#F5A623;color:#1A1A2E;">📋 Log</a>
+  <a href="/expenses/month.html" style="flex:1;text-align:center;padding:9px;border-radius:8px;text-decoration:none;font-size:0.82rem;font-weight:600;background:#0F3460;color:#AAAACC;">📅 Mes</a>
+  <a href="/expenses/assets.html" style="flex:1;text-align:center;padding:9px;border-radius:8px;text-decoration:none;font-size:0.82rem;font-weight:600;background:#0F3460;color:#AAAACC;">💰 Assets</a>
+</div>
+
+<div class="card">
+  <h1>💸 LOG GASTO</h1>
+
+  <!-- Type Tabs -->
+  <div class="type-tabs">
+    <button class="tab active-daily"  onclick="setType('daily')"  id="tab-daily">📋 Gasto</button>
+    <button class="tab"               onclick="setType('fixed')"  id="tab-fixed">🔒 Fijo</button>
+    <button class="tab"               onclick="setType('income')" id="tab-income">💰 Ingreso</button>
+  </div>
+
+  <form id="expense-form">
+    <input type="hidden" name="entry_type" id="entry_type" value="daily" />
+    <p class="hidden"><input name="bot-field" /></p>
+
+    <!-- Month -->
+    <div class="field">
+      <label>Mes</label>
+      <select name="month" id="month" required>
+        <option value="">— seleccionar —</option>
+        <option value="Mar 2025">Mar 2025</option>
+        <option value="Apr 2025">Apr 2025</option>
+        <option value="May 2025">May 2025</option>
+        <option value="Jun 2025">Jun 2025</option>
+        <option value="Jul 2025">Jul 2025</option>
+        <option value="Aug 2025">Aug 2025</option>
+        <option value="Sep 2025">Sep 2025</option>
+        <option value="Oct 2025">Oct 2025</option>
+        <option value="Nov 2025">Nov 2025</option>
+        <option value="Dec 2025">Dec 2025</option>
+        <option value="Jan 2026">Jan 2026</option>
+        <option value="Feb 2026">Feb 2026</option>
+        <option value="Mar 2026">Mar 2026</option>
+        <option value="Apr 2026">Apr 2026</option>
+        <option value="May 2026" selected>May 2026</option>
+        <option value="Jun 2026">Jun 2026</option>
+        <option value="Jul 2026">Jul 2026</option>
+      </select>
+    </div>
+
+    <!-- Description -->
+    <div class="field">
+      <label>Descripción</label>
+      <input type="text" name="description" id="description" placeholder="ej. Pizza, Gym, Basecoat..." required autocomplete="off" />
+    </div>
+
+    <!-- Day (daily only) -->
+    <div class="field" id="field-day">
+      <label>Día del mes</label>
+      <input type="number" name="day" id="day" min="1" max="31" placeholder="ej. 25" />
+      <p class="hint">Número del día (1–31)</p>
+    </div>
+
+    <!-- Amounts -->
+    <div class="row-2">
+      <div class="field">
+        <label>ARS</label>
+        <input type="number" name="ars" id="ars" min="0" step="any" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>USD</label>
+        <input type="number" name="usd" id="usd" min="0" step="any" placeholder="0" />
+      </div>
+    </div>
+    <p class="hint" style="margin-top:-10px; margin-bottom:16px;">Completar al menos uno (ARS o USD)</p>
+
+    <!-- Category — daily only -->
+    <div class="field" id="field-category">
+      <label>Categoría</label>
+      <select name="category" id="category">
+        <option value="">— opcional —</option>
+        <option>Food</option>
+        <option>Transport</option>
+        <option>Health</option>
+        <option>Utilities</option>
+        <option>Entertainment</option>
+        <option>Tax</option>
+        <option>Savings</option>
+        <option>Big Buy</option>
+        <option>Personal</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <!-- Payment — daily only -->
+    <div class="field" id="field-payment">
+      <label>Método de pago</label>
+      <select name="payment" id="payment">
+        <option value="">— opcional —</option>
+        <option>Cash ARS</option>
+        <option>USD Cash</option>
+        <option>Wise</option>
+        <option>Binance</option>
+        <option>MercadoPago</option>
+        <option>Tarjeta</option>
+      </select>
+    </div>
+
+    <!-- Status — fixed only -->
+    <div class="field hidden" id="field-status">
+      <label>Estado</label>
+      <select name="status" id="status">
+        <option value="">— opcional —</option>
+        <option>Pagado</option>
+        <option>Pendiente</option>
+        <option>Auto</option>
+      </select>
+    </div>
+
+    <div class="divider"></div>
+
+    <button type="submit" class="submit-btn btn-daily" id="submit-btn">+ Guardar Gasto</button>
+  </form>
+
+  <div id="success-msg">✅ ¡Guardado! El gasto fue registrado.</div>
+</div>
+
+<script>
+  const LABELS = {
+    daily:  { btn: '+ Guardar Gasto',   cls: 'btn-daily',  tab: 'active-daily'  },
+    fixed:  { btn: '+ Guardar Fijo',    cls: 'btn-fixed',  tab: 'active-fixed'  },
+    income: { btn: '+ Guardar Ingreso', cls: 'btn-income', tab: 'active-income' },
+  };
+
+  let currentType = 'daily';
+
+  function setType(type) {
+    currentType = type;
+    document.getElementById('entry_type').value = type;
+
+    // Tabs
+    ['daily','fixed','income'].forEach(t => {
+      const el = document.getElementById(`tab-${t}`);
+      el.className = 'tab' + (t === type ? ` ${LABELS[t].tab}` : '');
+    });
+
+    // Fields visibility
+    const isDailyOrIncome = type === 'daily' || type === 'income';
+    toggle('field-day',      type === 'daily');
+    toggle('field-category', type === 'daily');
+    toggle('field-payment',  type === 'daily');
+    toggle('field-status',   type === 'fixed');
+
+    // Submit button
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = LABELS[type].btn;
+    btn.className = `submit-btn ${LABELS[type].cls}`;
+  }
+
+  function toggle(id, show) {
+    document.getElementById(id).classList.toggle('hidden', !show);
+  }
+
+  // Handle redirect after Netlify form submit
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('submitted') === '1') {
+    document.getElementById('expense-form').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('expense-form').style.display = 'block';
+      document.getElementById('success-msg').style.display = 'none';
+      document.getElementById('expense-form').reset();
+      document.getElementById('entry_type').value = 'daily';
+      setType('daily');
+      window.history.replaceState({}, '', window.location.pathname);
+    }, 2500);
+  }
+
+  // Netlify forms: after POST redirect to ?submitted=1
+  document.getElementById('expense-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const data = new FormData(this);
+    fetch('/.netlify/functions/log-expense', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(data)),
+      })
+      .then(() => {
+        this.style.display = 'none';
+        document.getElementById('success-msg').style.display = 'block';
+        setTimeout(() => {
+          this.style.display = 'block';
+          document.getElementById('success-msg').style.display = 'none';
+          this.reset();
+          document.getElementById('entry_type').value = 'daily';
+          setType('daily');
+        }, 2500);
+      })
+      .catch(() => alert('Error al guardar. Intentá de nuevo.'));
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 112">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Inter:wght@600;700&display=swap');
+    </style>
+    <linearGradient id="dg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0369A1"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+    <filter id="sh" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#0EA5E9" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Diamond with gradient fill and glow shadow -->
+  <path d="M60,8 L100,48 L60,88 L20,48 Z" fill="url(#dg)" filter="url(#sh)"/>
+
+  <!-- Large O -->
+  <text
+    x="60" y="44"
+    font-family="'Plus Jakarta Sans', sans-serif"
+    font-size="38"
+    font-weight="800"
+    fill="white"
+    text-anchor="middle">O</text>
+
+  <!-- Orange wave accent centered at y=52 inside O hollow -->
+  <path
+    d="M49,52 C52,48 56,56 60,52 C64,48 68,56 71,52"
+    stroke="#F97316"
+    stroke-width="2"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+  <!-- Small D -->
+  <text
+    x="60" y="68"
+    font-family="'Inter', sans-serif"
+    font-size="14"
+    font-weight="700"
+    fill="rgba(255,255,255,0.65)"
+    text-anchor="middle"
+    letter-spacing="3">D</text>
+
+  <!-- OLA DIGITAL brand label below diamond -->
+  <text
+    x="60" y="100"
+    font-family="'Inter', sans-serif"
+    font-size="10"
+    font-weight="600"
+    fill="#64748B"
+    text-anchor="middle"
+    letter-spacing="4">OLA DIGITAL</text>
+
+  <!-- Orange accent dots at diamond corners -->
+  <circle cx="60" cy="8"  r="3" fill="#F97316"/>
+  <circle cx="100" cy="48" r="3" fill="#F97316"/>
+  <circle cx="60" cy="88" r="3" fill="#F97316"/>
+  <circle cx="20" cy="48" r="3" fill="#F97316"/>
+</svg>

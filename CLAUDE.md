@@ -66,8 +66,111 @@ credentials.json, token.json  # Google OAuth (gitignored)
 
 **Core principle:** Local files are just for processing. Anything I need to see or use lives in cloud services. Everything in `.tmp/` is disposable.
 
+## Self-Auditing Systems
+
+Two patterns that make the framework self-aware over time:
+
+**Activity log + metric tracking**
+After each session, Claude reads its own output logs, measures what completed vs. what failed, and surfaces patterns — which tools break most often, which workflows have gaps, where time is lost. This turns failures into data instead of forgotten incidents.
+
+**Workflow quality loop**
+After every tool run, Claude grades its own output (did it meet the goal? were there errors? did it have to improvise?) and flags which workflow docs need updating. The workflow becomes more accurate with each execution, not less.
+
+How to trigger: after any multi-step task, ask "grade this run and flag what the workflow is missing."
+
+## High-ROI Next Moves for This Setup
+
+Given this WAT framework + MCP Gmail + Google Drive access, the highest-leverage things to build:
+
+**1. Scheduled headless runs** (`/schedule`)
+Run workflows automatically without being present. Claude executes the full tool chain on a cron, outputs results to Google Sheets or Gmail draft. You review outcomes, not steps.
+
+Examples already proven in the community:
+- **Nightly dependency audit** — runs `npm audit` (or `pip-audit` for Python), finds HIGH/CRITICAL vulnerabilities, checks if a patched version exists, opens a PR with the fix automatically
+- **Automated PR review** — every new PR gets a first-pass scan for bugs, security issues (SQL injection, exposed secrets, unsafe inputs), and style violations before a human looks at it
+
+**2. Self-improving workflow loop**
+After each tool run, Claude updates the workflow doc with what it learned — rate limits hit, edge cases found, better approaches discovered. Workflows compound in quality over time.
+
+**3. Parallel subagents**
+For large data tasks (e.g. scraping + scoring + drafting), split into independent workstreams and run multiple Claude sessions simultaneously. Compresses calendar time dramatically.
+
+## Skills (Slash Commands)
+
+Reusable skills are stored in `~/.claude/commands/` and available across all projects.
+
+| Skill | Trigger | What it does |
+|-------|---------|--------------|
+| `/usage` | "how are we doing", "usage today" | Checks Gmail drafts from the last 24h, groups by city/campaign, reports progress against known goals |
+
 ## Bottom Line
 
 You sit between what I want (workflows) and what actually gets done (tools). Your job is to read instructions, make smart decisions, call the right tools, recover from errors, and keep improving the system as you go.
 
 Stay pragmatic. Stay reliable. Keep learning.
+
+# CLAUDE.md
+
+Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
+
+**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
+
+## 1. Think Before Coding
+
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
+
+Before implementing:
+- State your assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them - don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop. Name what's confusing. Ask.
+
+## 2. Simplicity First
+
+**Minimum code that solves the problem. Nothing speculative.**
+
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If you write 200 lines and it could be 50, rewrite it.
+
+Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+
+## 3. Surgical Changes
+
+**Touch only what you must. Clean up only your own mess.**
+
+When editing existing code:
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it - don't delete it.
+
+When your changes create orphans:
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
+
+The test: Every changed line should trace directly to the user's request.
+
+## 4. Goal-Driven Execution
+
+**Define success criteria. Loop until verified.**
+
+Transform tasks into verifiable goals:
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
+
+For multi-step tasks, state a brief plan:
+```
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+```
+
+Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+
+---
+
+**These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.

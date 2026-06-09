@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Recruiter Outreach Review</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e2e8f0; min-height: 100vh; padding: 24px; }
+  h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; color: #f8fafc; }
+  .subtitle { font-size: 13px; color: #64748b; margin-bottom: 24px; }
+  .layout { display: grid; grid-template-columns: 1fr 340px; gap: 20px; align-items: start; }
+  .column-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #64748b; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .count { background: #1e293b; border-radius: 10px; padding: 2px 8px; font-size: 11px; color: #94a3b8; }
+
+  #queue { min-height: 80px; display: flex; flex-direction: column; gap: 10px; }
+
+  .card {
+    background: #1e293b;
+    border: 1px solid #2d3748;
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: grab;
+    transition: box-shadow .15s, border-color .15s;
+    user-select: none;
+  }
+  .card:active { cursor: grabbing; }
+  .card.dragging { opacity: .35; }
+  .card.drag-over-top { border-top: 2px solid #6366f1; }
+  .card.drag-over-bottom { border-bottom: 2px solid #6366f1; }
+
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .card-name { font-size: 14px; font-weight: 600; color: #f1f5f9; }
+  .card-company { font-size: 12px; color: #6366f1; margin-top: 1px; }
+  .card-title-badge { font-size: 11px; color: #94a3b8; background: #0f1117; border-radius: 4px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0; margin-left: 8px; }
+  .card-subject { font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
+  .card-body { font-size: 12px; color: #64748b; line-height: 1.55; max-height: 56px; overflow: hidden; position: relative; }
+  .card-body.expanded { max-height: none; }
+  .card-body:not(.expanded)::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 20px; background: linear-gradient(transparent, #1e293b); pointer-events: none; }
+  .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+  .expand-btn { font-size: 11px; color: #6366f1; cursor: pointer; background: none; border: none; padding: 0; }
+  .expand-btn:hover { text-decoration: underline; }
+  .card-email { font-size: 11px; color: #475569; }
+
+  .right-panel { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 24px; }
+
+  #reject-zone {
+    background: #1a0f0f;
+    border: 2px dashed #7f1d1d;
+    border-radius: 12px;
+    padding: 16px;
+    min-height: 120px;
+    transition: background .15s, border-color .15s;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  #reject-zone.drag-active { background: #2d0f0f; border-color: #ef4444; }
+  .zone-hint { font-size: 12px; color: #7f1d1d; text-align: center; padding: 16px 0; }
+
+  .rejected-card { background: #1f1010; border: 1px solid #7f1d1d44; border-radius: 8px; padding: 10px 12px; }
+  .rc-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .rc-name { font-size: 13px; font-weight: 600; color: #fca5a5; }
+  .rc-company { font-size: 11px; color: #7f1d1d; margin-top: 2px; }
+  .undo-btn { font-size: 11px; color: #ef4444; cursor: pointer; background: none; border: none; padding: 0; flex-shrink: 0; }
+  .undo-btn:hover { text-decoration: underline; }
+
+  .save-panel { background: #1e293b; border: 1px solid #2d3748; border-radius: 10px; padding: 16px; }
+  .save-panel h3 { font-size: 13px; font-weight: 600; margin-bottom: 12px; color: #f1f5f9; }
+  .stats { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .stat { display: flex; justify-content: space-between; font-size: 12px; color: #64748b; }
+  .stat span:last-child { color: #f1f5f9; font-weight: 500; }
+  .save-btn { width: 100%; padding: 10px; background: #6366f1; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .15s; }
+  .save-btn:hover { background: #4f46e5; }
+  .save-btn:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
+  .saved-msg { font-size: 12px; color: #4ade80; text-align: center; margin-top: 8px; display: none; }
+  .error-msg { font-size: 12px; color: #f87171; text-align: center; margin-top: 8px; display: none; }
+
+  .empty { font-size: 13px; color: #475569; padding: 24px; text-align: center; border: 1px dashed #2d3748; border-radius: 10px; }
+  .loading { font-size: 13px; color: #64748b; padding: 24px; text-align: center; }
+</style>
+</head>
+<body>
+
+<h1>Recruiter Outreach Review</h1>
+<p class="subtitle" id="subtitle">Loading…</p>
+
+<div class="layout">
+  <div>
+    <div class="column-label">Queue <span class="count" id="queue-count">0</span></div>
+    <div id="queue"><div class="loading">Loading drafts…</div></div>
+  </div>
+  <div class="right-panel">
+    <div>
+      <div class="column-label">Rejected <span class="count" id="reject-count">0</span></div>
+      <div id="reject-zone">
+        <div class="zone-hint" id="reject-hint">Drop cards here to reject</div>
+      </div>
+    </div>
+    <div class="save-panel">
+      <h3>Save Changes</h3>
+      <div class="stats">
+        <div class="stat"><span>Total drafts</span><span id="stat-total">—</span></div>
+        <div class="stat"><span>Queued</span><span id="stat-queued">—</span></div>
+        <div class="stat"><span>Rejected</span><span id="stat-rejected">—</span></div>
+      </div>
+      <button class="save-btn" id="save-btn" disabled onclick="saveLog()">Save Changes</button>
+      <div class="saved-msg" id="saved-msg">✓ Saved — log updated, rejected added to seen list</div>
+      <div class="error-msg" id="error-msg"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let allData = [];       // full log (all records)
+let draftCards = [];    // only records with draft_id
+let rejected = new Set();
+let queueOrder = [];    // indices into draftCards, sorted by user
+let dragSrcIdx = null;
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+
+async function init() {
+  try {
+    const res = await fetch('/api/log');
+    allData = await res.json();
+    draftCards = allData.filter(d => d.draft_id);
+    queueOrder = draftCards.map((_, i) => i);
+
+    // Pre-populate already-rejected from review_status field
+    draftCards.forEach((d, i) => {
+      if (d.review_status === 'rejected') rejected.add(i);
+    });
+
+    document.getElementById('subtitle').textContent =
+      `${draftCards.length} drafts · drag to reorder · drop into Rejected to skip`;
+    renderAll();
+  } catch (e) {
+    document.getElementById('subtitle').textContent = 'Could not load data. Is the server running?';
+    document.getElementById('queue').innerHTML =
+      '<div class="empty">Run: python3 tools/recruiter_review_server.py</div>';
+  }
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
+
+function renderAll() {
+  renderQueue();
+  renderRejectZone();
+  updateStats();
+}
+
+function renderQueue() {
+  const el = document.getElementById('queue');
+  const visible = queueOrder.filter(i => !rejected.has(i));
+  el.innerHTML = '';
+  if (visible.length === 0) {
+    el.innerHTML = '<div class="empty">All cards reviewed.</div>';
+  } else {
+    visible.forEach(i => el.appendChild(makeCard(draftCards[i], i)));
+  }
+  document.getElementById('queue-count').textContent = visible.length;
+}
+
+function renderRejectZone() {
+  const zone = document.getElementById('reject-zone');
+  const hint = document.getElementById('reject-hint');
+  Array.from(zone.children).forEach(c => { if (c !== hint) c.remove(); });
+
+  if (rejected.size === 0) {
+    hint.style.display = 'block';
+  } else {
+    hint.style.display = 'none';
+    [...rejected].forEach(i => {
+      const d = draftCards[i];
+      const div = document.createElement('div');
+      div.className = 'rejected-card';
+      div.innerHTML = `
+        <div class="rc-top">
+          <div>
+            <div class="rc-name">${d.name || d.email}</div>
+            <div class="rc-company">${d.company}</div>
+          </div>
+          <button class="undo-btn" onclick="undoReject(${i})">↩ undo</button>
+        </div>`;
+      zone.appendChild(div);
+    });
+  }
+  document.getElementById('reject-count').textContent = rejected.size;
+}
+
+function makeCard(d, idx) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.draggable = true;
+  card.dataset.idx = idx;
+
+  const bodyId = `body-${idx}`;
+  card.innerHTML = `
+    <div class="card-header">
+      <div>
+        <div class="card-name">${d.name || '(unknown)'}</div>
+        <div class="card-company">${d.company}</div>
+      </div>
+      <div class="card-title-badge">${d.title || 'Recruiter'}</div>
+    </div>
+    <div class="card-subject">📧 ${d.subject}</div>
+    <div class="card-body" id="${bodyId}">${(d.body || '').replace(/\n/g, '<br>')}</div>
+    <div class="card-footer">
+      <button class="expand-btn" onclick="toggleExpand(event,'${bodyId}')">show more</button>
+      <span class="card-email">${d.email}</span>
+    </div>`;
+
+  card.addEventListener('dragstart', onDragStart);
+  card.addEventListener('dragend', onDragEnd);
+  card.addEventListener('dragover', onCardDragOver);
+  card.addEventListener('dragleave', onCardDragLeave);
+  card.addEventListener('drop', onCardDrop);
+  return card;
+}
+
+function toggleExpand(e, id) {
+  e.stopPropagation();
+  const el = document.getElementById(id);
+  const btn = e.target;
+  el.classList.toggle('expanded');
+  btn.textContent = el.classList.contains('expanded') ? 'show less' : 'show more';
+}
+
+// ── Drag & Drop ───────────────────────────────────────────────────────────────
+
+function onDragStart(e) {
+  dragSrcIdx = parseInt(this.dataset.idx);
+  setTimeout(() => this.classList.add('dragging'), 0);
+  e.dataTransfer.effectAllowed = 'move';
+}
+
+function onDragEnd() {
+  this.classList.remove('dragging');
+  document.querySelectorAll('.card').forEach(c => {
+    c.classList.remove('drag-over-top', 'drag-over-bottom');
+  });
+}
+
+function onCardDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  const rect = this.getBoundingClientRect();
+  const mid = rect.top + rect.height / 2;
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('drag-over-top', 'drag-over-bottom'));
+  this.classList.add(e.clientY < mid ? 'drag-over-top' : 'drag-over-bottom');
+}
+
+function onCardDragLeave() {
+  this.classList.remove('drag-over-top', 'drag-over-bottom');
+}
+
+function onCardDrop(e) {
+  e.preventDefault();
+  const targetIdx = parseInt(this.dataset.idx);
+  if (dragSrcIdx === null || dragSrcIdx === targetIdx) return;
+
+  const rect = this.getBoundingClientRect();
+  const insertAfter = e.clientY >= rect.top + rect.height / 2;
+
+  const visible = queueOrder.filter(i => !rejected.has(i));
+  const srcPos = visible.indexOf(dragSrcIdx);
+  const tgtPos = visible.indexOf(targetIdx);
+  if (srcPos === -1 || tgtPos === -1) return;
+
+  visible.splice(srcPos, 1);
+  const insertPos = visible.indexOf(targetIdx) + (insertAfter ? 1 : 0);
+  visible.splice(insertPos, 0, dragSrcIdx);
+
+  queueOrder = [...visible, ...queueOrder.filter(i => rejected.has(i))];
+  dragSrcIdx = null;
+  renderQueue();
+  markDirty();
+}
+
+// Reject zone
+const rejectZone = document.getElementById('reject-zone');
+rejectZone.addEventListener('dragover', e => { e.preventDefault(); rejectZone.classList.add('drag-active'); });
+rejectZone.addEventListener('dragleave', () => rejectZone.classList.remove('drag-active'));
+rejectZone.addEventListener('drop', e => {
+  e.preventDefault();
+  rejectZone.classList.remove('drag-active');
+  if (dragSrcIdx !== null) {
+    rejected.add(dragSrcIdx);
+    dragSrcIdx = null;
+    renderAll();
+    markDirty();
+  }
+});
+
+function undoReject(idx) {
+  rejected.delete(idx);
+  renderAll();
+  markDirty();
+}
+
+// ── Stats & Save ──────────────────────────────────────────────────────────────
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = draftCards.length;
+  document.getElementById('stat-queued').textContent = draftCards.length - rejected.size;
+  document.getElementById('stat-rejected').textContent = rejected.size;
+}
+
+function markDirty() {
+  document.getElementById('save-btn').disabled = false;
+  document.getElementById('saved-msg').style.display = 'none';
+  updateStats();
+}
+
+async function saveLog() {
+  const rejectedEmails = [...rejected].map(i => draftCards[i].email);
+
+  // Tag all records with review_status
+  const updatedLog = allData.map(d => {
+    if (!d.draft_id) return d;
+    const idx = draftCards.findIndex(c => c.email === d.email);
+    return { ...d, review_status: rejected.has(idx) ? 'rejected' : 'queued' };
+  });
+
+  try {
+    const res = await fetch('/api/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ log: updatedLog, rejected_emails: rejectedEmails }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      document.getElementById('saved-msg').style.display = 'block';
+      document.getElementById('error-msg').style.display = 'none';
+      document.getElementById('save-btn').disabled = true;
+    } else {
+      throw new Error(data.error);
+    }
+  } catch (err) {
+    const el = document.getElementById('error-msg');
+    el.textContent = `Save failed: ${err.message}`;
+    el.style.display = 'block';
+  }
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 68" width="280" height="68">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Inter:wght@400&display=swap');</style>
+  </defs>
+  <text font-family="'Plus Jakarta Sans', sans-serif" font-size="52" font-weight="800" y="52">
+    <tspan x="18" fill="#0369A1">O</tspan>
+    <tspan fill="#0EA5E9">L</tspan>
+    <tspan fill="#06B6D4">A</tspan>
+  </text>
+  <text x="122" y="52" font-family="'Inter', sans-serif" font-size="24" font-weight="400" fill="#94A3B8" letter-spacing="0.5">digital</text>
+  <circle cx="200" cy="47" r="4" fill="#F97316"/>
+  <line x1="0" y1="65" x2="280" y2="65" stroke="#E2E8F0" stroke-width="1"/>
+</svg>

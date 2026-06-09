@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storm Digital — 04 · How It Works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="storm-kit.css">
+</head>
+<body>
+  <div class="stage">
+    <!-- ===== 04 · HOW IT WORKS ===== -->
+    <div class="post" data-screen-label="04 How It Works">
+
+      <div class="wordmark">
+        <svg width="17" height="23" viewBox="0 0 17 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.5 0L0 13h6.2l-2.4 10L17 8.5H9.3L12 0z" fill="#c2ef4e"/>
+        </svg>
+        <span class="name"><b>Storm</b>&nbsp;<span>Digital</span></span>
+      </div>
+
+      <div style="position:absolute; left:64px; right:64px; top:206px;">
+        <div class="eyebrow">How It Works</div>
+        <div class="display" style="font-size:58px; line-height:1.1; margin-top:26px; max-width:880px;">
+          Three levers move<br><span class="chip">cost per lead</span>.
+        </div>
+
+        <!-- Steps -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:44px; margin-top:78px;">
+
+          <div>
+            <div style="height:3px; background:var(--hairline-violet); margin-bottom:26px;"></div>
+            <div style="font-family:var(--font-display); font-weight:600; font-size:72px; line-height:1; color:#fff;">01</div>
+            <div class="eyebrow" style="font-size:14px; margin-top:20px; color:#fff;">Targeting</div>
+            <div class="body" style="font-size:18px; line-height:1.5; margin-top:12px;">Intent-based audiences — not spray-and-pray reach.</div>
+          </div>
+
+          <div>
+            <div style="height:3px; background:var(--hairline-violet); margin-bottom:26px;"></div>
+            <div style="font-family:var(--font-display); font-weight:600; font-size:72px; line-height:1; color:#fff;">02</div>
+            <div class="eyebrow" style="font-size:14px; margin-top:20px; color:#fff;">Landing Pages</div>
+            <div class="body" style="font-size:18px; line-height:1.5; margin-top:12px;">Built to convert, rebuilt and tested every single week.</div>
+          </div>
+
+          <div>
+            <div style="height:3px; background:var(--hairline-violet); margin-bottom:26px;"></div>
+            <div style="font-family:var(--font-display); font-weight:600; font-size:72px; line-height:1; color:#fff;">03</div>
+            <div class="eyebrow" style="font-size:14px; margin-top:20px; color:#fff;">Bid Strategy</div>
+            <div class="body" style="font-size:18px; line-height:1.5; margin-top:12px;">Bids tuned to booked jobs — never to raw clicks.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Mascot: traffic cone -->
+      <div class="mascot" style="top:150px; right:52px; transform:rotate(-7deg);">
+        <svg width="124" height="150" viewBox="0 0 110 134" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="55" cy="124" rx="46" ry="9" class="night"/>
+          <rect x="8" y="104" width="94" height="18" rx="6" class="lime ink"/>
+          <path d="M55 10 L83 108 H27 Z" class="pink ink"/>
+          <path d="M44.6 50 H65.4 L69.6 70 H40.4 Z" class="white"/>
+          <path d="M38 78 H72" stroke="#150f23" stroke-width="0" />
+        </svg>
+      </div>
+
+      <svg class="squiggle" viewBox="0 0 952 16" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 8 q 20 -7 40 0 q 20 7 40 0 q 20 -7 40 0 q 20 7 40 0 q 20 -7 40 0 q 20 7 40 0 q 20 -7 40 0 q 20 7 40 0 q 20 -7 40 0 q 20 7 40 0 q 20 -7 40 0 q 20 7 40 0 q 20 -7 40 0 q 20 7 40 0 q 20 -7 40 0 q 20 7 40 0 q 20 -7 40 0 q 20 7 40 0 q 20 -7 40 0 q 20 7 40 0 q 20 -7 40 0 q 20 7 40 0 q 20 -7 40 0 q 20 7 40 0"/>
+      </svg>
+
+      <div class="mark-num">04 / 05</div>
+      <div class="mark-url">storm.mkt.agency</div>
+
+    </div>
+  </div>
+
+  <script>
+    function fit(){
+      var p = document.querySelector('.post');
+      var s = Math.min(window.innerWidth/1080, window.innerHeight/1080);
+      p.style.transform = 'scale('+s+')';
+    }
+    window.addEventListener('resize', fit); fit();
+  </script>
+</body>
+</html>
