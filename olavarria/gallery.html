@@ -4,37 +4,71 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>España 3175 — Antes y Después</title>
+<meta name="description" content="La remodelación de España 3175 (Olavarría), ambiente por ambiente: fotos del antes, renders y avances.">
+<meta property="og:title" content="España 3175 · Olavarría — Antes y Después">
+<meta property="og:description" content="La remodelación, ambiente por ambiente: antes, renders y avances.">
+<meta property="og:image" content="https://dondevamosba-web.github.io/casa-espana-3175/img/thumb/1ycOPKpcCGfT1zCebvkzfFbfuVDXnnDbO.jpg">
+<meta property="og:type" content="website">
 <style>
   :root { --bg:#14110f; --card:#1f1a17; --accent:#d4a373; --text:#f1ece6; --muted:#9a8f85; }
   * { box-sizing:border-box; margin:0; }
   body { background:var(--bg); color:var(--text); font-family:Georgia,'Times New Roman',serif; padding:48px 24px; }
-  header { text-align:center; margin-bottom:48px; }
+  header { text-align:center; margin-bottom:28px; }
   h1 { font-size:2.4rem; letter-spacing:.02em; }
   header p { color:var(--muted); margin-top:8px; font-style:italic; }
-  .room { max-width:1200px; margin:0 auto 56px; background:var(--card); border-radius:14px; padding:28px; }
+  nav { max-width:1200px; margin:0 auto 28px; display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+  nav a { color:var(--accent); border:1px solid #3a322b; border-radius:999px; padding:6px 14px;
+          text-decoration:none; font-size:.88rem; }
+  nav a:hover { background:var(--card); }
+  .room { max-width:1200px; margin:0 auto 56px; background:var(--card); border-radius:14px; padding:28px;
+          scroll-margin-top:20px; }
   .room h2 { color:var(--accent); font-size:1.4rem; margin-bottom:4px; }
   .room .meta { color:var(--muted); font-size:.9rem; margin-bottom:18px; }
   h3 { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.14em; margin:18px 0 8px; }
+  h3 .pend { text-transform:none; letter-spacing:normal; font-style:italic; }
   .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr)); gap:14px; }
-  figure { margin:0; }
-  figure a { display:block; }
+  figure { margin:0; position:relative; }
   figure img { width:100%; border-radius:10px; display:block; aspect-ratio:4/3; object-fit:cover; background:#2a241f;
-               transition:opacity .15s; }
-  figure a:hover img { opacity:.85; }
+               transition:opacity .15s; cursor:zoom-in; }
+  figure img:hover { opacity:.85; }
   figure.plano svg { width:100%; height:auto; display:block; }
-  .empty { border:2px dashed #3a322b; border-radius:10px; aspect-ratio:4/3;
-           display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:.85rem; }
   footer { text-align:center; color:var(--muted); font-size:.85rem; }
   .hint { text-align:center; color:var(--muted); font-size:.85rem; margin-bottom:10px; }
   #barra { text-align:center; margin-bottom:30px; }
   #barra button { background:var(--accent); border:0; border-radius:8px; padding:8px 16px; font-family:inherit; font-size:.95rem; cursor:pointer; }
   #aviso { color:#9c8; font-size:.85rem; margin-left:10px; }
-  figure { position:relative; }
   .mark { position:absolute; top:8px; right:8px; z-index:2; background:rgba(0,0,0,.55); color:#fff;
           border:0; border-radius:50%; width:30px; height:30px; cursor:pointer; font-size:.9rem; }
   .mark:hover { background:#c0392b; }
   figure.marcada img { opacity:.35; outline:3px solid #c0392b; outline-offset:-3px; }
   figure.marcada .mark { background:#c0392b; }
+
+  /* Comparador antes/render */
+  .compara { position:relative; border-radius:10px; overflow:hidden; aspect-ratio:4/3; margin-bottom:18px;
+             touch-action:none; user-select:none; -webkit-user-select:none; max-width:700px; }
+  .compara img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; pointer-events:none; }
+  .compara .top { clip-path:inset(0 calc(100% - var(--x,50%)) 0 0); }
+  .compara .handle { position:absolute; top:0; bottom:0; left:var(--x,50%); width:2px; background:#fff;
+                     transform:translateX(-1px); }
+  .compara .handle::after { content:"◂ ▸"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                            background:var(--accent); color:#14110f; border-radius:999px; padding:6px 10px;
+                            font-size:.8rem; white-space:nowrap; }
+  .compara .tag { position:absolute; top:10px; background:rgba(0,0,0,.55); color:#fff; font-size:.75rem;
+                  letter-spacing:.1em; text-transform:uppercase; padding:4px 10px; border-radius:6px; }
+  .compara .tag.antes { left:10px; }
+  .compara .tag.render { right:10px; }
+
+  /* Lightbox */
+  #lb { position:fixed; inset:0; background:rgba(0,0,0,.92); display:none; z-index:10;
+        align-items:center; justify-content:center; }
+  #lb.abierto { display:flex; }
+  #lb img { max-width:94vw; max-height:88vh; border-radius:6px; }
+  #lb .cerrar { position:absolute; top:14px; right:18px; font-size:1.6rem; background:none; border:0; color:#fff; cursor:pointer; }
+  #lb .nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.12);
+             border:0; color:#fff; font-size:1.6rem; padding:14px 16px; border-radius:10px; cursor:pointer; }
+  #lb .nav:hover { background:rgba(255,255,255,.25); }
+  #lb .prev { left:12px; } #lb .next { right:12px; }
+  #lb figcaption { position:absolute; bottom:16px; left:0; right:0; text-align:center; color:var(--muted); font-size:.9rem; }
 </style>
 </head>
 <body>
@@ -42,12 +76,13 @@
   <h1>España 3175 · Olavarría</h1>
   <p>La remodelación, ambiente por ambiente</p>
 </header>
-<p class="hint">Tocá cualquier foto para verla completa en otra pestaña. Con la ✕ marcás las que no te gustan.</p>
+<nav id="indice"></nav>
+<p class="hint">Tocá cualquier foto para verla completa. Con la ✕ marcás las que no te gustan.</p>
 <div id="barra"><button onclick="copiarMarcadas()">Copiar marcadas (<span id="nmarcadas">0</span>)</button> <span id="aviso"></span></div>
 
 <main id="rooms"></main>
 
-<section class="room">
+<section class="room" id="planos">
   <h2>Planos</h2>
   <div class="meta">Vivienda unifamiliar · dos niveles · lote 8,66 × 25 m</div>
   <div class="grid">
@@ -123,10 +158,18 @@
   </div>
 </section>
 
-<footer>Se actualiza editando el array AMBIENTES de este archivo.</footer>
+<footer>Se actualiza editando el array AMBIENTES de este archivo. Las fotos viven en img/.</footer>
+
+<div id="lb">
+  <button class="cerrar" title="Cerrar">✕</button>
+  <button class="nav prev" title="Anterior">‹</button>
+  <img alt="">
+  <button class="nav next" title="Siguiente">›</button>
+  <figcaption></figcaption>
+</div>
 
 <script>
-// Cada ambiente: antes / render / despues son listas de IDs de Google Drive.
+// Cada ambiente: antes / render / despues son listas de IDs. Cada ID es img/{id}.jpg (+ img/thumb/{id}.jpg).
 const AMBIENTES = [
   { nombre: "Living", nota: "6,00 × 4,66 m — ventana de 3,13 m",
     antes:  ["1_74nj-vC_GclHE-LeiGpIgV0yR-LZ4Yi","1NzwxaWB8bME_j9aCHcAtwZ2j01r3YKbV","1Yv5l38hv3aYIWkvyrG9N-8SVkMFIJmKp","1TQDjsXeXERwwCfkdsBP8wdiueGpdzaqT"],
@@ -166,21 +209,81 @@ const AMBIENTES = [
     despues: [] },
 ];
 
-const thumb = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
-const full  = id => `https://drive.google.com/thumbnail?id=${id}&sz=w4000`;
+const thumb = id => `img/thumb/${id}.jpg`;
+const full  = id => `img/${id}.jpg`;
+const slug = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-");
 const fig = (id, nombre) =>
-  `<figure data-id="${id}" data-desc="${nombre}"><button class="mark" title="Marcar para eliminar">✕</button><a href="${full(id)}" target="_blank"><img src="${thumb(id)}" alt="${nombre}" loading="lazy"></a></figure>`;
+  `<figure data-id="${id}" data-desc="${nombre}"><button class="mark" title="Marcar para eliminar">✕</button><img src="${thumb(id)}" data-full="${full(id)}" alt="${nombre}" loading="lazy" decoding="async"></figure>`;
 
 const SLOTS = [["antes","Antes"],["render","Render"],["despues","Después"]];
 document.getElementById("rooms").innerHTML = AMBIENTES.map(a => `
-  <section class="room">
+  <section class="room" id="${slug(a.nombre)}">
     <h2>${a.nombre}</h2>
     <div class="meta">${a.nota || "&nbsp;"}</div>
+    ${a.antes.length && a.render.length ? `
+    <h3>Antes / Render — deslizá para comparar</h3>
+    <div class="compara">
+      <img src="${thumb(a.render[0])}" alt="${a.nombre} — render" loading="lazy">
+      <img class="top" src="${thumb(a.antes[0])}" alt="${a.nombre} — antes" loading="lazy">
+      <span class="tag antes">Antes</span><span class="tag render">Render</span>
+      <div class="handle"></div>
+    </div>` : ""}
     ${SLOTS.map(([key,label]) => a[key].length
       ? `<h3>${label}</h3><div class="grid">${a[key].map(id => fig(id, a.nombre+" — "+label)).join("")}</div>`
-      : `<h3>${label}</h3><div class="grid"><div class="empty">pendiente</div></div>`
+      : `<h3>${label} — <span class="pend">pendiente</span></h3>`
     ).join("")}
   </section>`).join("");
+
+// Índice de ambientes
+document.getElementById("indice").innerHTML =
+  AMBIENTES.map(a => `<a href="#${slug(a.nombre)}">${a.nombre}</a>`).join("") +
+  `<a href="#planos">Planos</a>`;
+
+// Comparador antes/render
+document.querySelectorAll(".compara").forEach(c => {
+  const mover = e => {
+    const r = c.getBoundingClientRect();
+    const x = Math.min(Math.max((e.clientX - r.left) / r.width, 0), 1);
+    c.style.setProperty("--x", (x * 100).toFixed(2) + "%");
+  };
+  c.addEventListener("pointerdown", e => { c.setPointerCapture(e.pointerId); mover(e); });
+  c.addEventListener("pointermove", e => { if (e.buttons) mover(e); });
+});
+
+// Lightbox
+const lb = document.getElementById("lb"), lbImg = lb.querySelector("img"), lbCap = lb.querySelector("figcaption");
+let lbLista = [], lbIdx = 0;
+function lbMostrar(i) {
+  lbIdx = (i + lbLista.length) % lbLista.length;
+  const f = lbLista[lbIdx];
+  lbImg.src = f.querySelector("img").dataset.full;
+  lbCap.textContent = `${f.dataset.desc} (${lbIdx + 1}/${lbLista.length})`;
+}
+document.getElementById("rooms").addEventListener("click", e => {
+  const img = e.target.closest("figure[data-id] img");
+  if (!img) return;
+  const grid = img.closest(".grid");
+  lbLista = [...grid.querySelectorAll("figure[data-id]")];
+  lb.classList.add("abierto");
+  lbMostrar(lbLista.indexOf(img.closest("figure")));
+});
+lb.querySelector(".prev").onclick = () => lbMostrar(lbIdx - 1);
+lb.querySelector(".next").onclick = () => lbMostrar(lbIdx + 1);
+lb.querySelector(".cerrar").onclick = () => lb.classList.remove("abierto");
+lb.addEventListener("click", e => { if (e.target === lb) lb.classList.remove("abierto"); });
+document.addEventListener("keydown", e => {
+  if (!lb.classList.contains("abierto")) return;
+  if (e.key === "Escape") lb.classList.remove("abierto");
+  if (e.key === "ArrowLeft") lbMostrar(lbIdx - 1);
+  if (e.key === "ArrowRight") lbMostrar(lbIdx + 1);
+});
+let lbX0 = null;
+lbImg.addEventListener("touchstart", e => lbX0 = e.touches[0].clientX);
+lbImg.addEventListener("touchend", e => {
+  if (lbX0 === null) return;
+  const dx = e.changedTouches[0].clientX - lbX0; lbX0 = null;
+  if (Math.abs(dx) > 40) lbMostrar(lbIdx + (dx < 0 ? 1 : -1));
+});
 
 // Marcar fotos para eliminar
 document.addEventListener("click", e => {
@@ -198,11 +301,13 @@ function actualizarBarra() {
 function copiarMarcadas() {
   const lista = Object.entries(localStorage).filter(([k]) => k.startsWith("del_"))
     .map(([k,v]) => `${v} (id: ${k.slice(4)})`).join("\n");
-  navigator.clipboard.writeText(lista || "(ninguna marcada)").then(() =>
-    document.getElementById("aviso").textContent = "¡Copiado! Pegáselo a Claude en el chat.");
+  navigator.clipboard.writeText(lista || "(ninguna marcada)").then(() => {
+    const aviso = document.getElementById("aviso");
+    aviso.textContent = "¡Copiado! Pegáselo a Claude en el chat.";
+    setTimeout(() => aviso.textContent = "", 3000);
+  });
 }
 // restaurar marcas guardadas
-new MutationObserver(() => {}).observe(document.body, {});
 document.querySelectorAll("figure[data-id]").forEach(f => {
   if (localStorage.getItem("del_" + f.dataset.id)) f.classList.add("marcada");
 });
