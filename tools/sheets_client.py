@@ -1,6 +1,8 @@
 """
 Shared Google Sheets + Drive auth used by all outreach logging tools.
 """
+import json
+import os
 import sys
 from pathlib import Path
 
@@ -32,6 +34,12 @@ def get_services():
             print(f"Failed to load OAuth token ({e})")
             creds = None
     
+    # Cloud/headless environments: service account JSON passed as env var
+    if not creds and os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON"):
+        creds = ServiceAccountCredentials.from_service_account_info(
+            json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"]), scopes=SCOPES
+        )
+
     # Fall back to service account if OAuth doesn't exist
     if not creds and SERVICE_ACCOUNT_FILE.exists():
         creds = ServiceAccountCredentials.from_service_account_file(
