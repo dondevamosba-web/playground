@@ -11,11 +11,11 @@
   header { text-align:center; margin-bottom:48px; }
   h1 { font-size:2.4rem; letter-spacing:.02em; }
   header p { color:var(--muted); margin-top:8px; font-style:italic; }
-  .room { max-width:1000px; margin:0 auto 56px; background:var(--card); border-radius:14px; padding:28px; }
+  .room { max-width:1200px; margin:0 auto 56px; background:var(--card); border-radius:14px; padding:28px; }
   .room h2 { color:var(--accent); font-size:1.4rem; margin-bottom:4px; }
   .room .meta { color:var(--muted); font-size:.9rem; margin-bottom:18px; }
   h3 { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.14em; margin:18px 0 8px; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr)); gap:14px; }
   figure { margin:0; }
   figure a { display:block; }
   figure img { width:100%; border-radius:10px; display:block; aspect-ratio:4/3; object-fit:cover; background:#2a241f;
@@ -25,7 +25,16 @@
   .empty { border:2px dashed #3a322b; border-radius:10px; aspect-ratio:4/3;
            display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:.85rem; }
   footer { text-align:center; color:var(--muted); font-size:.85rem; }
-  .hint { text-align:center; color:var(--muted); font-size:.85rem; margin-bottom:30px; }
+  .hint { text-align:center; color:var(--muted); font-size:.85rem; margin-bottom:10px; }
+  #barra { text-align:center; margin-bottom:30px; }
+  #barra button { background:var(--accent); border:0; border-radius:8px; padding:8px 16px; font-family:inherit; font-size:.95rem; cursor:pointer; }
+  #aviso { color:#9c8; font-size:.85rem; margin-left:10px; }
+  figure { position:relative; }
+  .mark { position:absolute; top:8px; right:8px; z-index:2; background:rgba(0,0,0,.55); color:#fff;
+          border:0; border-radius:50%; width:30px; height:30px; cursor:pointer; font-size:.9rem; }
+  .mark:hover { background:#c0392b; }
+  figure.marcada img { opacity:.35; outline:3px solid #c0392b; outline-offset:-3px; }
+  figure.marcada .mark { background:#c0392b; }
 </style>
 </head>
 <body>
@@ -33,7 +42,8 @@
   <h1>España 3175 · Olavarría</h1>
   <p>La remodelación, ambiente por ambiente</p>
 </header>
-<p class="hint">Tocá cualquier foto para verla completa en otra pestaña.</p>
+<p class="hint">Tocá cualquier foto para verla completa en otra pestaña. Con la ✕ marcás las que no te gustan.</p>
+<div id="barra"><button onclick="copiarMarcadas()">Copiar marcadas (<span id="nmarcadas">0</span>)</button> <span id="aviso"></span></div>
 
 <main id="rooms"></main>
 
@@ -83,20 +93,16 @@ const AMBIENTES = [
     antes:  ["15hsf97SHX84kEbFkfD-XlfblDUo651Z_","1lWgmHRw55Re6rOM5qHBXzN4GNXH8LSHC","1wHaJdBqTp0ee6les9frpJUQsSIjCnQc8"],
     render: ["1YjlwideILf_yKgEbmZfJVDGo4RpInF8k"],
     despues: [] },
-  { nombre: "Escalera y hall", nota: "",
+  { nombre: "Garage y escalera", nota: "Garage de 2,30 m de ancho — sigue siendo garage; revisar humedad del techo",
     antes:  ["1EuoNsPaHkSd0s6NX0-rTqry5BzTm0_vS"],
-    render: ["1b7z77bLx0syzv887hexx32YCmiTKkXgD"],
-    despues: [] },
-  { nombre: "Garage", nota: "2,30 m de ancho — sigue siendo garage; revisar humedad del techo",
-    antes:  [],
-    render: ["1Z8vRz6NImu9g0QYWK7eYzLSEnu4pzYah"],
+    render: ["1Z8vRz6NImu9g0QYWK7eYzLSEnu4pzYah","1b7z77bLx0syzv887hexx32YCmiTKkXgD"],
     despues: [] },
 ];
 
 const thumb = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
 const full  = id => `https://drive.google.com/thumbnail?id=${id}&sz=w4000`;
 const fig = (id, nombre) =>
-  `<figure><a href="${full(id)}" target="_blank"><img src="${thumb(id)}" alt="${nombre}" loading="lazy"></a></figure>`;
+  `<figure data-id="${id}" data-desc="${nombre}"><button class="mark" title="Marcar para eliminar">✕</button><a href="${full(id)}" target="_blank"><img src="${thumb(id)}" alt="${nombre}" loading="lazy"></a></figure>`;
 
 const SLOTS = [["antes","Antes"],["render","Render"],["despues","Después"]];
 document.getElementById("rooms").innerHTML = AMBIENTES.map(a => `
@@ -108,6 +114,32 @@ document.getElementById("rooms").innerHTML = AMBIENTES.map(a => `
       : `<h3>${label}</h3><div class="grid"><div class="empty">pendiente</div></div>`
     ).join("")}
   </section>`).join("");
+
+// Marcar fotos para eliminar
+document.addEventListener("click", e => {
+  if (!e.target.classList.contains("mark")) return;
+  const f = e.target.closest("figure");
+  f.classList.toggle("marcada");
+  const key = "del_" + f.dataset.id;
+  f.classList.contains("marcada") ? localStorage.setItem(key, f.dataset.desc) : localStorage.removeItem(key);
+  actualizarBarra();
+});
+function actualizarBarra() {
+  const n = Object.keys(localStorage).filter(k => k.startsWith("del_")).length;
+  document.getElementById("nmarcadas").textContent = n;
+}
+function copiarMarcadas() {
+  const lista = Object.entries(localStorage).filter(([k]) => k.startsWith("del_"))
+    .map(([k,v]) => `${v} (id: ${k.slice(4)})`).join("\n");
+  navigator.clipboard.writeText(lista || "(ninguna marcada)").then(() =>
+    document.getElementById("aviso").textContent = "¡Copiado! Pegáselo a Claude en el chat.");
+}
+// restaurar marcas guardadas
+new MutationObserver(() => {}).observe(document.body, {});
+document.querySelectorAll("figure[data-id]").forEach(f => {
+  if (localStorage.getItem("del_" + f.dataset.id)) f.classList.add("marcada");
+});
+actualizarBarra();
 </script>
 </body>
 </html>
