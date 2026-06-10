@@ -21,7 +21,7 @@
   figure img { width:100%; border-radius:10px; display:block; aspect-ratio:4/3; object-fit:cover; background:#2a241f;
                transition:opacity .15s; }
   figure a:hover img { opacity:.85; }
-  figure.plano img { aspect-ratio:auto; object-fit:contain; background:#1a1714; }
+  figure.plano svg { width:100%; height:auto; display:block; }
   .empty { border:2px dashed #3a322b; border-radius:10px; aspect-ratio:4/3;
            display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:.85rem; }
   footer { text-align:center; color:var(--muted); font-size:.85rem; }
@@ -49,10 +49,77 @@
 
 <section class="room">
   <h2>Planos</h2>
-  <div class="meta">Living 6,00 × 4,66 m · ventana del living 3,13 m · garage 2,30 m de ancho · lote ~8,6 × 26 m</div>
+  <div class="meta">Vivienda unifamiliar · dos niveles · lote 8,66 × 25 m</div>
   <div class="grid">
-    <figure class="plano"><a href="plano-lower-floor.png" target="_blank"><img src="plano-lower-floor.png" alt="Plano planta baja" loading="lazy"></a><figcaption>Planta baja</figcaption></figure>
-    <figure class="plano"><a href="plano-upper-floor.png" target="_blank"><img src="plano-upper-floor.png" alt="Plano planta alta" loading="lazy"></a><figcaption>Planta alta</figcaption></figure>
+    <figure class="plano"><svg viewBox="0 0 430 640" xmlns="http://www.w3.org/2000/svg" style="background:#0d2240;border-radius:10px">
+<defs>
+  <pattern id="dots2" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="#7e96b8"/></pattern>
+  <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M0,9 L9,0" stroke="#5a708e" stroke-width="1"/></pattern>
+  <style>
+    .l{fill:none;stroke:#dde7f3;stroke-width:1.4}
+    .t{fill:#dde7f3;font-family:Georgia,serif;letter-spacing:3px;font-size:13px;text-anchor:middle}
+    .d{fill:#8fa6c4;font-family:Georgia,serif;letter-spacing:1px;font-size:9px;text-anchor:middle}
+    .h{fill:#8fa6c4;font-family:Georgia,serif;letter-spacing:4px;font-size:11px;text-anchor:middle}
+  </style>
+</defs>
+<text x="215" y="34" class="t" style="font-size:17px">PLANTA BAJA</text>
+<text x="215" y="52" class="d">N.P.T. ±0.00 · cotas en metros</text>
+<text x="215" y="86" class="h">▲ JARDÍN / FONDO ▲</text>
+<g transform="translate(68,100)">
+  <rect x="0" y="0" width="294" height="204" fill="url(#dots2)" class="l"/>
+  <text x="147" y="98" class="t">PATIO</text><text x="147" y="114" class="d">8.66 × 6.00</text>
+  <rect x="0" y="204" width="294" height="68" fill="url(#hatch)" class="l"/>
+  <text x="147" y="234" class="d">PATIO DEL LOCAL (VECINO) · 8.66 × 2.00</text>
+  <rect x="0" y="272" width="199" height="204" fill="url(#hatch)" class="l"/>
+  <text x="99" y="366" class="t" style="font-size:12px">LOCAL</text>
+  <text x="99" y="382" class="d">(vecino) · 5.86 × 6.00</text>
+  <rect x="199" y="272" width="95" height="204" class="l"/>
+  <text x="246" y="366" class="t" style="font-size:12px">GARAJE</text>
+  <text x="246" y="382" class="d">2.80 × 6.00</text>
+</g>
+<text x="215" y="606" class="h">▼ CALLE / FRENTE ▼</text>
+<text x="215" y="630" class="d">rayado = superficie del vecino · punteado = jardín/patio</text>
+</svg><figcaption>Planta baja</figcaption></figure>
+    <figure class="plano"><svg viewBox="0 0 430 980" xmlns="http://www.w3.org/2000/svg" style="background:#0d2240;border-radius:10px">
+<defs>
+  <pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="#7e96b8"/></pattern>
+  <style>
+    .l{fill:none;stroke:#dde7f3;stroke-width:1.4}
+    .t{fill:#dde7f3;font-family:Georgia,serif;letter-spacing:3px;font-size:13px;text-anchor:middle}
+    .d{fill:#8fa6c4;font-family:Georgia,serif;letter-spacing:1px;font-size:9px;text-anchor:middle}
+    .h{fill:#8fa6c4;font-family:Georgia,serif;letter-spacing:4px;font-size:11px;text-anchor:middle}
+  </style>
+</defs>
+<text x="215" y="34" class="t" style="font-size:17px">PLANTA ALTA</text>
+<text x="215" y="52" class="d">N.P.T. +3.20 · cotas en metros</text>
+<text x="215" y="86" class="h">▲ JARDÍN / FONDO ▲</text>
+<g transform="translate(68,100)">
+  <rect x="0" y="0" width="294" height="204" fill="url(#dots)" class="l"/>
+  <text x="147" y="98" class="t">JARDÍN</text><text x="147" y="114" class="d">8.66 × 6.00</text>
+  <rect x="0" y="204" width="294" height="102" class="l"/>
+  <text x="147" y="252" class="t">TERRAZA</text><text x="147" y="268" class="d">8.66 × 3.00</text>
+  <rect x="0" y="306" width="136" height="136" class="l"/>
+  <text x="68" y="368" class="t">DORM. 2</text><text x="68" y="384" class="d">4.00 × 4.00</text>
+  <rect x="136" y="306" width="158" height="204" class="l"/>
+  <text x="215" y="400" class="t">COCINA</text><text x="215" y="416" class="d">4.66 × 6.00</text>
+  <rect x="0" y="442" width="68" height="68" class="l"/>
+  <text x="34" y="472" class="d">BAÑO 2</text><text x="34" y="486" class="d">2×2</text>
+  <rect x="0" y="510" width="68" height="68" class="l"/>
+  <text x="34" y="540" class="d">BAÑO 1</text><text x="34" y="554" class="d">2×2</text>
+  <rect x="68" y="442" width="34" height="136" class="l"/>
+  <text x="85" y="516" class="d" transform="rotate(-90 85 516)">PASILLO</text>
+  <rect x="102" y="442" width="34" height="136" class="l"/>
+  <rect x="136" y="510" width="158" height="68" class="l"/>
+  <text x="215" y="540" class="t" style="font-size:11px">ESC ⟶</text><text x="215" y="556" class="d">baja P.B.</text>
+  <rect x="0" y="578" width="136" height="204" class="l"/>
+  <text x="68" y="672" class="t">DORM. 1</text><text x="68" y="688" class="d">4.00 × 6.00</text>
+  <rect x="136" y="578" width="158" height="204" class="l"/>
+  <text x="215" y="672" class="t">LIVING</text><text x="215" y="688" class="d">4.66 × 6.00</text>
+  <rect x="0" y="782" width="294" height="68" class="l"/>
+  <text x="147" y="812" class="t" style="font-size:11px">BALCÓN</text><text x="147" y="828" class="d">8.66 × 2.00</text>
+</g>
+<text x="215" y="972" class="h">▼ CALLE / FRENTE ▼</text>
+</svg><figcaption>Planta alta</figcaption></figure>
   </div>
 </section>
 
@@ -95,7 +162,7 @@ const AMBIENTES = [
     despues: [] },
   { nombre: "Garage y escalera", nota: "Garage de 2,30 m de ancho — sigue siendo garage; revisar humedad del techo",
     antes:  ["1EuoNsPaHkSd0s6NX0-rTqry5BzTm0_vS"],
-    render: ["1Z8vRz6NImu9g0QYWK7eYzLSEnu4pzYah","1b7z77bLx0syzv887hexx32YCmiTKkXgD"],
+    render: ["1Z8vRz6NImu9g0QYWK7eYzLSEnu4pzYah","1b7z77bLx0syzv887hexx32YCmiTKkXgD","1gFkI-1k9YAEC8fwpE6pq7sidFf-t5y4I"],
     despues: [] },
 ];
 
