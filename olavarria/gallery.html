@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>España 3175 — Antes y Después</title>
+<style>
+  :root { --bg:#14110f; --card:#1f1a17; --accent:#d4a373; --text:#f1ece6; --muted:#9a8f85; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--bg); color:var(--text); font-family:Georgia,'Times New Roman',serif; padding:48px 24px; }
+  header { text-align:center; margin-bottom:48px; }
+  h1 { font-size:2.4rem; letter-spacing:.02em; }
+  header p { color:var(--muted); margin-top:8px; font-style:italic; }
+  .room { max-width:1000px; margin:0 auto 56px; background:var(--card); border-radius:14px; padding:28px; }
+  .room h2 { color:var(--accent); font-size:1.4rem; margin-bottom:4px; }
+  .room .meta { color:var(--muted); font-size:.9rem; margin-bottom:18px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; }
+  figure { margin:0; }
+  figure img { width:100%; border-radius:10px; display:block; aspect-ratio:4/3; object-fit:cover; background:#2a241f; }
+  figcaption { text-align:center; color:var(--muted); font-size:.85rem; margin-top:6px;
+               text-transform:uppercase; letter-spacing:.12em; }
+  .empty { border:2px dashed #3a322b; border-radius:10px; aspect-ratio:4/3;
+           display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:.85rem; }
+  footer { text-align:center; color:var(--muted); font-size:.85rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>España 3175 · Olavarría</h1>
+  <p>La remodelación, ambiente por ambiente</p>
+</header>
+
+<main id="rooms"></main>
+
+<footer>Actualizado a mano editando el array ROOMS en este archivo.</footer>
+
+<script>
+// To add content: paste public image URLs (Google Drive direct links or CDN).
+// Leave "" for slots you don't have yet — they render as placeholders.
+const ROOMS = [
+  { name: "Living",            note: "",                              before: "", render: "", after: "" },
+  { name: "Cocina",            note: "",                              before: "", render: "", after: "" },
+  { name: "Baños",             note: "Se mantienen azulejos verdes",  before: "", render: "", after: "" },
+  { name: "Terraza y Pérgola", note: "Parrilla nueva",                before: "", render: "", after: "" },
+  { name: "Exterior y Fachada",note: "",                              before: "", render: "", after: "" },
+];
+
+const SLOTS = [["before","Antes"],["render","Render"],["after","Después"]];
+document.getElementById("rooms").innerHTML = ROOMS.map(r => `
+  <section class="room">
+    <h2>${r.name}</h2>
+    <div class="meta">${r.note || "&nbsp;"}</div>
+    <div class="grid">
+      ${SLOTS.map(([key,label]) => r[key]
+        ? `<figure><img src="${r[key]}" alt="${r.name} — ${label}" loading="lazy"><figcaption>${label}</figcaption></figure>`
+        : `<figure><div class="empty">${label} — pendiente</div><figcaption>${label}</figcaption></figure>`
+      ).join("")}
+    </div>
+  </section>`).join("");
+</script>
+</body>
+</html>
