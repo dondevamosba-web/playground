@@ -37,12 +37,26 @@
 <script>
 // To add content: paste public image URLs (Google Drive direct links or CDN).
 // Leave "" for slots you don't have yet — they render as placeholders.
+const DRIVE = id => `https://drive.google.com/uc?export=download&id=${id}`;
 const ROOMS = [
-  { name: "Living",            note: "",                              before: "", render: "", after: "" },
-  { name: "Cocina",            note: "",                              before: "", render: "", after: "" },
-  { name: "Baños",             note: "Se mantienen azulejos verdes",  before: "", render: "", after: "" },
-  { name: "Terraza y Pérgola", note: "Parrilla nueva",                before: "", render: "", after: "" },
-  { name: "Exterior y Fachada",note: "",                              before: "", render: "", after: "" },
+  { name: "Living",            note: "",
+    before: DRIVE("1_74nj-vC_GclHE-LeiGpIgV0yR-LZ4Yi"), render: DRIVE("1ycOPKpcCGfT1zCebvkzfFbfuVDXnnDbO"), after: "" },
+  { name: "Cocina",            note: "Vista a la ventana incluida",
+    before: DRIVE("17biJGYaVQ00_LHvU6CuIFjsCVUCtbbC1"), render: DRIVE("18dysMjlVzLVSknb2-qYl42JZDSdHLADA"), after: "" },
+  { name: "Baño 1",            note: "Se mantienen azulejos verdes",
+    before: DRIVE("1vtxrs8J15Dnutxn7IOFnfttcEjQiFOFc"), render: DRIVE("10TSS-yepj_5Ys3lE3d_DaOeBKjkzum00"), after: "" },
+  { name: "Baño 2",            note: "",
+    before: DRIVE("1rau4gU6iPvpR61hPaElVXlmAjAd3eWSI"), render: DRIVE("1sp-AwqS1xslPv-8zz24rqyNVw4fSUTQ1"), after: "" },
+  { name: "Dormitorio 1",      note: "Foto de obra (ex garage)",
+    before: DRIVE("1ZlM2p5Vf5VSxfl1lQEVJv3wfbOcTcFyg"), render: "", after: "" },
+  { name: "Dormitorio 2",      note: "",
+    before: DRIVE("1OurIzOhqFDXsoCm_jOg2hK5HSwR_3pHO"), render: DRIVE("1UvWsQONye_YuO7aMcCRlfQcgmKyh0SBV"), after: "" },
+  { name: "Terraza y Pérgola", note: "Parrilla nueva",
+    before: DRIVE("1YW0e9OZ0feKSC85oPKoHsTyNVri8Mqow"), render: DRIVE("1QFknnNQM-mAkp1EyOWwynuvo8zYQyvuz"), after: "" },
+  { name: "Jardín",            note: "",
+    before: DRIVE("15hsf97SHX84kEbFkfD-XlfblDUo651Z_"), render: DRIVE("1YjlwideILf_yKgEbmZfJVDGo4RpInF8k"), after: "" },
+  { name: "Escalera y Hall",   note: "",
+    before: DRIVE("1EuoNsPaHkSd0s6NX0-rTqry5BzTm0_vS"), render: "", after: "" },
 ];
 
 const SLOTS = [["before","Antes"],["render","Render"],["after","Después"]];
