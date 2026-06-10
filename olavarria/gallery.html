@@ -21,7 +21,7 @@
   figure img { width:100%; border-radius:10px; display:block; aspect-ratio:4/3; object-fit:cover; background:#2a241f;
                transition:opacity .15s; }
   figure a:hover img { opacity:.85; }
-  figure.plano img { aspect-ratio:auto; object-fit:contain; background:#fff; }
+  figure.plano img { aspect-ratio:auto; object-fit:contain; background:#1a1714; }
   .empty { border:2px dashed #3a322b; border-radius:10px; aspect-ratio:4/3;
            display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:.85rem; }
   footer { text-align:center; color:var(--muted); font-size:.85rem; }
@@ -51,8 +51,8 @@
   <h2>Planos</h2>
   <div class="meta">Living 6,00 × 4,66 m · ventana del living 3,13 m · garage 2,30 m de ancho · lote ~8,6 × 26 m</div>
   <div class="grid">
-    <figure class="plano"><a href="https://drive.google.com/thumbnail?id=11HPOYG_uydzQduvAqftOln5ZjuqXU1x0&sz=w4000" target="_blank"><img src="https://drive.google.com/thumbnail?id=11HPOYG_uydzQduvAqftOln5ZjuqXU1x0&sz=w1600" alt="Plano planta baja" loading="lazy"></a><figcaption>Planta baja</figcaption></figure>
-    <figure class="plano"><a href="https://drive.google.com/thumbnail?id=1nSKwFAyhjlPs308dSKnm3pdGSHa1sWRa&sz=w4000" target="_blank"><img src="https://drive.google.com/thumbnail?id=1nSKwFAyhjlPs308dSKnm3pdGSHa1sWRa&sz=w1600" alt="Plano planta alta" loading="lazy"></a><figcaption>Planta alta</figcaption></figure>
+    <figure class="plano"><a href="plano-lower-floor.png" target="_blank"><img src="plano-lower-floor.png" alt="Plano planta baja" loading="lazy"></a><figcaption>Planta baja</figcaption></figure>
+    <figure class="plano"><a href="plano-upper-floor.png" target="_blank"><img src="plano-upper-floor.png" alt="Plano planta alta" loading="lazy"></a><figcaption>Planta alta</figcaption></figure>
   </div>
 </section>
 
@@ -62,11 +62,11 @@
 // Cada ambiente: antes / render / despues son listas de IDs de Google Drive.
 const AMBIENTES = [
   { nombre: "Living", nota: "6,00 × 4,66 m — ventana de 3,13 m",
-    antes:  ["1_74nj-vC_GclHE-LeiGpIgV0yR-LZ4Yi","1NzwxaWB8bME_j9aCHcAtwZ2j01r3YKbV","1Yv5l38hv3aYIWkvyrG9N-8SVkMFIJmKp","1TQDjsXeXERwwCfkdsBP8wdiueGpdzaqT","1bLgNqZRrAm1bDJwlZka8pixT_OZ9JQEa"],
+    antes:  ["1_74nj-vC_GclHE-LeiGpIgV0yR-LZ4Yi","1NzwxaWB8bME_j9aCHcAtwZ2j01r3YKbV","1Yv5l38hv3aYIWkvyrG9N-8SVkMFIJmKp","1TQDjsXeXERwwCfkdsBP8wdiueGpdzaqT"],
     render: ["1ycOPKpcCGfT1zCebvkzfFbfuVDXnnDbO","1j_tXPtbWCAbyWKjF2K_h_ySfty9Ozujt"],
     despues: [] },
   { nombre: "Cocina y comedor", nota: "Incluye la vista a la ventana",
-    antes:  ["17biJGYaVQ00_LHvU6CuIFjsCVUCtbbC1","1B0amNkLpmfYntea59aiESHZEMcLfu_db","1xzXIWFdL68W84aGBKBYIPbLZ7QM7rVVz","1yYX641QZEbByAptaj18MRR5TzVuHApZY","15-TT5vOk88iDJ-I4VlMjNqCAA3lzooGJ"],
+    antes:  ["17biJGYaVQ00_LHvU6CuIFjsCVUCtbbC1","1B0amNkLpmfYntea59aiESHZEMcLfu_db","1yYX641QZEbByAptaj18MRR5TzVuHApZY","15-TT5vOk88iDJ-I4VlMjNqCAA3lzooGJ"],
     render: ["18dysMjlVzLVSknb2-qYl42JZDSdHLADA","1SVIULallKMN8KNUJQ1V4rtAjrGM6FTGM","1HSvOLkrbGfgR-_MHsNfREquZ0XYoplm7"],
     despues: [] },
   { nombre: "Baño 1", nota: "Se mantienen los azulejos verdes",
@@ -78,7 +78,7 @@ const AMBIENTES = [
     render: ["1sp-AwqS1xslPv-8zz24rqyNVw4fSUTQ1"],
     despues: [] },
   { nombre: "Dormitorio 1", nota: "Foto de obra",
-    antes:  ["1ZlM2p5Vf5VSxfl1lQEVJv3wfbOcTcFyg"],
+    antes:  ["1ZlM2p5Vf5VSxfl1lQEVJv3wfbOcTcFyg","1BitDCrrPOsUGtieH830YagQZ6Ph-H4uF"],
     render: [],
     despues: [] },
   { nombre: "Dormitorio 2", nota: "",
@@ -86,7 +86,7 @@ const AMBIENTES = [
     render: ["1UvWsQONye_YuO7aMcCRlfQcgmKyh0SBV"],
     despues: [] },
   { nombre: "Terraza y pérgola", nota: "Parrilla nueva",
-    antes:  ["1YW0e9OZ0feKSC85oPKoHsTyNVri8Mqow","1tKwQSP87DZCtSEv73FjglwgqGnjSZ332","1F64QmA8UJUrI0QNrUBcd4-04RYmHNtH-"],
+    antes:  ["1YW0e9OZ0feKSC85oPKoHsTyNVri8Mqow","1F64QmA8UJUrI0QNrUBcd4-04RYmHNtH-"],
     render: ["1QFknnNQM-mAkp1EyOWwynuvo8zYQyvuz","1xc7TnQB2yIaNGRi4mMqhayFmdv8i3Bx1","17TcdcpMsDqFMs12cpLpLPLGXSY56PyzP","1KJqqpg-6dAPd7IJydT4ROz09ae3wSv_U"],
     despues: [] },
   { nombre: "Jardín", nota: "",
