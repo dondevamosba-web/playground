@@ -14,14 +14,18 @@
   .room { max-width:1000px; margin:0 auto 56px; background:var(--card); border-radius:14px; padding:28px; }
   .room h2 { color:var(--accent); font-size:1.4rem; margin-bottom:4px; }
   .room .meta { color:var(--muted); font-size:.9rem; margin-bottom:18px; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; }
+  h3 { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.14em; margin:18px 0 8px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
   figure { margin:0; }
-  figure img { width:100%; border-radius:10px; display:block; aspect-ratio:4/3; object-fit:cover; background:#2a241f; }
-  figcaption { text-align:center; color:var(--muted); font-size:.85rem; margin-top:6px;
-               text-transform:uppercase; letter-spacing:.12em; }
+  figure a { display:block; }
+  figure img { width:100%; border-radius:10px; display:block; aspect-ratio:4/3; object-fit:cover; background:#2a241f;
+               transition:opacity .15s; }
+  figure a:hover img { opacity:.85; }
+  figure.plano img { aspect-ratio:auto; object-fit:contain; background:#fff; }
   .empty { border:2px dashed #3a322b; border-radius:10px; aspect-ratio:4/3;
            display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:.85rem; }
   footer { text-align:center; color:var(--muted); font-size:.85rem; }
+  .hint { text-align:center; color:var(--muted); font-size:.85rem; margin-bottom:30px; }
 </style>
 </head>
 <body>
@@ -29,56 +33,76 @@
   <h1>España 3175 · Olavarría</h1>
   <p>La remodelación, ambiente por ambiente</p>
 </header>
+<p class="hint">Tocá cualquier foto para verla completa en otra pestaña.</p>
 
 <main id="rooms"></main>
 
 <section class="room">
   <h2>Planos</h2>
-  <div class="meta">Living 6,00 × 4,66 m · ventana 3,13 m · garage (futuro dormitorio) 2,30 m de ancho · lote ~8,6 × 26 m</div>
+  <div class="meta">Living 6,00 × 4,66 m · ventana del living 3,13 m · garage (futuro dormitorio) 2,30 m de ancho · lote ~8,6 × 26 m</div>
   <div class="grid">
-    <figure><img src="https://drive.google.com/thumbnail?id=11HPOYG_uydzQduvAqftOln5ZjuqXU1x0&sz=w1600" alt="Plano planta baja" loading="lazy" style="object-fit:contain;background:#fff"><figcaption>Planta baja</figcaption></figure>
-    <figure><img src="https://drive.google.com/thumbnail?id=1nSKwFAyhjlPs308dSKnm3pdGSHa1sWRa&sz=w1600" alt="Plano planta alta" loading="lazy" style="object-fit:contain;background:#fff"><figcaption>Planta alta</figcaption></figure>
+    <figure class="plano"><a href="https://drive.google.com/file/d/11HPOYG_uydzQduvAqftOln5ZjuqXU1x0/view" target="_blank"><img src="https://drive.google.com/thumbnail?id=11HPOYG_uydzQduvAqftOln5ZjuqXU1x0&sz=w1600" alt="Plano planta baja" loading="lazy"></a><figcaption>Planta baja</figcaption></figure>
+    <figure class="plano"><a href="https://drive.google.com/file/d/1nSKwFAyhjlPs308dSKnm3pdGSHa1sWRa/view" target="_blank"><img src="https://drive.google.com/thumbnail?id=1nSKwFAyhjlPs308dSKnm3pdGSHa1sWRa&sz=w1600" alt="Plano planta alta" loading="lazy"></a><figcaption>Planta alta</figcaption></figure>
   </div>
 </section>
 
-<footer>Actualizado a mano editando el array ROOMS en este archivo.</footer>
+<footer>Se actualiza editando el array AMBIENTES de este archivo.</footer>
 
 <script>
-// To add content: paste public image URLs (Google Drive direct links or CDN).
-// Leave "" for slots you don't have yet — they render as placeholders.
-const DRIVE = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
-const ROOMS = [
-  { name: "Living",            note: "",
-    before: DRIVE("1_74nj-vC_GclHE-LeiGpIgV0yR-LZ4Yi"), render: DRIVE("1ycOPKpcCGfT1zCebvkzfFbfuVDXnnDbO"), after: "" },
-  { name: "Cocina",            note: "Vista a la ventana incluida",
-    before: DRIVE("17biJGYaVQ00_LHvU6CuIFjsCVUCtbbC1"), render: DRIVE("18dysMjlVzLVSknb2-qYl42JZDSdHLADA"), after: "" },
-  { name: "Baño 1",            note: "Se mantienen azulejos verdes",
-    before: DRIVE("1vtxrs8J15Dnutxn7IOFnfttcEjQiFOFc"), render: DRIVE("10TSS-yepj_5Ys3lE3d_DaOeBKjkzum00"), after: "" },
-  { name: "Baño 2",            note: "",
-    before: DRIVE("1rau4gU6iPvpR61hPaElVXlmAjAd3eWSI"), render: DRIVE("1sp-AwqS1xslPv-8zz24rqyNVw4fSUTQ1"), after: "" },
-  { name: "Dormitorio 1",      note: "Foto de obra (ex garage)",
-    before: DRIVE("1ZlM2p5Vf5VSxfl1lQEVJv3wfbOcTcFyg"), render: "", after: "" },
-  { name: "Dormitorio 2",      note: "",
-    before: DRIVE("1OurIzOhqFDXsoCm_jOg2hK5HSwR_3pHO"), render: DRIVE("1UvWsQONye_YuO7aMcCRlfQcgmKyh0SBV"), after: "" },
-  { name: "Terraza y Pérgola", note: "Parrilla nueva",
-    before: DRIVE("1YW0e9OZ0feKSC85oPKoHsTyNVri8Mqow"), render: DRIVE("1QFknnNQM-mAkp1EyOWwynuvo8zYQyvuz"), after: "" },
-  { name: "Jardín",            note: "",
-    before: DRIVE("15hsf97SHX84kEbFkfD-XlfblDUo651Z_"), render: DRIVE("1YjlwideILf_yKgEbmZfJVDGo4RpInF8k"), after: "" },
-  { name: "Escalera y Hall",   note: "",
-    before: DRIVE("1EuoNsPaHkSd0s6NX0-rTqry5BzTm0_vS"), render: "", after: "" },
+// Cada ambiente: antes / render / despues son listas de IDs de Google Drive.
+const AMBIENTES = [
+  { nombre: "Living", nota: "6,00 × 4,66 m — ventana de 3,13 m",
+    antes:  ["1_74nj-vC_GclHE-LeiGpIgV0yR-LZ4Yi","1NzwxaWB8bME_j9aCHcAtwZ2j01r3YKbV","1Yv5l38hv3aYIWkvyrG9N-8SVkMFIJmKp","1TQDjsXeXERwwCfkdsBP8wdiueGpdzaqT","1bLgNqZRrAm1bDJwlZka8pixT_OZ9JQEa"],
+    render: ["1ycOPKpcCGfT1zCebvkzfFbfuVDXnnDbO","1j_tXPtbWCAbyWKjF2K_h_ySfty9Ozujt"],
+    despues: [] },
+  { nombre: "Cocina y comedor", nota: "Incluye la vista a la ventana",
+    antes:  ["17biJGYaVQ00_LHvU6CuIFjsCVUCtbbC1","1B0amNkLpmfYntea59aiESHZEMcLfu_db","1xzXIWFdL68W84aGBKBYIPbLZ7QM7rVVz","1yYX641QZEbByAptaj18MRR5TzVuHApZY","15-TT5vOk88iDJ-I4VlMjNqCAA3lzooGJ"],
+    render: ["18dysMjlVzLVSknb2-qYl42JZDSdHLADA","1SVIULallKMN8KNUJQ1V4rtAjrGM6FTGM","1HSvOLkrbGfgR-_MHsNfREquZ0XYoplm7"],
+    despues: [] },
+  { nombre: "Baño 1", nota: "Se mantienen los azulejos verdes",
+    antes:  ["1vtxrs8J15Dnutxn7IOFnfttcEjQiFOFc","1khoOK_PS7ZojQ1WPSArC9x0-aWi_ZA4O"],
+    render: ["10TSS-yepj_5Ys3lE3d_DaOeBKjkzum00","1uByu9acJtJPdb2yvumAde1uv3bCNn7Fv"],
+    despues: [] },
+  { nombre: "Baño 2", nota: "",
+    antes:  ["1rau4gU6iPvpR61hPaElVXlmAjAd3eWSI","1ammMnzBvq4x_Ar5Xxw7MRScI9pzHUCOI"],
+    render: ["1sp-AwqS1xslPv-8zz24rqyNVw4fSUTQ1"],
+    despues: [] },
+  { nombre: "Dormitorio 1 (ex garage)", nota: "2,30 m de ancho — foto de obra; revisar humedad del techo",
+    antes:  ["1ZlM2p5Vf5VSxfl1lQEVJv3wfbOcTcFyg"],
+    render: [],
+    despues: [] },
+  { nombre: "Dormitorio 2", nota: "",
+    antes:  ["1OurIzOhqFDXsoCm_jOg2hK5HSwR_3pHO","17yUgUMXB-DnnSba11vnraGZxNCblAYIb","1QAL2tlO96NFti2wtH_Y8_bxZb0JsBrbq"],
+    render: ["1UvWsQONye_YuO7aMcCRlfQcgmKyh0SBV"],
+    despues: [] },
+  { nombre: "Terraza y pérgola", nota: "Parrilla nueva",
+    antes:  ["1YW0e9OZ0feKSC85oPKoHsTyNVri8Mqow","1tKwQSP87DZCtSEv73FjglwgqGnjSZ332","1F64QmA8UJUrI0QNrUBcd4-04RYmHNtH-"],
+    render: ["1QFknnNQM-mAkp1EyOWwynuvo8zYQyvuz","1xc7TnQB2yIaNGRi4mMqhayFmdv8i3Bx1"],
+    despues: [] },
+  { nombre: "Jardín", nota: "",
+    antes:  ["15hsf97SHX84kEbFkfD-XlfblDUo651Z_","1lWgmHRw55Re6rOM5qHBXzN4GNXH8LSHC","1wHaJdBqTp0ee6les9frpJUQsSIjCnQc8"],
+    render: ["1YjlwideILf_yKgEbmZfJVDGo4RpInF8k"],
+    despues: [] },
+  { nombre: "Escalera y hall", nota: "",
+    antes:  ["1EuoNsPaHkSd0s6NX0-rTqry5BzTm0_vS"],
+    render: [],
+    despues: [] },
 ];
 
-const SLOTS = [["before","Antes"],["render","Render"],["after","Después"]];
-document.getElementById("rooms").innerHTML = ROOMS.map(r => `
+const thumb = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const full  = id => `https://drive.google.com/file/d/${id}/view`;
+const fig = (id, nombre) =>
+  `<figure><a href="${full(id)}" target="_blank"><img src="${thumb(id)}" alt="${nombre}" loading="lazy"></a></figure>`;
+
+const SLOTS = [["antes","Antes"],["render","Render"],["despues","Después"]];
+document.getElementById("rooms").innerHTML = AMBIENTES.map(a => `
   <section class="room">
-    <h2>${r.name}</h2>
-    <div class="meta">${r.note || "&nbsp;"}</div>
-    <div class="grid">
-      ${SLOTS.map(([key,label]) => r[key]
-        ? `<figure><img src="${r[key]}" alt="${r.name} — ${label}" loading="lazy"><figcaption>${label}</figcaption></figure>`
-        : `<figure><div class="empty">${label} — pendiente</div><figcaption>${label}</figcaption></figure>`
-      ).join("")}
-    </div>
+    <h2>${a.nombre}</h2>
+    <div class="meta">${a.nota || "&nbsp;"}</div>
+    ${SLOTS.map(([key,label]) => a[key].length
+      ? `<h3>${label}</h3><div class="grid">${a[key].map(id => fig(id, a.nombre+" — "+label)).join("")}</div>`
+      : `<h3>${label}</h3><div class="grid"><div class="empty">pendiente</div></div>`
+    ).join("")}
   </section>`).join("");
 </script>
 </body>
