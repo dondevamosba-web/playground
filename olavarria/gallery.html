@@ -39,10 +39,10 @@
 
 <section class="room">
   <h2>Planos</h2>
-  <div class="meta">Living 6,00 × 4,66 m · ventana del living 3,13 m · garage (futuro dormitorio) 2,30 m de ancho · lote ~8,6 × 26 m</div>
+  <div class="meta">Living 6,00 × 4,66 m · ventana del living 3,13 m · garage 2,30 m de ancho · lote ~8,6 × 26 m</div>
   <div class="grid">
-    <figure class="plano"><a href="https://drive.google.com/file/d/11HPOYG_uydzQduvAqftOln5ZjuqXU1x0/view" target="_blank"><img src="https://drive.google.com/thumbnail?id=11HPOYG_uydzQduvAqftOln5ZjuqXU1x0&sz=w1600" alt="Plano planta baja" loading="lazy"></a><figcaption>Planta baja</figcaption></figure>
-    <figure class="plano"><a href="https://drive.google.com/file/d/1nSKwFAyhjlPs308dSKnm3pdGSHa1sWRa/view" target="_blank"><img src="https://drive.google.com/thumbnail?id=1nSKwFAyhjlPs308dSKnm3pdGSHa1sWRa&sz=w1600" alt="Plano planta alta" loading="lazy"></a><figcaption>Planta alta</figcaption></figure>
+    <figure class="plano"><a href="https://drive.google.com/thumbnail?id=11HPOYG_uydzQduvAqftOln5ZjuqXU1x0&sz=w4000" target="_blank"><img src="https://drive.google.com/thumbnail?id=11HPOYG_uydzQduvAqftOln5ZjuqXU1x0&sz=w1600" alt="Plano planta baja" loading="lazy"></a><figcaption>Planta baja</figcaption></figure>
+    <figure class="plano"><a href="https://drive.google.com/thumbnail?id=1nSKwFAyhjlPs308dSKnm3pdGSHa1sWRa&sz=w4000" target="_blank"><img src="https://drive.google.com/thumbnail?id=1nSKwFAyhjlPs308dSKnm3pdGSHa1sWRa&sz=w1600" alt="Plano planta alta" loading="lazy"></a><figcaption>Planta alta</figcaption></figure>
   </div>
 </section>
 
@@ -67,7 +67,7 @@ const AMBIENTES = [
     antes:  ["1rau4gU6iPvpR61hPaElVXlmAjAd3eWSI","1ammMnzBvq4x_Ar5Xxw7MRScI9pzHUCOI"],
     render: ["1sp-AwqS1xslPv-8zz24rqyNVw4fSUTQ1"],
     despues: [] },
-  { nombre: "Dormitorio 1 (ex garage)", nota: "2,30 m de ancho — foto de obra; revisar humedad del techo",
+  { nombre: "Dormitorio 1", nota: "Foto de obra",
     antes:  ["1ZlM2p5Vf5VSxfl1lQEVJv3wfbOcTcFyg"],
     render: [],
     despues: [] },
@@ -87,10 +87,14 @@ const AMBIENTES = [
     antes:  ["1EuoNsPaHkSd0s6NX0-rTqry5BzTm0_vS"],
     render: [],
     despues: [] },
+  { nombre: "Garage", nota: "2,30 m de ancho — sigue siendo garage; revisar humedad del techo",
+    antes:  [],
+    render: [],
+    despues: [] },
 ];
 
 const thumb = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
-const full  = id => `https://drive.google.com/file/d/${id}/view`;
+const full  = id => `https://drive.google.com/thumbnail?id=${id}&sz=w4000`;
 const fig = (id, nombre) =>
   `<figure><a href="${full(id)}" target="_blank"><img src="${thumb(id)}" alt="${nombre}" loading="lazy"></a></figure>`;
 

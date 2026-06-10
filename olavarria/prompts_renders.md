@@ -6,9 +6,13 @@ Tip general: si el primer resultado cambia demasiado la estructura (paredes, ven
 
 ---
 
-## Dormitorio 1 (ex garage)
+## Garage (renovado, sigue siendo garage)
 
-> Tomá esta foto de un garage angosto (2,30 m de ancho) y transformalo en un render fotorrealista de un dormitorio cálido y moderno. Mantené la perspectiva y las proporciones de la foto. Conservá la pared de piedra laja como pared de acento, pintada o sellada en tono natural. Techo reparado, liso, pintado blanco (sin manchas de humedad). Piso de madera clara estilo nórdico. Una cama de 1,40 m contra la pared larga con ropa de cama en tonos crudos y terracota, iluminación cálida con apliques de pared, un ventiluz o ventana alta para luz natural. Estilo: moderno cálido, madera y textiles naturales, mismo estilo que un render de interiorismo profesional. Formato vertical.
+> Tomá esta foto de un garage angosto (2,30 m de ancho) y transformalo en un render fotorrealista del mismo garage renovado. Mantené la perspectiva, las proporciones y la estructura exacta. Conservá la pared de piedra laja tal como está y el deck/portón de madera oscura restaurado. Techo reparado, liso, pintado blanco (sin manchas de humedad). Piso de cemento alisado gris claro, iluminación cálida con tiras LED en el techo, ganchos y estantes de pared negros bien ordenados para herramientas y bicis. Estilo: garage moderno, limpio y cálido. Formato vertical.
+
+## Dormitorio 1
+
+> Tomá esta foto de un dormitorio en obra y transformala en un render fotorrealista del mismo dormitorio terminado. Mantené la estructura, ventanas y perspectiva exactas. Paredes blancas lisas, piso de madera clara, cama de 1,40 m con ropa de cama en tonos crudos y terracota, mesitas de luz de madera, iluminación cálida con apliques. Estilo: moderno cálido, madera y textiles naturales. Formato vertical.
 
 ## Escalera y hall
 
@@ -28,7 +32,8 @@ Tip general: si el primer resultado cambia demasiado la estructura (paredes, ven
 
 Guardalos en `~/Desktop/renovation/renders/` con estos nombres y avisame:
 
-- `bedroom-garage_01.png`
+- `garage_01.png`
+- `bedroom-1_01.png`
 - `stairs-hall_01.png`
 - `hallway_01.png`
 - `facade_01.png`
