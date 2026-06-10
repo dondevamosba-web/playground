@@ -1,7 +1,7 @@
 # Workflow: Scrape Events & Queue for Approval
 
 **Account:** Fiestas (electronic parties Argentina)
-**Trigger:** Run daily or manually before you want to post.
+**Trigger:** Runs daily at 9:00 AM (AR) via local cron (`.tmp/cron_fiestas_queue.log`); can also be run manually anytime.
 **Output:** New rows added to the Google Sheet with Status=pending. You review and change to "approved".
 
 ---
@@ -77,3 +77,16 @@ It skips any event where (Event Name + Event Date) already exists in the sheet.
 
 **Sheet not found:**
 - `FIESTAS_APPROVAL_SHEET_ID` in `.env` may be wrong. Clear it and run again to recreate.
+
+---
+
+## Related Tools (unified approval sheet)
+
+These work against the multi-account approval sheet (`UNIFIED_APPROVAL_SHEET_ID` in `.env`, tabs: Ola Digital / Storm / Fiestas / Techno):
+
+- `tools/create_unified_approval_sheet.py` — create the unified sheet (one-time setup)
+- `tools/seed_approval_sheet.py` — seed it with draft rows
+- `tools/seed_fiestas_upcoming.py` — seed upcoming RA events into the Fiestas tab
+- `tools/fetch_next_posts.py` — list the next scheduled/approved posts
+- `tools/publish_all_approved.py` — publish every approved row across all 4 tabs (runs 2x daily via cron)
+- `tools/generate_fiestas_news_image.py` — branded news image generator (macOS-only font paths; photo URL passed per event)

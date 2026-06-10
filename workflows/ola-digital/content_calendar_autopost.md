@@ -114,4 +114,4 @@ Schedule this to run daily.
 - **Instagram rate limit**: 25 API posts per 24h — don't over-fill the calendar
 - **Reel processing**: the tool polls until the video container is ready (up to 2 minutes); if it times out, re-run
 - **Netlify Forms**: requires the site to be deployed on Netlify; the form won't appear in the dashboard until at least one submission has been received
-- **Token expiry**: `INSTAGRAM_ACCESS_TOKEN` expires every 60 days — refresh via the Graph API exchange endpoint before it expires
+- **Token health**: `INSTAGRAM_ACCESS_TOKEN` is a Meta system-user token (no timed expiry, but it can be revoked). Check with `python3 tools/check_token_health.py` — also runs Mondays 9am via cron, log in `.tmp/cron_token_health.log`

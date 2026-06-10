@@ -94,6 +94,28 @@ python tools/post_instagram.py \
   --schedule "2026-06-07T18:00:00-03:00"
 ```
 
+## Calendario de contenido + auto-publicación
+
+Alternativa al flujo manual de arriba: mantener un Google Sheet con posts programados y publicarlos automáticamente cuando llega su horario.
+
+### Paso 1 — Crear/llenar el calendario
+
+```bash
+python3 tools/fill_content_techno.py             # genera el sheet + captions con Claude
+python3 tools/fill_content_techno.py --dry-run   # preview sin escribir
+```
+
+Crea el sheet "Techno — Content Calendar" y guarda el ID en `.env` como `TECHNO_CONTENT_CALENDAR_SHEET_ID`. Misma estructura de columnas que el calendario de Ola Digital: vos completás **Media URL** y dejás Status en `pending`.
+
+### Paso 2 — Auto-publicar
+
+```bash
+python3 tools/auto_post_techno.py            # publica lo que está vencido
+python3 tools/auto_post_techno.py --dry-run  # preview
+```
+
+Ya corre automáticamente por cron a las 9:30 y 18:30 (hora AR); log en `.tmp/cron_autopost.log`. Para saltear un post, poné Status = `skip` en el sheet.
+
 ## Setup inicial (una sola vez)
 
 Completar en `.env`:
