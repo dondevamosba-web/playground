@@ -139,7 +139,43 @@ def build_summary(results: list, hour_utc: int, today: str) -> str:
         "Each bullet: ad set name, issue, specific action (pause / reduce budget by X% / check delivery). "
         "No intro, no conclusion — just the 3 bullets."
     )
+    # haiku: mechanical formatting of flagged data into bullets
     return call_claude(prompt, model="haiku")
+
+
+def adversarial_check(summary: str, results: list, hour_utc: int, today: str) -> tuple[bool, str]:
+    """
+    Attempt to refute the recommended actions in summary.
+    Returns (passed, refutation_log).
+    passed=True means the summary survived scrutiny and can go to the draft.
+    passed=False means a concern was raised that warrants human review.
+    """
+    flags = [r for r in results if r["status"] != "ON TRACK"]
+    data_lines = "\n".join(
+        f"- {r['campaign']} / {r['adset']}: pacing {r['ratio']:.0%} at hour {hour_utc} UTC, "
+        f"budget ${r['budget']:.2f}, spent ${r['spend']:.2f}"
+        for r in flags
+    )
+    prompt = (
+        f"You are an adversarial reviewer. It is {hour_utc}:00 UTC on {today}.\n\n"
+        "A Meta Ads manager has proposed the following actions:\n\n"
+        f"{summary}\n\n"
+        "Raw pacing data:\n"
+        f"{data_lines}\n\n"
+        "Your job is to find reasons these actions could be WRONG or premature. Consider:\n"
+        "- Is it too early in the day to judge pacing (before hour 8 UTC)?\n"
+        "- Could a BEHIND ad set be in the learning phase or have a schedule start delay?\n"
+        "- Could an AHEAD ad set be intentionally front-loaded by Meta's delivery algorithm?\n"
+        "- Is the budget difference small enough to be noise (under $5 deviation)?\n"
+        "- Would pausing now harm an in-flight auction?\n\n"
+        "If you find a legitimate concern: start with REFUTED, then explain in 1-2 lines.\n"
+        "If the actions look sound: start with PASSED, then confirm why in 1 line.\n"
+        "Be concise and direct."
+    )
+    # sonnet: adversarial judgment call, not formatting
+    verdict = call_claude(prompt, model="sonnet")
+    passed = verdict.strip().upper().startswith("PASSED")
+    return passed, verdict
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -224,11 +260,27 @@ def main():
     print(f"\n{summary}")
 
     if not args.dry_run and any(r["status"] != "ON TRACK" for r in all_results):
+        passed, refutation_log = adversarial_check(summary, all_results, hour_utc, today)
+        print(f"\n[adversarial] {refutation_log}")
+
         flags_count = counts["AHEAD"] + counts["BEHIND"]
-        subject = f"Meta Budget Pacing — {today} {hour_utc}:00 UTC ({flags_count} flag(s))"
-        html = build_html_body(summary)
-        result = create_draft(to="dondevamosba@gmail.com", subject=subject, body=html, html=True)
-        print(f"\nGmail draft created: {result['draft_id']}")
+        if passed:
+            subject = f"Meta Budget Pacing — {today} {hour_utc}:00 UTC ({flags_count} flag(s))"
+            body_text = summary + f"\n\n---\n[adversarial check] {refutation_log}"
+            html = build_html_body(body_text)
+            result = create_draft(to="dondevamosba@gmail.com", subject=subject, body=html, html=True)
+            print(f"\nGmail draft created: {result['draft_id']}")
+        else:
+            subject = f"[HELD] Meta Budget Pacing — {today} {hour_utc}:00 UTC ({flags_count} flag(s)) — adversarial refuted"
+            body_text = (
+                "The following actions were proposed but held by adversarial review.\n\n"
+                f"PROPOSED ACTIONS:\n{summary}\n\n"
+                f"ADVERSARIAL REFUTATION:\n{refutation_log}\n\n"
+                "Review manually before acting."
+            )
+            html = build_html_body(body_text)
+            result = create_draft(to="dondevamosba@gmail.com", subject=subject, body=html, html=True)
+            print(f"\nDraft held (adversarial refuted) — created for manual review: {result['draft_id']}")
     elif not args.dry_run:
         print("\nAll on track — no draft needed.")
 

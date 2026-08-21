@@ -44,7 +44,8 @@ Contact: carminattiguido@gmail.com | linkedin.com/in/guidocarminatti"""
 # ── Email lookup ──────────────────────────────────────────────────────────────
 
 _EMAIL_GOOD = {"recruit", "recruiting", "recruitment", "hiring", "talent", "ta",
-               "hr", "career", "careers", "jobs", "people", "apply", "staffing"}
+               "hr", "career", "careers", "jobs", "people", "apply", "staffing",
+               "ceo", "founder", "cofounder", "owner"}
 _EMAIL_BAD  = {"info", "contact", "support", "help", "hello", "customerservice",
                "customer", "feedback", "privacy", "legal", "vendor", "disability",
                "noreply", "operations", "admin", "general", "media", "press",
@@ -99,7 +100,11 @@ def lookup_recruiter_email(company_name: str) -> str | None:
         if not os.path.exists(cache_path):
             continue
         with open(cache_path, encoding="utf-8") as f:
-            data = json.load(f)
+            try:
+                # raw_decode tolerates trailing garbage from interrupted/concurrent writes
+                data, _ = json.JSONDecoder().raw_decode(f.read())
+            except ValueError:
+                continue
         for entry in data:
             if entry.get("company", "").lower().strip() == name_lower:
                 emails = entry.get("emails_found", "") or entry.get("emails", "")
@@ -259,23 +264,22 @@ def run_cycle(pages: int = 2, dry_run: bool = False):
         # Label_8 = 🔄 Auto Draft (always applied)
         AUTO_LABEL = "Label_8"
 
+        # Only draft when a recruiter/HR/CEO email was found; the rest stay
+        # in cycle_log.json (Guido 2026-07-06: no more "NO EMAIL" drafts)
+        skipped_no_email = 0
         for draft in drafts:
             recruiter_email = draft.get("recruiter_email")
-            to_addr = recruiter_email or "dondevamosba@gmail.com"
-            subject = draft["subject"] if recruiter_email else f"⚠️ NO EMAIL — {draft['subject']}"
-            recipient_line = (
-                f"To: {recruiter_email}\n"
-                if recruiter_email
-                else "⚠️ Find recruiter email before sending\n"
-            )
+            if not recruiter_email:
+                skipped_no_email += 1
+                continue
             try:
                 result = create_draft(
-                    to=to_addr,
-                    subject=subject,
+                    to=recruiter_email,
+                    subject=draft["subject"],
                     body=(
                         f"Job: {draft['title']} @ {draft['company']}\n"
                         f"Apply: {draft['url']}\n"
-                        f"{recipient_line}"
+                        f"To: {recruiter_email}\n"
                         "\n---\n\n"
                         f"{draft['body']}"
                     ),
@@ -283,15 +287,19 @@ def run_cycle(pages: int = 2, dry_run: bool = False):
                 )
                 draft["draft_id"] = result["draft_id"]
                 draft["message_id"] = result["message_id"]
-                tag = f"({recruiter_email})" if recruiter_email else "(no email — flagged)"
-                print(f"  ✓ {draft['company']} {tag}")
+                print(f"  ✓ {draft['company']} ({recruiter_email})")
             except Exception as e:
                 print(f"  ✗ {draft['company']}: {e}")
+        if skipped_no_email:
+            print(f"  ({skipped_no_email} jobs sin email — solo en cycle_log.json, sin draft)")
 
-    # Save seen registry and log
+    # Save seen registry and log (plus a dated copy — LOG_FILE gets
+    # overwritten each run and generated emails were being lost)
     save_seen(seen)
-    with open(LOG_FILE, "w", encoding="utf-8") as f:
-        json.dump(drafts, f, indent=2, ensure_ascii=False)
+    dated_log = LOG_FILE.replace(".json", f"_{date.today().isoformat()}.json")
+    for path in (LOG_FILE, dated_log):
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(drafts, f, indent=2, ensure_ascii=False)
 
     # Summary
     pushed = sum(1 for d in drafts if d.get("draft_id"))

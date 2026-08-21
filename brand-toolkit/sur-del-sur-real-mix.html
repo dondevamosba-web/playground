@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Sur del Sur — real photos × Sierra Field Notes overlay</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Space+Mono:wght@400;700&family=League+Script&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --paper:#EDE3CC; --ink:#231A12; --copper:#B5541F; --forest:#2E3B26; --gold:#B8860B;
+    --font-display:'Zilla Slab',serif; --font-mono:'Space Mono',monospace; --font-script:'League Script',cursive;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; padding:0 0 100px; background:#c9c1ac; font-family:'Inter',sans-serif; }
+  .intro{ max-width:1120px; margin:0 auto; padding:50px 24px 10px; text-align:center; }
+  .intro h1{ font-family:var(--font-display); font-weight:700; font-size:25px; margin:0 0 8px; color:#211a10; }
+  .intro p{ color:#5a5342; font-size:13px; margin:0 auto; max-width:760px; }
+  .note{ max-width:1120px; margin:8px auto 0; text-align:center; font-size:12px; color:#8a5a30; font-weight:600; }
+
+  .row-label{ max-width:1120px; margin:44px auto 14px; padding:0 24px; }
+  .row-label .n{ font-family:var(--font-mono); font-size:12px; font-weight:700; color:#7a6f57; letter-spacing:2px; }
+  .row-label h2{ font-family:var(--font-display); font-size:19px; margin:2px 0 0; color:#211a10; }
+
+  .strip{ max-width:1120px; margin:0 auto; display:flex; gap:20px; flex-wrap:wrap; padding:0 24px; }
+  .frame{ flex:none; width:340px; height:340px; box-shadow:0 18px 40px rgba(0,0,0,.28); border-radius:6px; overflow:hidden; }
+  .post{ width:1080px; height:1080px; position:relative; transform:scale(0.3148); transform-origin:top left; overflow:hidden; color:var(--paper); font-family:'Inter',sans-serif;}
+
+  .photo-bg{ position:absolute; inset:0; background-size:cover; background-position:center; }
+  .duotone-copper{ filter: grayscale(1) contrast(1.15) brightness(.95); }
+  .duotone-forest{ filter: grayscale(1) contrast(1.2) brightness(.85); }
+  .tint{ position:absolute; inset:0; mix-blend-mode:multiply; }
+  .tint.copper{ background:linear-gradient(180deg, rgba(181,84,31,.75), rgba(35,26,18,.9)); }
+  .tint.forest{ background:linear-gradient(180deg, rgba(46,59,38,.6), rgba(15,20,12,.92)); }
+  .tint.paper{ background:linear-gradient(180deg, rgba(184,134,11,.35), rgba(35,26,18,.85)); }
+  .grain{ position:absolute; inset:0; opacity:.25; mix-blend-mode:overlay;
+    background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0px, transparent 1px, transparent 3px); }
+
+  .stamp-tag{ position:absolute; font-family:var(--font-mono); font-size:20px; font-weight:700; letter-spacing:1px;
+    padding:8px 18px; border:2px dashed rgba(237,227,204,.55); border-radius:4px; transform:rotate(-1.2deg);
+    background:rgba(0,0,0,.2); color:var(--paper); top:70px; left:76px; }
+
+  .contours-light{ position:absolute; inset:0; opacity:.22; z-index:1; }
+
+  .headline{ position:absolute; left:76px; right:76px; bottom:170px; font-family:var(--font-display);
+    font-weight:700; font-size:52px; line-height:1.12; color:var(--paper); text-shadow:0 4px 20px rgba(0,0,0,.4); }
+  .headline i{ font-family:var(--font-script); font-weight:400; font-size:1.25em; }
+  .sub{ position:absolute; left:76px; right:76px; bottom:120px; font-family:var(--font-mono); font-size:16px;
+    color:rgba(237,227,204,.85); letter-spacing:.5px; }
+  .footer-brand{ position:absolute; bottom:64px; left:76px; right:76px; display:flex; justify-content:space-between;
+    font-family:var(--font-mono); font-size:16px; letter-spacing:1px; color:rgba(237,227,204,.85); }
+
+  .caption-box{ max-width:1120px; margin:16px auto 0; background:#fff; border-radius:10px; padding:16px 22px;
+    font-size:13px; color:#333; box-shadow:0 4px 14px rgba(0,0,0,.08); }
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>Sur del Sur — fotos reales × overlay "Sierra Field Notes"</h1>
+  <p>Fotos bajadas del Instagram real @sur.del.sur (contenido propio de ellos), tratadas con duotono kraft/cobre/bosque + el sistema de sello y ficha de espécimen del kit. Así se vería su contenido real ya existente pasado por el filtro de marca.</p>
+</div>
+<div class="note">⚠️ La foto "avistamiento" incluye una camiseta oficial de Argentina/adidas visible — es contenido que ellos mismos publicaron, pero si se re-usa en piezas nuevas conviene chequear derechos de marca antes de reeditar y republicar.</div>
+
+<!-- ============ POST 1: TAP POUR ============ -->
+<div class="row-label"><span class="n">FOTO REAL 01</span><h2>Tiraje de barril → post "Espécimen en Servicio"</h2></div>
+<div class="strip">
+  <div class="frame">
+    <div class="post">
+      <div class="photo-bg duotone-copper" style="background-image:url('assets/sur-del-sur/tap_pour.jpg');"></div>
+      <div class="tint copper"></div>
+      <div class="grain"></div>
+      <div class="stamp-tag">N.° 011 — SERVIDO</div>
+      <div class="headline">Recién<br/><i>servida</i>,<br/>como debe ser.</div>
+      <div class="sub">TIRADA DE BARRIL · SIN FILTRAR</div>
+      <div class="footer-brand"><span>SUR DEL SUR</span><span>TAPROOM</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ POST 2: TANKS / LIVE MUSIC ============ -->
+<div class="row-label"><span class="n">FOTO REAL 02</span><h2>Fábrica + música en vivo → post "Registro Nocturno"</h2></div>
+<div class="strip">
+  <div class="frame">
+    <div class="post">
+      <div class="photo-bg duotone-forest" style="background-image:url('assets/sur-del-sur/tanks_livemusic.jpg');"></div>
+      <div class="tint forest"></div>
+      <div class="grain"></div>
+      <div class="stamp-tag">REGISTRO NOCTURNO</div>
+      <div class="headline">Entre tanques<br/>y <i>buena banda</i>,<br/>como todos los viernes.</div>
+      <div class="sub">FÁBRICA + TAPROOM · SIERRAS BAYAS</div>
+      <div class="footer-brand"><span>SUR DEL SUR</span><span>VIE–DOM 18H</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ POST 3: LIFESTYLE / AVISTAMIENTO ============ -->
+<div class="row-label"><span class="n">FOTO REAL 03</span><h2>Foto de cliente real → post "Avistamiento de Campo"</h2></div>
+<div class="strip">
+  <div class="frame">
+    <div class="post">
+      <div class="photo-bg duotone-copper" style="background-image:url('assets/sur-del-sur/lifestyle_can.jpg'); background-position:center 20%;"></div>
+      <div class="tint paper"></div>
+      <div class="grain"></div>
+      <div class="stamp-tag">AVISTAMIENTO N.° 042</div>
+      <div class="headline">Espécimen<br/>detectado<br/><i>en su hábitat.</i></div>
+      <div class="sub">CONFIRMADO: MOMENTO SUR DEL SUR</div>
+      <div class="footer-brand"><span>SUR DEL SUR</span><span>ETIQUETANOS PARA SALIR ACÁ</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REFERENCE: REAL LOGO FOUND ============ -->
+<div class="row-label"><span class="n">REFERENCIA</span><h2>Logo real detectado (packaging) — para calibrar el kit</h2></div>
+<div class="strip">
+  <div class="frame" style="width:260px;height:340px;">
+    <img src="assets/sur-del-sur/real_logo_box.jpg" style="width:100%;height:100%;object-fit:cover;"/>
+  </div>
+  <div style="max-width:600px;font-size:13px;color:#3a3428;line-height:1.6;padding:8px 0;">
+    <b>Hallazgo:</b> el logo real de Sur del Sur es un script suelto ("Sur del Sur") + "COMPAÑÍA CERVECERA" en versalitas espaciadas, sobre cartón kraft, con una ilustración de camión vintage de línea. Esto confirma que la dirección "Sierra Field Notes" (kraft + tinta + ilustración de línea) está en la sintonía correcta de la marca real — ya usan cartón, tipografía manuscrita y line-art. Recomendación: sumar una variante script (tipo <i style="font-family:'League Script';font-size:20px;">League Script</i>) para los titulares más cálidos/personales, reservando el slab (Zilla Slab) para datos y headlines de peso.
+  </div>
+</div>
+
+<div class="caption-box">
+  <b>Cómo se hizo:</b> descargué las fotos públicas del feed real de @sur.del.sur (API pública de perfil, sin login), les apliqué un duotono (grayscale + overlay de color con mix-blend-mode multiply) para unificarlas con la paleta cobre/bosque/kraft del kit, y les sumé los mismos elementos de marca: sello con ficha de espécimen, tipografía Zilla Slab/Space Mono, y pie de marca. Esto es más rápido y más auténtico que generar todo desde cero — usa lo que ya tienen.
+</div>
+
+</body>
+</html>

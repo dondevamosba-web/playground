@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Techno — ficha con precio USD + ARS</title>
+<!--
+  Ficha de producto con precio doble.
+  Por posteo cambian: .prod img[src], .nombre, las 4 celdas de .specs,
+  .usd, .ars y .rate.
+
+  El panel de imagen va a sangre con object-fit:cover porque las fotos de
+  producto vienen con fondos distintos (Apple CDN en negro, Samsung en blanco).
+  Recortar es mas seguro que intentar recortar el fondo.
+
+  QUITAR el bloque .ejemplo antes de publicar.
+-->
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#F2F3F5}
+  .poster{position:absolute;top:0;left:0;width:1080px;height:1080px;overflow:hidden;
+    background:#F2F3F5;color:#101215;display:flex;flex-direction:column}
+
+  .prod{height:548px;flex:none;position:relative;overflow:hidden;background:#0B0C0E}
+  .prod img{width:100%;height:100%;object-fit:cover;display:block}
+  .marca{position:absolute;top:34px;left:38px;background:#F2F3F5;color:#101215;
+    font-family:Consolas,monospace;font-size:22px;letter-spacing:.2em;padding:9px 18px}
+  .ejemplo{position:absolute;top:34px;right:38px;background:#D4361F;color:#fff;
+    font-family:Consolas,monospace;font-size:20px;letter-spacing:.14em;padding:9px 16px}
+
+  .info{flex:1;padding:44px 60px 40px;display:flex;flex-direction:column}
+  .nombre{font-family:Bahnschrift,"Segoe UI",sans-serif;font-weight:700;font-size:74px;
+    line-height:.98;letter-spacing:-.025em;margin:0}
+
+  .specs{display:grid;grid-template-columns:1fr 1fr;gap:14px 48px;
+    font-family:Consolas,monospace;font-size:26px;margin-top:26px;
+    border-top:3px solid #C9CDD3;padding-top:22px}
+  .specs span{color:#6E7681;font-size:21px;letter-spacing:.1em}
+  .specs b{font-weight:600;display:block;margin-top:3px}
+
+  .precio{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;
+    border-top:3px solid #C9CDD3;padding-top:24px}
+  .usd{font-family:Bahnschrift,"Segoe UI",sans-serif;font-weight:700;font-size:82px;
+    line-height:.9;letter-spacing:-.025em}
+  .ars{font-family:Consolas,monospace;font-size:30px;color:#101215;margin-top:10px}
+  .rate{font-family:Consolas,monospace;font-size:20px;color:#6E7681;letter-spacing:.08em;margin-top:6px}
+  .pie{text-align:right;font-family:Consolas,monospace;font-size:20px;
+    letter-spacing:.12em;color:#6E7681;line-height:1.7}
+</style></head><body>
+<div class="poster">
+  <div class="prod">
+    <img src="prod-macbookpro.png" alt="">
+    <div class="marca">APPLE</div>
+    <div class="ejemplo">PRECIO DE EJEMPLO</div>
+  </div>
+  <div class="info">
+    <h1 class="nombre">MacBook Pro M4 16"</h1>
+    <div class="specs">
+      <div><span>CHIP</span><b>M4 Pro</b></div>
+      <div><span>MEMORIA</span><b>24 GB</b></div>
+      <div><span>ALMACENAMIENTO</span><b>512 GB SSD</b></div>
+      <div><span>PANTALLA</span><b>16.2" Liquid Retina</b></div>
+    </div>
+    <div class="precio">
+      <div>
+        <div class="usd">USD 2.499</div>
+        <div class="ars">$ 3.248.700</div>
+        <div class="rate">D&Oacute;LAR 1.300 &middot; AL 27.07</div>
+      </div>
+      <div class="pie">
+        IMPORTADO DE USA<br>
+        OLAVARR&Iacute;A &middot; ENV&Iacute;OS A TODO EL PA&Iacute;S<br>
+        @TECHNO.APPLE.OK
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

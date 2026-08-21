@@ -14,11 +14,18 @@ A running collection of links, references, and ideas for the renovation. Add fre
 
 <!-- cabinets, countertops, backsplash, appliances -->
 
+- Isla central
+- Horno empotrado
+- Melamina hasta el techo (alacenas/muebles altos sin espacio muerto arriba)
+- Aire acondicionado en la cocina
+
 ---
 
 ## Bathrooms
 
 <!-- fixtures, hardware, accessories — keeping dark green tiles -->
+
+- Ambos baños a nuevo (renovación completa)
 
 ---
 
@@ -26,11 +33,16 @@ A running collection of links, references, and ideas for the renovation. Add fre
 
 <!-- parrilla references, pergola styles, outdoor furniture, plants, lighting -->
 
+- Idea de parrilla (foto guardada en `olavarria/img/inspiracion/parrilla-idea-terraza.webp`)
+
 ---
 
 ## Lighting
 
 <!-- fixtures, brands, warm LED references -->
+
+- Luz dicroica
+- Cielorraso de durlock con luces empotradas en todos los ambientes
 
 ---
 
@@ -43,6 +55,13 @@ A running collection of links, references, and ideas for the renovation. Add fre
 ## General / Misc
 
 <!-- anything that doesn't fit above yet -->
+
+- Cañería de agua nueva (toda la casa)
+- Cañería de gas nueva (toda la casa)
+- Referencia de colores de tinte para madera, Cetol (foto en `olavarria/img/inspiracion/colores-madera-idea.webp`) — para la mesada/muebles de madera de la cocina
+- Referencia de ventanas correderas nuevas (foto en `olavarria/img/inspiracion/ventanas-correderas-nuevas.webp`)
+
+**Problema relevado — ventanales con óxido y agujeros:** marcos con óxido avanzado y perforaciones (fotos en `olavarria/img/problemas/`: `oxido-ventanales_01.webp`, `ventanales-agujeros_01.webp`, `ventanales-agujeros_02-peor.webp`). Evaluar si se reparan o se reemplazan por las correderas nuevas de arriba.
 
 ---
 

@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helbreath Olympia — Tips & Market</title>
+<style>
+  :root {
+    --bg: #0f0f1a;
+    --card: #1a1a2e;
+    --card2: #16213e;
+    --accent: #e94560;
+    --gold: #f5a623;
+    --green: #27ae60;
+    --blue: #3498db;
+    --purple: #9b59b6;
+    --text: #e0e0e0;
+    --muted: #888;
+    --border: #2a2a4a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.6; }
+
+  /* HEADER */
+  header { background: linear-gradient(135deg, #1a1a2e, #16213e); border-bottom: 2px solid var(--accent); padding: 24px 32px; display: flex; align-items: center; gap: 16px; }
+  header h1 { font-size: 26px; color: var(--gold); letter-spacing: 1px; }
+  header span { color: var(--muted); font-size: 13px; }
+
+  /* NAV */
+  nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 32px; display: flex; gap: 4px; }
+  nav a { display: block; padding: 12px 18px; color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; border-bottom: 3px solid transparent; transition: all .2s; }
+  nav a:hover, nav a.active { color: var(--text); border-bottom-color: var(--accent); }
+
+  /* LAYOUT */
+  .container { max-width: 1300px; margin: 0 auto; padding: 28px 24px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  @media(max-width:900px){ .grid2,.grid3{ grid-template-columns:1fr; } }
+
+  /* CARDS */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .card-title { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .card-title.buy { color: var(--green); }
+  .card-title.sell { color: var(--accent); }
+  .card-title.gold { color: var(--gold); }
+  .card-title.blue { color: var(--blue); }
+  .card-title.purple { color: var(--purple); }
+
+  /* MARKET LISTS */
+  .market-item { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+  .market-item:last-child { border-bottom: none; }
+  .rank { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+  .rank.buy { background: rgba(39,174,96,.2); color: var(--green); border: 1px solid var(--green); }
+  .rank.sell { background: rgba(233,69,96,.2); color: var(--accent); border: 1px solid var(--accent); }
+  .rank.gold-r { background: rgba(245,166,35,.2); color: var(--gold); border: 1px solid var(--gold); }
+  .item-name { flex: 1; font-weight: 600; text-transform: capitalize; }
+  .item-count { font-size: 12px; color: var(--muted); }
+  .bar { height: 4px; border-radius: 2px; margin-top: 3px; }
+  .bar.buy { background: var(--green); }
+  .bar.sell { background: var(--accent); }
+
+  /* SECTION TABS */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* TIPS */
+  .tips-section { margin-bottom: 32px; }
+  .tips-section h2 { font-size: 18px; color: var(--gold); margin-bottom: 16px; padding: 10px 16px; background: var(--card2); border-left: 4px solid var(--gold); border-radius: 4px; }
+  .tips-section h3 { font-size: 14px; color: var(--blue); margin: 20px 0 10px; text-transform: uppercase; letter-spacing: .5px; }
+  .tip { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+  .tip-num { font-size: 11px; color: var(--accent); font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
+  .tip-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .tip-body { font-size: 14px; color: #bbb; line-height: 1.7; }
+  .tip-body code { background: #0f0f1a; color: var(--gold); padding: 2px 6px; border-radius: 3px; font-family: monospace; font-size: 13px; }
+  .tip-body strong { color: var(--text); }
+  .tip-body ul { margin: 8px 0 0 18px; }
+  .tip-body li { margin-bottom: 4px; }
+
+  /* CHARS */
+  .char-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .char-card h3 { color: var(--gold); font-size: 15px; margin-bottom: 12px; }
+  .char-card .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-top: 10px; margin-bottom: 4px; }
+  .char-card .value { font-size: 14px; color: var(--text); }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; margin: 2px; }
+  .tag.green { background: rgba(39,174,96,.2); color: var(--green); border: 1px solid var(--green); }
+  .tag.blue { background: rgba(52,152,219,.2); color: var(--blue); border: 1px solid var(--blue); }
+  .tag.red { background: rgba(233,69,96,.2); color: var(--accent); border: 1px solid var(--accent); }
+  .tag.gold { background: rgba(245,166,35,.2); color: var(--gold); border: 1px solid var(--gold); }
+
+  /* PRICES */
+  .price-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .price-table th { text-align: left; padding: 8px 10px; background: var(--card2); color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .5px; }
+  .price-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  .price-table tr:last-child td { border-bottom: none; }
+  .price-table tr:hover td { background: rgba(255,255,255,.03); }
+  .price { font-weight: 700; color: var(--gold); }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .pill.hot { background: rgba(233,69,96,.2); color: var(--accent); }
+  .pill.ok { background: rgba(39,174,96,.2); color: var(--green); }
+  .pill.rare { background: rgba(155,89,182,.2); color: var(--purple); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>⚔️ Helbreath Olympia</h1>
+    <span>Tips personales · Market scrapeado del Discord · Actualizado 2026-07-30</span>
+  </div>
+</header>
+
+<nav>
+  <a href="#" class="active" onclick="show('market',this)">📈 Market</a>
+  <a href="#" onclick="show('tips',this)">📖 Tips</a>
+  <a href="#" onclick="show('chars',this)">🧙 Mis chars</a>
+  <a href="#" onclick="show('prices',this)">💰 Precios ref.</a>
+  <a href="#" onclick="show('watchlist',this)">🎯 Watchlist</a>
+  <a href="#" onclick="show('calc',this)">🧮 Enchant Calc</a>
+</nav>
+
+<div class="container">
+
+<!-- MARKET -->
+<div id="market" class="section active">
+  <div class="grid2">
+
+    <div class="card">
+      <div class="card-title buy">🔍 TOP 20 — Más buscados (BUY)</div>
+      <div class="market-item"><span class="rank buy">1</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Nox</span><span class="item-count">519 pedidos</span></div><div class="bar buy" style="width:100%"></div></div></div>
+      <div class="market-item"><span class="rank buy">2</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Roam</span><span class="item-count">476x</span></div><div class="bar buy" style="width:91%"></div></div></div>
+      <div class="market-item"><span class="rank buy">3</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Bane +7</span><span class="item-count">471x</span></div><div class="bar buy" style="width:90%"></div></div></div>
+      <div class="market-item"><span class="rank buy">4</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">PA6 Shard</span><span class="item-count">342x</span></div><div class="bar buy" style="width:66%"></div></div></div>
+      <div class="market-item"><span class="rank buy">5</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Liche</span><span class="item-count">310x</span></div><div class="bar buy" style="width:60%"></div></div></div>
+      <div class="market-item"><span class="rank buy">6</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">KE +7</span><span class="item-count">286x</span></div><div class="bar buy" style="width:55%"></div></div></div>
+      <div class="market-item"><span class="rank buy">7</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">HP8 Frag</span><span class="item-count">279x</span></div><div class="bar buy" style="width:54%"></div></div></div>
+      <div class="market-item"><span class="rank buy">8</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">SB +7</span><span class="item-count">265x</span></div><div class="bar buy" style="width:51%"></div></div></div>
+      <div class="market-item"><span class="rank buy">9</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">MR7 Frag</span><span class="item-count">203x</span></div><div class="bar buy" style="width:39%"></div></div></div>
+      <div class="market-item"><span class="rank buy">10</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">ZW MS20 +7</span><span class="item-count">203x</span></div><div class="bar buy" style="width:39%"></div></div></div>
+      <div class="market-item"><span class="rank buy">11</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Rox</span><span class="item-count">197x</span></div><div class="bar buy" style="width:38%"></div></div></div>
+      <div class="market-item"><span class="rank buy">12</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Merien Stone</span><span class="item-count">185x</span></div><div class="bar buy" style="width:36%"></div></div></div>
+      <div class="market-item"><span class="rank buy">13</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Merien Shield</span><span class="item-count">170x</span></div><div class="bar buy" style="width:33%"></div></div></div>
+      <div class="market-item"><span class="rank buy">14</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Ele Bow</span><span class="item-count">151x</span></div><div class="bar buy" style="width:29%"></div></div></div>
+      <div class="market-item"><span class="rank buy">15</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">DR5 Frag</span><span class="item-count">139x</span></div><div class="bar buy" style="width:27%"></div></div></div>
+      <div class="market-item"><span class="rank buy">16</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Efreet Neck</span><span class="item-count">133x</span></div><div class="bar buy" style="width:26%"></div></div></div>
+      <div class="market-item"><span class="rank buy">17</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">GBH</span><span class="item-count">129x</span></div><div class="bar buy" style="width:25%"></div></div></div>
+      <div class="market-item"><span class="rank buy">18</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Greed</span><span class="item-count">120x</span></div><div class="bar buy" style="width:23%"></div></div></div>
+      <div class="market-item"><span class="rank buy">19</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Cancel Wand</span><span class="item-count">109x</span></div><div class="bar buy" style="width:21%"></div></div></div>
+      <div class="market-item"><span class="rank buy">20</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Xelima Stone</span><span class="item-count">108x</span></div><div class="bar buy" style="width:21%"></div></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title sell">💸 TOP 20 — Más vendidos (SELL)</div>
+      <div class="market-item"><span class="rank sell">1</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Merien Stone</span><span class="item-count">3572x</span></div><div class="bar sell" style="width:100%"></div></div></div>
+      <div class="market-item"><span class="rank sell">2</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Ele Bow</span><span class="item-count">2612x</span></div><div class="bar sell" style="width:73%"></div></div></div>
+      <div class="market-item"><span class="rank sell">3</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Nox</span><span class="item-count">2206x</span></div><div class="bar sell" style="width:62%"></div></div></div>
+      <div class="market-item"><span class="rank sell">4</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Liche</span><span class="item-count">1511x</span></div><div class="bar sell" style="width:42%"></div></div></div>
+      <div class="market-item"><span class="rank sell">5</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Efreet Neck</span><span class="item-count">1495x</span></div><div class="bar sell" style="width:42%"></div></div></div>
+      <div class="market-item"><span class="rank sell">6</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Rox</span><span class="item-count">1307x</span></div><div class="bar sell" style="width:37%"></div></div></div>
+      <div class="market-item"><span class="rank sell">7</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Merien Shield</span><span class="item-count">1303x</span></div><div class="bar sell" style="width:36%"></div></div></div>
+      <div class="market-item"><span class="rank sell">8</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">KE +7</span><span class="item-count">1281x</span></div><div class="bar sell" style="width:36%"></div></div></div>
+      <div class="market-item"><span class="rank sell">9</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Roam</span><span class="item-count">1234x</span></div><div class="bar sell" style="width:35%"></div></div></div>
+      <div class="market-item"><span class="rank sell">10</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">MS32</span><span class="item-count">1234x</span></div><div class="bar sell" style="width:35%"></div></div></div>
+      <div class="market-item"><span class="rank sell">11</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Bane +7</span><span class="item-count">1043x</span></div><div class="bar sell" style="width:29%"></div></div></div>
+      <div class="market-item"><span class="rank sell">12</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Greed</span><span class="item-count">998x</span></div><div class="bar sell" style="width:28%"></div></div></div>
+      <div class="market-item"><span class="rank sell">13</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">ZW MS20 +7</span><span class="item-count">887x</span></div><div class="bar sell" style="width:25%"></div></div></div>
+      <div class="market-item"><span class="rank sell">14</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">GBH</span><span class="item-count">846x</span></div><div class="bar sell" style="width:24%"></div></div></div>
+      <div class="market-item"><span class="rank sell">15</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Token</span><span class="item-count">840x</span></div><div class="bar sell" style="width:24%"></div></div></div>
+      <div class="market-item"><span class="rank sell">16</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">PA6 Shard</span><span class="item-count">839x</span></div><div class="bar sell" style="width:23%"></div></div></div>
+      <div class="market-item"><span class="rank sell">17</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">SB +7</span><span class="item-count">813x</span></div><div class="bar sell" style="width:23%"></div></div></div>
+      <div class="market-item"><span class="rank sell">18</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">KB +7</span><span class="item-count">810x</span></div><div class="bar sell" style="width:23%"></div></div></div>
+      <div class="market-item"><span class="rank sell">19</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Vortex Gem</span><span class="item-count">798x</span></div><div class="bar sell" style="width:22%"></div></div></div>
+      <div class="market-item"><span class="rank sell">20</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="item-name">Xelima Stone</span><span class="item-count">720x</span></div><div class="bar sell" style="width:20%"></div></div></div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:20px" class="card">
+    <div class="card-title gold">💡 Conclusiones del market</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:8px">
+      <div><strong style="color:var(--green)">🔥 Items calientes (alta demanda, fácil de vender):</strong><br>Nox · Roam · Bane+7 · KE+7 · Liche · Rox · Merien Shield · ZW MS20+7</div>
+      <div><strong style="color:var(--blue)">📦 Consumibles siempre en movimiento:</strong><br>Merien Stone · Xelima Stone · PA6 Shard · DR5 Frag · HP8 Frag · MR7 Frag · Token</div>
+      <div><strong style="color:var(--purple)">🎯 Flip potencial (alto supply, alta demand):</strong><br>Efreet Neck (1495 vendidos, 133 pedidos = mucho supply) · GBH · Greed · Vortex Gem</div>
+    </div>
+  </div>
+</div>
+
+<!-- TIPS -->
+<div id="tips" class="section">
+
+  <div class="tips-section">
+    <h2>💰 1. Cómo hacer coin</h2>
+    <div class="tip"><div class="tip-num">REGLA DE ORO</div><div class="tip-title">No farmees "para coin" — solo jugá</div><div class="tip-body">La conclusión unánime de los veteranos (moorern, alborosie): <strong>se hace hunteando y vendiendo frags/shards del disenchant.</strong> La clave es matár el tier de mob más alto que puedas matar con seguridad. Comparar tu progreso con players viejos es inútil.</div></div>
+    <div class="tip"><div class="tip-num">TIP 1</div><div class="tip-title">Disenchant TODO (Ctrl+E) y vendé los frags</div><div class="tip-body">Los más demandados: <strong>PA5 shard ~2c</strong> (vuela) · <strong>DR5 frag ~3c</strong> · <strong>PD8/9 shards 1-2c</strong> · <strong>PD10 ~5c</strong> (raro, siempre vale). La tabla de shards del wiki es la biblia de precios.</div></div>
+    <div class="tip"><div class="tip-num">TIP 2</div><div class="tip-title">Frogs ~1 semana = ~86c total (tu Fencing/Tank)</div><div class="tip-body">41c frags/shards + 37c stones + 10c tablets. El método principal para juntar coins de manera consistente.</div></div>
+    <div class="tip"><div class="tip-num">TIP 3</div><div class="tip-title">Farming skill 90%+ = 200k gold cada 7 minutos AFK</div><div class="tip-body">Gold infinito y AFK-able. Mientras subís de 20%→90% ganás +15kk de gold extra. Barleys también sirven para alchemy.</div></div>
+    <div class="tip"><div class="tip-num">TIP 4</div><div class="tip-title">PD es un "coin sink" — no subas más de PD52</div><div class="tip-body">PD50→PD58 cuesta fortuna y solo suma ~15 daño por tick. Tu Fencing/Tank con Excalibur es mucho más barato de mantener y farmea más frags.</div></div>
+  </div>
+
+  <div class="tips-section">
+    <h2>🐸 2. Fencing/Tank — Frog Hunter (pmp)</h2>
+    <div class="tip"><div class="tip-num">BUILD</div><div class="tip-title">Arma: Excalibur +7 (55c) o +0 (8-10c) y subir</div><div class="tip-body"><strong>NO uses arma PD para frogs</strong> — los mobs tienen poca HP, el poison % es inútil y encima huyen. Excal/ancient puro. Zerk + Excal+5 + Ring of Dragon = "te quedás en garden todo el día".</div></div>
+    <div class="tip"><div class="tip-num">BUILD</div><div class="tip-title">Set: CIC HP + PA plate · Stats: 100 str / 36 int / 50 dex / resto VIT o 200 LUCK</div><div class="tip-body">Con 200 luck (RoT+NoT) "crits todo el tiempo". alborosie: <em>"No necesitás más de 50 dex para frogs, ni siquiera zerk. Excal7 y a romper."</em></div></div>
+    <div class="tip"><div class="tip-num">BUILD</div><div class="tip-title">Dónde: D2 pits o Cyclops (tier 5) — mejor que frogs</div><div class="tip-body">Cyclops: pits más grandes, menos raideados, mejor mob level de Ogre/WW para daily quests. D2 tiene 3 pits de frogs + cyclops + rudolph.</div></div>
+  </div>
+
+  <div class="tips-section">
+    <h2>⚔️ 3. War SS/PD (Falchion)</h2>
+    <div class="tip"><div class="tip-num">BUILD</div><div class="tip-title">Falchion PD45-52 + HR · Nunca PD+CD</div><div class="tip-body">Por debajo de PD45 los demons cuestan. PD52+ recién se siente "fácil". PD+CD en falchion = invendible e ineficiente.</div></div>
+    <div class="tip"><div class="tip-num">BUILD</div><div class="tip-title">Set: PA plate + PA legs · resto CIC HP · Efreet neck</div><div class="tip-body">PA27+ con zafiro PA9 + Merien shield = cap 80% PA en el pecho. Efreet neck (~2c) es clave para demons. Ring/Neck of Thirst para regenerar pegándole.</div></div>
+    <div class="tip"><div class="tip-num">MECÁNICA</div><div class="tip-title">Poison pierde fuerza bajo 25% HP del mob</div><div class="tip-body">Siempre llevá segunda arma de daño directo (Blood Rapier, Excal) para rematar. El demon la dropea (Blood Rapier) con +80 HR.</div></div>
+  </div>
+
+  <div class="tips-section">
+    <h2>🧙 4. Mago Earth/Merien</h2>
+    <div class="tip"><div class="tip-num">CLAVE</div><div class="tip-title">ESW es el spell que mejor escala: 6 hits vs 4 de otros</div><div class="tip-body">Cada item de daño suma 50% más a ESW que a otros mages. Por eso <em>"earth shines when you have the damage items."</em> Merien -14% daño mágico es <strong>solo vs players</strong>, no mobs.</div></div>
+    <div class="tip"><div class="tip-num">STATS</div><div class="tip-title">~40 str / 190 int / 200 mag / resto VIT</div><div class="tip-body">Merien te da +15 str → plate mail y Merien shield sin sacrificar nada. Con angel maxeado (+16 stats) podés bajar mag y meter más VIT.</div></div>
+    <div class="tip"><div class="tip-num">WANDS</div><div class="tip-title">Ranking: zwand > cc/cd > kwand > anc HR > MS32</div><div class="tip-body">Zwand = rey para PvM (daño consistente, menos regens del mob). Para PvP muchos prefieren anc HR wand (para = siempre pega, full spell hits). MS32+7 vs +5 NO vale la pena: ahorra ~30-40c, no suma daño.</div></div>
+  </div>
+
+  <div class="tips-section">
+    <h2>🎯 5. Mecánicas avanzadas</h2>
+    <h3>Combate</h3>
+    <div class="tip"><div class="tip-num">TIP 21</div><div class="tip-title">CIC se activa cuando te PEGAN, no cuando pegás</div><div class="tip-body">Cada hit que recibís tiene X% de darte un crit. En un pit lleno de mobs los crits son constantes. Si estás solo vs un mob, el CIC rinde menos.</div></div>
+    <div class="tip"><div class="tip-num">TIP 22</div><div class="tip-title">Fórmula Hit Ratio</div><div class="tip-body"><code>(tu HR ÷ DR del enemigo) × 0.62 = % chance de pegar</code><br>Ej: 250 HR vs 400 DR → 39% de chance. Si errás mucho, subí HR antes de subir daño.</div></div>
+    <div class="tip"><div class="tip-num">TIP 23</div><div class="tip-title">Fórmula Crush Damage</div><div class="tip-body"><code>daño promedio = base + base × crush_chance × crush_damage</code><br>CC y CD importan más de lo que parece. Un set con CC/CD alto puede superar a uno con más daño base.</div></div>
+    <div class="tip"><div class="tip-num">TIP 24</div><div class="tip-title">PA no stackea entre slots — cada pieza es independiente</div><div class="tip-body"><ul><li>Plate: ~40% · Legs: ~25% · Helm: ~20% · Berk: ~10%</li><li>No mezclés PA y DR en el mismo set — dejás weak spots</li><li>O full PA o full DR</li></ul></div></div>
+    <div class="tip"><div class="tip-num">TIP 25</div><div class="tip-title">Merien talent es un DPS buff neto</div><div class="tip-body">Aunque da -15 str, el bonus de attack speed hace que el DPS total suba. Testeado en dummy. Especialmente bueno con Hammer (más strip speed) y para mages (cast speed brutal con 50 mag).</div></div>
+    <div class="tip"><div class="tip-num">TIP 26</div><div class="tip-title">Poison: PA y MA no reducen su daño</div><div class="tip-body">Lo que ayuda: <strong>PR</strong> (Poison Resistance) en items · <strong>DR</strong> para evitar el hit inicial · Cape PR22 reduce daño on-hit de poison ~50%. También sirve contra Cloudkill.</div></div>
+    <div class="tip"><div class="tip-num">TIP 27</div><div class="tip-title">Falchion ya está al max de attack speed</div><div class="tip-body">Agile y Merien no la hacen más rápida. Para reducir requisito de str usá el stat <strong>"Light"</strong>, no "Agile".</div></div>
+    <div class="tip"><div class="tip-num">TIP 28</div><div class="tip-title">Elementos de mobs y debilidades</div><div class="tip-body">Cada mob tiene elemento y debilidad. <strong>Beholders = Lightning → debilidad Earth.</strong> Con Elemental Bow/Hammer podés cambiar elemento al vuelo sin cooldown para hacer más daño específico.</div></div>
+    <h3>Survival</h3>
+    <div class="tip"><div class="tip-num">TIP 29</div><div class="tip-title">Food trick: doble HP efectivo contra el primer golpe</div><div class="tip-body">Comé ~20 carnes con HP lleno antes de duelos/Heldenian. Cuando te pegan el primer hit, la comida regenera el HP al instante. Muy útil en PvP y raids.</div></div>
+    <div class="tip"><div class="tip-num">TIP 30</div><div class="tip-title">Starving baja tus stats silenciosamente</div><div class="tip-body">Sin comida bajan: HP/MP/SP regen · hit ratio · DR/MR ratio · casting probability. Comé cada vez que entrás al pueblo. Mobs con meat drops (orcs, zombies) te mantienen gratis.</div></div>
+    <div class="tip"><div class="tip-num">TIP 31</div><div class="tip-title">Ginseng: usalo ANTES del freeze</div><div class="tip-body">Da inmunidad si lo comés antes. No remueve freeze ya aplicado. Contra IE Sword no sirve (te vuelven a freezear igual). Solución: <strong>IP Neck o IE Neck equipado</strong>.</div></div>
+    <div class="tip"><div class="tip-num">TIP 32</div><div class="tip-title">Summon Ogre Potion — escudo anti-warrior para mages</div><div class="tip-body">Invocá un Ogre y posicionate detrás. Los warriors no te pueden pegar mientras viva. Burn out sus crits y casteá libre. En huida: pasillo de 1 tile + potion bloquea el acceso.</div></div>
+    <h3>Farm & Drop</h3>
+    <div class="tip"><div class="tip-num">TIP 33</div><div class="tip-title">Drop rate con rep casi triplica drops</div><div class="tip-body"><code>log(10, rep+20)</code> = tu bonus multiplicador.<br>0 rep → x1.3 · 980 rep → x3. Item con 10% drop: sin rep 16%, con rep máxima 37%.</div></div>
+    <div class="tip"><div class="tip-num">TIP 34</div><div class="tip-title">Mobs más duros = stats más altas en drops</div><div class="tip-body">Cada mob tiene un tope de stat posible. "You can't get an HR91 off slimes." Siempre matá el mob más difícil que puedas matar con seguridad.</div></div>
+    <div class="tip"><div class="tip-num">TIP 35</div><div class="tip-title">Vortex gems: Stalkers del río son los más confiables</div><div class="tip-body">Cuando Stalkers dropean un rare, casi siempre es Vortex Gem. Alternativas: Nizies (solo con Abandone), gargoyles, unis.</div></div>
+    <div class="tip"><div class="tip-num">TIP 36</div><div class="tip-title">El drop rate varía por pit — movete si está seco</div><div class="tip-body">"Drop rate is like gambling — not every table is paying out." Si tu pit habitual no está dando, probá otro del mismo mob.</div></div>
+    <h3>Leveling & Rebirths</h3>
+    <div class="tip"><div class="tip-num">TIP 37</div><div class="tip-title">Plan en 3 etapas — siempre 2 mobs por etapa</div><div class="tip-body">Orcs+Zombies → Skeletons+Helhounds → ToH1+Helhounds. Si tu pit está tomado, arrancás con el otro. Subís hunt level de ambos = matás más rápido con el tiempo.</div></div>
+    <div class="tip"><div class="tip-num">TIP 38</div><div class="tip-title">Mining + Crafting = 40 levels AFK al rebirthed</div><div class="tip-body">EXP de mining/crafting escala con exp set. Juntá crystals/gems minando, y al rebirthed: exp set puesto + craftear en warehouse = 40 levels sin moverte.</div></div>
+    <div class="tip"><div class="tip-num">TIP 39</div><div class="tip-title">Orc quest = 2-4kk gold por rebirth (auto-suficiente)</div><div class="tip-body">La quest de orcs desde Farm TP hasta nivel 119 paga el siguiente rebirth solo. Con meat drops encima sobra gold.</div></div>
+    <div class="tip"><div class="tip-num">TIP 40</div><div class="tip-title">El truco del amigo para enchanting x2</div><div class="tip-body">Un compañero junta PA shards, vos juntás DR, se intercambian. Duplica la velocidad de enchanting de los dos sin gastar más tiempo. Mejor que grindear un set mixto solo.</div></div>
+  </div>
+
+</div>
+
+<!-- CHARS -->
+<div id="chars" class="section">
+  <div style="font-size:12px;color:var(--muted);margin-bottom:14px">
+    Los campos son editables — tocá y escribí. Se guardan solos en este navegador (localStorage). <button onclick="charsExport()" style="background:none;border:1px solid var(--border);color:var(--blue);border-radius:4px;padding:3px 10px;font-size:11px;cursor:pointer">Exportar backup (JSON)</button>
+  </div>
+  <div class="grid3" id="charsGrid">
+    <div class="char-card" data-char="ss">
+      <h3>⚔️ War SS/PD</h3>
+      <div class="label">Arma</div><input class="value char-field" data-field="arma" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:14px">
+      <div class="label">Set</div><input class="value char-field" data-field="set" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:14px">
+      <div class="label">Rol</div><input class="value char-field" data-field="rol" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:14px">
+      <div class="label">Stats</div><input class="value char-field" data-field="stats" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:14px">
+      <div class="label">Próximo upgrade <span style="font-weight:400">(separado por coma)</span></div>
+      <input class="char-field" data-field="upgrades" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:13px;margin-bottom:8px">
+      <div class="upgrade-tags" style="margin-bottom:10px"></div>
+      <div class="label">Log de progreso</div>
+      <div class="char-log" style="font-size:12px;color:#bbb;max-height:110px;overflow-y:auto;margin-bottom:6px"></div>
+      <div style="display:flex;gap:6px">
+        <input class="char-log-input" placeholder="Nueva nota..." style="flex:1;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:12px">
+        <button onclick="charsAddLog(this)" style="background:var(--gold);color:#1a1a2e;border:none;border-radius:4px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer">+</button>
+      </div>
+    </div>
+    <div class="char-card" data-char="mage">
+      <h3>🧙 Mago Earth/Merien</h3>
+      <div class="label">Wand</div><input class="value char-field" data-field="arma" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:14px">
+      <div class="label">Set</div><input class="value char-field" data-field="set" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:14px">
+      <div class="label">Rol</div><input class="value char-field" data-field="rol" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:14px">
+      <div class="label">Stats</div><input class="value char-field" data-field="stats" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:14px">
+      <div class="label">Próximo upgrade <span style="font-weight:400">(separado por coma)</span></div>
+      <input class="char-field" data-field="upgrades" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:13px;margin-bottom:8px">
+      <div class="upgrade-tags" style="margin-bottom:10px"></div>
+      <div class="label">Log de progreso</div>
+      <div class="char-log" style="font-size:12px;color:#bbb;max-height:110px;overflow-y:auto;margin-bottom:6px"></div>
+      <div style="display:flex;gap:6px">
+        <input class="char-log-input" placeholder="Nueva nota..." style="flex:1;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:12px">
+        <button onclick="charsAddLog(this)" style="background:var(--gold);color:#1a1a2e;border:none;border-radius:4px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer">+</button>
+      </div>
+    </div>
+    <div class="char-card" data-char="pmp">
+      <h3>🐸 Fencing/Tank (pmp)</h3>
+      <div class="label">Arma</div><input class="value char-field" data-field="arma" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:14px">
+      <div class="label">Set</div><input class="value char-field" data-field="set" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:14px">
+      <div class="label">Rol</div><input class="value char-field" data-field="rol" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:14px">
+      <div class="label">Stats</div><input class="value char-field" data-field="stats" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:14px">
+      <div class="label">Próximo upgrade <span style="font-weight:400">(separado por coma)</span></div>
+      <input class="char-field" data-field="upgrades" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:13px;margin-bottom:8px">
+      <div class="upgrade-tags" style="margin-bottom:10px"></div>
+      <div class="label">Log de progreso</div>
+      <div class="char-log" style="font-size:12px;color:#bbb;max-height:110px;overflow-y:auto;margin-bottom:6px"></div>
+      <div style="display:flex;gap:6px">
+        <input class="char-log-input" placeholder="Nueva nota..." style="flex:1;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;font-size:12px">
+        <button onclick="charsAddLog(this)" style="background:var(--gold);color:#1a1a2e;border:none;border-radius:4px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px" class="card">
+    <div class="card-title gold">🔄 Pipeline entre chars</div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 0;font-size:14px">
+      <div style="background:var(--card2);padding:10px 16px;border-radius:8px;border:1px solid var(--border)">🐸 <strong>pmp</strong><br><span style="color:var(--muted);font-size:12px">Frog/Cyclops farm<br>→ frags + stones</span></div>
+      <div style="color:var(--gold);font-size:20px">→</div>
+      <div style="background:var(--card2);padding:10px 16px;border-radius:8px;border:1px solid var(--border)">⚔️ <strong>SS/PD</strong><br><span style="color:var(--muted);font-size:12px">Demon hunt<br>→ Blood Rapier · necks · PD frags</span></div>
+      <div style="color:var(--gold);font-size:20px">→</div>
+      <div style="background:var(--card2);padding:10px 16px;border-radius:8px;border:1px solid var(--border)">🧙 <strong>Mago</strong><br><span style="color:var(--muted);font-size:12px">Usa todo el gear<br>→ Demon/PvP</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICES -->
+<div id="prices" class="section">
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title gold">💎 Rares & Armas</div>
+      <table class="price-table">
+        <tr><th>Item</th><th>Precio</th><th>Estado</th></tr>
+        <tr><td>ZW MS20 +7</td><td class="price">1200-1300c</td><td><span class="pill rare">Endgame</span></td></tr>
+        <tr><td>KE +7</td><td class="price">370c <span style="font-size:11px;color:var(--muted)">(era 560-600c)</span></td><td><span class="pill hot">Bajando 07/26</span></td></tr>
+        <tr><td>Bane +7</td><td class="price">1900-2600c</td><td><span class="pill rare">Top tier</span></td></tr>
+        <tr><td>SB +7</td><td class="price">1050c</td><td><span class="pill rare">Raro</span></td></tr>
+        <tr><td>ZW MS10 +7</td><td class="price">140-170c</td><td><span class="pill ok">Accesible</span></td></tr>
+        <tr><td>Excal +7</td><td class="price">50-55c</td><td><span class="pill ok">Tu target</span></td></tr>
+        <tr><td>Excal +0</td><td class="price">3-8c</td><td><span class="pill ok">Entrada</span></td></tr>
+        <tr><td>Ele Bow +7</td><td class="price">65-67c</td><td><span class="pill hot">Hot</span></td></tr>
+        <tr><td>Blood Rapier +7</td><td class="price">65c</td><td><span class="pill ok">Bueno</span></td></tr>
+        <tr><td>KB +7</td><td class="price">60-70c</td><td><span class="pill ok">OK</span></td></tr>
+        <tr><td>GBH +5</td><td class="price">50c</td><td><span class="pill ok">OK</span></td></tr>
+        <tr><td>Cancel Wand</td><td class="price">24-25c</td><td><span class="pill ok">Accesible</span></td></tr>
+        <tr><td>Falch PD65</td><td class="price">1100c</td><td><span class="pill rare">Endgame</span></td></tr>
+        <tr><td>Falch PD60</td><td class="price">480-510c</td><td><span class="pill hot">Hot</span></td></tr>
+        <tr><td>Falch PD56</td><td class="price">140-150c</td><td><span class="pill ok">Entry</span></td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title blue">📿 Necks & Consumibles</div>
+      <table class="price-table">
+        <tr><th>Item</th><th>Precio</th><th>Estado</th></tr>
+        <tr><td>Nox</td><td class="price">100c</td><td><span class="pill hot">Hot</span></td></tr>
+        <tr><td>Rox</td><td class="price">8-10c <span style="font-size:11px;color:var(--muted)">(era 30-35c)</span></td><td><span class="pill hot">Bajando 07/26</span></td></tr>
+        <tr><td>Roam</td><td class="price">50-100c</td><td><span class="pill hot">Hot</span></td></tr>
+        <tr><td>Liche</td><td class="price">50-95c</td><td><span class="pill hot">Hot</span></td></tr>
+        <tr><td>Greed</td><td class="price">11-16c</td><td><span class="pill ok">OK</span></td></tr>
+        <tr><td>Beholder Neck</td><td class="price">15c</td><td><span class="pill ok">OK</span></td></tr>
+        <tr><td>Merien Shield</td><td class="price">7-18c</td><td><span class="pill hot">Hot</span></td></tr>
+        <tr><td>MS18 neck</td><td class="price">12-15c</td><td><span class="pill ok">OK</span></td></tr>
+        <tr><td>MS32</td><td class="price">8-9c</td><td><span class="pill ok">Entry mago</span></td></tr>
+        <tr><td>DM5 neck</td><td class="price">10-12c</td><td><span class="pill ok">OK</span></td></tr>
+        <tr><td>Efreet Neck</td><td class="price">1-2c</td><td><span class="pill ok">Barato</span></td></tr>
+        <tr><td>HR60 Neck</td><td class="price">3-6c</td><td><span class="pill ok">Útil</span></td></tr>
+        <tr><td>Ring of Thirst</td><td class="price">2c</td><td><span class="pill ok">Útil</span></td></tr>
+        <tr><td>Vortex Gem</td><td class="price">9-10c</td><td><span class="pill ok">OK</span></td></tr>
+        <tr><td>Resu Wand MS20</td><td class="price">5c</td><td><span class="pill ok">OK</span></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- WATCHLIST -->
+<div id="watchlist" class="section">
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-title gold">🎯 Items que quiero comprar</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px">
+      Buscador en vivo revisado: <strong style="color:var(--text)">2026-07-29</strong> — sin resultados ahí. Pero scrapeando el canal <strong style="color:var(--text)">#market de Discord</strong> el <strong style="color:var(--text)">2026-07-30</strong> (historial completo 29/07 13:27 → 30/07 1:02, ~55 mensajes) aparecieron 3 matches reales — ver filas resaltadas.
+      <strong style="color:var(--accent)">Ojo:</strong> los links del buscador NO precargan los filtros solos — hay que tipear el item a mano en <a href="https://helbreathlistinghelper.trollnet.win" target="_blank" style="color:var(--blue)">helbreathlistinghelper.trollnet.win</a>.
+    </div>
+    <table class="price-table">
+      <tr><th>Item</th><th>Stat 1</th><th>Stat 2</th><th>Link</th><th>Match Discord #market</th></tr>
+      <tr><td>Hauberk</td><td>CIC 5</td><td>Magic Absorption</td><td><a href="https://helbreathlistinghelper.trollnet.win/?item_name=Hauberk&stat_name=Critical+Increase+Chance&stat_value_min=5&stat_value_max=5&stat2_name=Magic+Absorption" target="_blank">buscar →</a></td><td style="color:var(--muted)">—</td></tr>
+      <tr><td>Tower Shield</td><td>CIC 5</td><td>Magic Absorption</td><td><a href="https://helbreathlistinghelper.trollnet.win/?item_name=Tower+Shield&stat_name=Critical+Increase+Chance&stat_value_min=5&stat_value_max=5&stat2_name=Magic+Absorption" target="_blank">buscar →</a></td><td style="color:var(--muted)">—</td></tr>
+      <tr style="background:rgba(39,174,96,.08)"><td>Cape</td><td>CIC 5</td><td>Magic Absorption</td><td><a href="https://helbreathlistinghelper.trollnet.win/?item_name=Cape&stat_name=Critical+Increase+Chance&stat_value_min=5&stat_value_max=5&stat2_name=Magic+Absorption" target="_blank">buscar →</a></td><td><span class="pill ok">2 matches</span> yiiizit: "cape cic5 ma12" (sin precio) · lotus: "CIC5 MA36 Cape" (sin precio, roll alto) — 29/07</td></tr>
+      <tr><td>Hauberk</td><td>CIC 5</td><td>Physical Absorption</td><td><a href="https://helbreathlistinghelper.trollnet.win/?item_name=Hauberk&stat_name=Critical+Increase+Chance&stat_value_min=5&stat_value_max=5&stat2_name=Physical+Absorption" target="_blank">buscar →</a></td><td style="color:var(--muted)">—</td></tr>
+      <tr><td>Full-Helm</td><td>CIC 5</td><td>Physical Absorption</td><td><a href="https://helbreathlistinghelper.trollnet.win/?item_name=Full-Helm&stat_name=Critical+Increase+Chance&stat_value_min=5&stat_value_max=5&stat2_name=Physical+Absorption" target="_blank">buscar →</a></td><td style="color:var(--muted)">Cerca: cruuzeao "full helm cic5 ma low (M)" — es MA no PA</td></tr>
+      <tr style="background:rgba(39,174,96,.08)"><td>Wings Helm</td><td>Light</td><td>Defense Ratio</td><td><a href="https://helbreathlistinghelper.trollnet.win/?item_name=Wings+Helm&stat_name=Light&stat2_name=Defense+Ratio&require_price=1" target="_blank">buscar →</a></td><td><span class="pill ok">1 match</span> fighterx: "light36 dr49 wing helm (M)" — 12c — 29/07 17:58. También cerca: HBO "Mcon DR80 Wings (W)+4"</td></tr>
+      <tr style="background:rgba(39,174,96,.08)"><td>Plate Mail</td><td>Light</td><td>Defense Ratio</td><td><a href="https://helbreathlistinghelper.trollnet.win/?item_name=Plate+Mail&stat_name=Light&stat2_name=Defense+Ratio&require_price=1" target="_blank">buscar →</a></td><td><span class="pill ok">1 match</span> HBO/titofek: "Light60 DR94 Plate (M)+7" — parte de un lote grande, sin precio individual (acepta coins/tokens/stones/frags) — 29/07 19:02</td></tr>
+      <tr><td>Hauberk</td><td>Endurance</td><td>Defense Ratio</td><td><a href="https://helbreathlistinghelper.trollnet.win/?item_name=Hauberk&stat_name=Endurance&stat2_name=Defense+Ratio&require_price=1" target="_blank">buscar →</a></td><td style="color:var(--muted)">—</td></tr>
+      <tr><td>Plate Leggings</td><td>Endurance</td><td>Defense Ratio</td><td><a href="https://helbreathlistinghelper.trollnet.win/?item_name=Plate+Leggings&stat_name=Endurance&stat2_name=Defense+Ratio&require_price=1" target="_blank">buscar →</a></td><td style="color:var(--muted)">—</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-title purple">📡 Últimos precios del #market (Discord, scrapeado 2026-07-30)</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Historial completo revisado: 29/07 13:27 → 30/07 1:02 (~55 mensajes). Precios sueltos de vendedores individuales, no promedios — usar como referencia de rango, no verdad absoluta.</div>
+    <table class="price-table">
+      <tr><th>Item</th><th>Precio visto</th><th>Vs. referencia dashboard</th></tr>
+      <tr><td>KE +7</td><td class="price">370c</td><td><span class="pill hot">Bajó fuerte</span> era 560-600c — confirmado 2x por el mismo vendedor (Kim-Do-Gi, 17:32 y 0:18)</td></tr>
+      <tr><td>Rox</td><td class="price">8-10c</td><td><span class="pill hot">Bajó fuerte</span> era 30-35c — visto en 3 vendedores distintos</td></tr>
+      <tr><td>Merien Shield +0</td><td class="price">7c</td><td><span class="pill ok">Consistente</span></td></tr>
+      <tr><td>Merien Shield +5</td><td class="price">15-18c</td><td>dato nuevo</td></tr>
+      <tr><td>Merien Shield +7</td><td class="price">59-60c</td><td>dato nuevo</td></tr>
+      <tr><td>Merien Necklace</td><td class="price">5-6c</td><td><span class="pill ok">Consistente</span></td></tr>
+      <tr><td>Greed</td><td class="price">12c</td><td><span class="pill ok">Consistente</span> (rango 11-16c)</td></tr>
+      <tr><td>Beholder Neck / DM5 Neck / MS18 Neck</td><td class="price">9c cada uno</td><td>un toque más bajo que dashboard (12-15c)</td></tr>
+      <tr><td>Resu Wand MS20 / MS10</td><td class="price">6c / 3c</td><td><span class="pill ok">Consistente</span></td></tr>
+      <tr><td>RoGM</td><td class="price">1c o 1 stone</td><td><span class="pill ok">Consistente</span></td></tr>
+      <tr><td>PD60 HR112 Falchion+3</td><td class="price">240c</td><td>referencia directa para tu SS/PD (vos tenés +5, más caro)</td></tr>
+      <tr><td>Bane +7</td><td class="price">en venta, sin precio</td><td>al menos 3 vendedores distintos lo ofrecen (shakkhb_ x2, AsianPlayer no) — todos piden "hacer oferta"</td></tr>
+      <tr><td>Demon Slayer (base vs +7)</td><td class="price">5c → 70c</td><td>dato nuevo — el enchant importa mucho en este item</td></tr>
+      <tr><td>Blood Axe +7</td><td class="price">50c</td><td>dato nuevo</td></tr>
+      <tr><td>Frags CC11/12/13 (buy)</td><td class="price">1c / 2c / 5c</td><td>dato nuevo — referencia de compra de titofek</td></tr>
+      <tr><td>Frags CD12/13/14 (buy)</td><td class="price">5c / 10c / 21c</td><td>dato nuevo</td></tr>
+      <tr><td>Shards MR5/MR6/PA5/PA6</td><td class="price">1c / 2c / 3c / 5c</td><td>dato nuevo (fighterx) — complementa tu referencia de PA5~2c/DR5~3c</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-title purple">📈 Tendencia anual 2026 (muestreo mensual del #market)</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Muestra de ~10-15 mensajes por mes (no exhaustivo) para ver evolución de precios enero→julio. Búsqueda "sell" filtrada por canal + rango de fecha.</div>
+    <table class="price-table">
+      <tr><th>Mes</th><th>Hallazgos clave</th></tr>
+      <tr><td><strong>Enero</strong></td><td>Zwand MS10+7 = 160c · Kwand MS20+7 = 150c · <strong>Excalibur+7 = 75c</strong> · Inhib manual (sold) = 205c · Niche neck = 55c</td></tr>
+      <tr><td><strong>Febrero</strong></td><td>Sabre PD65 HR121+4 en oferta (sin precio fijo) · poca data con precio cerrado esta muestra</td></tr>
+      <tr><td><strong>Marzo</strong></td><td>MP Cape (Cic6 MP69) = 15c · MP Rhose (Cic6 MP83) = 25c · varios sets PA/MR/HP de gama alta a "offer"</td></tr>
+      <tr><td><strong>Abril</strong></td><td>Shards Exp10/11/12 = 3c/6c/12c (bundle 20c) · Frag Exp13 = 8c · Demon Slayer+1 = 5c</td></tr>
+      <tr><td><strong>Mayo</strong></td><td>MS22 CC31 HR112+2 = 95c · <strong>Wing Helm Light66 DR90+5 = 699c</strong> (pieza rara top-tier)</td></tr>
+      <tr><td><strong>Junio</strong></td><td>Set MP completo (5 piezas) M = 400c · <strong>Berk CIC5 MR92+8 = 700c</strong> · <strong>Plate Light60 MR92+8 = 800c</strong> (gama alta subió fuerte)</td></tr>
+      <tr><td><strong>Julio (fin de mes)</strong></td><td>KE+7 = 370c (bajó de 560-600) · Rox = 8-10c (bajó de 30-35) · <strong>Excalibur+7 ~50-55c</strong></td></tr>
+    </table>
+    <div style="font-size:12px;color:var(--accent);margin-top:10px">💡 Dato para vos: <strong>Excalibur+7 bajó de ~75c en enero a ~50-55c ahora</strong> — mejor momento del año para comprarlo para pmp. Mientras tanto, el gear de gama alta (MR/DR top-tier) subió fuerte entre mayo y junio (piezas sueltas de 700-800c) — no es tu tier actual, pero marca que el server tiene inflación en el endgame.</div>
+  </div>
+  <div class="card">
+    <div class="card-title blue">🔗 Links de referencia</div>
+    <div style="font-size:14px;line-height:2">
+      <div>📊 <a href="https://docs.google.com/spreadsheets/d/11zwiWvB98XwbVL_lnfA9P20PrQSXF2WTcGwzgkqmiIs/edit?gid=859088440#gid=859088440" target="_blank" style="color:var(--blue)">Market V2 — Most Important</a> (Google Sheet)</div>
+      <div>🧮 <a href="https://www.helbreath.net/enchant-calc" target="_blank" style="color:var(--blue)">Enchant Calc oficial</a> · también tenés uno local acá mismo en la pestaña <a href="#" onclick="show('calc',document.querySelector('nav a[onclick*=calc]'));return false" style="color:var(--gold)">🧮 Enchant Calc</a></div>
+      <div>📖 <a href="https://www.helbreath.net/wiki" target="_blank" style="color:var(--blue)">Wiki oficial</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ENCHANT CALC -->
+<div id="calc" class="section">
+  <div class="card" style="max-width:640px;margin:0 auto">
+    <div class="card-title gold">🧮 Enchanting Calculator</div>
+
+    <div class="field" style="margin-bottom:14px">
+      <label style="display:block;font-size:.88rem;color:var(--muted);margin-bottom:5px">Enchantment Type</label>
+      <select id="c-enchantType" onchange="cUpdatePreview()" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:8px 10px;font-size:.95rem">
+        <optgroup label="Frag Enchants">
+          <option value="hp_rec">Frag - HP Recovery</option>
+          <option value="sp_rec">Frag - SP Recovery</option>
+          <option value="mp_rec">Frag - MP Recovery</option>
+          <option value="hr">Frag - Hit Ratio</option>
+          <option value="dr">Frag - Defense Ratio</option>
+          <option value="mr">Frag - Magic Resistance</option>
+          <option value="pr">Frag - Poison Resistance</option>
+          <option value="exp">Frag - Experience</option>
+          <option value="gold">Frag - Gold</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="grid2" style="gap:12px;margin-bottom:14px">
+      <div class="field"><label style="display:block;font-size:.88rem;color:var(--muted);margin-bottom:5px">Current Stat Value</label>
+        <input type="number" id="c-currentStat" value="58" min="1" oninput="cUpdatePreview()" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:8px 10px"></div>
+      <div class="field"><label style="display:block;font-size:.88rem;color:var(--muted);margin-bottom:5px">Desired Stat Value</label>
+        <input type="number" id="c-desiredStat" value="88" min="1" oninput="cUpdatePreview()" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:8px 10px"></div>
+    </div>
+    <div class="grid2" style="gap:12px;margin-bottom:14px">
+      <div class="field"><label style="display:block;font-size:.88rem;color:var(--muted);margin-bottom:5px">Is Item Vortexed?</label>
+        <select id="c-vortexed" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:8px 10px"><option value="yes">Yes</option><option value="no">No</option></select></div>
+      <div class="field"><label style="display:block;font-size:.88rem;color:var(--muted);margin-bottom:5px">Low Tier Enchanting Bonus</label>
+        <select id="c-lowTier" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:8px 10px"><option value="no">No</option><option value="yes">Yes</option></select></div>
+    </div>
+    <div id="c-statPreview" style="display:flex;gap:16px;align-items:center;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:10px 14px;margin-bottom:20px;font-size:.85rem;color:#a0c0a0"></div>
+
+    <div class="card-title blue" style="margin-top:8px">Market Prices</div>
+    <div class="grid2" style="gap:12px;margin:12px 0">
+      <div class="field"><label style="display:block;font-size:.88rem;color:var(--muted);margin-bottom:5px">Market Frag Level</label>
+        <input type="number" id="c-marketLevel" value="7" min="1" max="17" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:8px 10px"></div>
+      <div class="field"><label style="display:block;font-size:.88rem;color:var(--muted);margin-bottom:5px">Price per Frag (C)</label>
+        <input type="number" id="c-fragPrice" value="1" min="0" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:8px 10px"></div>
+    </div>
+    <div class="grid2" style="gap:12px;margin-bottom:12px">
+      <div class="field"><label style="display:block;font-size:.88rem;color:var(--muted);margin-bottom:5px">Vortex & Gem Price (C)</label>
+        <input type="number" id="c-vortexPrice" value="0" min="0" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:8px 10px"></div>
+      <div class="field"><label style="display:block;font-size:.88rem;color:var(--muted);margin-bottom:5px">Base Item Price (C)</label>
+        <input type="number" id="c-itemPrice" value="0" min="0" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:8px 10px"></div>
+    </div>
+    <div class="field" style="margin-bottom:16px"><label style="display:block;font-size:.88rem;color:var(--muted);margin-bottom:5px">Number of Pieces to Upgrade</label>
+      <input type="number" id="c-numPieces" value="1" min="1" max="20" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:8px 10px"></div>
+
+    <button onclick="cCalculate()" style="width:100%;background:var(--gold);color:#1a1a2e;border:none;border-radius:4px;padding:12px;font-size:1rem;font-weight:700;cursor:pointer">Calculate Upgrade Cost</button>
+    <div id="c-errorMsg"></div>
+
+    <div id="c-result" class="card" style="display:none;margin-top:20px">
+      <div class="card-title gold">Upgrade Cost Calculator</div>
+      <div id="c-resultSummaryText" style="margin-bottom:16px;font-size:.9rem;color:#a0c0a0"></div>
+      <div class="grid3" style="text-align:center;margin-bottom:20px">
+        <div class="card" style="padding:12px 8px"><div style="font-size:.9rem;color:var(--muted)">Frag Cost</div><div class="price" style="font-size:1.5rem" id="c-fragCost">—</div><div style="font-size:.75rem;color:var(--muted)">coins</div></div>
+        <div class="card" style="padding:12px 8px"><div style="font-size:.9rem;color:var(--muted)">Total Frags</div><div class="price" style="font-size:1.5rem" id="c-totalFrags">—</div><div style="font-size:.75rem;color:var(--muted)">units</div></div>
+        <div class="card" style="padding:12px 8px"><div style="font-size:.9rem;color:var(--muted)">Total Cost</div><div class="price" style="font-size:1.5rem" id="c-totalCost">—</div><div style="font-size:.75rem;color:var(--muted)">coins</div></div>
+      </div>
+      <div id="c-formulaLine" style="text-align:center;font-size:.85rem;color:var(--muted);margin-bottom:20px"></div>
+      <table class="price-table">
+        <thead><tr><th>Frag Level</th><th>Stat Range</th><th>Count</th><th>Unit Price</th><th>Total</th></tr></thead>
+        <tbody id="c-resultTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// --- Enchant Calc (namespaced c-*) ---
+const C_ENCHANT_TYPES = {
+  hp_rec: { name: 'HP Recovery', unit: '%', step: 7 },
+  sp_rec: { name: 'SP Recovery', unit: '%', step: 7 },
+  mp_rec: { name: 'MP Recovery', unit: '%', step: 7 },
+  hr:     { name: 'Hit Ratio',   unit: '',  step: 7 },
+  dr:     { name: 'Defense Ratio', unit: '', step: 7 },
+  mr:     { name: 'Magic Resistance', unit: '', step: 7 },
+  pr:     { name: 'Poison Resistance', unit: '', step: 3 },
+  exp:    { name: 'Experience', unit: '%', step: 5 },
+  gold:   { name: 'Gold', unit: '%', step: 6 },
+};
+function cGetFragLevel(stat, step) { return Math.floor(stat / step); }
+function cGetRangeMin(level, step) { return level * step; }
+function cGetRangeMax(level, step) { return level * step + step - 1; }
+function cFragsPerLevel(vortexed, lowTier, level) {
+  if (vortexed === 'yes') return 3;
+  if (level >= 5) return 2;
+  return lowTier === 'yes' ? 3 : 4;
+}
+function cUpdatePreview() {
+  const type = C_ENCHANT_TYPES[document.getElementById('c-enchantType').value];
+  const cur = parseInt(document.getElementById('c-currentStat').value) || 0;
+  const des = parseInt(document.getElementById('c-desiredStat').value) || 0;
+  const step = type.step;
+  const curLv = cGetFragLevel(cur, step);
+  const desLv = cGetFragLevel(des, step);
+  const preview = document.getElementById('c-statPreview');
+  if (cur && des) {
+    preview.innerHTML = `
+      <div>Current: <span style="color:#80c880;font-weight:600">${type.name} +${cur}${type.unit}</span> <span style="color:var(--blue)">(Lv.${curLv})</span></div>
+      <div>→</div>
+      <div>Target: <span style="color:#80c880;font-weight:600">${type.name} +${des}${type.unit}</span> <span style="color:var(--blue)">(Lv.${desLv})</span></div>
+    `;
+  }
+}
+function cCalculate() {
+  const typeKey = document.getElementById('c-enchantType').value;
+  const type = C_ENCHANT_TYPES[typeKey];
+  const currentStat = parseInt(document.getElementById('c-currentStat').value);
+  const desiredStat = parseInt(document.getElementById('c-desiredStat').value);
+  const vortexed = document.getElementById('c-vortexed').value;
+  const lowTier = document.getElementById('c-lowTier').value;
+  const marketLevel = parseInt(document.getElementById('c-marketLevel').value);
+  const fragPrice = parseFloat(document.getElementById('c-fragPrice').value) || 0;
+  const vortexPrice = parseFloat(document.getElementById('c-vortexPrice').value) || 0;
+  const itemPrice = parseFloat(document.getElementById('c-itemPrice').value) || 0;
+  const numPieces = parseInt(document.getElementById('c-numPieces').value) || 1;
+
+  const errorEl = document.getElementById('c-errorMsg');
+  errorEl.innerHTML = '';
+
+  if (!currentStat || !desiredStat) {
+    errorEl.innerHTML = '<div class="error" style="background:#3a1a1a;border:1px solid #7a2a2a;color:#f08080;border-radius:4px;padding:12px;margin-top:12px">Please fill in current and desired stat.</div>';
+    return;
+  }
+  if (desiredStat <= currentStat) {
+    errorEl.innerHTML = '<div class="error" style="background:#3a1a1a;border:1px solid #7a2a2a;color:#f08080;border-radius:4px;padding:12px;margin-top:12px">Desired stat must be higher than current stat.</div>';
+    return;
+  }
+
+  const step = type.step;
+  const currentLevel = cGetFragLevel(currentStat, step);
+  const desiredLevel = cGetFragLevel(desiredStat, step);
+
+  if (currentLevel === desiredLevel) {
+    errorEl.innerHTML = '<div class="error" style="background:#3a1a1a;border:1px solid #7a2a2a;color:#f08080;border-radius:4px;padding:12px;margin-top:12px">Current and desired stat are in the same frag level — no upgrade needed.</div>';
+    return;
+  }
+
+  const rows = [];
+  let totalFragCount = 0;
+  let totalFragCost = 0;
+
+  for (let lv = currentLevel; lv <= desiredLevel; lv++) {
+    const rangeMin = cGetRangeMin(lv, step);
+    const rangeMax = cGetRangeMax(lv, step);
+    const baseFrags = cFragsPerLevel(vortexed, lowTier, lv);
+
+    let frags;
+    if (lv === currentLevel) {
+      const fragsUsed = Math.floor((currentStat - rangeMin) / (step / baseFrags));
+      frags = baseFrags - fragsUsed;
+    } else if (lv === desiredLevel) {
+      frags = Math.ceil((desiredStat - rangeMin) / (step / baseFrags));
+      if (frags < 1) frags = 1;
+    } else {
+      frags = baseFrags;
+    }
+
+    const unitPrice = fragPrice * Math.pow(2, lv - marketLevel);
+
+    rows.push({ lv, rangeMin, rangeMax, frags, unitPrice, total: frags * unitPrice });
+    totalFragCount += frags;
+    totalFragCost += frags * unitPrice;
+  }
+
+  const costPerPiece = totalFragCost + vortexPrice + itemPrice;
+  const grandTotal = costPerPiece * numPieces;
+
+  document.getElementById('c-result').style.display = 'block';
+  document.getElementById('c-fragCost').textContent = Math.round(totalFragCost * numPieces) + ' C';
+  document.getElementById('c-totalFrags').textContent = totalFragCount * numPieces;
+  document.getElementById('c-totalCost').textContent = Math.round(grandTotal) + ' C';
+
+  document.getElementById('c-resultSummaryText').innerHTML =
+    `Current Stat: <b style="color:#80c880">${type.name} +${currentStat}${type.unit}</b> &nbsp;→&nbsp; ` +
+    `Target Stat: <b style="color:#80c880">${type.name} +${desiredStat}${type.unit}</b>` +
+    (numPieces > 1 ? `<br><span style="color:var(--gold)">× ${numPieces} piezas — costo por pieza: ${Math.round(costPerPiece)} C</span>` : '');
+
+  const parts = [Math.round(totalFragCost) + ' C (frags)'];
+  if (vortexPrice > 0) parts.push(vortexPrice + ' C (vortex/gem)');
+  if (itemPrice > 0) parts.push(itemPrice + ' C (item)');
+  const perPieceStr = parts.join(' + ') + (parts.length > 1 ? ` = ${Math.round(costPerPiece)} C/pieza` : '/pieza');
+  document.getElementById('c-formulaLine').textContent =
+    numPieces > 1 ? `${perPieceStr}  →  Total ${numPieces} piezas = ${Math.round(grandTotal)} C` : perPieceStr;
+
+  const tbody = document.getElementById('c-resultTable');
+  tbody.innerHTML = '';
+  rows.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="lv-badge" style="display:inline-block;background:var(--card2);border:1px solid var(--border);border-radius:3px;padding:2px 7px;font-size:.8rem;font-weight:600;color:var(--blue)">Lv. ${r.lv}</span></td>
+      <td style="color:#a0c0a0">${r.rangeMin}–${r.rangeMax}${type.unit}</td>
+      <td><b>${r.frags}</b></td>
+      <td>${r.unitPrice % 1 === 0 ? r.unitPrice : r.unitPrice.toFixed(2)} C</td>
+      <td style="color:var(--gold)"><b>${Math.round(r.total)} C</b></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  const totalTr = document.createElement('tr');
+  totalTr.style.fontWeight = '700';
+  totalTr.style.color = 'var(--gold)';
+  totalTr.innerHTML = `<td colspan="2">Por pieza</td><td>${totalFragCount}</td><td>—</td><td>${Math.round(totalFragCost)} C</td>`;
+  tbody.appendChild(totalTr);
+
+  if (numPieces > 1) {
+    const grandTr = document.createElement('tr');
+    grandTr.style.fontWeight = '700';
+    grandTr.style.color = '#e0bf5a';
+    grandTr.innerHTML = `<td colspan="2">Total ${numPieces} piezas</td><td>${totalFragCount * numPieces}</td><td>—</td><td>${Math.round(totalFragCost * numPieces)} C</td>`;
+    tbody.appendChild(grandTr);
+  }
+}
+cUpdatePreview();
+
+// --- Chars: editable + persisted in localStorage ---
+const CHARS_KEY = 'helbreath_chars_v1';
+const CHARS_DEFAULT = {
+  ss: {
+    arma: 'Falch PD60 HR112 +5', set: 'PA plate + CIC HP mix', rol: 'Demon hunter · Single target',
+    stats: '78-100 str / 36 int / ~170 dex / resto VIT',
+    upgrades: 'Falch PD63+, PA plate mejor, Efreet neck', log: []
+  },
+  mage: {
+    arma: 'MS32 +5', set: 'HP/DR mix (objetivo: DR 500+)', rol: 'Demon hunter · PvP · Soporte',
+    stats: '40 str / 190 int / 200 mag / resto VIT',
+    upgrades: 'Zwand (largo plazo), Set DR 500, MS32+7 NO vale', log: []
+  },
+  pmp: {
+    arma: '— (buscando Excalibur)', set: 'CIC HP + PA plate', rol: 'Frog/Cyclops farmer · Frags',
+    stats: '100 str / 36 int / 50 dex / 200 LUCK',
+    upgrades: 'Excal +7 (55c), o Excal +0 (8-10c), Ring of Dragon', log: []
+  }
+};
+const TAG_COLORS = ['gold', 'blue', 'green', 'red'];
+
+function charsLoad() {
+  try {
+    const raw = localStorage.getItem(CHARS_KEY);
+    if (!raw) return JSON.parse(JSON.stringify(CHARS_DEFAULT));
+    const parsed = JSON.parse(raw);
+    // fill in any missing chars/fields from defaults (schema safety)
+    Object.keys(CHARS_DEFAULT).forEach(k => {
+      if (!parsed[k]) parsed[k] = CHARS_DEFAULT[k];
+      if (!parsed[k].log) parsed[k].log = [];
+    });
+    return parsed;
+  } catch (e) {
+    return JSON.parse(JSON.stringify(CHARS_DEFAULT));
+  }
+}
+function charsSave(data) {
+  localStorage.setItem(CHARS_KEY, JSON.stringify(data));
+}
+function charsRenderTags(card, upgradesStr) {
+  const wrap = card.querySelector('.upgrade-tags');
+  wrap.innerHTML = '';
+  upgradesStr.split(',').map(s => s.trim()).filter(Boolean).forEach((t, i) => {
+    const span = document.createElement('span');
+    span.className = 'tag ' + TAG_COLORS[i % TAG_COLORS.length];
+    span.textContent = t;
+    wrap.appendChild(span);
+  });
+}
+function charsRenderLog(card, log) {
+  const wrap = card.querySelector('.char-log');
+  if (!log.length) { wrap.innerHTML = '<span style="color:#666">Sin notas todavía.</span>'; return; }
+  wrap.innerHTML = log.slice().reverse().map(e =>
+    `<div style="margin-bottom:4px"><span style="color:var(--gold)">${e.date}</span> — ${e.text}</div>`
+  ).join('');
+}
+function charsInit() {
+  const data = charsLoad();
+  document.querySelectorAll('#charsGrid .char-card').forEach(card => {
+    const key = card.dataset.char;
+    const c = data[key];
+    card.querySelectorAll('.char-field').forEach(input => {
+      input.value = c[input.dataset.field] || '';
+      input.addEventListener('input', () => {
+        const d = charsLoad();
+        d[key][input.dataset.field] = input.value;
+        charsSave(d);
+        if (input.dataset.field === 'upgrades') charsRenderTags(card, input.value);
+      });
+    });
+    charsRenderTags(card, c.upgrades);
+    charsRenderLog(card, c.log);
+  });
+}
+function charsAddLog(btn) {
+  const card = btn.closest('.char-card');
+  const key = card.dataset.char;
+  const input = card.querySelector('.char-log-input');
+  const text = input.value.trim();
+  if (!text) return;
+  const d = charsLoad();
+  const date = new Date().toISOString().slice(0, 10);
+  d[key].log.push({ date, text });
+  charsSave(d);
+  input.value = '';
+  charsRenderLog(card, d[key].log);
+}
+function charsExport() {
+  const data = charsLoad();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'helbreath-chars-backup.json';
+  a.click();
+}
+charsInit();
+
+function show(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+  return false;
+}
+</script>
+</body>
+</html>

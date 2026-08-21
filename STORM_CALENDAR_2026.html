@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storm Digital Calendar + Kit — 50 Posts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f8fafc;
+            color: #181d26;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, #1147e8 0%, #aa2d00 100%);
+            color: white;
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        header .content {
+            text-align: left;
+        }
+
+        header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            opacity: 0.95;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        header .image-section {
+            text-align: center;
+        }
+
+        header .image-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            header .content {
+                text-align: center;
+            }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #1147e8;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .stat-card strong {
+            display: block;
+            font-size: 24px;
+            color: #1147e8;
+            margin-bottom: 5px;
+        }
+
+        .stat-card small {
+            color: #41454d;
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e2e6;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #41454d;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            color: #1147e8;
+            border-bottom-color: #1147e8;
+        }
+
+        .tab-btn:hover {
+            color: #1147e8;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Posts Grid */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .post-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        }
+
+        .post-card-header {
+            background: linear-gradient(135deg, #1147e8 0%, #aa2d00 100%);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .post-card-number {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .post-card-body {
+            padding: 20px;
+        }
+
+        .post-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #181d26;
+        }
+
+        .post-type {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #f8fafc;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #41454d;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 10px;
+        }
+
+        .post-type.metric {
+            background: #e3f2fd;
+            color: #1147e8;
+        }
+
+        .post-type.educational {
+            background: #f0f4e8;
+            color: #0a2e0e;
+        }
+
+        .post-type.case-study {
+            background: #fff3e0;
+            color: #aa2d00;
+        }
+
+        .post-type.social-proof {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .post-type.cta {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .post-type.brand {
+            background: #f3e5f5;
+            color: #6a1b9a;
+        }
+
+        .post-type.promo {
+            background: #fff9c4;
+            color: #f57f17;
+        }
+
+        .post-topic {
+            font-size: 13px;
+            color: #41454d;
+            line-height: 1.4;
+        }
+
+        /* Calendar View */
+        .calendar-view {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .calendar-header {
+            background: linear-gradient(135deg, #1147e8 0%, #aa2d00 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #e0e2e6;
+            padding: 1px;
+        }
+
+        .day-header {
+            background: #f8fafc;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 12px;
+            color: #41454d;
+        }
+
+        .day-cell {
+            background: white;
+            padding: 10px;
+            min-height: 80px;
+            font-size: 12px;
+        }
+
+        .day-number {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #181d26;
+        }
+
+        .day-posts {
+            font-size: 11px;
+            color: #41454d;
+        }
+
+        .day-posts .post-ref {
+            display: inline-block;
+            background: #1147e8;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-right: 3px;
+            margin-bottom: 2px;
+        }
+
+        /* Kit Section */
+        .kit-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .kit-section h3 {
+            color: #1147e8;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .color-box {
+            border-radius: 8px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            font-weight: 500;
+            font-size: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .color-hex {
+            display: block;
+            font-family: monospace;
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        th {
+            background: #f8fafc;
+            border-bottom: 2px solid #e0e2e6;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #181d26;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e2e6;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .post-num {
+            font-weight: 600;
+            color: #1147e8;
+            width: 30px;
+        }
+
+        /* Filter */
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid #e0e2e6;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #41454d;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #1147e8;
+            color: white;
+            border-color: #1147e8;
+        }
+
+        .filter-btn:hover {
+            border-color: #1147e8;
+            color: #1147e8;
+        }
+
+        .footer {
+            background: #181d26;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+
+        .footer a {
+            color: #f4d35e;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="content">
+                <h1>⚡ Storm Digital</h1>
+                <p>50-Post Content Deck + Design Kit | @storm.mkt.agency</p>
+            </div>
+            <div class="image-section">
+                <img src="https://via.placeholder.com/300x400/1147e8/ffffff?text=Storm+Digital" alt="Storm Digital Professional" id="headerImage" style="cursor: pointer;" title="Click to replace image or provide image path">
+                <p style="font-size: 12px; margin-top: 10px; opacity: 0.8;">Professional photo | Ad Performance Dashboard</p>
+            </div>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <strong>50</strong>
+                <small>Total Posts</small>
+            </div>
+            <div class="stat-card">
+                <strong>9</strong>
+                <small>Core Themes</small>
+            </div>
+            <div class="stat-card">
+                <strong>3-5</strong>
+                <small>Posts/Week</small>
+            </div>
+            <div class="stat-card">
+                <strong>PPC</strong>
+                <small>Focus Area</small>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('posts')">📋 All Posts</button>
+            <button class="tab-btn" onclick="switchTab('calendar')">📅 Calendar View</button>
+            <button class="tab-btn" onclick="switchTab('kit')">🎨 Design Kit</button>
+        </div>
+
+        <!-- POSTS TAB -->
+        <div id="posts" class="tab-content active">
+            <div class="filters">
+                <button class="filter-btn active" onclick="filterPosts('all')">All</button>
+                <button class="filter-btn" onclick="filterPosts('metric')">Metric</button>
+                <button class="filter-btn" onclick="filterPosts('educational')">Educational</button>
+                <button class="filter-btn" onclick="filterPosts('case-study')">Case Study</button>
+                <button class="filter-btn" onclick="filterPosts('social-proof')">Testimonial</button>
+                <button class="filter-btn" onclick="filterPosts('cta')">CTA</button>
+            </div>
+
+            <div class="posts-grid" id="postsGrid">
+                <!-- Generated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- CALENDAR TAB -->
+        <div id="calendar" class="tab-content">
+            <div class="calendar-view">
+                <div class="calendar-header">Recommended 12-Week Distribution</div>
+                <div class="calendar-grid">
+                    <div class="day-header">Mon</div>
+                    <div class="day-header">Tue</div>
+                    <div class="day-header">Wed</div>
+                    <div class="day-header">Thu</div>
+                    <div class="day-header">Fri</div>
+                    <div class="day-header">Sat</div>
+                    <div class="day-header">Sun</div>
+
+                    <!-- Week 1 -->
+                    <div class="day-cell"><div class="day-number">1</div><div class="day-posts"><span class="post-ref">1</span></div></div>
+                    <div class="day-cell"><div class="day-number">2</div><div class="day-posts"><span class="post-ref">2</span></div></div>
+                    <div class="day-cell"><div class="day-number">3</div><div class="day-posts"><span class="post-ref">3</span></div></div>
+                    <div class="day-cell"><div class="day-number">4</div><div class="day-posts"><span class="post-ref">4</span></div></div>
+                    <div class="day-cell"><div class="day-number">5</div><div class="day-posts"><span class="post-ref">5</span></div></div>
+                    <div class="day-cell"><div class="day-number">6</div></div>
+                    <div class="day-cell"><div class="day-number">7</div><div class="day-posts"><span class="post-ref">6</span></div></div>
+
+                    <!-- Week 2 -->
+                    <div class="day-cell"><div class="day-number">8</div><div class="day-posts"><span class="post-ref">7</span></div></div>
+                    <div class="day-cell"><div class="day-number">9</div><div class="day-posts"><span class="post-ref">8</span></div></div>
+                    <div class="day-cell"><div class="day-number">10</div><div class="day-posts"><span class="post-ref">9</span></div></div>
+                    <div class="day-cell"><div class="day-number">11</div><div class="day-posts"><span class="post-ref">10</span></div></div>
+                    <div class="day-cell"><div class="day-number">12</div><div class="day-posts"><span class="post-ref">11</span></div></div>
+                    <div class="day-cell"><div class="day-number">13</div></div>
+                    <div class="day-cell"><div class="day-number">14</div><div class="day-posts"><span class="post-ref">12</span></div></div>
+                </div>
+            </div>
+
+            <p style="margin-top: 20px; color: #41454d; font-size: 13px;">
+                <strong>Pattern:</strong> Post M/T/W/Th/F (5/week, some weeks 4) | Rest on weekends | Bonus promo/seasonal posts as needed
+            </p>
+        </div>
+
+        <!-- KIT TAB -->
+        <div id="kit" class="tab-content">
+            <div class="kit-section">
+                <h3>📦 Storm Digital Design System</h3>
+                <p style="margin-bottom: 20px; color: #41454d;">Complete branding kit with colors, typography, and component guidelines.</p>
+            </div>
+
+            <div class="kit-section">
+                <h3>🎨 Color Palette</h3>
+                <div class="color-palette">
+                    <div class="color-box" style="background: #1147e8;">
+                        Storm Blue
+                        <span class="color-hex">#1147e8</span>
+                    </div>
+                    <div class="color-box" style="background: #aa2d00;">
+                        Coral
+                        <span class="color-hex">#aa2d00</span>
+                    </div>
+                    <div class="color-box" style="background: #0a2e0e;">
+                        Forest
+                        <span class="color-hex">#0a2e0e</span>
+                    </div>
+                    <div class="color-box" style="background: #f5e9d4;">
+                        Cream
+                        <span class="color-hex">#f5e9d4</span>
+                    </div>
+                    <div class="color-box" style="background: #fcab79;">
+                        Peach
+                        <span class="color-hex">#fcab79</span>
+                    </div>
+                    <div class="color-box" style="background: #a8d8c4;">
+                        Mint
+                        <span class="color-hex">#a8d8c4</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kit-section">
+                <h3>🔤 Typography</h3>
+                <table>
+                    <tr>
+                        <th>Element</th>
+                        <th>Font</th>
+                        <th>Weight</th>
+                        <th>Size</th>
+                    </tr>
+                    <tr>
+                        <td>Heading</td>
+                        <td>Inter</td>
+                        <td>600</td>
+                        <td>28px</td>
+                    </tr>
+                    <tr>
+                        <td>Subheading</td>
+                        <td>Inter</td>
+                        <td>500</td>
+                        <td>16px</td>
+                    </tr>
+                    <tr>
+                        <td>Body</td>
+                        <td>Inter</td>
+                        <td>400</td>
+                        <td>14px</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="kit-section">
+                <h3>📐 Components</h3>
+                <ul style="list-style: none; color: #41454d;">
+                    <li style="padding: 8px 0;">✓ Post cards (1080×1350px Instagram feed)</li>
+                    <li style="padding: 8px 0;">✓ Carousel/reel templates</li>
+                    <li style="padding: 8px 0;">✓ CTA buttons (primary/secondary)</li>
+                    <li style="padding: 8px 0;">✓ Quote/testimonial frames</li>
+                    <li style="padding: 8px 0;">✓ Stat cards (metric + context)</li>
+                    <li style="padding: 8px 0;">✓ Image overlays (text + brand)</li>
+                    <li style="padding: 8px 0;">✓ Story templates (1080×1920px)</li>
+                </ul>
+            </div>
+
+            <div class="kit-section">
+                <h3>📂 File Structure</h3>
+                <pre style="background: #f8fafc; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 12px; color: #333;">
+brand-toolkit/
+└── storm-posts/
+    ├── 01-50/              # Individual HTML templates
+    ├── assets/             # Images, logos
+    ├── storm-kit.css       # Design system CSS
+    ├── index.html          # Master gallery
+    └── storm-logo-circle.html</pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Storm Digital Kit</strong> — Last updated 2026-07-31</p>
+        <p style="margin-top: 10px; font-size: 13px;">
+            📍 <a href="#">@storm.mkt.agency</a> |
+            🔗 <a href="#">storm-site/</a> |
+            📊 <a href="#">6-Account Pipeline</a>
+        </p>
+    </div>
+
+    <script>
+        const posts = [
+            { num: 1, title: 'CPL Stat', type: 'metric', topic: 'Cost per lead statistic' },
+            { num: 2, title: 'Myth vs Reality', type: 'educational', topic: 'Common PPC misconceptions' },
+            { num: 3, title: 'Testimonial', type: 'social-proof', topic: 'Client quote' },
+            { num: 4, title: 'How It Works', type: 'educational', topic: "Storm's process/framework" },
+            { num: 5, title: 'Manifesto', type: 'brand', topic: 'Core values/philosophy' },
+            { num: 6, title: 'HVAC Result', type: 'case-study', topic: 'HVAC client win' },
+            { num: 7, title: 'Review Power', type: 'educational', topic: 'Review/rating strategy' },
+            { num: 8, title: 'Verticals', type: 'educational', topic: 'Industries served' },
+            { num: 9, title: 'Free Audit CTA', type: 'cta', topic: 'Lead magnet offer' },
+            { num: 10, title: 'Fee Comparison', type: 'educational', topic: 'Storm vs competitors' },
+            { num: 11, title: 'Three Truths', type: 'educational', topic: 'Core insights/beliefs' },
+            { num: 12, title: 'Client Win Stat', type: 'metric', topic: 'Success statistic' },
+            { num: 13, title: 'Client Quote', type: 'social-proof', topic: 'Testimonial/review' },
+            { num: 14, title: 'ROI Multiple', type: 'metric', topic: 'Return on ad spend' },
+            { num: 15, title: 'Speed Stat', type: 'metric', topic: 'Lead response time' },
+            { num: 16, title: 'Budget Leak', type: 'educational', topic: 'Wasted spend/optimization' },
+            { num: 17, title: 'Close Rate', type: 'metric', topic: 'Sales conversion stat' },
+            { num: 18, title: 'Before After', type: 'case-study', topic: 'Campaign transformation' },
+            { num: 19, title: 'Obsessed', type: 'brand', topic: 'Culture/team message' },
+            { num: 20, title: 'Reviews Stat', type: 'metric', topic: 'Review volume/rating' },
+            { num: 21, title: 'Roofing Leads', type: 'case-study', topic: 'Roofing campaign result' },
+            { num: 22, title: 'The 48h Rule', type: 'educational', topic: 'Speed-to-lead principle' },
+            { num: 23, title: 'HVAC CPL', type: 'metric', topic: 'HVAC-specific pricing' },
+            { num: 24, title: 'Plumbing Win', type: 'case-study', topic: 'Plumbing client result' },
+            { num: 25, title: 'Local SEO Stack', type: 'educational', topic: 'SEO + SEM combo strategy' },
+            { num: 26, title: 'No Retainer', type: 'educational', topic: 'Performance-based model' },
+            { num: 27, title: 'Windows Stat', type: 'metric', topic: 'Window cleaning vertical stat' },
+            { num: 28, title: 'Seasonal Play', type: 'educational', topic: 'Seasonal campaign timing' },
+            { num: 29, title: 'Trust Signal', type: 'social-proof', topic: 'Authority/credibility marker' },
+            { num: 30, title: 'Landing Page Kill', type: 'educational', topic: 'High-converting LP strategy' },
+            { num: 31, title: 'Off Season Wins', type: 'case-study', topic: 'Off-peak revenue strategy' },
+            { num: 32, title: 'Call Tracking', type: 'educational', topic: 'Call measurement/attribution' },
+            { num: 33, title: 'Quality Score', type: 'metric', topic: 'Google Ads quality metric' },
+            { num: 34, title: 'DM Audit CTA', type: 'cta', topic: 'Direct message lead magnet' },
+            { num: 35, title: 'Conversion Rate', type: 'metric', topic: 'Landing page conversion %' },
+            { num: 36, title: 'Negative Keywords', type: 'educational', topic: 'Wasted spend elimination' },
+            { num: 37, title: 'Referral Engine', type: 'educational', topic: 'Word-of-mouth automation' },
+            { num: 38, title: 'Speed to Lead', type: 'metric', topic: 'Time from click to contact' },
+            { num: 39, title: 'Ad Spend Waste', type: 'educational', topic: 'Budget optimization' },
+            { num: 40, title: 'Booking Rate', type: 'metric', topic: 'Service booking conversion' },
+            { num: 41, title: 'Ad Types', type: 'educational', topic: 'Google Ads format guide' },
+            { num: 42, title: 'Testimonial 2', type: 'social-proof', topic: 'Client success story' },
+            { num: 43, title: 'Retargeting', type: 'educational', topic: 'Pixel + audience strategy' },
+            { num: 44, title: 'Revenue Math', type: 'educational', topic: 'Unit economics breakdown' },
+            { num: 45, title: 'Mobile First', type: 'educational', topic: 'Mobile-optimized strategy' },
+            { num: 46, title: 'Testimonial 3', type: 'social-proof', topic: 'Another client quote' },
+            { num: 47, title: 'July Promo', type: 'promo', topic: 'Limited-time offer' },
+            { num: 48, title: 'Geo Targeting', type: 'educational', topic: 'Location-based ads' },
+            { num: 49, title: 'Competitor Gap', type: 'educational', topic: 'Competitive advantage' },
+            { num: 50, title: 'The Offer', type: 'cta', topic: 'Main value proposition' },
+        ];
+
+        let currentFilter = 'all';
+
+        function renderPosts() {
+            const grid = document.getElementById('postsGrid');
+            const filtered = currentFilter === 'all' ? posts : posts.filter(p => p.type === currentFilter);
+
+            grid.innerHTML = filtered.map(post => `
+                <div class="post-card">
+                    <div class="post-card-header">
+                        <span class="post-card-number">Post ${post.num}</span>
+                    </div>
+                    <div class="post-card-body">
+                        <div class="post-title">${post.title}</div>
+                        <span class="post-type ${post.type.replace('-', '-')}">${post.type.replace('-', ' ')}</span>
+                        <div class="post-topic">${post.topic}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterPosts(type) {
+            currentFilter = type;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderPosts();
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        renderPosts();
+    </script>
+</body>
+</html>

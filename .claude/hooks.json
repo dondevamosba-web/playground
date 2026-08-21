@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"C:\\Users\\Guido\\Dropbox\\playground\" && .venv-win\\Scripts\\python.exe tools/check_captions.py"
+          }
+        ]
+      }
+    ]
+  }
+}

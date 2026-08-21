@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #000; }
+
+  .poster {
+    position: absolute; top: 0; left: 0;
+    width: 1080px; height: 1350px;
+    overflow: hidden;
+    font-family: "Bahnschrift SemiBold Condensed", "Bahnschrift", "Segoe UI", sans-serif;
+  }
+
+  .bg { position: absolute; inset: 0; z-index: 0; }
+  .bg img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+  /* soft scrim only at the very top (small wordmark legibility) and bottom third (copy) */
+  .scrim-top {
+    position: absolute; top: 0; left: 0; right: 0; height: 260px; z-index: 1;
+    background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 100%);
+  }
+  .scrim-bottom {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 620px; z-index: 1;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.86) 62%, rgba(0,0,0,.94) 100%);
+  }
+
+  .layer { position: relative; z-index: 2; }
+
+  .head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 64px 80px 0;
+  }
+  .wordmark {
+    color: #fff; font-size: 30px; font-weight: 700; letter-spacing: .04em;
+  }
+  .tag {
+    color: rgba(255,255,255,.78); font-size: 24px; font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase;
+  }
+
+  .foot {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+    padding: 0 80px 76px;
+  }
+  .hook {
+    color: #fff; font-size: 92px; line-height: .98; font-weight: 700;
+    letter-spacing: -.01em; margin: 0 0 28px;
+    text-transform: uppercase;
+  }
+  .hook .accent { color: #8ecbef; }
+  .cta-row {
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 2px solid rgba(255,255,255,.22);
+    padding-top: 30px;
+  }
+  .handle { color: rgba(255,255,255,.75); font-size: 30px; font-weight: 600; }
+  .cta { color: #8ecbef; font-size: 34px; font-weight: 700; letter-spacing: .01em; }
+</style>
+</head>
+<body>
+  <div class="poster">
+    <div class="bg"><img src="assets/frames/frame_01.png"></div>
+    <div class="scrim-top"></div>
+    <div class="scrim-bottom"></div>
+
+    <div class="head layer">
+      <div class="wordmark">juantellez.arte</div>
+      <div class="tag">Remeras</div>
+    </div>
+
+    <div class="foot layer">
+      <h1 class="hook">El Messi<br>que <span class="accent">nos gusta</span></h1>
+      <div class="cta-row">
+        <span class="handle">Estampado a mano</span>
+        <span class="cta">Pedilo por DM →</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

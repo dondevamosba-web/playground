@@ -37,6 +37,32 @@ WEEKLY_SLOTS = [
     (4, "19:00", "carousel", "Carrusel o post con llamado a la acción"),
 ]
 
+# Real designed posts exported from ola-digital-posts.html via
+# screenshot_ola_digital_v2.py (the old pool here was bare number/title
+# placeholder cards, not actual designed content — fixed 2026-07-17).
+# Expanded 2026-07-21 from 13 to all 16 real singles (was missing 07/08/12,
+# and single_count resets to 0 each script run, so index 0 — 01_stat_seo_local
+# — kept landing on the first single-post slot of every run, producing
+# visible duplicates like row 73 vs row 105).
+TRIAD_CYCLE = [
+    ".tmp/ola_digital_posts_v2/01_stat_seo_local.png",
+    ".tmp/ola_digital_posts_v2/02_hook_sabías_que.png",
+    ".tmp/ola_digital_posts_v2/03_bold_manifesto.png",
+    ".tmp/ola_digital_posts_v2/04_list_errores.png",
+    ".tmp/ola_digital_posts_v2/05_stat_email_marketing.png",
+    ".tmp/ola_digital_posts_v2/06_versus_competencia.png",
+    ".tmp/ola_digital_posts_v2/07_hook_sabías_que.png",
+    ".tmp/ola_digital_posts_v2/08_bold_manifesto.png",
+    ".tmp/ola_digital_posts_v2/09_list_checklist.png",
+    ".tmp/ola_digital_posts_v2/10_stat_google_ads.png",
+    ".tmp/ola_digital_posts_v2/11_bold_verdad_incómoda.png",
+    ".tmp/ola_digital_posts_v2/12_hook_errores.png",
+    ".tmp/ola_digital_posts_v2/13_versus_mentalidad.png",
+    ".tmp/ola_digital_posts_v2/14_list_sitio_web.png",
+    ".tmp/ola_digital_posts_v2/15_beforeafter_caso_real.png",
+    ".tmp/ola_digital_posts_v2/16_stat_sitio_web.png",
+]
+
 HASHTAGS = (
     "#OlaDigital #OlaDigitalOlavarría #Olavarría #OlavarríaBsAs "
     "#PymesOlavarría #NegociosOlavarría #MarketingDigital #MarketingArgentina "
@@ -51,13 +77,33 @@ Meta: generar leads y establecer autoridad en marketing digital local.
 """
 
 
+# Haiku defaults to the same "87-89% de búsquedas locales" stat almost every
+# time a stat/hook prompt is generated with no other anchor — found 2026-07-22
+# after it had already posted live 4 times plus 3 more queued. Rotate through
+# a fixed list of distinct angles so captions actually vary.
+STAT_ANGLES = [
+    "tiempo de respuesta a mensajes de Instagram/WhatsApp",
+    "costo de no tener reseñas recientes en Google",
+    "abandono de sitios web lentos en mobile",
+    "diferencia de conversión entre negocios con y sin video en redes",
+    "cuánto tarda un cliente en decidir entre dos negocios similares",
+    "impacto de fotos profesionales vs. fotos de celular en redes",
+    "frecuencia de posteo mínima para no perder alcance orgánico",
+    "por qué un negocio con web pero sin mantenimiento pierde clientes",
+]
+
+
 def generate_caption(content_type: str, post_number: int) -> str:
+    angle = STAT_ANGLES[(post_number - 1) % len(STAT_ANGLES)]
     prompt = f"""Escribí un caption para Instagram de Ola Digital.
 
 {BRAND_CONTEXT}
 
 Tipo de post: {content_type}
 Número en secuencia: {post_number}
+Si el post es de tipo stat/dato/hook, basalo en este ángulo específico (no inventes
+otro, y sobre todo no uses el dato de "87-89% de búsquedas locales" — ya se usó
+muchas veces): {angle}
 
 Reglas:
 - Máximo 120 palabras
@@ -74,7 +120,7 @@ Devolvé solo el texto del caption, sin comillas ni explicaciones."""
     return call_claude(prompt, model="haiku")
 
 
-def build_rows(start: date, weeks: int, dry_run: bool) -> list[list]:
+def build_rows(start: date, weeks: int, dry_run: bool, single_count: int = 0) -> list[list]:
     rows = []
     for week in range(weeks):
         for weekday, time_str, post_type, content_type in WEEKLY_SLOTS:
@@ -90,15 +136,22 @@ def build_rows(start: date, weeks: int, dry_run: bool) -> list[list]:
                 print(f"  [{post_date} {time_str}] {content_type}...")
                 caption = generate_caption(content_type, post_number)
 
+            # No video pipeline exists yet, so every slot posts as a single
+            # image (triad cycle) regardless of the reel/carousel label —
+            # that label still shapes the caption via content_type above.
+            media_url = TRIAD_CYCLE[single_count % len(TRIAD_CYCLE)]
+            single_count += 1
+            effective_post_type = "single"
+
             rows.append([
                 post_date.isoformat(),
                 time_str,
                 post_date.strftime("%A"),
                 content_type,
-                post_type,
+                effective_post_type,
                 caption,
                 HASHTAGS,
-                "",          # Media URL — user fills this
+                media_url,
                 "pending",
                 "",          # Post ID — auto_post fills this
             ])
@@ -165,8 +218,21 @@ def main():
     start = date.today() + timedelta(days=1)
     total = args.weeks * len(WEEKLY_SLOTS)
 
+    # Continue the image cycle from where the sheet already left off instead
+    # of always restarting at index 0 — otherwise every top-up run reclusters
+    # repeats within days of each other instead of spacing them ~3+ weeks
+    # apart (found 2026-07-22: the "89% stat" investigation surfaced this).
+    single_count = 0
+    sheet_id = args.sheet_id or os.getenv(SHEET_ENV_KEY)
+    if sheet_id and not args.dry_run:
+        sheets_probe, _ = get_services()
+        existing = sheets_probe.spreadsheets().values().get(
+            spreadsheetId=sheet_id, range="H2:H10000"
+        ).execute().get("values", [])
+        single_count = sum(1 for r in existing if r and r[0].strip())
+
     print(f"Generating {total} posts across {args.weeks} weeks (from {start})...")
-    rows = build_rows(start, args.weeks, args.dry_run)
+    rows = build_rows(start, args.weeks, args.dry_run, single_count)
 
     if args.dry_run:
         print("\n── Preview ─────────────────────────────────────────────")
@@ -177,7 +243,6 @@ def main():
         return
 
     sheets, drive = get_services()
-    sheet_id = args.sheet_id or os.getenv(SHEET_ENV_KEY)
 
     if not sheet_id:
         print(f"Creating Google Sheet: '{SHEET_TITLE}'...")

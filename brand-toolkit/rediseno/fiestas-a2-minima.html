@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Fiestas A2 — barra mínima</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#0A0A0A}
+  .poster{position:absolute;top:0;left:0;width:1080px;height:1350px;overflow:hidden;
+    background:#0A0A0A;display:flex;flex-direction:column}
+  .art{flex:1;position:relative;overflow:hidden}
+  .art img{width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block}
+  /* 62px sobre 1350 = 4.6% de la pieza. Nada tapa el flyer. */
+  .bar{height:62px;flex:none;background:#0A0A0A;border-top:2px solid #A96FE8;
+    display:flex;align-items:center;padding:0 34px;
+    font-family:Consolas,monospace;font-size:21px;letter-spacing:.13em;color:#9A9AA2}
+  .bar b{color:#F2F2F4;font-weight:400}
+</style></head><body>
+<div class="poster">
+  <div class="art"><img src="flyer-real.jpg" alt=""></div>
+  <div class="bar"><b>@fiestaselectronicasbuenosaires</b></div>
+</div>
+</body></html>

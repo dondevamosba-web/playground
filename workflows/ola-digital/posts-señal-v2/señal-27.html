@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Ola Digital — señal 27</title>
+<style>
+  @font-face{
+    font-family:'Inter';
+    src:url('fonts/Inter-Variable.woff2') format('woff2-variations'), url('fonts/Inter-Variable.woff2') format('woff2');
+    font-weight:100 900;
+  }
+  :root{
+    --od-bg:#0F172A; --od-blue:#0EA5E9; --od-orange:#F97316; --od-white:#fff;
+    --od-muted:rgba(255,255,255,.62); --od-line:rgba(255,255,255,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--od-bg)}
+  .poster{position:absolute;top:0;left:0;width:1080px;height:1080px;overflow:hidden;
+    background:var(--od-bg);color:var(--od-white);display:flex;flex-direction:column;
+    justify-content:space-between;font-family:'Inter',system-ui,sans-serif;
+    font-feature-settings:'ss01','cv11';letter-spacing:-.01em}
+  .head{display:flex;align-items:center;justify-content:space-between;padding:90px 140px 0}
+  .wordmark{font-weight:800;font-size:22px;letter-spacing:.16em;display:flex;align-items:center;gap:12px}
+  .wordmark .dot{width:12px;height:12px;border-radius:50%;background:var(--od-blue);
+    box-shadow:0 0 0 4px rgba(14,165,233,.18)}
+  .tag{font-size:15px;letter-spacing:.18em;color:var(--od-muted);text-transform:uppercase;font-weight:600}
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 140px}
+  .eyebrow{font-size:18px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--od-blue);margin-bottom:28px}
+  h1{font-size:96px;line-height:0.98;font-weight:900;letter-spacing:-.035em;margin:0}
+  h1 span{color:var(--od-blue)}
+  .foot{display:flex;align-items:center;justify-content:space-between;padding:0 140px 90px;
+    color:var(--od-muted);font-size:18px;font-weight:500;letter-spacing:.02em}
+  .foot .arrow{color:var(--od-blue);font-weight:700}
+</style></head><body>
+<div class="poster">
+  <div class="head"><div class="wordmark"><span class="dot"></span>OLA DIGITAL</div><div class="tag">Señal</div></div>
+  <div class="body">
+    <div class="eyebrow">Señal 27</div>
+    <h1>Tu reel<br>se ve<br><span>sin sonido.</span></h1>
+  </div>
+  <div class="foot"><span>oladigital.com.ar</span><span class="arrow">Escribinos →</span></div>
+</div>
+</body></html>

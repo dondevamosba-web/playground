@@ -17,43 +17,526 @@
     }
   },
   "schedule": {
-    "posts_per_week": 4,
+    "posts_per_day": 3,
     "slots": [
-      {"weekday": 1, "time": "12:00"},
-      {"weekday": 3, "time": "19:00"},
-      {"weekday": 5, "time": "11:00"},
-      {"weekday": 6, "time": "18:00"}
+      {
+        "weekday": 0,
+        "time": "09:00"
+      },
+      {
+        "weekday": 0,
+        "time": "13:00"
+      },
+      {
+        "weekday": 0,
+        "time": "19:00"
+      },
+      {
+        "weekday": 1,
+        "time": "09:00"
+      },
+      {
+        "weekday": 1,
+        "time": "13:00"
+      },
+      {
+        "weekday": 1,
+        "time": "19:00"
+      },
+      {
+        "weekday": 2,
+        "time": "09:00"
+      },
+      {
+        "weekday": 2,
+        "time": "13:00"
+      },
+      {
+        "weekday": 2,
+        "time": "19:00"
+      },
+      {
+        "weekday": 3,
+        "time": "09:00"
+      },
+      {
+        "weekday": 3,
+        "time": "13:00"
+      },
+      {
+        "weekday": 3,
+        "time": "19:00"
+      },
+      {
+        "weekday": 4,
+        "time": "09:00"
+      },
+      {
+        "weekday": 4,
+        "time": "13:00"
+      },
+      {
+        "weekday": 4,
+        "time": "19:00"
+      },
+      {
+        "weekday": 5,
+        "time": "09:00"
+      },
+      {
+        "weekday": 5,
+        "time": "13:00"
+      },
+      {
+        "weekday": 5,
+        "time": "19:00"
+      },
+      {
+        "weekday": 6,
+        "time": "09:00"
+      },
+      {
+        "weekday": 6,
+        "time": "13:00"
+      },
+      {
+        "weekday": 6,
+        "time": "19:00"
+      }
     ]
   },
   "products": [
-    {"brand": "apple", "product": "iPhone 17 Pro Max 256GB", "type": "launch", "weight": 5},
-    {"brand": "apple", "product": "iPhone 17 Pro 128GB", "type": "launch", "weight": 4},
-    {"brand": "apple", "product": "iPhone Air", "type": "launch", "weight": 4},
-    {"brand": "apple", "product": "iPhone 17 128GB", "type": "offer", "weight": 3},
-    {"brand": "apple", "product": "iPhone 16 Pro Max 256GB", "type": "offer", "weight": 3},
-    {"brand": "apple", "product": "iPhone 16 Pro 128GB", "type": "offer", "weight": 2},
-    {"brand": "apple", "product": "iPhone 16 128GB", "type": "offer", "weight": 2},
-    {"brand": "apple", "product": "MacBook Air M3 13\"", "type": "feature", "weight": 2},
-    {"brand": "apple", "product": "MacBook Pro M4 14\"", "type": "feature", "weight": 2},
-    {"brand": "apple", "product": "AirPods Pro 2da Gen", "type": "offer", "weight": 2},
-    {"brand": "apple", "product": "AirPods Max", "type": "feature", "weight": 2},
-    {"brand": "apple", "product": "iPad Air M2 11\"", "type": "feature", "weight": 2},
-    {"brand": "apple", "product": "iPad Air M2 13\"", "type": "offer", "weight": 1},
-    {"brand": "apple", "product": "Apple Watch Series 10 45mm", "type": "offer", "weight": 2},
-    {"brand": "apple", "product": "Apple Watch Ultra 2", "type": "feature", "weight": 1},
-    {"brand": "apple", "product": "iMac M4 24\"", "type": "launch", "weight": 2},
-    {"brand": "apple", "product": "Mac Mini M4", "type": "feature", "weight": 2},
-    {"brand": "apple", "type": "meme", "product": "", "weight": 2},
-    {"brand": "samsung", "product": "Galaxy S25 Ultra", "type": "offer", "weight": 3},
-    {"brand": "samsung", "product": "Galaxy S25+", "type": "offer", "weight": 2},
-    {"brand": "samsung", "product": "Galaxy S25", "type": "offer", "weight": 2},
-    {"brand": "samsung", "product": "Galaxy Tab S10+", "type": "feature", "weight": 1},
-    {"brand": "samsung", "product": "Galaxy Buds3 Pro", "type": "offer", "weight": 1},
-    {"brand": "samsung", "type": "meme", "product": "", "weight": 1},
-    {"brand": "playstation", "product": "PS5 Slim + 2 DualSense", "type": "offer", "weight": 3},
-    {"brand": "playstation", "product": "PS5 Slim", "type": "offer", "weight": 2},
-    {"brand": "playstation", "product": "DualSense Edge", "type": "feature", "weight": 2},
-    {"brand": "playstation", "product": "PS5 Slim + God of War Ragnarök", "type": "launch", "weight": 1},
-    {"brand": "playstation", "type": "meme", "product": "", "weight": 2}
+    {
+      "brand": "apple",
+      "product": "iPhone 17 Pro Max 256GB",
+      "type": "launch",
+      "weight": 6
+    },
+    {
+      "brand": "apple",
+      "product": "iPhone 17 Pro 128GB",
+      "type": "launch",
+      "weight": 5
+    },
+    {
+      "brand": "apple",
+      "product": "iPhone 17 128GB",
+      "type": "launch",
+      "weight": 4
+    },
+    {
+      "brand": "apple",
+      "product": "iPhone Air",
+      "type": "launch",
+      "weight": 5
+    },
+    {
+      "brand": "apple",
+      "product": "iPhone 16 Pro Max 256GB",
+      "type": "offer",
+      "weight": 4,
+      "images": [
+        "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro-max.jpg"
+      ]
+    },
+    {
+      "brand": "apple",
+      "product": "iPhone 16 Pro 128GB",
+      "type": "offer",
+      "weight": 3,
+      "images": [
+        "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg"
+      ]
+    },
+    {
+      "brand": "apple",
+      "product": "iPhone 16 128GB",
+      "type": "offer",
+      "weight": 3
+    },
+    {
+      "brand": "apple",
+      "product": "AirPods Pro 2da Gen",
+      "type": "offer",
+      "weight": 3
+    },
+    {
+      "brand": "apple",
+      "product": "AirPods 4",
+      "type": "offer",
+      "weight": 2
+    },
+    {
+      "brand": "apple",
+      "product": "AirPods Max",
+      "type": "feature",
+      "weight": 2
+    },
+    {
+      "brand": "apple",
+      "product": "iPad Air M2 11\"",
+      "type": "feature",
+      "weight": 3
+    },
+    {
+      "brand": "apple",
+      "product": "iPad Air M2 13\"",
+      "type": "offer",
+      "weight": 2
+    },
+    {
+      "brand": "apple",
+      "product": "Mac Mini M4",
+      "type": "feature",
+      "weight": 3,
+      "images": [
+        "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MYQ22?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+      ]
+    },
+    {
+      "brand": "apple",
+      "product": "iMac M4 24\"",
+      "type": "launch",
+      "weight": 2
+    },
+    {
+      "brand": "apple",
+      "product": "MacBook Air M3 13\"",
+      "type": "feature",
+      "weight": 2
+    },
+    {
+      "brand": "apple",
+      "product": "MacBook Pro M4 14\"",
+      "type": "feature",
+      "weight": 2
+    },
+    {
+      "brand": "apple",
+      "product": "Magic Keyboard + Trackpad",
+      "type": "feature",
+      "weight": 2
+    },
+    {
+      "brand": "apple",
+      "product": "Magic Mouse",
+      "type": "offer",
+      "weight": 1
+    },
+    {
+      "brand": "apple",
+      "product": "Cargador MagSafe 25W",
+      "type": "offer",
+      "weight": 2,
+      "images": [
+        "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MYY93?wid=2000&hei=2000&fmt=jpeg&qlt=90"
+      ]
+    },
+    {
+      "brand": "apple",
+      "product": "Cargador USB-C 67W para MacBook",
+      "type": "offer",
+      "weight": 2
+    },
+    {
+      "brand": "apple",
+      "product": "Apple Watch Series 10 45mm",
+      "type": "offer",
+      "weight": 2
+    },
+    {
+      "brand": "apple",
+      "product": "Apple Watch Ultra 2",
+      "type": "feature",
+      "weight": 1
+    },
+    {
+      "brand": "apple",
+      "type": "meme",
+      "product": "",
+      "weight": 2
+    },
+    {
+      "brand": "samsung",
+      "product": "Galaxy S25 Ultra",
+      "type": "offer",
+      "weight": 3,
+      "images": [
+        "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s25-ultra-sm-s938.jpg"
+      ]
+    },
+    {
+      "brand": "samsung",
+      "product": "Galaxy S25+",
+      "type": "offer",
+      "weight": 2,
+      "images": [
+        "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s25-plus-sm-s936.jpg"
+      ]
+    },
+    {
+      "brand": "samsung",
+      "product": "Galaxy S25",
+      "type": "offer",
+      "weight": 2,
+      "images": [
+        "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s25-sm-s931.jpg"
+      ]
+    },
+    {
+      "brand": "samsung",
+      "product": "Galaxy Tab S10+",
+      "type": "feature",
+      "weight": 1
+    },
+    {
+      "brand": "samsung",
+      "product": "Galaxy Buds3 Pro",
+      "type": "offer",
+      "weight": 1
+    },
+    {
+      "brand": "samsung",
+      "type": "meme",
+      "product": "",
+      "weight": 1
+    },
+    {
+      "brand": "playstation",
+      "product": "PS5 Slim + 2 DualSense",
+      "type": "offer",
+      "weight": 3
+    },
+    {
+      "brand": "playstation",
+      "product": "PS5 Slim",
+      "type": "offer",
+      "weight": 2
+    },
+    {
+      "brand": "playstation",
+      "product": "DualSense Edge",
+      "type": "feature",
+      "weight": 2
+    },
+    {
+      "brand": "playstation",
+      "product": "PS5 Slim + God of War Ragnarök",
+      "type": "launch",
+      "weight": 1
+    },
+    {
+      "brand": "playstation",
+      "type": "meme",
+      "product": "",
+      "weight": 2
+    },
+    {
+      "product": "iPhone 16 Plus 128GB",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 8,
+      "images": [
+        "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg"
+      ]
+    },
+    {
+      "product": "iPhone 16 Plus 256GB",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 7,
+      "images": [
+        "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg"
+      ]
+    },
+    {
+      "product": "iPhone 17 Pro Max 512GB",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 9,
+      "images": [
+        "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro-max.jpg"
+      ]
+    },
+    {
+      "product": "iPhone 17 Plus",
+      "brand": "apple",
+      "type": "launch",
+      "weight": 7,
+      "images": [
+        "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17.jpg"
+      ]
+    },
+    {
+      "product": "AirPods 4 ANC",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 7,
+      "images": [
+        "https://fdn.gsmarena.com/imgroot/news/24/09/airpods-4-offic/gallery/-1200/gsmarena_001.jpg"
+      ]
+    },
+    {
+      "product": "AirPods Max USB-C",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 6,
+      "images": [
+        "https://fdn.gsmarena.com/imgroot/news/24/09/airpods-4-offic/gallery/-1200/gsmarena_003.jpg"
+      ]
+    },
+    {
+      "product": "MacBook Air M4 13\"",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 9,
+      "images": [
+        "https://fdn.gsmarena.com/imgroot/news/25/03/macbook-air-m4/inline/-1200/gsmarena_001.jpg"
+      ]
+    },
+    {
+      "product": "MacBook Air M4 15\"",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 8,
+      "images": [
+        "https://fdn.gsmarena.com/imgroot/news/25/03/macbook-air-m4/inline/-1200/gsmarena_001.jpg"
+      ]
+    },
+    {
+      "product": "MacBook Pro M4 16\"",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 8,
+      "images": [
+        "https://www.apple.com/v/macbook-pro/aj/images/overview/hero/hero_endframe__b8tacyw2m3aq_large.jpg"
+      ]
+    },
+    {
+      "product": "Mac Mini M4 Pro",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 7,
+      "images": [
+        "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MYQ22?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+      ]
+    },
+    {
+      "product": "Mac Studio M4 Max",
+      "brand": "apple",
+      "type": "launch",
+      "weight": 6,
+      "images": [
+        "https://www.apple.com/v/mac-studio/h/images/overview/design/design_hero__eq1c9nf1mviq_large.jpg"
+      ]
+    },
+    {
+      "product": "Studio Display 27\"",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 5,
+      "images": [
+        "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MMYW3?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+      ]
+    },
+    {
+      "product": "Cargador MagSafe 15W iPhone",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 7,
+      "images": [
+        "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MHXH3?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+      ]
+    },
+    {
+      "product": "MagSafe Duo Charger",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 5,
+      "images": [
+        "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MHXF3?wid=1200&hei=630&fmt=jpeg&qlt=95"
+      ]
+    },
+    {
+      "product": "Magic Keyboard Touch ID",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 6,
+      "images": [
+        "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MK2C3?wid=2000&hei=2000&fmt=jpeg&qlt=90"
+      ]
+    },
+    {
+      "product": "Magic Trackpad",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 5,
+      "images": [
+        "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MK2D3?wid=2000&hei=2000&fmt=jpeg&qlt=90"
+      ]
+    },
+    {
+      "product": "Apple Pencil Pro",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 6,
+      "images": [
+        "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MX2D3?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+      ]
+    },
+    {
+      "product": "Funda FineWoven iPhone 16 Pro",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 6,
+      "images": [
+        "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MT4D3?wid=2000&hei=2000&fmt=jpeg&qlt=90"
+      ]
+    },
+    {
+      "product": "Funda silicona iPhone 17 Pro",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 6,
+      "images": [
+        "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg"
+      ]
+    },
+    {
+      "product": "Sleeve cuero MacBook Air 13\"",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 4,
+      "images": [
+        "https://fdn.gsmarena.com/imgroot/news/25/03/macbook-air-m4/inline/-1200/gsmarena_001.jpg"
+      ]
+    },
+    {
+      "product": "iPad Pro M4 11\"",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 8,
+      "images": [
+        "https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-11-2024.jpg"
+      ]
+    },
+    {
+      "product": "iPad Pro M4 13\"",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 7,
+      "images": [
+        "https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-13-2024.jpg"
+      ]
+    },
+    {
+      "product": "Apple Watch Series 10 42mm",
+      "brand": "apple",
+      "type": "offer",
+      "weight": 7,
+      "images": [
+        "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/watch-s10-digitalmat-gallery-1-202409?wid=2000&hei=2000&fmt=jpeg&qlt=90"
+      ]
+    }
   ]
 }

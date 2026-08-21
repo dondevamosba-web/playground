@@ -32,7 +32,37 @@ ACCOUNTS = {
     "Storm":       os.environ.get("STORM_INSTAGRAM_BUSINESS_ACCOUNT_ID"),
     "Fiestas":     os.environ.get("FIESTAS_INSTAGRAM_BUSINESS_ACCOUNT_ID"),
     "Techno":      os.environ.get("TECHNO_INSTAGRAM_BUSINESS_ACCOUNT_ID"),
+    "Empleo":      os.environ.get("OLA_EMPLEO_INSTAGRAM_BUSINESS_ACCOUNT_ID"),
+    "Talento USA": os.environ.get("TALENTO_USA_INSTAGRAM_BUSINESS_ACCOUNT_ID"),
 }
+
+# Google OAuth tokens on live code paths (token_gmail.json died silently on
+# 2026-07-06 and blocked job drafts for days — check them all daily)
+GOOGLE_TOKENS = {
+    "token_sheets.json": "sheets/drive — TODO el pipeline de contenido",
+    "token_gmail.json":  "gmail — drafts de job outreach y briefings",
+}
+
+
+def check_google_tokens() -> bool:
+    from google.oauth2.credentials import Credentials
+    from google.auth.transport.requests import Request
+    ok = True
+    print("\nGoogle tokens:")
+    for fname, what in GOOGLE_TOKENS.items():
+        path = ROOT / fname
+        if not path.exists():
+            print(f"  ❌ {fname}: no existe — {what}")
+            ok = False
+            continue
+        try:
+            creds = Credentials.from_authorized_user_file(str(path))
+            creds.refresh(Request())
+            print(f"  ✅ {fname}: refresh OK")
+        except Exception as e:
+            print(f"  ❌ {fname}: {str(e)[:90]} — {what}")
+            ok = False
+    return ok
 
 
 def main():
@@ -83,11 +113,13 @@ def main():
             print(f"  ❌ {name}: {err}")
             all_ok = False
 
+    google_ok = check_google_tokens()
+
     if days_left is not None and days_left < args.warn_days:
         print(f"\n⚠️  Token expires in {days_left} days — re-issue soon "
               "(Meta Business Suite → System Users → Generate token, update .env).")
         sys.exit(2)
-    if not all_ok:
+    if not all_ok or not google_ok:
         sys.exit(2)
     print("\nAll healthy.")
 

@@ -1,0 +1,364 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "fecha": "2026-09-01",
+      "producto": "iPhone 16 Pro Max",
+      "marca": "Apple",
+      "caption": "iPhone 16 Pro Max. Pantalla de 6.9\", chip A18 Pro, cámara 48MP. Importado directo desde USA. Llega a Olavarría antes que al retail. Garantía completa, precio justo.",
+      "hashtags": "#apple #iphone #iphone16 #olavarria #tecnologia",
+      "imagen_url": "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=400"
+    },
+    {
+      "id": 2,
+      "fecha": "2026-09-02",
+      "producto": "Galaxy S25 Ultra",
+      "marca": "Samsung",
+      "caption": "Galaxy S25 Ultra. Pantalla AMOLED 6.9\", Snapdragon 8 Elite, cámara 200MP. El smartphone premium por excelencia. Importado directo desde USA sin intermediarios.",
+      "hashtags": "#samsung #galaxy #galaxys25 #olavarria #android",
+      "imagen_url": "https://images.unsplash.com/photo-1757709608566-4b9fd41a7af5?w=400"
+    },
+    {
+      "id": 3,
+      "fecha": "2026-09-03",
+      "producto": "MacBook Pro 16\"",
+      "marca": "Apple",
+      "caption": "MacBook Pro 16\" con chip M4 Pro. Pantalla Liquid Retina XDR, batería todo el día. Para profesionales que exigen lo mejor. Directo desde USA a Olavarría.",
+      "hashtags": "#apple #macbook #macbookpro #diseño #productividad",
+      "imagen_url": "https://images.unsplash.com/photo-1707485122968-56916bd2c464?w=400"
+    },
+    {
+      "id": 4,
+      "fecha": "2026-09-04",
+      "producto": "Samsung Galaxy Z Fold 6",
+      "marca": "Samsung",
+      "caption": "Galaxy Z Fold 6. Smartphone plegable con pantalla de 7.6\". Tecnología de punta en tu bolsillo. Importado directo desde USA. Garantía completa.",
+      "hashtags": "#samsung #galaxyfold #plegable #innovacion #tech",
+      "imagen_url": "https://images.unsplash.com/photo-1592890288564-76628a30a657?w=400"
+    },
+    {
+      "id": 5,
+      "fecha": "2026-09-05",
+      "producto": "iPad Pro 12.9\"",
+      "marca": "Apple",
+      "caption": "iPad Pro 12.9\" con chip M4. Pantalla Liquid Retina, Apple Pencil Pro compatible. Para crear, diseñar y producir. Importado directo desde USA.",
+      "hashtags": "#apple #ipad #ipadpro #diseño #creatividad",
+      "imagen_url": "https://images.unsplash.com/photo-1707438095940-1eee18e85400?w=400"
+    },
+    {
+      "id": 6,
+      "fecha": "2026-09-06",
+      "producto": "Apple Watch Ultra 2",
+      "marca": "Apple",
+      "caption": "Apple Watch Ultra 2. Reloj deportivo de titanio con pantalla siempre encendida. Resistente al agua hasta 100 metros. Tecnología de punta en tu muñeca.",
+      "hashtags": "#apple #applewatch #wearable #deportes #fitness",
+      "imagen_url": "https://images.unsplash.com/photo-1721864429288-f77b22fdc9ea?w=400"
+    },
+    {
+      "id": 7,
+      "fecha": "2026-09-07",
+      "producto": "AirPods Pro 2",
+      "marca": "Apple",
+      "caption": "AirPods Pro 2 (2da generación). Cancelación activa de ruido adaptativa. Sonido de calidad estudio. Importados desde USA. Garantía completa.",
+      "hashtags": "#apple #airpods #audio #tecnologia #wireless",
+      "imagen_url": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400"
+    },
+    {
+      "id": 8,
+      "fecha": "2026-09-08",
+      "producto": "iPhone 16",
+      "marca": "Apple",
+      "caption": "iPhone 16. Chip A18, cámara dual, batería todo el día. La opción perfecta para quienes quieren lo mejor de Apple sin excesos. Importado desde USA.",
+      "hashtags": "#apple #iphone16 #iphone #tecnologia #mobile",
+      "imagen_url": "https://images.unsplash.com/photo-1624096104992-9b4fa3a279dd?w=400"
+    },
+    {
+      "id": 9,
+      "fecha": "2026-09-09",
+      "producto": "Samsung Galaxy Buds3 Pro",
+      "marca": "Samsung",
+      "caption": "Galaxy Buds3 Pro. Sonido premium con cancelación de ruido. Compatible con todos tus dispositivos. Importados directo desde USA. Stock limitado.",
+      "hashtags": "#samsung #galaxybuds #audio #wireless #tech",
+      "imagen_url": "https://images.unsplash.com/photo-1603898037474-82229ef4e00c?w=400"
+    },
+    {
+      "id": 10,
+      "fecha": "2026-09-10",
+      "producto": "Apple Watch Series 10",
+      "marca": "Apple",
+      "caption": "Apple Watch Series 10. Pantalla más grande, más delgado que nunca. Monitor de salud integrado. Tu compañero de bienestar. Directo desde USA.",
+      "hashtags": "#apple #applewatch #salud #wearable #tecnologia",
+      "imagen_url": "https://images.unsplash.com/photo-1525825691042-e14d9042fc70?w=400"
+    },
+    {
+      "id": 11,
+      "fecha": "2026-09-11",
+      "producto": "iPad Air 11\"",
+      "marca": "Apple",
+      "caption": "iPad Air 11\" con chip M2. Pantalla Liquid Retina de 11 pulgadas. Potencia y portabilidad en equilibrio perfecto. Importado directo desde USA.",
+      "hashtags": "#apple #ipad #ipadair #tecnologia #portable",
+      "imagen_url": "https://images.unsplash.com/photo-1623976127552-da3b13f35b9b?w=400"
+    },
+    {
+      "id": 12,
+      "fecha": "2026-09-12",
+      "producto": "MacBook Air M4",
+      "marca": "Apple",
+      "caption": "MacBook Air M4 de 13\". Desempeño ultrarrápido, diseño ultrafino. Perfecto para trabajo, estudio y creatividad. Importado desde USA.",
+      "hashtags": "#apple #macbook #diseño #productividad #apple",
+      "imagen_url": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400"
+    },
+    {
+      "id": 13,
+      "fecha": "2026-09-13",
+      "producto": "Samsung Galaxy S25+",
+      "marca": "Samsung",
+      "caption": "Galaxy S25+ Premium. Pantalla AMOLED 120Hz, procesador Snapdragon 8 Elite. El punto dulce entre poder y tamaño. Importado directo desde USA.",
+      "hashtags": "#samsung #galaxys25 #android #tecnologia #premium",
+      "imagen_url": "https://images.unsplash.com/photo-1738830234395-a351829a1c7b?w=400"
+    },
+    {
+      "id": 14,
+      "fecha": "2026-09-14",
+      "producto": "iMac 24\" M4",
+      "marca": "Apple",
+      "caption": "iMac 24\" con chip M4. Pantalla Retina 4.5K, diseño en 7 colores vibrantes. Toda potencia en un equipo hermoso. Importado desde USA.",
+      "hashtags": "#apple #imac #diseño #macos #desktop",
+      "imagen_url": "https://images.unsplash.com/photo-1527443195645-1133f7f28990?w=400"
+    },
+    {
+      "id": 15,
+      "fecha": "2026-09-15",
+      "producto": "Magic Keyboard + Trackpad",
+      "marca": "Apple",
+      "caption": "Magic Keyboard y Magic Trackpad. Accesorios imprescindibles para tu Mac. Inalámbricos, recargables. Directo desde USA.",
+      "hashtags": "#apple #mac #accesorios #inalambrico #productivo",
+      "imagen_url": "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=400"
+    },
+    {
+      "id": 16,
+      "fecha": "2026-09-16",
+      "producto": "iPhone 16 Plus",
+      "marca": "Apple",
+      "caption": "iPhone 16 Plus. Pantalla grande de 6.7\", batería extendida. El tamaño que siempre quisiste con la potencia de A18. Importado desde USA.",
+      "hashtags": "#apple #iphone #iphone16 #grande #pantalla",
+      "imagen_url": "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=400"
+    },
+    {
+      "id": 17,
+      "fecha": "2026-09-17",
+      "producto": "Sony PlayStation 5 Pro",
+      "marca": "PlayStation",
+      "caption": "PlayStation 5 Pro. Gaming a 4K 120fps. SSD 2TB, GPU mejorada. Lo máximo en entretenimiento. Importado directo desde USA.",
+      "hashtags": "#playstation #ps5 #gaming #consola #entretenimiento",
+      "imagen_url": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400"
+    },
+    {
+      "id": 18,
+      "fecha": "2026-09-18",
+      "producto": "DualSense Edge Controller",
+      "marca": "PlayStation",
+      "caption": "DualSense Edge. Control profesional para PS5. Botones intercambiables, sticks reparables. Para gamers serios. Importado desde USA.",
+      "hashtags": "#playstation #ps5 #gaming #controller #esports",
+      "imagen_url": "https://images.unsplash.com/photo-1624096104992-9b4fa3a279dd?w=400"
+    },
+    {
+      "id": 19,
+      "fecha": "2026-09-19",
+      "producto": "Samsung Galaxy Z Flip 6",
+      "marca": "Samsung",
+      "caption": "Galaxy Z Flip 6. Smartphone plegable compacto. Pantalla de 6.7\" abierto, 3.4\" cerrado. Innovación en tu bolsillo. Importado directo desde USA.",
+      "hashtags": "#samsung #galaxyflip #plegable #innovacion #design",
+      "imagen_url": "https://images.unsplash.com/photo-1707485122968-56916bd2c464?w=400"
+    },
+    {
+      "id": 20,
+      "fecha": "2026-09-20",
+      "producto": "iPad mini 7",
+      "marca": "Apple",
+      "caption": "iPad mini 7 con chip A17 Pro. Pantalla Liquid Retina de 8.3\". Portabilidad máxima, potencia máxima. Importado directo desde USA.",
+      "hashtags": "#apple #ipad #ipadmini #portable #tecnologia",
+      "imagen_url": "https://images.unsplash.com/photo-1592890288564-76628a30a657?w=400"
+    },
+    {
+      "id": 21,
+      "fecha": "2026-09-21",
+      "producto": "Apple TV 4K (2024)",
+      "marca": "Apple",
+      "caption": "Apple TV 4K. Streaming en 4K HDR. Soporte para Dolby Vision y Atmos. El centro de entretenimiento perfecto. Importado desde USA.",
+      "hashtags": "#apple #appletv #streaming #entretenimiento #4k",
+      "imagen_url": "https://images.unsplash.com/photo-1707438095940-1eee18e85400?w=400"
+    },
+    {
+      "id": 22,
+      "fecha": "2026-09-22",
+      "producto": "Samsung Galaxy Watch 6 Classic",
+      "marca": "Samsung",
+      "caption": "Galaxy Watch 6 Classic. Reloj inteligente con bisel giratorio. Batería 2 días, pantalla AMOLED. Importado directo desde USA.",
+      "hashtags": "#samsung #galaxywatch #wearable #smartwatch #tech",
+      "imagen_url": "https://images.unsplash.com/photo-1721864429288-f77b22fdc9ea?w=400"
+    },
+    {
+      "id": 23,
+      "fecha": "2026-09-23",
+      "producto": "Apple HomePod mini",
+      "marca": "Apple",
+      "caption": "HomePod mini. Altavoz inteligente con sonido envolvente. Conecta con tu ecosistema Apple. Colores vibrantes. Importado desde USA.",
+      "hashtags": "#apple #homepod #smartspeaker #casa #inteligente",
+      "imagen_url": "https://images.unsplash.com/photo-1603898037474-82229ef4e00c?w=400"
+    },
+    {
+      "id": 24,
+      "fecha": "2026-09-24",
+      "producto": "MagSafe Charger 25W",
+      "marca": "Apple",
+      "caption": "MagSafe Charger 25W. Cargador rápido magnético. Compatible con iPhone 15 y posteriores. Carga en 30 minutos. Importado desde USA.",
+      "hashtags": "#apple #magsafe #cargador #accesorios #iphone",
+      "imagen_url": "https://images.unsplash.com/photo-1525825691042-e14d9042fc70?w=400"
+    },
+    {
+      "id": 25,
+      "fecha": "2026-09-25",
+      "producto": "Samsung Galaxy Buds Live",
+      "marca": "Samsung",
+      "caption": "Galaxy Buds Live. Auriculares tipo gota con cancelación de ruido. Sonido natural y potente. Importados directo desde USA.",
+      "hashtags": "#samsung #galaxybuds #audio #wireless #auriculares",
+      "imagen_url": "https://images.unsplash.com/photo-1623976127552-da3b13f35b9b?w=400"
+    },
+    {
+      "id": 26,
+      "fecha": "2026-09-26",
+      "producto": "iPhone 16 Pro",
+      "marca": "Apple",
+      "caption": "iPhone 16 Pro. Chip A18 Pro, cámara Titanio ProMotion 120Hz. Camara profesional en tu bolsillo. Importado desde USA.",
+      "hashtags": "#apple #iphone16pro #fotografia #tecnologia #pro",
+      "imagen_url": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400"
+    },
+    {
+      "id": 27,
+      "fecha": "2026-09-27",
+      "producto": "Mac Studio M4 Max",
+      "marca": "Apple",
+      "caption": "Mac Studio con M4 Max. Procesador de 12 núcleos, GPU 20 núcleos. Para creadores profesionales. Importado directo desde USA.",
+      "hashtags": "#apple #macstudio #profesional #creatividad #pro",
+      "imagen_url": "https://images.unsplash.com/photo-1738830234395-a351829a1c7b?w=400"
+    },
+    {
+      "id": 28,
+      "fecha": "2026-09-28",
+      "producto": "Samsung Galaxy Tab S10",
+      "marca": "Samsung",
+      "caption": "Galaxy Tab S10 Ultra. Pantalla 14.6\", procesador Snapdragon 8 Elite. Tableta flagship. Importada directo desde USA.",
+      "hashtags": "#samsung #galaxytab #tablet #pantalla #productivo",
+      "imagen_url": "https://images.unsplash.com/photo-1757709608566-4b9fd41a7af5?w=400"
+    },
+    {
+      "id": 29,
+      "fecha": "2026-09-29",
+      "producto": "Apple Watch Hermès",
+      "marca": "Apple",
+      "caption": "Apple Watch Hermès. Diseño de lujo con correas de cuero Hermès. Tecnología de salud integrada. Importado desde USA.",
+      "hashtags": "#apple #applewatch #lujo #hermès #diseño",
+      "imagen_url": "https://images.unsplash.com/photo-1707485122968-56916bd2c464?w=400"
+    },
+    {
+      "id": 30,
+      "fecha": "2026-09-30",
+      "producto": "Sony WH-1000XM5 Headphones",
+      "marca": "Sony",
+      "caption": "Sony WH-1000XM5. Auriculares premium con cancelación de ruido. 30 horas de batería. Sonido de estudio. Importados desde USA.",
+      "hashtags": "#sony #audio #headphones #sonido #cancelacion",
+      "imagen_url": "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=400"
+    },
+    {
+      "id": 31,
+      "fecha": "2026-10-01",
+      "producto": "Meta Quest 3S",
+      "marca": "Meta",
+      "caption": "Meta Quest 3S. Realidad virtual de siguiente nivel. 1400x1440 por ojo. Accesorios incluidos. Importado directo desde USA.",
+      "hashtags": "#meta #vr #realidadvirtual #gaming #futuro",
+      "imagen_url": "https://images.unsplash.com/photo-1592890288564-76628a30a657?w=400"
+    },
+    {
+      "id": 32,
+      "fecha": "2026-10-02",
+      "producto": "Samsung Galaxy Fit 3",
+      "marca": "Samsung",
+      "caption": "Galaxy Fit 3. Pulsera inteligente compacta. Pantalla AMOLED 1.6\", batería 14 días. Monitor de salud 24/7. Importado desde USA.",
+      "hashtags": "#samsung #galaxyfit #fitness #wearable #salud",
+      "imagen_url": "https://images.unsplash.com/photo-1707438095940-1eee18e85400?w=400"
+    },
+    {
+      "id": 33,
+      "fecha": "2026-10-03",
+      "producto": "Apple AirTag 4-Pack",
+      "marca": "Apple",
+      "caption": "AirTag 4-Pack. Localiza tus cosas con Buscar. Precisión ultra amplia. Batería 1 año. Importado directo desde USA.",
+      "hashtags": "#apple #airtag #tracking #localización #tecnologia",
+      "imagen_url": "https://images.unsplash.com/photo-1721864429288-f77b22fdc9ea?w=400"
+    },
+    {
+      "id": 34,
+      "fecha": "2026-10-04",
+      "producto": "Beats Solo 4",
+      "marca": "Beats by Apple",
+      "caption": "Beats Solo 4. Auriculares de diadema con cancelación de ruido. Batería 40 horas. Diseño iconic. Importados desde USA.",
+      "hashtags": "#beats #audio #headphones #Apple #musica",
+      "imagen_url": "https://images.unsplash.com/photo-1603898037474-82229ef4e00c?w=400"
+    },
+    {
+      "id": 35,
+      "fecha": "2026-10-05",
+      "producto": "Samsung Galaxy Ring",
+      "marca": "Samsung",
+      "caption": "Galaxy Ring. Anillo inteligente de titanio. Monitor de salud biométrico. Batería 7 días. Tecnología de punta. Importado desde USA.",
+      "hashtags": "#samsung #galaxyring #wearable #salud #futuro",
+      "imagen_url": "https://images.unsplash.com/photo-1625825691042-e14d9042fc70?w=400"
+    },
+    {
+      "id": 36,
+      "fecha": "2026-10-06",
+      "producto": "Apple Watch Ultra 2 Titanium",
+      "marca": "Apple",
+      "caption": "Apple Watch Ultra 2 Titanium. Reloj deportivo de titanio puro. Resistencia extrema. Batería 36 horas. Importado desde USA.",
+      "hashtags": "#apple #applewatch #deporte #titanio #extremo",
+      "imagen_url": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400"
+    },
+    {
+      "id": 37,
+      "fecha": "2026-10-07",
+      "producto": "Samsung Galaxy S25 FE",
+      "marca": "Samsung",
+      "caption": "Galaxy S25 FE. Valor puro. Procesador Samsung Exynos. Cámara 50MP. Batería 5000 mAh. Importado directo desde USA.",
+      "hashtags": "#samsung #galaxys25 #valor #presupuesto #android",
+      "imagen_url": "https://images.unsplash.com/photo-1624096104992-9b4fa3a279dd?w=400"
+    },
+    {
+      "id": 38,
+      "fecha": "2026-10-08",
+      "producto": "Apple iPhone SE (4ta gen)",
+      "marca": "Apple",
+      "caption": "iPhone SE (4ta generación). Chip A18, diseño clásico, precio accesible. Lo mejor de Apple en presupuesto. Importado desde USA.",
+      "hashtags": "#apple #iphonese #presupuesto #accesible #iphone",
+      "imagen_url": "https://images.unsplash.com/photo-1757709608566-4b9fd41a7af5?w=400"
+    },
+    {
+      "id": 39,
+      "fecha": "2026-10-09",
+      "producto": "Samsung Galaxy Z Fold 7",
+      "marca": "Samsung",
+      "caption": "Galaxy Z Fold 7 (próximamente). Smartphone plegable de siguiente generación. Pantalla 7.6\", diseño mejorado. Pre-orden disponible.",
+      "hashtags": "#samsung #galaxyfold #futuro #innovacion #plegable",
+      "imagen_url": "https://images.unsplash.com/photo-1707485122968-56916bd2c464?w=400"
+    },
+    {
+      "id": 40,
+      "fecha": "2026-10-10",
+      "producto": "Apple Vision Pro 2",
+      "marca": "Apple",
+      "caption": "Apple Vision Pro 2. Computadora espacial de próxima generación. Display Micro OLED 4K. El futuro es hoy. Importado desde USA.",
+      "hashtags": "#apple #visionpro #espacial #futuro #realidad",
+      "imagen_url": "https://images.unsplash.com/photo-1525825691042-e14d9042fc70?w=400"
+    }
+  ]
+}

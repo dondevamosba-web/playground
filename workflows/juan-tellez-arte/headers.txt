@@ -1,0 +1,17 @@
+HTTP/1.1 200 OK
+Content-Type: video/mp4
+ETag: 44d6c202ae7dcb3a52a474f438e53e4ce6008d8973f28051fd6179b183287fa1
+cross-origin-resource-policy: cross-origin
+timing-allow-origin: *
+Access-Control-Allow-Origin: *
+Accept-Ranges: bytes
+X-FB-Connection-Quality: EXCELLENT; q=0.9, rtt=35, rtx=0, c=13, mss=1392, tbw=3365, tp=-1, tpl=-1, uplat=1, ullat=-1
+Date: Tue, 28 Jul 2026 21:42:18 GMT
+Cache-Control: max-age=1209600, no-transform
+Alt-Svc: h3=":443"; ma=86400
+No-Vary-Search: key-order, params=("_nc_gid" "oh" "oe" "_nc_oc" "_nc_ohc" "_nc_cat" "_nc_ht" "_nc_cb")
+x-fb-ptm-uuid: C84582C5B04F367C919108E887E4C791
+X-Robots-Tag: noarchive, noindex
+Connection: keep-alive
+Content-Length: 7098334
+
