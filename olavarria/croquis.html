@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Croquis — España 3175, Olavarría</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  h1 { text-align: center; font-size: 16px; margin-bottom: 10px; }
+  .subtitle { text-align: center; color: #666; font-size: 12px; margin-bottom: 25px; }
+  .croquis-wrapper { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
+  .croquis-box { background: white; padding: 20px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+  svg { background: white; border: 1px solid #ccc; }
+  .label { font-size: 10px; font-weight: bold; text-anchor: middle; }
+  .dimension { font-size: 8px; fill: #555; }
+  .title { font-size: 12px; font-weight: bold; margin-bottom: 8px; text-align: center; }
+  .scale-note { font-size: 10px; color: #666; text-align: center; margin-top: 8px; }
+  .legend { background: #f9f9f9; padding: 12px; border-left: 3px solid #333; margin-top: 20px; font-size: 11px; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>CROQUIS 1:50 — ESPAÑA 3175, OLAVARRÍA</h1>
+<p class="subtitle">N = Fachada/Calle | S = Patio/Jardín | E = Derecha | O = Izquierda | Escala: 20px = 1m</p>
+
+<div class="croquis-wrapper">
+
+<!-- PLANTA ALTA -->
+<div class="croquis-box">
+<div class="title">PLANTA ALTA (103,66 m²)</div>
+<svg width="380" height="420" viewBox="0 0 380 420" xmlns="http://www.w3.org/2000/svg">
+
+<!-- Encabezados direcciones sutiles -->
+<text x="190" y="12" style="font-size: 9px; fill: #c41e3a; font-weight: bold; text-anchor: middle;">N</text>
+<text x="8" y="210" style="font-size: 9px; fill: #0066cc; font-weight: bold;">O</text>
+<text x="372" y="210" style="font-size: 9px; fill: #0066cc; font-weight: bold;">E</text>
+<text x="190" y="415" style="font-size: 9px; fill: #c41e3a; font-weight: bold; text-anchor: middle;">S</text>
+
+<!-- LADO NORTE/FACHADA -->
+<!-- Balcón -->
+<rect x="20" y="15" width="135" height="25" fill="none" stroke="#000" stroke-width="1.5"/>
+<text x="87" y="32" class="label">BALCÓN 8,6×2</text>
+
+<!-- Living -->
+<rect x="20" y="40" width="95" height="70" fill="#f0f0f0" stroke="#000" stroke-width="1.5"/>
+<text x="67" y="75" class="label">LIVING</text>
+<text x="67" y="82" class="label">6×4,66</text>
+
+<!-- Dormitorio 1 (OESTE) -->
+<rect x="20" y="110" width="55" height="65" fill="#f0f0f0" stroke="#000" stroke-width="1.5"/>
+<text x="47" y="147" class="label">DORMI 1</text>
+<text x="47" y="154" class="label">3,5×4</text>
+
+<!-- Baño 1 -->
+<rect x="75" y="110" width="32" height="32" fill="#e8f4f8" stroke="#000" stroke-width="1.5"/>
+<text x="91" y="131" class="label">BAÑO 1</text>
+
+<!-- Toilet -->
+<rect x="75" y="142" width="32" height="32" fill="#e8f4f8" stroke="#000" stroke-width="1.5"/>
+<text x="91" y="163" class="label">TOILET</text>
+
+<!-- Pasillo -->
+<rect x="107" y="110" width="16" height="65" fill="#fff" stroke="#000" stroke-width="1.5"/>
+
+<!-- Escalera (CENTRO) -->
+<rect x="123" y="40" width="75" height="70" fill="#f0f0f0" stroke="#000" stroke-width="1.5"/>
+<text x="160" y="75" class="label">ESCALERA</text>
+<text x="160" y="82" class="label">4,66×2</text>
+
+<!-- Dormitorio 2 (ESTE/NORTE) -->
+<rect x="255" y="15" width="55" height="57" fill="#f0f0f0" stroke="#000" stroke-width="1.5"/>
+<text x="282" y="45" class="label">DORMI 2</text>
+<text x="282" y="52" class="label">3,45×3,6</text>
+
+<!-- Cocina/Comedor (ESTE) -->
+<rect x="228" y="72" width="95" height="72" fill="#fef4e8" stroke="#000" stroke-width="1.5"/>
+<text x="275" y="110" class="label">COCINA</text>
+<text x="275" y="117" class="label">COMEDOR 4,66×6</text>
+
+<!-- Lavadero (ESTE) -->
+<rect x="323" y="72" width="32" height="32" fill="#fff" stroke="#000" stroke-width="1.5"/>
+<text x="339" y="93" class="label">LAVADERO</text>
+
+<!-- TERRAZA (ESTE/SUR - vertical angosta) -->
+<rect x="323" y="104" width="32" height="71" fill="#e8f8e8" stroke="#000" stroke-width="1.5" stroke-dasharray="4,4"/>
+<text x="339" y="140" class="label" font-size="9">TERRAZA</text>
+<text x="339" y="147" class="label" font-size="8">8,66×3</text>
+
+<!-- ESCALA VISUAL -->
+<line x1="20" y1="400" x2="40" y2="400" stroke="#000" stroke-width="2"/>
+<text x="30" y="410" class="dimension" text-anchor="middle">1m</text>
+
+</svg>
+<div class="scale-note">Escala 1:50</div>
+</div>
+
+<!-- PLANTA BAJA -->
+<div class="croquis-box">
+<div class="title">PLANTA BAJA</div>
+<svg width="380" height="360" viewBox="0 0 380 360" xmlns="http://www.w3.org/2000/svg">
+
+<!-- Encabezados direcciones sutiles -->
+<text x="190" y="12" style="font-size: 9px; fill: #c41e3a; font-weight: bold; text-anchor: middle;">N</text>
+<text x="8" y="180" style="font-size: 9px; fill: #0066cc; font-weight: bold;">O</text>
+<text x="372" y="180" style="font-size: 9px; fill: #0066cc; font-weight: bold;">E</text>
+<text x="190" y="350" style="font-size: 9px; fill: #c41e3a; font-weight: bold; text-anchor: middle;">S</text>
+
+<!-- GARAGE (NORTE-OESTE) -->
+<rect x="20" y="40" width="37" height="95" fill="#f0f0f0" stroke="#000" stroke-width="1.5"/>
+<text x="38" y="90" class="label">GARAGE</text>
+<text x="38" y="97" class="label">2,3×6</text>
+<rect x="20" y="40" width="37" height="6" fill="#666"/>
+
+<!-- ESCALERA (CENTRO) -->
+<circle cx="120" cy="87" r="12" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="3,3"/>
+<polygon points="120,77 128,87 120,97 112,87" fill="#999"/>
+<text x="120" y="91" class="label" font-size="8">ESC</text>
+
+<!-- JARDÍN TRASERO (SUR - ocupa ancho) -->
+<rect x="20" y="135" width="325" height="110" fill="#e8f8d8" stroke="#000" stroke-width="1.5"/>
+<text x="182" y="185" class="label">JARDÍN TRASERO 8,66×6</text>
+
+<!-- Plantas -->
+<circle cx="50" cy="160" r="4" fill="#4a7c4e"/>
+<circle cx="90" cy="170" r="4" fill="#4a7c4e"/>
+<circle cx="130" cy="160" r="4" fill="#4a7c4e"/>
+<circle cx="170" cy="175" r="4" fill="#4a7c4e"/>
+<circle cx="210" cy="165" r="4" fill="#4a7c4e"/>
+<circle cx="250" cy="175" r="4" fill="#4a7c4e"/>
+<circle cx="290" cy="160" r="4" fill="#4a7c4e"/>
+<circle cx="330" cy="170" r="4" fill="#4a7c4e"/>
+
+<!-- Conexión escalera desde arriba -->
+<path d="M 120 135 L 120 125" stroke="#666" stroke-width="1.5"/>
+<text x="125" y="130" class="dimension">escalera</text>
+
+<!-- ESCALA VISUAL -->
+<line x1="20" y1="340" x2="40" y2="340" stroke="#000" stroke-width="2"/>
+<text x="30" y="350" class="dimension" text-anchor="middle">1m</text>
+
+</svg>
+<div class="scale-note">Escala 1:50</div>
+</div>
+
+</div>
+
+<div class="legend">
+<strong>COLORES:</strong> Gris = espacios habitables | Azul = baños | Crema = cocina | Verde = terraza/jardín
+</div>
+
+</body>
+</html>

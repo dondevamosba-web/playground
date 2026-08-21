@@ -26,7 +26,8 @@
   .room .meta { color:var(--muted); font-size:.9rem; margin-bottom:18px; }
   h3 { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.14em; margin:18px 0 8px; }
   h3 .pend { text-transform:none; letter-spacing:normal; font-style:italic; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr)); gap:14px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:14px; }
+  @media(max-width:600px){ .grid { grid-template-columns:1fr; } }
   figure { margin:0; position:relative; }
   figure img { width:100%; border-radius:10px; display:block; aspect-ratio:4/3; object-fit:cover; background:#2a241f;
                transition:opacity .15s; cursor:zoom-in; }
@@ -43,20 +44,6 @@
   figure.marcada img { opacity:.35; outline:3px solid #c0392b; outline-offset:-3px; }
   figure.marcada .mark { background:#c0392b; }
 
-  /* Comparador antes/render */
-  .compara { position:relative; border-radius:10px; overflow:hidden; aspect-ratio:4/3; margin-bottom:18px;
-             touch-action:none; user-select:none; -webkit-user-select:none; max-width:700px; }
-  .compara img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; pointer-events:none; }
-  .compara .top { clip-path:inset(0 calc(100% - var(--x,50%)) 0 0); }
-  .compara .handle { position:absolute; top:0; bottom:0; left:var(--x,50%); width:2px; background:#fff;
-                     transform:translateX(-1px); }
-  .compara .handle::after { content:"◂ ▸"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-                            background:var(--accent); color:#14110f; border-radius:999px; padding:6px 10px;
-                            font-size:.8rem; white-space:nowrap; }
-  .compara .tag { position:absolute; top:10px; background:rgba(0,0,0,.55); color:#fff; font-size:.75rem;
-                  letter-spacing:.1em; text-transform:uppercase; padding:4px 10px; border-radius:6px; }
-  .compara .tag.antes { left:10px; }
-  .compara .tag.render { right:10px; }
 
   /* Lightbox */
   #lb { position:fixed; inset:0; background:rgba(0,0,0,.92); display:none; z-index:10;
@@ -72,13 +59,9 @@
 </style>
 </head>
 <body>
-<header>
-  <h1>España 3175 · Olavarría</h1>
-  <p>La remodelación, ambiente por ambiente</p>
-</header>
 <nav id="indice"></nav>
 <p class="hint">Tocá cualquier foto para verla completa. Con la ✕ marcás las que no te gustan.</p>
-<div id="barra"><button onclick="copiarMarcadas()">Copiar marcadas (<span id="nmarcadas">0</span>)</button> <span id="aviso"></span></div>
+<div id="barra"><button onclick="copiarMarcadas()">Copiar IDs para borrar (<span id="nmarcadas">0</span> marcadas)</button> <button onclick="desmarcarTodas()" style="margin-left:8px;background:#444;color:#fff;border:0;border-radius:8px;padding:8px 16px;font-family:inherit;font-size:.95rem;cursor:pointer">Desmarcar todas</button> <span id="aviso"></span></div>
 
 <main id="rooms"></main>
 
@@ -172,40 +155,48 @@
 // Cada ambiente: antes / render / despues son listas de IDs. Cada ID es img/{id}.jpg (+ img/thumb/{id}.jpg).
 const AMBIENTES = [
   { nombre: "Living", nota: "6,00 × 4,66 m — ventana de 3,13 m",
-    antes:  ["1_74nj-vC_GclHE-LeiGpIgV0yR-LZ4Yi","1NzwxaWB8bME_j9aCHcAtwZ2j01r3YKbV","1Yv5l38hv3aYIWkvyrG9N-8SVkMFIJmKp","1TQDjsXeXERwwCfkdsBP8wdiueGpdzaqT"],
-    render: ["1ycOPKpcCGfT1zCebvkzfFbfuVDXnnDbO","1j_tXPtbWCAbyWKjF2K_h_ySfty9Ozujt"],
+    antes:  ["1Yv5l38hv3aYIWkvyrG9N-8SVkMFIJmKp","1TQDjsXeXERwwCfkdsBP8wdiueGpdzaqT"],
+    render: ["living-render-v8_01","living-render-angulo2_01","living-render-v3_01","living-render-v4_01"],
     despues: [] },
-  { nombre: "Cocina y comedor", nota: "Incluye la vista a la ventana",
-    antes:  ["17biJGYaVQ00_LHvU6CuIFjsCVUCtbbC1","1B0amNkLpmfYntea59aiESHZEMcLfu_db","1yYX641QZEbByAptaj18MRR5TzVuHApZY","15-TT5vOk88iDJ-I4VlMjNqCAA3lzooGJ"],
-    render: ["18dysMjlVzLVSknb2-qYl42JZDSdHLADA","1SVIULallKMN8KNUJQ1V4rtAjrGM6FTGM","1HSvOLkrbGfgR-_MHsNfREquZ0XYoplm7"],
+  { nombre: "Cocina y comedor", nota: "Isla, horno empotrado, melamina hasta el techo, aire acondicionado",
+    antes:  ["1B0amNkLpmfYntea59aiESHZEMcLfu_db","cocina-antes-v2_01","cocina-antes-v2_02","comedor-antes_01","comedor-antes_02"],
+    render: ["kitchen-render-v6_01","kitchen-render-angulo3_v2","kitchen-render-angulo4_v2","kitchen-render-opuesto_v2"],
     despues: [] },
-  { nombre: "Baño 1", nota: "Se mantienen los azulejos verdes",
-    antes:  ["1vtxrs8J15Dnutxn7IOFnfttcEjQiFOFc","1khoOK_PS7ZojQ1WPSArC9x0-aWi_ZA4O"],
-    render: ["10TSS-yepj_5Ys3lE3d_DaOeBKjkzum00","1uByu9acJtJPdb2yvumAde1uv3bCNn7Fv"],
+  { nombre: "Baño 1", nota: "Con bañera/ducha — se mantienen los azulejos verdes",
+    antes:  ["bathroom1-antes-v2_01"],
+    render: ["bathroom1-render-v5_01","bathroom1-render-v4_01"],
     despues: [] },
-  { nombre: "Baño 2", nota: "",
-    antes:  ["1rau4gU6iPvpR61hPaElVXlmAjAd3eWSI","1ammMnzBvq4x_Ar5Xxw7MRScI9pzHUCOI"],
-    render: ["1sp-AwqS1xslPv-8zz24rqyNVw4fSUTQ1"],
+  { nombre: "Baño toilet", nota: "Sin ducha — solo inodoro y bacha. Se mantienen los azulejos verdes",
+    antes:  ["bathroom-1_03","bathroom-2_03"],
+    render: ["bathroom1-render-v2_01"],
     despues: [] },
   { nombre: "Dormitorio 1 (principal)", nota: "3,50 × 4,00 m — da al balcón del frente",
-    antes:  ["1ZlM2p5Vf5VSxfl1lQEVJv3wfbOcTcFyg","1BitDCrrPOsUGtieH830YagQZ6Ph-H4uF"],
-    render: ["1UY28sVzEwVZ02UQxbUorIVObxIlsosbZ"],
+    antes:  ["1ZlM2p5Vf5VSxfl1lQEVJv3wfbOcTcFyg"],
+    render: ["bedroom1-render-v3_01","bedroom1-render-v2_01"],
     despues: [] },
-  { nombre: "Dormitorio 2", nota: "3,45 × 3,60 m — ventanal de 2,10 m, da al patio, al lado de la cocina",
-    antes:  ["1OurIzOhqFDXsoCm_jOg2hK5HSwR_3pHO","17yUgUMXB-DnnSba11vnraGZxNCblAYIb","1QAL2tlO96NFti2wtH_Y8_bxZb0JsBrbq"],
-    render: ["1UvWsQONye_YuO7aMcCRlfQcgmKyh0SBV"],
+  { nombre: "Dormitorio 2", nota: "3,45 × 3,60 m — ventanal de 2,10 m, da al patio",
+    antes:  ["1OurIzOhqFDXsoCm_jOg2hK5HSwR_3pHO","17yUgUMXB-DnnSba11vnraGZxNCblAYIb"],
+    render: ["bedroom2-render-v2_01","bedroom2-closet-render_01"],
     despues: [] },
-  { nombre: "Terraza y pérgola", nota: "Parrilla nueva",
-    antes:  ["1YW0e9OZ0feKSC85oPKoHsTyNVri8Mqow","1F64QmA8UJUrI0QNrUBcd4-04RYmHNtH-"],
-    render: ["1QFknnNQM-mAkp1EyOWwynuvo8zYQyvuz","1xc7TnQB2yIaNGRi4mMqhayFmdv8i3Bx1","17TcdcpMsDqFMs12cpLpLPLGXSY56PyzP","1KJqqpg-6dAPd7IJydT4ROz09ae3wSv_U","1wQbTzxpgBj2zto3x5k7tskDDqufuchUk"],
+  { nombre: "Terraza y pérgola", nota: "Parrilla nueva — incluye lavadero y patio trasero",
+    antes:  ["1YW0e9OZ0feKSC85oPKoHsTyNVri8Mqow","1F64QmA8UJUrI0QNrUBcd4-04RYmHNtH-","laundry-patio_01"],
+    render: ["terraza-render-v2_01","terraza-render-angulo2_01","1wQbTzxpgBj2zto3x5k7tskDDqufuchUk","laundry-patio_render_01"],
     despues: [] },
   { nombre: "Jardín", nota: "",
-    antes:  ["15hsf97SHX84kEbFkfD-XlfblDUo651Z_","1lWgmHRw55Re6rOM5qHBXzN4GNXH8LSHC","1wHaJdBqTp0ee6les9frpJUQsSIjCnQc8"],
-    render: ["1YjlwideILf_yKgEbmZfJVDGo4RpInF8k"],
+    antes:  ["15hsf97SHX84kEbFkfD-XlfblDUo651Z_","garden-antes_02"],
+    render: ["1YjlwideILf_yKgEbmZfJVDGo4RpInF8k","garden-render-v2_01"],
+    despues: ["jardin-limpieza_01","jardin-limpieza_02"] },
+  { nombre: "Exterior y fachada", nota: "",
+    antes:  ["facade-antes_01","facade-antes_02"],
+    render: [],
     despues: [] },
-  { nombre: "Garage y escalera", nota: "Garage de 2,30 m de ancho — sigue siendo garage; revisar humedad del techo",
-    antes:  ["1EuoNsPaHkSd0s6NX0-rTqry5BzTm0_vS"],
-    render: ["1Z8vRz6NImu9g0QYWK7eYzLSEnu4pzYah","1b7z77bLx0syzv887hexx32YCmiTKkXgD","1gFkI-1k9YAEC8fwpE6pq7sidFf-t5y4I"],
+  { nombre: "Garage y escalera", nota: "Garage de 2,30 m de ancho",
+    antes:  [],
+    render: ["1Z8vRz6NImu9g0QYWK7eYzLSEnu4pzYah","1b7z77bLx0syzv887hexx32YCmiTKkXgD"],
+    despues: [] },
+  { nombre: "Pasillo y hall", nota: "Entrada principal — escalera con pared de mosaico",
+    antes:  ["hall-stairs_01","hall-doors_01"],
+    render: ["hall-stairs_render_01","hall-doors_render_01"],
     despues: [] },
 ];
 
@@ -220,18 +211,7 @@ document.getElementById("rooms").innerHTML = AMBIENTES.map(a => `
   <section class="room" id="${slug(a.nombre)}">
     <h2>${a.nombre}</h2>
     <div class="meta">${a.nota || "&nbsp;"}</div>
-    ${a.antes.length && a.render.length ? `
-    <h3>Antes / Render — deslizá para comparar</h3>
-    <div class="compara">
-      <img src="${thumb(a.render[0])}" alt="${a.nombre} — render" loading="lazy">
-      <img class="top" src="${thumb(a.antes[0])}" alt="${a.nombre} — antes" loading="lazy">
-      <span class="tag antes">Antes</span><span class="tag render">Render</span>
-      <div class="handle"></div>
-    </div>` : ""}
-    ${SLOTS.map(([key,label]) => a[key].length
-      ? `<h3>${label}</h3><div class="grid">${a[key].map(id => fig(id, a.nombre+" — "+label)).join("")}</div>`
-      : `<h3>${label} — <span class="pend">pendiente</span></h3>`
-    ).join("")}
+    <div class="grid">${SLOTS.flatMap(([key,label]) => a[key].map(id => fig(id, a.nombre+" — "+label))).join("")}</div>
   </section>`).join("");
 
 // Índice de ambientes
@@ -239,16 +219,6 @@ document.getElementById("indice").innerHTML =
   AMBIENTES.map(a => `<a href="#${slug(a.nombre)}">${a.nombre}</a>`).join("") +
   `<a href="#planos">Planos</a>`;
 
-// Comparador antes/render
-document.querySelectorAll(".compara").forEach(c => {
-  const mover = e => {
-    const r = c.getBoundingClientRect();
-    const x = Math.min(Math.max((e.clientX - r.left) / r.width, 0), 1);
-    c.style.setProperty("--x", (x * 100).toFixed(2) + "%");
-  };
-  c.addEventListener("pointerdown", e => { c.setPointerCapture(e.pointerId); mover(e); });
-  c.addEventListener("pointermove", e => { if (e.buttons) mover(e); });
-});
 
 // Lightbox
 const lb = document.getElementById("lb"), lbImg = lb.querySelector("img"), lbCap = lb.querySelector("figcaption");
@@ -303,9 +273,14 @@ function copiarMarcadas() {
     .map(([k,v]) => `${v} (id: ${k.slice(4)})`).join("\n");
   navigator.clipboard.writeText(lista || "(ninguna marcada)").then(() => {
     const aviso = document.getElementById("aviso");
-    aviso.textContent = "¡Copiado! Pegáselo a Claude en el chat.";
+    aviso.textContent = "¡Copiado! Pegame los IDs en el chat y los borro.";
     setTimeout(() => aviso.textContent = "", 3000);
   });
+}
+function desmarcarTodas() {
+  Object.keys(localStorage).filter(k => k.startsWith("del_")).forEach(k => localStorage.removeItem(k));
+  document.querySelectorAll("figure.marcada").forEach(f => f.classList.remove("marcada"));
+  actualizarBarra();
 }
 // restaurar marcas guardadas
 document.querySelectorAll("figure[data-id]").forEach(f => {

@@ -399,7 +399,7 @@ function DCViewport({ children, minScale = 0.1, maxScale = 8, style = {} }) {
           willChange: 'transform',
           width: 'max-content', minWidth: '100%',
           minHeight: '100%',
-          padding: '60px 0 80px',
+          padding: '100px 0 120px',
         }}
       >
         <div style={{ position: 'absolute', inset: -6000, backgroundImage: gridSvg, backgroundSize: '120px 120px', pointerEvents: 'none', zIndex: -1 }} />
@@ -431,7 +431,7 @@ function DCSection({ id, title, subtitle, children, gap = 48 }) {
   return (
     <div data-dc-section={sid}
       style={{ marginBottom: 'calc(80px * var(--dc-inv-zoom, 1))', position: 'relative' }}>
-      <div style={{ padding: '0 60px' }}>
+      <div style={{ padding: '0 110px' }}>
         <div className="dc-sectionhead" style={{ paddingBottom: 36 }}>
           <DCEditable tag="div" value={sec.title ?? title}
             onChange={(v) => ctx && sid && ctx.patchSection(sid, { title: v })}
@@ -439,7 +439,7 @@ function DCSection({ id, title, subtitle, children, gap = 48 }) {
           {subtitle && <div style={{ fontSize: 16, color: DC.subtitle }}>{subtitle}</div>}
         </div>
       </div>
-      <div style={{ display: 'flex', gap, padding: '0 60px', alignItems: 'flex-start', width: 'max-content' }}>
+      <div style={{ display: 'flex', gap, padding: '0 110px', alignItems: 'flex-start', width: 'max-content' }}>
         {order.map((k) => (
           <DCArtboardFrame key={k} sectionId={sid} artboard={byId[k]} order={order}
             label={(sec.labels || {})[k] ?? byId[k].props.label}
@@ -1357,7 +1357,7 @@ const PostShell = ({ surface = 'canvas', children, postNum, totalNum }) => {
       {/* Header */}
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '56px 64px 0',
+        padding: '56px 180px 0',
         flexShrink: 0,
       }}>
         <Wordmark surface={surface} small />
@@ -1371,7 +1371,7 @@ const PostShell = ({ surface = 'canvas', children, postNum, totalNum }) => {
       {/* Footer */}
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 64px 56px',
+        padding: '0 180px 56px',
         flexShrink: 0,
       }}>
         <span style={{ fontSize: 15, fontWeight: 500, color: urlColor, letterSpacing: '0.02em', fontVariantNumeric: 'tabular-nums' }}>
@@ -1391,16 +1391,16 @@ const TplBold = ({ post, surface }) => {
   const isDark = ['dark','coral','forest'].includes(surface);
   const lines = post.headline.split('\n');
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 64px' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 180px' }}>
       {post.eyebrow && (
         <div style={{
-          fontSize: 13, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase',
+          fontSize: 18, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase',
           color: surf.eyebrowColor, marginBottom: 32,
         }}>{post.eyebrow}</div>
       )}
       <h2 style={{
         margin: 0,
-        fontSize: 64,
+        fontSize: 72,
         fontWeight: 400,
         lineHeight: 1.08,
         letterSpacing: '-0.02em',
@@ -1412,7 +1412,7 @@ const TplBold = ({ post, surface }) => {
       {post.lede && (
         <p style={{
           margin: '32px 0 0',
-          fontSize: 20, fontWeight: 400, lineHeight: 1.4,
+          fontSize: 28, fontWeight: 400, lineHeight: 1.4,
           color: surf.lede,
           letterSpacing: '-0.005em',
           maxWidth: 840,
@@ -1426,10 +1426,10 @@ const TplBold = ({ post, surface }) => {
 const TplStat = ({ post, surface }) => {
   const surf = SURFACE[surface] || SURFACE.canvas;
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 64px' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 180px' }}>
       {post.eyebrow && (
         <div style={{
-          fontSize: 13, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase',
+          fontSize: 18, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase',
           color: surf.eyebrowColor, marginBottom: 24,
         }}>{post.eyebrow}</div>
       )}
@@ -1445,7 +1445,7 @@ const TplStat = ({ post, surface }) => {
         {post.statUnit && <span style={{ fontSize: 56, fontWeight: 400, letterSpacing: '-0.02em', marginBottom: 10 }}>{post.statUnit}</span>}
       </div>
       <div style={{
-        fontSize: 28, fontWeight: 400, lineHeight: 1.18,
+        fontSize: 38, fontWeight: 400, lineHeight: 1.18,
         color: surf.fg, maxWidth: 820,
         letterSpacing: '-0.01em',
         marginBottom: post.lede ? 20 : 0,
@@ -1453,7 +1453,7 @@ const TplStat = ({ post, surface }) => {
       {post.lede && (
         <p style={{
           margin: 0,
-          fontSize: 18, fontWeight: 400, lineHeight: 1.4,
+          fontSize: 26, fontWeight: 400, lineHeight: 1.4,
           color: surf.lede, maxWidth: 760,
         }}>{post.lede}</p>
       )}
@@ -1466,16 +1466,16 @@ const TplList = ({ post, surface }) => {
   const surf = SURFACE[surface] || SURFACE.canvas;
   const isDark = ['dark','coral','forest'].includes(surface);
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', padding: '48px 64px 0' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', padding: '48px 180px 0' }}>
       {post.eyebrow && (
         <div style={{
-          fontSize: 13, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase',
+          fontSize: 18, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase',
           color: surf.eyebrowColor, marginBottom: 20,
         }}>{post.eyebrow}</div>
       )}
       <h2 style={{
         margin: '0 0 36px',
-        fontSize: 44, fontWeight: 400, lineHeight: 1.1,
+        fontSize: 52, fontWeight: 400, lineHeight: 1.1,
         letterSpacing: '-0.02em',
         color: surf.fg,
         maxWidth: 820,
@@ -1489,7 +1489,7 @@ const TplList = ({ post, surface }) => {
             borderBottom: `1px solid ${surf.borderColor}`,
           }}>
             <span style={{
-              fontSize: 13, fontWeight: 700,
+              fontSize: 20, fontWeight: 700,
               color: surf.eyebrowColor,
               letterSpacing: '0.04em',
               flexShrink: 0,
@@ -1497,7 +1497,7 @@ const TplList = ({ post, surface }) => {
               minWidth: 24,
             }}>{String(i + 1).padStart(2,'0')}</span>
             <span style={{
-              fontSize: 18, fontWeight: 400, lineHeight: 1.45,
+              fontSize: 24, fontWeight: 400, lineHeight: 1.45,
               color: surf.fg,
               letterSpacing: '-0.005em',
             }}>{item}</span>
@@ -1827,7 +1827,7 @@ const BrandIdentityBoard = () => (
           <div style={{ fontSize: 36, fontWeight: 400, lineHeight: 1, letterSpacing: '-0.02em', color: '#ffffff' }}>Built for contractors.</div>
         </div>
         <div>
-          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 4 }}>Stat · 500 · 140px</div>
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 4 }}>Stat · 500 · 180px</div>
           <div style={{ fontSize: 52, fontWeight: 500, lineHeight: 0.9, letterSpacing: '-0.04em', color: '#aa2d00' }}>8×</div>
         </div>
         <div>
@@ -1846,7 +1846,7 @@ const BrandIdentityBoard = () => (
       <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: T.muted, marginBottom: 16 }}>Layout Rules</div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
         <div style={{ background: '#fff', border: '1px solid #e0e2e6', borderRadius: 10, padding: '16px 18px', fontSize: 13, lineHeight: 1.6, color: T.body }}>
-          <strong style={{ color: T.ink }}>Post padding</strong><br />64px sides · 56px top/bottom
+          <strong style={{ color: T.ink }}>Post padding</strong><br />180px sides · 56px top/bottom
         </div>
         <div style={{ background: '#fff', border: '1px solid #e0e2e6', borderRadius: 10, padding: '16px 18px', fontSize: 13, lineHeight: 1.6, color: T.body }}>
           <strong style={{ color: T.ink }}>3 templates</strong><br />bold · stat · list<br />One idea per post

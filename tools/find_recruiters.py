@@ -70,6 +70,11 @@ APOLLO_ORG_KEYWORDS = [
     "growth marketing recruiting",
     "ecommerce marketing staffing",
     "digital advertising recruitment",
+    "paid media recruiter",
+    "social media marketing staffing",
+    "SEM PPC recruiting agency",
+    "martech talent recruiting",
+    "demand generation recruiter",
 ]
 
 # Known boutique firms to always include (domain → name)
@@ -86,6 +91,26 @@ KNOWN_FIRMS = [
     {"name": "Antenna", "website": "https://www.antennagroup.com"},
     {"name": "Daggerfinn", "website": "https://www.daggerfinn.com"},
     {"name": "Specialist Staffing Group", "website": "https://www.ssg-global.com"},
+    {"name": "Brafton", "website": "https://www.brafton.com"},
+    {"name": "Hirewell", "website": "https://hirewell.com"},
+    {"name": "Talentful", "website": "https://www.talentful.com"},
+    {"name": "Celarity", "website": "https://www.celarity.com"},
+    {"name": "The Talent Labs", "website": "https://thetalentlabs.com"},
+    {"name": "SociallyHired", "website": "https://www.sociallyhired.com"},
+    {"name": "Marketing Talent", "website": "https://www.marketingtalent.com"},
+    {"name": "Paladin", "website": "https://www.paladinstaff.com"},
+    {"name": "The Creative Group Canada", "website": "https://www.roberthalf.com/ca/en/tcg"},
+    {"name": "Vivo Team", "website": "https://vivoteam.com"},
+    {"name": "Holloway Schulz & Partners", "website": "https://hollowayschulz.com"},
+    {"name": "JRoss Recruiters", "website": "https://www.jrossrecruiters.com"},
+    {"name": "Procom", "website": "https://www.procom.ca"},
+    {"name": "Summit Search Group", "website": "https://summitsearchgroup.com"},
+    {"name": "Recruitment Partners", "website": "https://recruitmentpartners.ca"},
+    {"name": "Futurestep", "website": "https://www.futurestep.com"},
+    {"name": "Beacon Hill Staffing", "website": "https://www.beaconhillstaffing.com"},
+    {"name": "Marketstar", "website": "https://www.marketstar.com"},
+    {"name": "Peak Sales Recruiting", "website": "https://www.peaksalesrecruiting.com"},
+    {"name": "GrowthAssistant", "website": "https://growthassistant.com"},
 ]
 
 # Title preference order — pick the best match per firm

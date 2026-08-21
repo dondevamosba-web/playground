@@ -57,6 +57,7 @@ HTML = """<!DOCTYPE html>
     .btn-registro    { background: #C8DDE2; color: #1A3A42; }
     .btn-relato      { background: #C8D9C4; color: #1A3A2A; }
     .btn-pensamiento { background: #DDD5F0; color: #2A1A42; }
+    .btn-catastrofe  { background: #F0DDD5; color: #421A1A; }
     .btn-primary  { background: #4A7C87; color: #fff; text-align: center; margin-top: auto; padding: 16px; border-radius: 12px; }
     .btn-back     { background: none; border: none; color: #6B7280; cursor: pointer; font-size: 0.9rem; padding: 0; margin-bottom: 24px; width: auto; display: inline-block; }
 
@@ -155,6 +156,11 @@ HTML = """<!DOCTYPE html>
       <span class="btn-emoji">🌀</span>
       <span class="btn-label">Pensamiento automático</span>
       <span class="btn-desc">Cuando aparece un pensamiento negativo</span>
+    </button>
+    <button class="btn btn-catastrofe" onclick="show('catastrofe')">
+      <span class="btn-emoji">🔥</span>
+      <span class="btn-label">Catastrofización</span>
+      <span class="btn-desc">Cuando el peor escenario se siente seguro</span>
     </button>
   </div>
 </div>
@@ -412,6 +418,97 @@ HTML = """<!DOCTYPE html>
   </div>
 </div>
 
+<!-- CATASTROFIZACIÓN -->
+<div id="catastrofe" class="screen">
+  <button class="btn-back" onclick="show('home')">← Volver</button>
+  <div class="progress-bar"><div class="progress-fill" id="cat-progress" style="width:16%"></div></div>
+
+  <!-- Step 1 -->
+  <div class="step active" id="cat-step-1">
+    <label>Paso 1 de 6</label>
+    <p class="question">¿Qué pasó exactamente?</p>
+    <p class="hint">El hecho concreto, sin interpretación</p>
+    <textarea id="c-hecho" placeholder="Ej: Me retaron en el trabajo. Me dolió la rodilla corriendo. Tuvimos una pelea fuerte." rows="4"></textarea>
+    <div class="spacer"></div>
+    <div class="nav-row">
+      <button class="btn-primary" onclick="catNext(1)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step" id="cat-step-2">
+    <label>Paso 2 de 6</label>
+    <p class="question">¿Cuál fue lo peor que te imaginaste que podía pasar?</p>
+    <p class="hint">El escenario catastrófico tal como lo pensaste</p>
+    <textarea id="c-catastrofe" placeholder="Ej: Me van a echar. Me quebré y nunca más voy a poder hacer deporte. Vamos a cortar." rows="4"></textarea>
+    <div class="spacer"></div>
+    <div class="nav-row">
+      <button class="btn-skip" onclick="catPrev(2)">←</button>
+      <button class="btn-primary" onclick="catNext(2)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step" id="cat-step-3">
+    <label>Paso 3 de 6</label>
+    <p class="question">¿Qué tan probable es realmente que pase ese peor escenario?</p>
+    <p class="hint">Del 0 al 10, siendo 10 "seguro que pasa"</p>
+    <input type="text" id="c-probabilidad" placeholder="Ej: 3/10 — es poco probable si lo pienso bien" />
+    <div class="chips">
+      <span class="chip" onclick="chipSelect(this, 'c-probabilidad')">1 — casi imposible</span>
+      <span class="chip" onclick="chipSelect(this, 'c-probabilidad')">3 — poco probable</span>
+      <span class="chip" onclick="chipSelect(this, 'c-probabilidad')">5 — puede pasar</span>
+      <span class="chip" onclick="chipSelect(this, 'c-probabilidad')">7 — bastante posible</span>
+      <span class="chip" onclick="chipSelect(this, 'c-probabilidad')">9 — muy probable</span>
+    </div>
+    <div class="spacer"></div>
+    <div class="nav-row">
+      <button class="btn-skip" onclick="catPrev(3)">←</button>
+      <button class="btn-primary" onclick="catNext(3)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step" id="cat-step-4">
+    <label>Paso 4 de 6</label>
+    <p class="question">Si pasara lo peor, ¿lo podrías manejar?</p>
+    <p class="hint">¿Qué harías? ¿Tenés recursos, personas, opciones?</p>
+    <textarea id="c-manejo" placeholder="Ej: Buscaría otro trabajo. Me haría atender y vería qué tan grave es. Hablaría con ella con calma." rows="4"></textarea>
+    <div class="spacer"></div>
+    <div class="nav-row">
+      <button class="btn-skip" onclick="catPrev(4)">←</button>
+      <button class="btn-primary" onclick="catNext(4)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="step" id="cat-step-5">
+    <label>Paso 5 de 6</label>
+    <p class="question">¿Cuál es el escenario más realista?</p>
+    <p class="hint">No el mejor ni el peor, el más probable</p>
+    <textarea id="c-realista" placeholder="Ej: Me van a llamar la atención pero no me van a echar. Probablemente sea una contractura. Peleamos, pero lo vamos a hablar." rows="4"></textarea>
+    <div class="spacer"></div>
+    <div class="nav-row">
+      <button class="btn-skip" onclick="catPrev(5)">←</button>
+      <button class="btn-primary" onclick="catNext(5)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- Step 6 -->
+  <div class="step" id="cat-step-6">
+    <label>Paso 6 de 6</label>
+    <p class="question">¿Qué podés hacer ahora con lo que realmente pasó?</p>
+    <p class="hint">Una acción concreta, aunque sea pequeña</p>
+    <textarea id="c-accion" placeholder="Ej: Mandarle un mail aclaratorio. Sacar turno con el médico. Proponerle hablar esta noche." rows="4"></textarea>
+    <p id="cat-error" class="error-msg">Hubo un error al guardar. Intentá de nuevo.</p>
+    <div class="spacer"></div>
+    <div class="nav-row">
+      <button class="btn-skip" onclick="catPrev(6)">←</button>
+      <button class="btn-primary" id="cat-submit-btn" onclick="submitCatastrofe()">Guardar ✓</button>
+    </div>
+  </div>
+</div>
+
 <!-- SUCCESS -->
 <div id="success" class="screen">
   <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
@@ -431,6 +528,7 @@ HTML = """<!DOCTYPE html>
     document.getElementById(screen).classList.add('active');
     if (screen === 'registro') resetRegistro();
     if (screen === 'pensamiento') resetPensamiento();
+    if (screen === 'catastrofe') resetCatastrofe();
   }
 
   function resetRegistro() {
@@ -564,6 +662,55 @@ HTML = """<!DOCTYPE html>
     }
   }
 
+  function resetCatastrofe() {
+    document.querySelectorAll('#catastrofe .step').forEach(s => s.classList.remove('active'));
+    document.getElementById('cat-step-1').classList.add('active');
+    document.getElementById('cat-progress').style.width = '16%';
+    document.querySelectorAll('#catastrofe .chip').forEach(c => c.classList.remove('selected'));
+    ['c-hecho','c-catastrofe','c-probabilidad','c-manejo','c-realista','c-accion'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+  }
+
+  function catNext(step) {
+    document.getElementById('cat-step-' + step).classList.remove('active');
+    const next = step + 1;
+    document.getElementById('cat-step-' + next).classList.add('active');
+    document.getElementById('cat-progress').style.width = (next / 6 * 100) + '%';
+  }
+
+  function catPrev(step) {
+    document.getElementById('cat-step-' + step).classList.remove('active');
+    const prev = step - 1;
+    document.getElementById('cat-step-' + prev).classList.add('active');
+    document.getElementById('cat-progress').style.width = (prev / 6 * 100) + '%';
+  }
+
+  async function submitCatastrofe() {
+    const btn = document.getElementById('cat-submit-btn');
+    btn.textContent = 'Guardando...';
+    btn.disabled = true;
+    const payload = {
+      hecho:        document.getElementById('c-hecho').value,
+      catastrofe:   document.getElementById('c-catastrofe').value,
+      probabilidad: document.getElementById('c-probabilidad').value,
+      manejo:       document.getElementById('c-manejo').value,
+      realista:     document.getElementById('c-realista').value,
+      accion:       document.getElementById('c-accion').value,
+    };
+    try {
+      const res = await fetch('/api/catastrofe', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+      if (!res.ok) throw new Error();
+      showQuote(); show('success');
+    } catch {
+      document.getElementById('cat-error').style.display = 'block';
+    } finally {
+      btn.textContent = 'Guardar ✓';
+      btn.disabled = false;
+    }
+  }
+
   document.addEventListener('keydown', function(e) {
     if (e.key !== 'Enter' || e.shiftKey) return;
     const activeScreen = document.querySelector('.screen.active');
@@ -581,6 +728,12 @@ HTML = """<!DOCTYPE html>
       const stepNum = parseInt(activeStep.id.replace('pen-step-', ''));
       e.preventDefault();
       if (stepNum < 7) penNext(stepNum); else submitPensamiento();
+    } else if (screenId === 'catastrofe') {
+      const activeStep = activeScreen.querySelector('.step.active');
+      if (!activeStep) return;
+      const stepNum = parseInt(activeStep.id.replace('cat-step-', ''));
+      e.preventDefault();
+      if (stepNum < 6) catNext(stepNum); else submitCatastrofe();
     }
   });
 
@@ -643,6 +796,10 @@ def get_or_create_spreadsheet():
         pen = ss.add_worksheet('Pensamientos', rows=1000, cols=10)
         pen.append_row(['Timestamp', 'Situación', 'Pensamiento automático', 'Emoción', 'Intensidad', 'Pruebas a favor', 'Pruebas en contra', 'Distorsión', 'Pensamiento alternativo'])
 
+    if 'Catastrofización' not in existing_titles:
+        cat = ss.add_worksheet('Catastrofización', rows=1000, cols=8)
+        cat.append_row(['Timestamp', 'Hecho concreto', 'Escenario catastrófico', 'Probabilidad real', 'Cómo lo manejaría', 'Escenario realista', 'Acción concreta'])
+
     return ss
 
 
@@ -683,6 +840,22 @@ def save_pensamiento():
         data.get('en_contra', ''),
         data.get('distorsion', ''),
         data.get('alternativo', ''),
+    ])
+    return jsonify({'ok': True})
+
+
+@app.route('/api/catastrofe', methods=['POST'])
+def save_catastrofe():
+    data = request.json
+    ws = get_or_create_spreadsheet().worksheet('Catastrofización')
+    ws.append_row([
+        datetime.now().strftime('%Y-%m-%d %H:%M'),
+        data.get('hecho', ''),
+        data.get('catastrofe', ''),
+        data.get('probabilidad', ''),
+        data.get('manejo', ''),
+        data.get('realista', ''),
+        data.get('accion', ''),
     ])
     return jsonify({'ok': True})
 

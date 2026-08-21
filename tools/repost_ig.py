@@ -65,6 +65,26 @@ Para el story caption: 1–2 líneas muy cortas. Sin hashtags.
 Respondé SOLO con JSON válido:
 {{"feed_caption": "...", "story_caption": "..."}}"""
 
+VIRAL_SYSTEM_PROMPT = """Sos un copywriter para una cuenta de Instagram de fiestas electrónicas en Buenos Aires.
+Tu voz es underground, irónica, directa. Escribís en español rioplatense.
+
+Te pasan un reel viral de la escena electrónica / techno / dance. Tu trabajo es escribir un caption propio
+que conecte con la comunidad de Buenos Aires. Puede ser un comentario sobre lo que se ve, una reflexión
+sobre la cultura de las fiestas, o algo que genere identificación. No describas literalmente el video.
+
+Reglas:
+- Nunca empieces con ¿
+- Sin emojis al principio
+- Tono: con onda, auténtico, brevemente gracioso o evocador según el contenido
+- Si el caption original está en inglés, escribí en español rioplatense
+- Terminá con "Vía @{source_account}" y hashtags relevantes en línea aparte
+
+Para el feed caption: 1–3 oraciones + atribución + hashtags.
+Para el story caption: 1 línea muy corta. Sin hashtags.
+
+Respondé SOLO con JSON válido:
+{{"feed_caption": "...", "story_caption": "..."}}"""
+
 
 def looks_like_event(caption: str) -> bool:
     if not caption:
@@ -114,11 +134,11 @@ def download_media(url: str, dest: Path) -> Path:
 
 
 def process_post(post: instaloader.Post, L: instaloader.Instaloader,
-                 drive, folder_id: str, source_account: str) -> dict | None:
+                 drive, folder_id: str, source_account: str, viral: bool = False) -> dict | None:
     sc = post.shortcode
     caption_text = post.caption or ""
 
-    if not looks_like_event(caption_text):
+    if not viral and not looks_like_event(caption_text):
         return None
 
     MEDIA_TMP.mkdir(parents=True, exist_ok=True)
@@ -164,12 +184,15 @@ def process_post(post: instaloader.Post, L: instaloader.Instaloader,
         return None
 
     # Generate repost caption
-    system = REPOST_SYSTEM_PROMPT.replace("{source_account}", source_account)
+    is_viral = not looks_like_event(caption_text)
+    base_prompt = VIRAL_SYSTEM_PROMPT if is_viral else REPOST_SYSTEM_PROMPT
+    system = base_prompt.replace("{source_account}", source_account)
     from tools.claude_call import call_claude
     import re
     event_name = caption_text[:60].split("\n")[0].strip()
     prompt = f"""Repost de @{source_account}. Caption original:\n\n{caption_text[:800]}"""
-    raw = call_claude(prompt, system_prompt=system)
+    # sonnet: creative caption with brand voice system prompt, not mechanical
+    raw = call_claude(prompt, system_prompt=system, model="sonnet")
     try:
         captions = json.loads(raw)
     except Exception:
@@ -215,6 +238,7 @@ def main():
     parser.add_argument("--accounts", nargs="+", help="IG handles to scrape")
     parser.add_argument("--from-json", help="Read shortcodes from .tmp/ig_posts.json")
     parser.add_argument("--limit", type=int, default=9, help="Posts per account to check")
+    parser.add_argument("--viral", action="store_true", help="Skip event filter — for viral/meme reels")
     parser.add_argument("--dry-run", action="store_true", help="Download + caption but don't write to sheet")
     args = parser.parse_args()
 
@@ -292,7 +316,7 @@ def main():
             continue
 
         print(f"  Processing {sc} from @{source} ({post.typename})...")
-        result = process_post(post, L, drive_svc, folder_id, source)
+        result = process_post(post, L, drive_svc, folder_id, source, viral=args.viral)
         if result:
             rows.append(build_sheet_row(result))
             print(f"    OK — {result['post_type']} queued")

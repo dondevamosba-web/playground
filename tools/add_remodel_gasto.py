@@ -53,17 +53,17 @@ def main():
     sheets, _ = get_services()
 
     if args.quote:
-        tab = "Presupuestos"
+        tab = "🏠 Remodel Presupuestos"
         row = [args.date, args.vendor, args.room, args.item,
                args.usd or "", args.ars or "", args.status, args.notes]
     else:
-        tab = "Gastos"
+        tab = "🏠 Remodel Gastos"
         row = [args.date, args.room, args.item, args.vendor,
                args.budgeted_usd or "", args.usd or "", args.ars or "",
                args.pay, args.notes]
 
     sheets.spreadsheets().values().append(
-        spreadsheetId=sid, range=f"{tab}!A1",
+        spreadsheetId=sid, range=f"'{tab}'!A1",
         valueInputOption="USER_ENTERED", insertDataOption="INSERT_ROWS",
         body={"values": [row]},
     ).execute()

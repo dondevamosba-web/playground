@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Fiestas B — chip esquina</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#0A0A0A}
+  .poster{position:absolute;top:0;left:0;width:1080px;height:1350px;overflow:hidden;background:#0A0A0A}
+  .poster img{width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block}
+  /* velo corto solo detrás del chip, para que se lea sobre cualquier flyer */
+  .veil{position:absolute;left:0;right:0;bottom:0;height:190px;
+    background:linear-gradient(180deg,rgba(10,10,10,0) 0%,rgba(10,10,10,.72) 100%)}
+  .chip{position:absolute;left:38px;bottom:38px;background:#A96FE8;color:#0A0A0A;
+    font-family:Consolas,monospace;font-size:23px;letter-spacing:.08em;
+    padding:12px 20px;font-weight:700}
+</style></head><body>
+<div class="poster">
+  <img src="flyer-real.jpg" alt="">
+  <div class="veil"></div>
+  <div class="chip">@fiestaselectronicasbuenosaires</div>
+</div>
+</body></html>

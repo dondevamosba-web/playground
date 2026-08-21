@@ -191,7 +191,8 @@ def build_summary(flags: list, yesterday: str) -> str:
         "Write a concise 3-bullet executive summary for the account manager. Each bullet covers one key issue, "
         "the metric, and a one-line recommended action. Be direct — no fluff, no intro sentence."
     )
-    return call_claude(prompt, model="haiku")
+    # sonnet: interpreting anomalies + recommending actions requires judgment, not just formatting
+    return call_claude(prompt, model="sonnet")
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────

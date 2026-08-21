@@ -20,6 +20,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 from datetime import date
 from pathlib import Path
@@ -41,6 +42,13 @@ VENUE_SOURCES = [
     "crobarclub",
     "clubthebowba",
     "pmopenair",
+    "rioelectronicmusic",
+    "creamfieldsargentina",
+    "brigadocrew",
+    "elementsba",
+    "mushroom_arg",
+    "desertinme",
+    "estamosfelices",
 ]
 
 FIELDS = ("business_discovery.username({h})"
@@ -170,6 +178,39 @@ def scan(handle: str, limit: int, token: str, ig_id: str) -> tuple[list[dict], i
     return out, len(media)
 
 
+def load_trending_artists():
+    """Load trending artist scores from prediction_trending.json."""
+    pred_file = ROOT / ".tmp" / "prediction_trending.json"
+    if not pred_file.exists():
+        # Try to generate it
+        try:
+            subprocess.run([sys.executable, "tools/predict_trending.py"],
+                          capture_output=True, timeout=120, cwd=ROOT)
+        except Exception:
+            pass
+
+    if pred_file.exists():
+        try:
+            data = json.loads(pred_file.read_text(encoding="utf-8"))
+            # Return list of top artists for quick lookup
+            return [a[0] for a in data.get("top_artists", [])][:20]
+        except Exception:
+            pass
+    return []
+
+
+def score_candidate(candidate, trending_artists):
+    """Score a candidate by how trending the artist is."""
+    name = candidate["caption"].split("\n")[0].lower()
+
+    # If artist is in top trending, boost score
+    for i, artist in enumerate(trending_artists):
+        if artist.lower() in name:
+            return 1000 - i  # Higher score for top artistas
+
+    return 0  # No trend score
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--handles", nargs="+", default=VENUE_SOURCES)
@@ -195,7 +236,13 @@ def main():
         candidates += fresh
         print(f"  @{handle}: {len(fresh)} candidatos de {total} posts")
 
-    candidates.sort(key=lambda c: c["event_date"])
+    # Score by trending artists
+    trending = load_trending_artists()
+    for c in candidates:
+        c["trend_score"] = score_candidate(c, trending)
+
+    # Sort by: trending score (DESC) then event date (ASC)
+    candidates.sort(key=lambda c: (-c["trend_score"], c["event_date"]))
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(candidates, ensure_ascii=False, indent=2),
@@ -204,7 +251,8 @@ def main():
     print(f"\n{len(candidates)} candidatos -> {out_path}\n")
     for c in candidates:
         head = c["caption"].split("\n")[0][:70]
-        print(f"[{c['event_date']}] @{c['handle']:22} {head}")
+        trend_emoji = "🔥" if c["trend_score"] > 500 else "📈" if c["trend_score"] > 0 else "  "
+        print(f"{trend_emoji} [{c['event_date']}] @{c['handle']:22} {head}")
         if c["warning"]:
             print(f"             ⚠ {c['warning']}")
 

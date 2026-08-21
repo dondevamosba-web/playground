@@ -129,7 +129,11 @@ def _cli_call(prompt: str, system_prompt: str | None, model: str, as_json: bool,
     if _CLAUDE_BIN is None:
         _CLAUDE_BIN = _find_claude_binary()
 
-    cmd = [_CLAUDE_BIN, "-p", prompt, "--model", model]
+    # --disable-slash-commands: without it, -p runs inside this repo's cwd and
+    # picks up CLAUDE.md + project skills, so the CLI reasons about which skill
+    # to invoke instead of just answering the prompt (seen 2026-07-18: captions
+    # came back as "run /build-my-voice first" instead of actual copy).
+    cmd = [_CLAUDE_BIN, "-p", prompt, "--model", model, "--disable-slash-commands"]
     if system_prompt:
         cmd += ["--system-prompt", system_prompt]
     if schema:

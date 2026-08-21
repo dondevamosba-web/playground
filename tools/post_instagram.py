@@ -28,7 +28,7 @@ load_dotenv()
 ACCESS_TOKEN = os.getenv("INSTAGRAM_ACCESS_TOKEN")
 IG_USER_ID = os.getenv("INSTAGRAM_BUSINESS_ACCOUNT_ID")
 FB_PAGE_ID = os.getenv("FACEBOOK_PAGE_ID")
-BASE_URL = "https://graph.facebook.com/v21.0"
+BASE_URL = "https://graph.facebook.com/v19.0"
 
 ACCOUNT_CONFIG = {
     "ola": {
@@ -46,6 +46,14 @@ ACCOUNT_CONFIG = {
     "techno": {
         "ig_id_key": "TECHNO_INSTAGRAM_BUSINESS_ACCOUNT_ID",
         "fb_page_id_key": "TECHNO_FACEBOOK_PAGE_ID",
+    },
+    "empleo": {
+        "ig_id_key": "OLA_EMPLEO_INSTAGRAM_BUSINESS_ACCOUNT_ID",
+        "fb_page_id_key": "OLA_EMPLEO_FACEBOOK_PAGE_ID",
+    },
+    "talento": {
+        "ig_id_key": "TALENTO_USA_INSTAGRAM_BUSINESS_ACCOUNT_ID",
+        "fb_page_id_key": "TALENTO_USA_PAGE_ID",
     },
 }
 
@@ -223,6 +231,7 @@ def get_media_permalink(media_id: str) -> str:
 
 def post_single(image_url: str, caption: str, schedule_time: str = None, dry_run: bool = False, skip_facebook: bool = False):
     print(f"Creating single image post...")
+    print(f"image_url={image_url}")
     if dry_run:
         print(f"[DRY RUN] Would create container: image_url={image_url}, caption={caption[:80]}...")
         return
@@ -349,7 +358,7 @@ def main():
     parser.add_argument("--schedule", dest="schedule_time", help="ISO 8601 datetime e.g. 2026-05-21T15:00:00+00:00")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--skip-facebook", action="store_true", help="Skip cross-posting to Facebook Page")
-    parser.add_argument("--account", default="ola", choices=["ola", "storm", "fiestas", "techno"], help="Select the Instagram/Facebook account to post to")
+    parser.add_argument("--account", default="ola", choices=["ola", "storm", "fiestas", "techno", "empleo", "talento"], help="Select the Instagram/Facebook account to post to")
     args = parser.parse_args()
 
     select_account(args.account)

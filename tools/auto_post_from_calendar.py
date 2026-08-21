@@ -59,8 +59,37 @@ def publish(row: list, dry_run: bool):
         print("    SKIP — no Media URL set in sheet")
         return None
 
+    if not media_url.startswith(("http://", "https://")):
+        local_path = ROOT / media_url.strip()
+        if local_path.exists():
+            print(f"    Local file detected: {media_url}")
+            from googleapiclient.http import MediaFileUpload
+            from tools.sheets_client import get_services as _gs
+            _, drive = _gs()
+            file_metadata = {'name': local_path.name, 'mimeType': 'image/png' if local_path.suffix.lower() == '.png' else 'video/mp4'}
+            media_obj = MediaFileUpload(str(local_path), mimetype=file_metadata['mimeType'])
+            file = drive.files().create(body=file_metadata, media_body=media_obj, fields='id').execute()
+            file_id = file.get('id')
+            drive.permissions().create(fileId=file_id, body={'kind': 'drive#permission', 'role': 'reader', 'type': 'anyone'}, fields='id').execute()
+            media_url = f"https://drive.google.com/uc?export=download&id={file_id}"
+            print(f"    Uploaded to Drive: {file_id}")
+
+            # Upload story version if it exists
+            story_path = local_path.parent / (local_path.stem + "_story" + local_path.suffix)
+            if story_path.exists():
+                from googleapiclient.http import MediaFileUpload as _MFU
+                s_obj = _MFU(str(story_path), mimetype='image/png')
+                s_file = drive.files().create(body={'name': story_path.name, 'mimeType': 'image/png'}, media_body=s_obj, fields='id').execute()
+                s_id = s_file.get('id')
+                drive.permissions().create(fileId=s_id, body={'kind': 'drive#permission', 'role': 'reader', 'type': 'anyone'}, fields='id').execute()
+                story_url = f"https://drive.google.com/uc?export=download&id={s_id}"
+                print(f"story_url={story_url}")
+        else:
+            print(f"    ERROR: Local file not found: {local_path}")
+            return None
+
     cmd = [
-        "python3", str(ROOT / "tools" / "post_instagram.py"),
+        sys.executable, str(ROOT / "tools" / "post_instagram.py"),
         "--account", "ola",
         "--type", post_type,
         "--caption", caption,
@@ -75,18 +104,19 @@ def publish(row: list, dry_run: bool):
         cmd += ["--dry-run"]
 
     result = subprocess.run(cmd, capture_output=True, text=True)
+    output = result.stdout.strip()
+    if output:
+        print(f"    {output[:200]}")
     if result.returncode != 0:
         print(f"    ERROR: {result.stderr.strip()}")
-        return None
 
-    output = result.stdout.strip()
-    print(f"    {output[:200]}")
-
+    # Even on a non-zero exit (e.g. FB cross-post failed after IG succeeded),
+    # an ID in stdout means the post IS live — never re-post it.
     for line in output.splitlines():
         for keyword in ("Media ID:", "reel ID:", "carousel ID:", "post ID:"):
             if keyword in line:
                 return line.split(":")[-1].strip().split()[0]
-    return "posted"
+    return None if result.returncode != 0 else "posted"
 
 
 def update_status(sheets, sheet_id: str, row_idx: int, status: str, post_id: str):
@@ -119,36 +149,62 @@ def main():
     now = datetime.now(tz=AR_TZ)
     print(f"Checking calendar — {now.strftime('%Y-%m-%d %H:%M')} AR time")
 
+    # never repeat: skip any caption already posted on this account
+    # (Guido 2026-07-10: "para ninguna repitas nunca")
+    posted_captions = {
+        col(row, COL_CAPTION).strip()[:60].lower()
+        for row in rows
+        if col(row, COL_POST_ID).strip() or col(row, COL_STATUS) == "posted"
+    }
+
     due = [
         (i, row, parse_dt(col(row, COL_DATE), col(row, COL_TIME)))
         for i, row in enumerate(rows)
         if col(row, COL_STATUS) == "approved"
+        and col(row, COL_CAPTION).strip()[:60].lower() not in posted_captions
         and col(row, COL_DATE)
         and col(row, COL_TIME)
+        and col(row, COL_POST_TYPE).lower() != "reel"
         and (args.force or parse_dt(col(row, COL_DATE), col(row, COL_TIME)) <= now)
     ]
+
+    # oldest first: with --force the whole calendar counts as due, and sheet
+    # order let future posts jump the queue while overdue ones sat unposted
+    due.sort(key=lambda t: t[2])
 
     if not due:
         print("Nothing due right now.")
         return
 
-    print(f"{len(due)} post(s) to publish:\n")
+    batch = due[:1]
+    if len(due) > 1:
+        print(f"{len(due)} due — publishing 1 (rate limit), rest deferred to next run\n")
+    else:
+        print(f"{len(due)} post(s) to publish:\n")
+
     posted = 0
-    for i, row, post_dt in due:
+    for i, row, post_dt in batch:
         content = col(row, COL_CONTENT)
         media   = col(row, COL_MEDIA_URL)
         print(f"  [{post_dt.strftime('%Y-%m-%d %H:%M')}] {content}")
         print(f"  Media: {media[:60] or '(none)'}")
 
+        if not args.dry_run:
+            update_status(sheets, sheet_id, i, "posting", "")
+
         post_id = publish(row, args.dry_run)
 
-        if not args.dry_run and post_id:
-            update_status(sheets, sheet_id, i, "posted", post_id)
-            print(f"    Sheet updated → posted (ID: {post_id})")
-            posted += 1
+        if not args.dry_run:
+            if post_id:
+                update_status(sheets, sheet_id, i, "posted", post_id)
+                print(f"    Sheet updated → posted (ID: {post_id})")
+                posted += 1
+            else:
+                update_status(sheets, sheet_id, i, "error", "")
+                print("    Sheet updated → error (won't auto-retry; fix and set back to pending)")
         print()
 
-    print(f"Done. {posted}/{len(due)} published.")
+    print(f"Done. {posted}/{len(batch)} published.")
 
 
 if __name__ == "__main__":
