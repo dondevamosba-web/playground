@@ -49,6 +49,82 @@ MEDIA_TMP = ROOT / ".tmp" / "auto_fiestas_media"
 BRAND_FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 BRAND_TAG = "@fiestas.electronicas"  # bottom-corner watermark; adjust to the real handle
 
+# --- IG scrape ramp-up ------------------------------------------------------
+# Instagram blocks scraping from datacenter IPs. Rather than guess a safe
+# per-account post limit, start at 1 and add 1 more each calendar day; freeze
+# the limit the moment Instagram signals a block instead of pushing further.
+RAMP_STATE_FILE = ROOT / ".tmp" / "fiestas_ig_ramp_state.json"
+RAMP_START = 1
+RAMP_STEP = 1
+RAMP_MAX = 10
+
+BLOCK_EXCEPTIONS = (
+    instaloader.exceptions.TooManyRequestsException,
+    instaloader.exceptions.LoginRequiredException,
+    instaloader.exceptions.ConnectionException,
+)
+
+
+class InstagramBlockedError(Exception):
+    def __init__(self, handle: str, reason: str):
+        self.handle = handle
+        self.reason = reason
+        super().__init__(f"@{handle}: {reason}")
+
+
+def is_blocking_error(e: Exception) -> bool:
+    if isinstance(e, BLOCK_EXCEPTIONS):
+        return True
+    msg = str(e).lower()
+    return any(kw in msg for kw in ("429", "checkpoint", "rate limit", "please wait", "login required", "log in"))
+
+
+def load_ramp_state() -> dict:
+    if RAMP_STATE_FILE.exists():
+        try:
+            return json.loads(RAMP_STATE_FILE.read_text())
+        except Exception:
+            pass
+    return {"date": None, "limit": RAMP_START, "flagged": False, "flagged_at": None, "flagged_reason": None}
+
+
+def save_ramp_state(state: dict):
+    RAMP_STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    RAMP_STATE_FILE.write_text(json.dumps(state, indent=2))
+
+
+def get_daily_limit() -> int:
+    """Today's per-account post limit: ramps up by RAMP_STEP/day, frozen after the first block."""
+    state = load_ramp_state()
+    today = now_ar()[:10]
+
+    if state["flagged"]:
+        print(f"IG ramp: frozen at limit={state['limit']} since first block on "
+              f"{state['flagged_at']} (@{state.get('flagged_handle', '?')}: {state['flagged_reason']}). "
+              f"Reset .tmp/fiestas_ig_ramp_state.json to resume ramping.")
+        return state["limit"]
+
+    if state["date"] != today:
+        if state["date"] is not None:
+            state["limit"] = min(state["limit"] + RAMP_STEP, RAMP_MAX)
+        state["date"] = today
+        save_ramp_state(state)
+
+    print(f"IG ramp: day's per-account limit = {state['limit']} (not yet flagged)")
+    return state["limit"]
+
+
+def record_flag(handle: str, reason: str):
+    state = load_ramp_state()
+    if not state["flagged"]:
+        state["flagged"] = True
+        state["flagged_at"] = now_ar()
+        state["flagged_handle"] = handle
+        state["flagged_reason"] = reason
+        save_ramp_state(state)
+    print(f"\n*** FIRST FLAG HIT: @{handle} — {reason} ***")
+    print(f"*** Ramp frozen at limit={state['limit']}. Stopping IG scraping for this run. ***")
+
 DEFAULT_EVENT_ACCOUNTS = [
     "electronicmusictickets", "infoticketsarg", "baires.electronica",
     "technobuenosaires", "wearebombo", "ems_arg", "moonparkoficial", "nisfernandez",
@@ -161,6 +237,8 @@ def queue_ig_account(L, drive_svc, folder_id, handle, limit, is_event_account, k
     try:
         profile = instaloader.Profile.from_username(L.context, handle)
     except Exception as e:
+        if is_blocking_error(e):
+            raise InstagramBlockedError(handle, str(e)[:200]) from e
         print(f"    FAIL @{handle}: {e}")
         return rows
 
@@ -189,6 +267,8 @@ def queue_ig_account(L, drive_svc, folder_id, handle, limit, is_event_account, k
                 local = brand_image(local)
             image_url = upload_to_drive(drive_svc, local, folder_id)
         except Exception as e:
+            if is_blocking_error(e):
+                raise InstagramBlockedError(handle, str(e)[:200]) from e
             print(f"    WARN media failed for {sc}: {e}")
             time.sleep(1)
             continue
@@ -226,7 +306,8 @@ def main():
     parser = argparse.ArgumentParser(description="Auto-queue + auto-approve Fiestas posts (RA + IG reposts)")
     parser.add_argument("--skip-ra", action="store_true")
     parser.add_argument("--skip-ig", action="store_true")
-    parser.add_argument("--limit", type=int, default=3, help="Posts checked per IG account")
+    parser.add_argument("--limit", type=int, default=None,
+                         help="Posts checked per IG account (default: ramps up 1/day, see get_daily_limit)")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
@@ -243,6 +324,7 @@ def main():
     if not args.skip_ig:
         event_accounts = [a.strip() for a in os.getenv("FIESTAS_REPOST_ACCOUNTS", "").split(",") if a.strip()] or DEFAULT_EVENT_ACCOUNTS
         viral_accounts = [a.strip() for a in os.getenv("FIESTAS_VIRAL_ACCOUNTS", "").split(",") if a.strip()] or DEFAULT_VIRAL_ACCOUNTS
+        limit = args.limit if args.limit is not None else get_daily_limit()
 
         L = instaloader.Instaloader(
             quiet=True, download_pictures=False, download_videos=False,
@@ -250,11 +332,15 @@ def main():
         )
         folder_id = get_or_create_drive_folder(drive_svc, DRIVE_FOLDER)
 
-        print(f"\nScraping {len(event_accounts)} event accounts + {len(viral_accounts)} viral accounts...")
-        for handle in event_accounts:
-            all_rows += queue_ig_account(L, drive_svc, folder_id, handle, args.limit, True, known)
-        for handle in viral_accounts:
-            all_rows += queue_ig_account(L, drive_svc, folder_id, handle, args.limit, False, known)
+        print(f"\nScraping {len(event_accounts)} event accounts + {len(viral_accounts)} viral accounts "
+              f"(limit={limit}/account)...")
+        try:
+            for handle in event_accounts:
+                all_rows += queue_ig_account(L, drive_svc, folder_id, handle, limit, True, known)
+            for handle in viral_accounts:
+                all_rows += queue_ig_account(L, drive_svc, folder_id, handle, limit, False, known)
+        except InstagramBlockedError as e:
+            record_flag(e.handle, e.reason)
 
     if not all_rows:
         print("\nNo new posts to queue.")
