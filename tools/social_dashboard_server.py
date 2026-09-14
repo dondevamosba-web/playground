@@ -181,11 +181,16 @@ def api_improve(account):
     try:
         result = call_claude(prompt, system_prompt=IMPROVE_SYSTEM_PROMPT, model="sonnet",
                               as_json=True, schema=IMPROVE_SCHEMA)
-        import json
-        parsed = json.loads(result) if isinstance(result, str) else result
-        return jsonify(parsed)
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": f"call_claude() falló: {e}"}), 500
+
+    import json
+    try:
+        parsed = json.loads(result) if isinstance(result, str) else result
+    except Exception as e:
+        # Show exactly what came back so a bad response is diagnosable from the UI
+        return jsonify({"error": f"No se pudo interpretar la respuesta: {e}\nRespuesta cruda: {result!r}"}), 500
+    return jsonify(parsed)
 
 
 @app.route("/api/claude-code", methods=["POST"])
