@@ -26,9 +26,13 @@ load_dotenv(ROOT / ".env")
 from tools.sheets_client import get_services
 from tools.publish_approved_events import (
     get_approved_rows, update_row, post_to_instagram, col,
-    COL_EVENT_NAME, COL_EVENT_DATE, COL_SOURCE, COL_FEED_CAPTION,
+    COL_EVENT_NAME, COL_EVENT_DATE, COL_VENUE, COL_SOURCE, COL_FEED_CAPTION,
     COL_STORY_CAPTION, COL_IMAGE_URL, SHEET_ID_ENV,
 )
+from tools.render_cache import filter_valid_events
+from tools.batch_logger import get_logger
+
+log = get_logger("publish_fiestas_next")
 
 AR_TZ = timezone(timedelta(hours=-3))
 
@@ -56,6 +60,19 @@ def pick_next(approved: list[tuple[int, list]]):
     return sorted(approved, key=sort_key)[0] if approved else None
 
 
+def strip_corrupted_rows(approved: list[tuple[int, list]]) -> list[tuple[int, list]]:
+    """Drop rows whose Event Name is actually a timestamp (shifted-row bug upstream)."""
+    as_dicts = [
+        {"name": col(row, COL_EVENT_NAME), "date": col(row, COL_EVENT_DATE), "venue": col(row, COL_VENUE), "_pos": i}
+        for i, (_, row) in enumerate(approved)
+    ]
+    valid_positions = {d["_pos"] for d in filter_valid_events(as_dicts)}
+    dropped = len(approved) - len(valid_positions)
+    if dropped:
+        log.warning(f"Dropped {dropped} corrupted row(s) — Event Name looked like a timestamp, not an event.")
+    return [approved[i] for i in sorted(valid_positions)]
+
+
 def main():
     parser = argparse.ArgumentParser(description="Publish the next most urgent approved Fiestas post")
     parser.add_argument("--dry-run", action="store_true")
@@ -65,14 +82,14 @@ def main():
 
     sheet_id = os.getenv(SHEET_ID_ENV, "").strip()
     if not sheet_id:
-        print(f"ERROR: {SHEET_ID_ENV} not set in .env")
+        log.error(f"ERROR: {SHEET_ID_ENV} not set in .env")
         sys.exit(1)
 
     sheets_svc, _ = get_services()
-    approved = get_approved_rows(sheets_svc, sheet_id)
+    approved = strip_corrupted_rows(get_approved_rows(sheets_svc, sheet_id))
 
     if not approved:
-        print("No approved posts to publish.")
+        log.info("No approved posts to publish.")
         return
 
     row_idx, row = pick_next(approved)
@@ -85,38 +102,38 @@ def main():
     is_reel   = "reel" in source.lower()
     feed_type = "reel" if is_reel else "single"
 
-    print(f"Publishing most urgent approved post ({len(approved)} approved total): {name} — {event_date}")
+    log.info(f"Publishing most urgent approved post ({len(approved)} approved total): {name} — {event_date}")
 
     post_ids = []
 
     if not args.story_only:
         if feed_cap and image_url:
-            print(f"  → Feed post ({feed_type})...")
+            log.info(f"  → Feed post ({feed_type})...")
             pid = post_to_instagram(feed_type, feed_cap, image_url, args.dry_run, is_video=is_reel)
             if pid:
                 post_ids.append(f"feed:{pid}")
         else:
-            print("  SKIP feed — missing caption or image URL")
+            log.info("  SKIP feed — missing caption or image URL")
 
     if not args.feed_only:
         story_text = story_cap or name
         if image_url:
-            print("  → Story...")
+            log.info("  → Story...")
             pid = post_to_instagram("story", story_text, image_url, args.dry_run)
             if pid:
                 post_ids.append(f"story:{pid}")
         else:
-            print("  SKIP story — no image URL")
+            log.info("  SKIP story — no image URL")
 
     if args.dry_run:
-        print("\n[DRY RUN] Sheet not updated.")
+        log.info("\n[DRY RUN] Sheet not updated.")
         return
 
     combined_id = " | ".join(post_ids) if post_ids else "error"
     status = "posted" if post_ids else "error"
     update_row(sheets_svc, sheet_id, row_idx, status, combined_id)
-    print(f"\nSheet updated: {status}")
-    print(f"post_id: {combined_id}")
+    log.info(f"\nSheet updated: {status}")
+    log.info(f"post_id: {combined_id}")
 
 
 if __name__ == "__main__":

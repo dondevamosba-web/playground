@@ -36,7 +36,7 @@ load_dotenv(ROOT / ".env")
 
 from tools.sheets_client import get_services
 from tools.queue_event_posts import (
-    get_or_create_sheet, existing_event_keys, append_rows, now_ar,
+    get_or_create_sheet, existing_event_keys, existing_events_full, append_rows, now_ar,
 )
 from tools.generate_event_caption import generate_caption
 from tools.repost_ig import (
@@ -44,10 +44,27 @@ from tools.repost_ig import (
     download_media, DRIVE_FOLDER,
 )
 from tools.claude_call import call_claude
+from tools.cross_account_dedup import is_duplicate
+from tools.batch_logger import get_logger
+
+log = get_logger("auto_fiestas_queue")
 
 MEDIA_TMP = ROOT / ".tmp" / "auto_fiestas_media"
-BRAND_FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+# Font fallback chain: Linux (this pipeline's usual host) -> Windows -> PIL default.
+BRAND_FONT_CANDIDATES = [
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",  # Linux
+    "C:\\Windows\\Fonts\\arialbd.ttf",                        # Windows (Arial Bold)
+]
 BRAND_TAG = "@fiestas.electronicas"  # bottom-corner watermark; adjust to the real handle
+
+
+def load_font(candidates: list[str], size: int) -> ImageFont.ImageFont:
+    for path in candidates:
+        try:
+            return ImageFont.truetype(path, size)
+        except Exception:
+            continue
+    return ImageFont.load_default()
 
 # --- IG scrape ramp-up ------------------------------------------------------
 # Instagram blocks scraping from datacenter IPs. Rather than guess a safe
@@ -99,9 +116,9 @@ def get_daily_limit() -> int:
     today = now_ar()[:10]
 
     if state["flagged"]:
-        print(f"IG ramp: frozen at limit={state['limit']} since first block on "
-              f"{state['flagged_at']} (@{state.get('flagged_handle', '?')}: {state['flagged_reason']}). "
-              f"Reset .tmp/fiestas_ig_ramp_state.json to resume ramping.")
+        log.info(f"IG ramp: frozen at limit={state['limit']} since first block on "
+                 f"{state['flagged_at']} (@{state.get('flagged_handle', '?')}: {state['flagged_reason']}). "
+                 f"Reset .tmp/fiestas_ig_ramp_state.json to resume ramping.")
         return state["limit"]
 
     if state["date"] != today:
@@ -110,7 +127,7 @@ def get_daily_limit() -> int:
         state["date"] = today
         save_ramp_state(state)
 
-    print(f"IG ramp: day's per-account limit = {state['limit']} (not yet flagged)")
+    log.info(f"IG ramp: day's per-account limit = {state['limit']} (not yet flagged)")
     return state["limit"]
 
 
@@ -122,8 +139,8 @@ def record_flag(handle: str, reason: str):
         state["flagged_handle"] = handle
         state["flagged_reason"] = reason
         save_ramp_state(state)
-    print(f"\n*** FIRST FLAG HIT: @{handle} — {reason} ***")
-    print(f"*** Ramp frozen at limit={state['limit']}. Stopping IG scraping for this run. ***")
+    log.warning(f"\n*** FIRST FLAG HIT: @{handle} — {reason} ***")
+    log.warning(f"*** Ramp frozen at limit={state['limit']}. Stopping IG scraping for this run. ***")
 
 DEFAULT_EVENT_ACCOUNTS = [
     "electronicmusictickets", "infoticketsarg", "baires.electronica",
@@ -167,10 +184,7 @@ def brand_image(local_path: Path) -> Path:
 
     draw = ImageDraw.Draw(img, "RGBA")
     draw.rectangle([(0, 1000), (1080, 1080)], fill=(0, 0, 0, 140))
-    try:
-        font = ImageFont.truetype(BRAND_FONT, 34)
-    except Exception:
-        font = ImageFont.load_default()
+    font = load_font(BRAND_FONT_CANDIDATES, 34)
     draw.text((24, 1020), BRAND_TAG, font=font, fill=(255, 255, 255, 255))
 
     out_path = local_path.with_name(local_path.stem + "_branded.jpg")
@@ -178,8 +192,8 @@ def brand_image(local_path: Path) -> Path:
     return out_path
 
 
-def queue_ra_events(sheets, sheet_id, known, dry_run) -> list[list]:
-    print("\nScraping Resident Advisor Argentina...")
+def queue_ra_events(sheets, sheet_id, known_full, dry_run) -> list[list]:
+    log.info("\nScraping Resident Advisor Argentina...")
     tmp = ROOT / ".tmp" / "auto_fiestas_ra.json"
     tmp.parent.mkdir(parents=True, exist_ok=True)
     import subprocess
@@ -188,35 +202,37 @@ def queue_ra_events(sheets, sheet_id, known, dry_run) -> list[list]:
         cwd=str(ROOT), capture_output=True, text=True,
     )
     if result.returncode != 0:
-        print(f"  WARN scrape_ra_events.py failed: {result.stderr.strip()[:300]}")
+        log.warning(f"  WARN scrape_ra_events.py failed: {result.stderr.strip()[:300]}")
         return []
 
     events = json.loads(tmp.read_text()) if tmp.exists() else []
-    print(f"  {len(events)} RA events scraped")
+    log.info(f"  {len(events)} RA events scraped")
 
     rows = []
     for ev in events:
-        key = (ev.get("name", "").strip(), ev.get("date", "").strip())
-        if not key[0] or key in known:
+        name = ev.get("name", "").strip()
+        date = ev.get("date", "").strip()
+        venue = ev.get("venue", "").strip()
+        if not name or is_duplicate(name, venue, date, known_full):
             continue
         try:
             captioned = generate_caption(ev)
         except Exception as e:
-            print(f"    Caption error for {ev.get('name')}: {e}")
+            log.warning(f"    Caption error for {name}: {e}")
             captioned = ev
 
         image_url = captioned.get("image_url", "")
         if image_url and not dry_run:
             try:
                 MEDIA_TMP.mkdir(parents=True, exist_ok=True)
-                local = MEDIA_TMP / f"ra_{abs(hash(key))}.jpg"
+                local = MEDIA_TMP / f"ra_{abs(hash((name, date)))}.jpg"
                 download_media(image_url, local)
                 branded = brand_image(local)
                 _, drive_svc = get_services()
                 folder_id = get_or_create_drive_folder(drive_svc, DRIVE_FOLDER)
                 image_url = upload_to_drive(drive_svc, branded, folder_id)
             except Exception as e:
-                print(f"    WARN branding/upload failed, keeping original image URL: {e}")
+                log.warning(f"    WARN branding/upload failed, keeping original image URL: {e}")
 
         rows.append([
             now_ar(), "Resident Advisor", ev.get("name", ""), ev.get("date", ""),
@@ -226,20 +242,20 @@ def queue_ra_events(sheets, sheet_id, known, dry_run) -> list[list]:
             image_url, ev.get("event_url", ""),
             "approved", "", "Auto-queued (daily pipeline)",
         ])
-        known.add(key)
+        known_full.append({"name": name, "date": date, "venue": venue})
     return rows
 
 
 def queue_ig_account(L, drive_svc, folder_id, handle, limit, is_event_account, known) -> list[list]:
     handle = handle.lstrip("@")
-    print(f"  Scraping @{handle}...")
+    log.info(f"  Scraping @{handle}...")
     rows = []
     try:
         profile = instaloader.Profile.from_username(L.context, handle)
     except Exception as e:
         if is_blocking_error(e):
             raise InstagramBlockedError(handle, str(e)[:200]) from e
-        print(f"    FAIL @{handle}: {e}")
+        log.warning(f"    FAIL @{handle}: {e}")
         return rows
 
     count = 0
@@ -269,7 +285,7 @@ def queue_ig_account(L, drive_svc, folder_id, handle, limit, is_event_account, k
         except Exception as e:
             if is_blocking_error(e):
                 raise InstagramBlockedError(handle, str(e)[:200]) from e
-            print(f"    WARN media failed for {sc}: {e}")
+            log.warning(f"    WARN media failed for {sc}: {e}")
             time.sleep(1)
             continue
 
@@ -298,7 +314,7 @@ Respondé SOLO con JSON: {{{{"feed_caption": "...", "story_caption": "..."}}}}""
         count += 1
         time.sleep(2)
 
-    print(f"    {count} posts queued from @{handle}")
+    log.info(f"    {count} posts queued from @{handle}")
     return rows
 
 
@@ -314,12 +330,13 @@ def main():
     sheets_svc, drive_svc = get_services()
     sheet_id = get_or_create_sheet(sheets_svc, drive_svc)
     known = existing_event_keys(sheets_svc, sheet_id)
-    print(f"Sheet has {len(known)} existing entries.")
+    known_full = existing_events_full(sheets_svc, sheet_id)
+    log.info(f"Sheet has {len(known)} existing entries.")
 
     all_rows = []
 
     if not args.skip_ra:
-        all_rows += queue_ra_events(sheets_svc, sheet_id, known, args.dry_run)
+        all_rows += queue_ra_events(sheets_svc, sheet_id, known_full, args.dry_run)
 
     if not args.skip_ig:
         event_accounts = [a.strip() for a in os.getenv("FIESTAS_REPOST_ACCOUNTS", "").split(",") if a.strip()] or DEFAULT_EVENT_ACCOUNTS
@@ -332,8 +349,8 @@ def main():
         )
         folder_id = get_or_create_drive_folder(drive_svc, DRIVE_FOLDER)
 
-        print(f"\nScraping {len(event_accounts)} event accounts + {len(viral_accounts)} viral accounts "
-              f"(limit={limit}/account)...")
+        log.info(f"\nScraping {len(event_accounts)} event accounts + {len(viral_accounts)} viral accounts "
+                 f"(limit={limit}/account)...")
         try:
             for handle in event_accounts:
                 all_rows += queue_ig_account(L, drive_svc, folder_id, handle, limit, True, known)
@@ -343,19 +360,19 @@ def main():
             record_flag(e.handle, e.reason)
 
     if not all_rows:
-        print("\nNo new posts to queue.")
+        log.info("\nNo new posts to queue.")
         return
 
-    print(f"\n{len(all_rows)} new posts (auto-approved):")
+    log.info(f"\n{len(all_rows)} new posts (auto-approved):")
     for r in all_rows:
-        print(f"  [{r[1]}] {r[2]} — {r[3]}")
+        log.info(f"  [{r[1]}] {r[2]} — {r[3]}")
 
     if args.dry_run:
-        print("\n[DRY RUN] Not writing to sheet.")
+        log.info("\n[DRY RUN] Not writing to sheet.")
         return
 
     append_rows(sheets_svc, sheet_id, all_rows)
-    print(f"\nQueued {len(all_rows)} posts (Status=approved) → https://docs.google.com/spreadsheets/d/{sheet_id}/edit")
+    log.info(f"\nQueued {len(all_rows)} posts (Status=approved) → https://docs.google.com/spreadsheets/d/{sheet_id}/edit")
 
 
 if __name__ == "__main__":

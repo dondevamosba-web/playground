@@ -89,6 +89,27 @@ def existing_event_keys(sheets, sheet_id: str) -> set:
         return set()
 
 
+def existing_events_full(sheets, sheet_id: str) -> list[dict]:
+    """Return [{"name", "date", "venue"}, ...] for every row already in the sheet.
+
+    Used for cross-account dedup (tools/cross_account_dedup.py), which needs the
+    venue alongside name/date to fuzzy-match the same real-world event described
+    differently by RA vs. a reposted IG account.
+    """
+    try:
+        resp = sheets.spreadsheets().values().get(
+            spreadsheetId=sheet_id,
+            range="Queue!C:E",
+        ).execute()
+        rows = resp.get("values", [])
+        return [
+            {"name": r[0].strip(), "date": r[1].strip() if len(r) > 1 else "", "venue": r[2].strip() if len(r) > 2 else ""}
+            for r in rows[1:] if len(r) >= 1 and r[0].strip()
+        ]
+    except Exception:
+        return []
+
+
 def append_rows(sheets, sheet_id: str, rows: list[list]):
     sheets.spreadsheets().values().append(
         spreadsheetId=sheet_id,

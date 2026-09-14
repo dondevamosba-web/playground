@@ -11,9 +11,30 @@ import requests, io
 
 ROOT = Path(__file__).parent.parent
 OUT = ROOT / ".tmp" / "fiestas_miss_monique.jpg"
-FONT_DIN_BOLD = "/System/Library/Fonts/Supplemental/DIN Condensed Bold.ttf"
-FONT_ARIAL_BOLD = "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
-FONT_IMPACT = "/System/Library/Fonts/Supplemental/Impact.ttf"
+
+# Each list is tried in order: Mac path (how this script was originally run) ->
+# Windows equivalent -> PIL's built-in default if neither font is installed.
+FONT_DIN_BOLD = [
+    "/System/Library/Fonts/Supplemental/DIN Condensed Bold.ttf",
+    "C:\\Windows\\Fonts\\ariblk.ttf",   # closest built-in Windows match (Arial Black, condensed-bold look)
+]
+FONT_ARIAL_BOLD = [
+    "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+    "C:\\Windows\\Fonts\\arialbd.ttf",  # Arial Bold ships on Windows
+]
+FONT_IMPACT = [
+    "/System/Library/Fonts/Supplemental/Impact.ttf",
+    "C:\\Windows\\Fonts\\impact.ttf",   # Impact ships on Windows
+]
+
+
+def load_font(candidates, size: int) -> ImageFont.ImageFont:
+    for path in candidates:
+        try:
+            return ImageFont.truetype(path, size)
+        except Exception:
+            continue
+    return ImageFont.load_default()
 
 W, H = 1080, 1080
 
@@ -68,10 +89,7 @@ line_y = int(H * 0.58)
 draw.rectangle([(60, line_y), (W - 60, line_y + 3)], fill=TEAL)
 
 # --- "NOTICIAS" pill top-left ---
-try:
-    font_tag = ImageFont.truetype(FONT_DIN_BOLD, 28)
-except:
-    font_tag = ImageFont.load_default()
+font_tag = load_font(FONT_DIN_BOLD, 28)
 
 tag_text = "NOTICIAS"
 tag_bbox = draw.textbbox((0, 0), tag_text, font=font_tag)
@@ -81,13 +99,10 @@ draw.rectangle([(52, 60), (52 + tag_w + pad*2, 60 + 36)], fill=TEAL)
 draw.text((52 + pad, 62), tag_text, font=font_tag, fill=(0, 0, 0))
 
 # --- Main headline ---
-try:
-    font_big = ImageFont.truetype(FONT_DIN_BOLD, 100)
-    font_mid = ImageFont.truetype(FONT_DIN_BOLD, 68)
-    font_small = ImageFont.truetype(FONT_ARIAL_BOLD, 34)
-    font_detail = ImageFont.truetype(FONT_ARIAL_BOLD, 28)
-except:
-    font_big = font_mid = font_small = font_detail = ImageFont.load_default()
+font_big = load_font(FONT_DIN_BOLD, 100)
+font_mid = load_font(FONT_DIN_BOLD, 68)
+font_small = load_font(FONT_ARIAL_BOLD, 34)
+font_detail = load_font(FONT_ARIAL_BOLD, 28)
 
 # Line 1: "MISS MONIQUE"
 y = line_y + 18
