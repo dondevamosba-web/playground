@@ -37,6 +37,8 @@ DISPLAY_NAMES = {
     "storm": "Storm",
     "fiestas": "Fiestas",
     "techno": "Techno",
+    "empleo": "Ola Empleo",
+    "talento": "Talento USA",
 }
 
 

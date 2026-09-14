@@ -50,6 +50,8 @@ ACCENT = {
     "fiestas": "#C084FC",
     "storm": "#A3E635",
     "techno": "#E5E7EB",
+    "empleo": "#F97316",
+    "talento": "#F43F5E",
 }
 
 IMPROVE_SCHEMA = {
@@ -219,7 +221,7 @@ a.wa-btn { background: #25D366; color: #05210F; font-weight: 700; text-decoratio
 </head>
 <body>
 <h1>Panel Social</h1>
-<div class="sub">Crecimiento y actividad de las 4 cuentas — actualiza cada vez que abrís la página.</div>
+<div class="sub">Crecimiento y actividad de las 6 cuentas — actualiza cada vez que abrís la página.</div>
 <div id="grid" class="grid"><div class="sub">Cargando...</div></div>
 
 <div class="wa-card">
@@ -231,7 +233,7 @@ a.wa-btn { background: #25D366; color: #05210F; font-weight: 700; text-decoratio
 </div>
 
 <script>
-const ACCENT = {ola:'#0EA5E9', fiestas:'#C084FC', storm:'#A3E635', techno:'#E5E7EB'};
+const ACCENT = {ola:'#0EA5E9', fiestas:'#C084FC', storm:'#A3E635', techno:'#E5E7EB', empleo:'#F97316', talento:'#F43F5E'};
 
 function growthBadge(label, val) {
   if (val === null || val === undefined) return `<span class="badge">${label}: —</span>`;
