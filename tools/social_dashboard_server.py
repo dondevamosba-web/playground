@@ -41,7 +41,7 @@ sys.path.insert(0, str(ROOT))
 
 from flask import Flask, jsonify, request, Response
 
-from tools.claude_call import call_claude
+from tools.claude_call import call_claude, _find_claude_binary
 from tools.post_instagram import ACCOUNT_CONFIG
 from tools.social_stats import (
     DISPLAY_NAMES,
@@ -194,9 +194,14 @@ def api_claude_code():
     if not prompt:
         return jsonify({"error": "Escribí algo primero."}), 400
     try:
+        # Resolve the actual binary path (not just "claude") — on Windows, subprocess
+        # doesn't resolve bare command names to the npm-installed .cmd shim the way
+        # a real shell does, so a plain "claude" here raises FileNotFoundError even
+        # when `claude --version` works fine typed directly into PowerShell.
+        claude_bin = _find_claude_binary()
         # -p = non-interactive; --dangerously-skip-permissions = no per-tool approval gate (see module docstring)
         result = subprocess.run(
-            ["claude", "-p", prompt, "--dangerously-skip-permissions"],
+            [claude_bin, "-p", prompt, "--dangerously-skip-permissions"],
             cwd=ROOT, capture_output=True, text=True, timeout=600,
         )
         output = result.stdout.strip() or result.stderr.strip() or "(sin salida)"
