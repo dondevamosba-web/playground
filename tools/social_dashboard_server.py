@@ -33,6 +33,7 @@ push, so `git status`/`git diff` after a run before trusting the result.
 """
 import subprocess
 import sys
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
@@ -160,11 +161,14 @@ def api_improve(account):
     if not data.get("configured"):
         return jsonify({"error": f"{DISPLAY_NAMES[account]} no está configurada en .env"}), 400
 
+    cutoff = (date.today() - timedelta(days=5)).isoformat()
+    recent_posts = [p for p in fetch_recent_media(account, limit=15) if (p.get("timestamp") or "")[:10] >= cutoff]
     posts_summary = "\n".join(
-        f"- \"{p['caption']}\" ({p['media_type']}, {p['like_count']} likes, "
-        f"{p['comments_count']} comentarios, {p['timestamp']})"
-        for p in data["posts"]
-    ) or "(sin posts recientes)"
+        f"- \"{(p.get('caption') or '').strip()[:90]}\" ({p.get('media_type')}, "
+        f"{p.get('like_count', 0)} likes, {p.get('comments_count', 0)} comentarios, "
+        f"{(p.get('timestamp') or '')[:10]})"
+        for p in recent_posts
+    ) or "(sin posts en los últimos 5 días)"
 
     prompt = (
         f"Cuenta: {data['name']} (@{data['username']})\n"
