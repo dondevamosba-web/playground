@@ -144,7 +144,10 @@ def _cli_call(prompt: str, system_prompt: str | None, model: str, as_json: bool,
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:
         raise RuntimeError(f"Claude CLI call failed:\n{result.stderr.strip()}")
-    return result.stdout.strip()
+    stdout = result.stdout.strip()
+    if not stdout:
+        raise RuntimeError(f"Claude CLI returned no output (exit 0).\nstderr:\n{result.stderr.strip()}")
+    return stdout
 
 
 # ---------------------------------------------------------------------------
