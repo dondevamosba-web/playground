@@ -141,7 +141,10 @@ def _cli_call(prompt: str, system_prompt: str | None, model: str, as_json: bool,
     elif as_json:
         cmd += ["--output-format", "json"]
 
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    # encoding="utf-8-sig" strips a leading BOM if Windows' claude.cmd emits one —
+    # without this, json.loads() on the output fails with a cryptic "Expecting
+    # value: line 1 column 1 (char 0)" even though the rest of the text is valid JSON.
+    result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8-sig")
     if result.returncode != 0:
         raise RuntimeError(f"Claude CLI call failed:\n{result.stderr.strip()}")
     stdout = result.stdout.strip()

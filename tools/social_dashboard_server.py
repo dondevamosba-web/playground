@@ -207,7 +207,7 @@ def api_claude_code():
         # -p = non-interactive; --dangerously-skip-permissions = no per-tool approval gate (see module docstring)
         result = subprocess.run(
             [claude_bin, "-p", prompt, "--dangerously-skip-permissions"],
-            cwd=ROOT, capture_output=True, text=True, timeout=600,
+            cwd=ROOT, capture_output=True, text=True, timeout=600, encoding="utf-8-sig",
         )
         output = result.stdout.strip() or result.stderr.strip() or "(sin salida)"
         return jsonify({"output": output, "ok": result.returncode == 0})
