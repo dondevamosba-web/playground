@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>España 3175 — Presupuesto de obra</title>
+<style>
+  :root { --bg:#14110f; --card:#1f1a17; --card-border:#332b24; --accent:#d4a373; --accent2:#8fae94;
+          --text:#f1ece6; --muted:#9a8f85; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--bg); color:var(--text); font-family:Georgia,'Times New Roman',serif;
+         padding:clamp(20px,5vw,48px) clamp(14px,4vw,24px); line-height:1.5; }
+  header { text-align:center; margin-bottom:10px; }
+  h1 { font-size:clamp(1.6rem,5vw,2.4rem); letter-spacing:.02em; }
+  header p { color:var(--muted); margin-top:8px; font-style:italic; font-size:clamp(.85rem,2.5vw,1rem); }
+  .wrap { max-width:1100px; margin:0 auto; }
+  section { background:var(--card); border:1px solid var(--card-border); border-radius:14px;
+            padding:clamp(16px,4vw,28px); margin:28px auto; }
+  h2 { color:var(--accent); font-size:clamp(1.1rem,3.5vw,1.35rem); margin-bottom:6px; }
+  .sub { color:var(--muted); font-size:.88rem; margin-bottom:16px; }
+  .tablewrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:.92rem; min-width:560px; }
+  th { text-align:left; color:var(--muted); font-size:.72rem; text-transform:uppercase;
+       letter-spacing:.12em; font-weight:normal; padding:0 10px 10px; border-bottom:1px solid var(--card-border); }
+  td { padding:11px 10px; border-bottom:1px solid #292219; vertical-align:top; }
+  tr:last-child td { border-bottom:0; }
+  .num { text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .rank { color:var(--muted); width:1.8em; }
+  .det { color:var(--muted); font-size:.82rem; display:block; margin-top:3px; }
+  tfoot td { border-top:2px solid var(--card-border); border-bottom:0; padding-top:14px;
+             font-size:1.02rem; color:var(--accent); }
+  .bar { display:block; height:3px; background:var(--accent); border-radius:2px; margin-top:6px; opacity:.55; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; }
+  .kpi { background:#191411; border:1px solid var(--card-border); border-radius:10px; padding:14px 16px; }
+  .kpi .k { color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; }
+  .kpi .v { color:var(--accent); font-size:1.5rem; margin-top:5px; font-variant-numeric:tabular-nums; }
+  .kpi .n { color:var(--muted); font-size:.78rem; margin-top:3px; }
+  ul { margin:8px 0 0 18px; color:var(--muted); font-size:.88rem; }
+  li { margin-bottom:5px; }
+  .warn { border-left:3px solid var(--accent2); padding-left:14px; color:var(--muted); font-size:.88rem; }
+  .out { color:var(--muted); font-size:.86rem; }
+  .out s { opacity:.6; }
+  footer { text-align:center; color:var(--muted); font-size:.82rem; padding:8px 0 4px; }
+  a { color:var(--accent); }
+  nav.top { max-width:1100px; margin:0 auto 4px; text-align:center; }
+  nav.top a { display:inline-block; color:var(--accent); border:1px solid #3a322b; border-radius:999px;
+              padding:6px 14px; text-decoration:none; font-size:.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>España 3175 — Presupuesto de obra</h1>
+  <p>Refacción integral · Olavarría · estimación al 30 de julio de 2026</p>
+</header>
+<nav class="top"><a href="gallery-v2.html">← Ver la galería de renders</a></nav>
+
+<section>
+  <h2>Resumen</h2>
+  <div class="sub">Dólar blue de referencia: $1.565 · dólar oficial: $1.515</div>
+  <div class="cards">
+    <div class="kpi"><div class="k">Total estimado</div><div class="v">$75,8 M</div><div class="n">pesos argentinos</div></div>
+    <div class="kpi"><div class="k">En dólares</div><div class="v">USD 48.400</div><div class="n">al blue $1.565</div></div>
+    <div class="kpi"><div class="k">Superficie cubierta</div><div class="v">103,7 m²</div><div class="n">planta alta completa</div></div>
+    <div class="kpi"><div class="k">Costo por m²</div><div class="v">$731 mil</div><div class="n">USD 467 / m² cubierto</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Superficies calculadas</h2>
+  <div class="sub">De las medidas relevadas en junio 2026 y los planos de planta</div>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Espacio</th><th>Medidas</th><th class="num">m²</th></tr></thead>
+    <tbody>
+      <tr><td>Living</td><td>6,00 × 4,66 m</td><td class="num">27,96</td></tr>
+      <tr><td>Cocina y comedor</td><td>4,66 × 6,00 m</td><td class="num">27,96</td></tr>
+      <tr><td>Dormitorio 1 (principal)</td><td>3,50 × 4,00 m</td><td class="num">14,00</td></tr>
+      <tr><td>Dormitorio 2</td><td>3,45 × 3,60 m</td><td class="num">12,42</td></tr>
+      <tr><td>Escalera y hall</td><td>4,66 × 2,00 m</td><td class="num">9,32</td></tr>
+      <tr><td>Baño 1</td><td>2,00 × 2,00 m</td><td class="num">4,00</td></tr>
+      <tr><td>Baño toilet</td><td>2,00 × 2,00 m</td><td class="num">4,00</td></tr>
+      <tr><td>Pasillo</td><td>1,00 × 4,00 m</td><td class="num">4,00</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="2">Total cubierto (planta alta)</td><td class="num">103,66</td></tr></tfoot>
+  </table>
+  </div>
+  <div class="tablewrap" style="margin-top:22px">
+  <table>
+    <thead><tr><th>Exteriores y semicubiertos</th><th>Medidas</th><th class="num">m²</th></tr></thead>
+    <tbody>
+      <tr><td>Jardín (el patio propio)</td><td>8,66 × 6,00 m</td><td class="num">51,96</td></tr>
+      <tr><td>Terraza</td><td>8,66 × 3,00 m</td><td class="num">25,98</td></tr>
+      <tr><td>Balcón del frente</td><td>8,60 × 2,00 m</td><td class="num">17,20</td></tr>
+      <tr><td>Garage</td><td>2,30 × 6,00 m</td><td class="num">13,80</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="2">Total exteriores</td><td class="num">108,94</td></tr></tfoot>
+  </table>
+  </div>
+  <p class="sub" style="margin:14px 0 0">El patio de planta baja que figura en el plano <strong>no es de la casa</strong> — es del vecino. El espacio exterior propio es el que llamamos jardín.</p>
+</section>
+
+<section>
+  <h2>Costos por rubro — de mayor a menor</h2>
+  <div class="sub">Materiales y mano de obra incluidos en cada rubro. Sin doble conteo entre ítems.</div>
+  <div class="tablewrap">
+  <table>
+    <thead>
+      <tr><th class="rank">#</th><th>Rubro</th><th class="num">Pesos ARS</th><th class="num">USD</th><th class="num">%</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="rank">1</td>
+        <td>Cocina — muebles, mesada, artefactos y colocación
+          <span class="det">28 m². Melamina hasta el techo, isla con mesada de madera, horno empotrado, anafe, campana, bacha y grifería, revestimiento liso</span>
+          <span class="bar" style="width:100%"></span></td>
+        <td class="num">$12.000.000</td><td class="num">7.668</td><td class="num">15,8%</td></tr>
+      <tr><td class="rank">2</td>
+        <td>Baño 1 completo (con bañera y ducha)
+          <span class="det">4 m². Sanitarios blancos, grifería, mueble de madera, mampara, nicho con luz, instalación sanitaria y eléctrica. Se mantienen los azulejos verdes</span>
+          <span class="bar" style="width:64%"></span></td>
+        <td class="num">$7.700.000</td><td class="num">4.920</td><td class="num">10,2%</td></tr>
+      <tr><td class="rank">3</td>
+        <td>Terraza y pérgola
+          <span class="det">26 m². Pérgola de madera con guirnaldas, parrilla de obra con mesada, piso porcelanato exterior, impermeabilización, revoque y pintura</span>
+          <span class="bar" style="width:62%"></span></td>
+        <td class="num">$7.400.000</td><td class="num">4.728</td><td class="num">9,8%</td></tr>
+      <tr><td class="rank">4</td>
+        <td>Instalación eléctrica completa
+          <span class="det">Tablero nuevo, cableado, bocas, llaves y tomas en toda la casa (excepto baños, ya incluidos en sus rubros)</span>
+          <span class="bar" style="width:48%"></span></td>
+        <td class="num">$5.800.000</td><td class="num">3.706</td><td class="num">7,7%</td></tr>
+      <tr><td class="rank">5</td>
+        <td>Pisos — porcelanato 60×60
+          <span class="det">103,7 m². Material $25.200/m² (Easy) + pegamento, pastina y colocación</span>
+          <span class="bar" style="width:43%"></span></td>
+        <td class="num">$5.200.000</td><td class="num">3.323</td><td class="num">6,9%</td></tr>
+      <tr><td class="rank">6</td>
+        <td>Baño toilet completo (sin ducha)
+          <span class="det">4 m². Inodoro, bidet, bacha y mueble, grifería, instalación sanitaria y eléctrica. Se mantienen los azulejos verdes</span>
+          <span class="bar" style="width:42%"></span></td>
+        <td class="num">$5.000.000</td><td class="num">3.195</td><td class="num">6,6%</td></tr>
+      <tr><td class="rank">7</td>
+        <td>Cielorraso de durlock + dicroicas
+          <span class="det">103,7 m² a $36.000/m² colocado, más ≈55 spots LED empotrados</span>
+          <span class="bar" style="width:35%"></span></td>
+        <td class="num">$4.250.000</td><td class="num">2.716</td><td class="num">5,6%</td></tr>
+      <tr><td class="rank">8</td>
+        <td>Mueble del living y puertas interiores
+          <span class="det">Biblioteca/mueble empotrado del living y 6 puertas interiores. <strong>No incluye placards</strong> — se usan los existentes</span>
+          <span class="bar" style="width:33%"></span></td>
+        <td class="num">$4.000.000</td><td class="num">2.556</td><td class="num">5,3%</td></tr>
+      <tr><td class="rank">9</td>
+        <td>Fachada y exterior
+          <span class="det">Revoque y pintura de fachada, puerta/portón de entrada, iluminación exterior, vereda</span>
+          <span class="bar" style="width:32%"></span></td>
+        <td class="num">$3.800.000</td><td class="num">2.428</td><td class="num">5,0%</td></tr>
+      <tr><td class="rank">10</td>
+        <td>Aire acondicionado
+          <span class="det">4 splits instalados: cocina, living y los dos dormitorios</span>
+          <span class="bar" style="width:30%"></span></td>
+        <td class="num">$3.600.000</td><td class="num">2.300</td><td class="num">4,8%</td></tr>
+      <tr><td class="rank">11</td>
+        <td>Pintura interior completa
+          <span class="det">103,7 m² a ≈$33.500/m² entre mano de obra y materiales</span>
+          <span class="bar" style="width:29%"></span></td>
+        <td class="num">$3.500.000</td><td class="num">2.236</td><td class="num">4,6%</td></tr>
+      <tr><td class="rank">12</td>
+        <td>Escalera y hall
+          <span class="det">Restauración con huellas de madera clara y baranda de hierro negro</span>
+          <span class="bar" style="width:22%"></span></td>
+        <td class="num">$2.700.000</td><td class="num">1.725</td><td class="num">3,6%</td></tr>
+      <tr><td class="rank">13</td>
+        <td>Cañería de agua nueva
+          <span class="det">Distribución de agua fría y caliente por termofusión en toda la casa, más calefón o termotanque</span>
+          <span class="bar" style="width:20%"></span></td>
+        <td class="num">$2.400.000</td><td class="num">1.534</td><td class="num">3,2%</td></tr>
+      <tr><td class="rank">14</td>
+        <td>Demolición, albañilería y retiro de escombros
+          <span class="det">Picado de pisos viejos, retiro de muebles fijos, contenedores</span>
+          <span class="bar" style="width:18%"></span></td>
+        <td class="num">$2.200.000</td><td class="num">1.406</td><td class="num">2,9%</td></tr>
+      <tr><td class="rank">15</td>
+        <td>Garage
+          <span class="det">14 m². Piso de cemento alisado, revisión del techo, pintura, estantes e iluminación</span>
+          <span class="bar" style="width:17%"></span></td>
+        <td class="num">$2.000.000</td><td class="num">1.278</td><td class="num">2,6%</td></tr>
+      <tr><td class="rank">16</td>
+        <td>Jardín
+          <span class="det">52 m². Césped, canteros, sendero o deck, iluminación baja. Es el único espacio exterior propio a nivel de piso</span>
+          <span class="bar" style="width:13%"></span></td>
+        <td class="num">$1.600.000</td><td class="num">1.022</td><td class="num">2,1%</td></tr>
+      <tr><td class="rank">17</td>
+        <td>Cañería de gas nueva
+          <span class="det">Distribución troncal, prueba de hermeticidad y habilitación ante la distribuidora</span>
+          <span class="bar" style="width:12%"></span></td>
+        <td class="num">$1.500.000</td><td class="num">958</td><td class="num">2,0%</td></tr>
+      <tr><td class="rank">18</td>
+        <td>Abertura de la terraza / lavadero
+          <span class="det">Única abertura a reemplazar: ventanal corredizo de aluminio blanco con vidrio simple (sin DVH), ≈4,5 m², colocación incluida</span>
+          <span class="bar" style="width:9%"></span></td>
+        <td class="num">$1.100.000</td><td class="num">703</td><td class="num">1,5%</td></tr>
+    </tbody>
+    <tfoot>
+      <tr><td colspan="2">TOTAL</td><td class="num">$75.750.000</td><td class="num">USD 48.403</td><td class="num">100%</td></tr>
+    </tfoot>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Dónde se va la plata</h2>
+  <ul>
+    <li><strong>La cocina sola es el 16% de todo ($12 M).</strong> Es el rubro más caro por lejos y el que más define el resultado.</li>
+    <li><strong>Los dos baños juntos = $12,7 M (17%).</strong> Mantener los azulejos verdes ahorra cerca de $1,2 M frente a rehacer el revestimiento.</li>
+    <li><strong>Las instalaciones (eléctrica + agua + gas) = $9,7 M.</strong> No se ven en ningún render, pero son el 13% del presupuesto y lo que no conviene postergar: van por debajo de todo lo demás.</li>
+    <li><strong>La terraza ($7,4 M) es 100% postergable.</strong> Si hace falta recortar, es el corte más limpio: no afecta habitabilidad ni obliga a romper nada después.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Qué mirar antes de firmar nada</h2>
+  <div class="warn">
+    <p><strong>Sin imprevistos presupuestados.</strong> Al sacar el 12%, cualquier sorpresa de obra (humedad en paredes, instalación vieja que no se puede reusar, cambio de alcance) sale de bolsillo sobre la marcha. Vale la pena tener el número en la cabeza aunque no esté en la planilla.</p>
+    <p style="margin-top:10px"><strong>Esto es una estimación, no un presupuesto de obra.</strong> Sirve para dimensionar y priorizar. Los números finales salen de tres presupuestos de contratistas reales sobre este mismo listado de rubros.</p>
+  </div>
+</section>
+
+<footer>
+  Valores de referencia: precios de materiales de Easy (30/07/2026), costos de mano de obra de relevamientos de mercado julio 2026,
+  dólar blue $1.565. Superficies calculadas sobre las medidas relevadas en junio 2026.
+</footer>
+</div>
+</body>
+</html>

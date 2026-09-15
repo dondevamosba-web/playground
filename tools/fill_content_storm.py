@@ -37,6 +37,65 @@ WEEKLY_SLOTS = [
     (5, "10:00", "carousel", "Service spotlight: roofing, HVAC, windows, or plumbing focus"),
 ]
 
+# Real designed posts exported from brand-toolkit/storm-posts/*.html via
+# screenshot_storm_v2.py (the old .tmp/storm_posts/ pool was bare number/title
+# placeholder cards, not actual designed content — fixed 2026-07-17).
+# Expanded 2026-07-18 from 13 to all 50 designs already rendered in
+# .tmp/storm_posts_v2/ — the cycle was stale and reusing only the first 13,
+# starving the queue while 37 designed-but-unused images sat idle.
+TRIAD_CYCLE = [
+    ".tmp/storm_posts_v2/01_cpl_stat.png",
+    ".tmp/storm_posts_v2/02_myth_vs_reality.png",
+    ".tmp/storm_posts_v2/03_testimonial.png",
+    ".tmp/storm_posts_v2/04_how_it_works.png",
+    ".tmp/storm_posts_v2/05_manifesto.png",
+    ".tmp/storm_posts_v2/06_hvac_result.png",
+    ".tmp/storm_posts_v2/07_review_power.png",
+    ".tmp/storm_posts_v2/08_verticals.png",
+    ".tmp/storm_posts_v2/09_free_audit_cta.png",
+    ".tmp/storm_posts_v2/10_fee_comparison.png",
+    ".tmp/storm_posts_v2/11_three_truths.png",
+    ".tmp/storm_posts_v2/12_client_win_stat.png",
+    ".tmp/storm_posts_v2/13_client_quote.png",
+    ".tmp/storm_posts_v2/14_roi_multiple.png",
+    ".tmp/storm_posts_v2/15_speed_stat.png",
+    ".tmp/storm_posts_v2/16_budget_leak.png",
+    ".tmp/storm_posts_v2/17_close_rate.png",
+    ".tmp/storm_posts_v2/18_before_after.png",
+    ".tmp/storm_posts_v2/19_obsessed.png",
+    ".tmp/storm_posts_v2/20_reviews_stat.png",
+    ".tmp/storm_posts_v2/21_roofing_leads.png",
+    ".tmp/storm_posts_v2/22_the_48h_rule.png",
+    ".tmp/storm_posts_v2/23_hvac_cpl.png",
+    ".tmp/storm_posts_v2/24_plumbing_win.png",
+    ".tmp/storm_posts_v2/25_local_seo_stack.png",
+    ".tmp/storm_posts_v2/26_no_retainer.png",
+    ".tmp/storm_posts_v2/27_windows_stat.png",
+    ".tmp/storm_posts_v2/28_seasonal_play.png",
+    ".tmp/storm_posts_v2/29_trust_signal.png",
+    ".tmp/storm_posts_v2/30_landing_page_kill.png",
+    ".tmp/storm_posts_v2/31_off_season_wins.png",
+    ".tmp/storm_posts_v2/32_call_tracking.png",
+    ".tmp/storm_posts_v2/33_quality_score.png",
+    ".tmp/storm_posts_v2/34_dm_audit_cta.png",
+    ".tmp/storm_posts_v2/35_conversion_rate.png",
+    ".tmp/storm_posts_v2/36_negative_keywords.png",
+    ".tmp/storm_posts_v2/37_referral_engine.png",
+    ".tmp/storm_posts_v2/38_speed_to_lead.png",
+    ".tmp/storm_posts_v2/39_ad_spend_waste.png",
+    ".tmp/storm_posts_v2/40_booking_rate.png",
+    ".tmp/storm_posts_v2/41_ad_types.png",
+    ".tmp/storm_posts_v2/42_testimonial_2.png",
+    ".tmp/storm_posts_v2/43_retargeting.png",
+    ".tmp/storm_posts_v2/44_revenue_math.png",
+    ".tmp/storm_posts_v2/45_mobile_first.png",
+    ".tmp/storm_posts_v2/46_testimonial_3.png",
+    ".tmp/storm_posts_v2/47_july_promo.png",
+    ".tmp/storm_posts_v2/48_geo_targeting.png",
+    ".tmp/storm_posts_v2/49_competitor_gap.png",
+    ".tmp/storm_posts_v2/50_the_offer.png",
+]
+
 HASHTAGS = (
     "#StormDigital #HomeServices #ContractorMarketing #RoofingMarketing "
     "#HVACMarketing #GoogleAds #LocalSEO #LeadGeneration #ContractorLife "
@@ -92,6 +151,7 @@ Return only the caption text, no quotes, no explanation."""
 def build_rows(start: date, weeks: int, dry_run: bool) -> list[list]:
     rows = []
     post_number = 1
+    single_count = 0
     for week in range(weeks):
         for weekday, time_str, post_type, content_type in WEEKLY_SLOTS:
             days_offset = (week * 7) + (weekday - start.weekday()) % 7
@@ -103,16 +163,23 @@ def build_rows(start: date, weeks: int, dry_run: bool) -> list[list]:
                 print(f"  Generating post {post_number}: {content_type[:50]}...")
                 caption = generate_caption(content_type, post_number)
 
+            # No video pipeline exists yet, so every slot posts as a single
+            # image (triad cycle) regardless of the reel/carousel label —
+            # that label still shapes the caption via content_type below.
+            media_url = TRIAD_CYCLE[single_count % len(TRIAD_CYCLE)]
+            single_count += 1
+            effective_post_type = "single"
+
             day_name = post_date.strftime("%A")
             rows.append([
                 post_date.strftime("%Y-%m-%d"),
                 time_str,
                 day_name,
                 content_type,
-                post_type,
+                effective_post_type,
                 caption,
                 HASHTAGS,
-                "",  # Media URL (filled when media is ready)
+                media_url,
                 "pending",
                 "",  # Post ID (filled after publishing)
             ])
@@ -155,16 +222,29 @@ def main():
 
     sheets, _ = get_services()
 
-    # Write header row + data
+    # Write header only if missing, then append — a plain values().update(range="A1", ...)
+    # here would overwrite whatever already occupies rows 1..len(rows), destroying
+    # existing queued posts (hit this 2026-07-18: clobbered 15 real pending rows).
     header = [["Date", "Time", "Day", "Content Type", "Post Type",
                "Caption", "Hashtags", "Media URL", "Status", "Post ID"]]
-    all_rows = header + rows
+    existing = sheets.spreadsheets().values().get(
+        spreadsheetId=sheet_id, range="A1:J1"
+    ).execute().get("values", [])
 
-    sheets.spreadsheets().values().update(
+    if not existing:
+        sheets.spreadsheets().values().update(
+            spreadsheetId=sheet_id,
+            range="A1",
+            valueInputOption="RAW",
+            body={"values": header},
+        ).execute()
+
+    sheets.spreadsheets().values().append(
         spreadsheetId=sheet_id,
         range="A1",
         valueInputOption="RAW",
-        body={"values": all_rows},
+        insertDataOption="INSERT_ROWS",
+        body={"values": rows},
     ).execute()
 
     print(f"\nDone. {len(rows)} posts written to sheet:")

@@ -43,25 +43,11 @@ SUPPORTED_TYPES = {
 
 
 def get_drive_service():
-    creds = None
-    if TOKEN_FILE.exists():
-        creds = Credentials.from_authorized_user_file(str(TOKEN_FILE), SCOPES)
-
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            if not CREDENTIALS_FILE.exists():
-                print("ERROR: credentials.json not found in project root.")
-                print("See workflows/upload_to_drive.md or tools/upload_to_drive.py docstring for setup.")
-                sys.exit(1)
-            flow = InstalledAppFlow.from_client_secrets_file(str(CREDENTIALS_FILE), SCOPES)
-            creds = flow.run_local_server(port=0)
-
-        TOKEN_FILE.write_text(creds.to_json())
-        print(f"Auth saved to {TOKEN_FILE}")
-
-    return build("drive", "v3", credentials=creds)
+    # Reuse the shared sheets/drive auth (token_sheets.json) instead of a
+    # separate token.json — that one expired 2026-07-03 and broke stories.
+    from sheets_client import get_services
+    _, drive = get_services()
+    return drive
 
 
 def get_or_create_folder(service, folder_path: str) -> str:

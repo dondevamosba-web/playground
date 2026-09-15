@@ -81,50 +81,75 @@ PRODUCT_PAGES = {
 # Fallback: GSMArena for phones (no auth, good product images)
 GSMARENA_SEARCH = "https://www.gsmarena.com/search.php3?sQuickSearch={query}"
 
-# Hardcoded fallback press images for products that resist scraping
+# Hardcoded fallback press images for products that resist scraping.
+# Refreshed 2026-07-18: the previous entries here were all dead links (2024
+# Newsroom article paths that Apple has since retired, guessed Samsung/PS5
+# gallery filenames that never existed) — 20 of 21 "found" candidates 404'd
+# on direct fetch. Replaced with URLs verified live via curl -I at write time:
+# Apple og:image meta tags (curl -L to follow redirects for retired models,
+# which land on the current generation's page) and Samsung's server-rendered
+# /buy/ page (samsung.com's own product pages are client-rendered JS with no
+# og:image, but /buy/ ships real <img> tags in the raw HTML).
 FALLBACK_IMAGES = {
     "playstation::ps5 slim":  [
-        "https://gmedia.playstation.com/is/image/SIEPDC/ps5-slim-product-thumbnail-01-en-14sep23?$800px--t$",
-        "https://gmedia.playstation.com/is/image/SIEPDC/ps5-slim-product-thumbnail-02-en-14sep23?$800px--t$",
-        "https://gmedia.playstation.com/is/image/SIEPDC/ps5-slim-hero-image-block-01-en-14sep23?$1600px--t$",
+        "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6472/6472709_sd.jpg",
+    ],
+    "apple::iphone 17 pro": [
+        "https://www.apple.com/v/iphone-17-pro/g/images/meta/iphone-17-pro_overview__eumhhclcpuaa_og.png",
+    ],
+    "apple::iphone 17": [
+        "https://www.apple.com/v/iphone-17/g/images/meta/iphone-17_overview__cg0rlzmbhl7m_og.png",
+    ],
+    "apple::iphone air": [
+        "https://www.apple.com/v/iphone-air/g/images/meta/iphone-air_overview__dwhg6l117yqa_og.png",
+    ],
+    "apple::iphone 16 pro": [
+        "https://www.apple.com/v/iphone/home/cj/images/meta/iphone__bh930eyjnj0i_og.png",
     ],
     "apple::iphone 16": [
-        "https://www.apple.com/newsroom/images/2024/09/apple-debuts-iphone-16-and-iphone-16-plus/article/Apple-iPhone-16-hero-240909_Full-Bleed-Image.jpg.large.jpg",
-        "https://www.apple.com/newsroom/images/2024/09/apple-debuts-iphone-16-and-iphone-16-plus/article/Apple-iPhone-16-color-lineup-240909_Full-Bleed-Image.jpg.large.jpg",
+        "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-model-unselect-gallery-1-202409?wid=1200&hei=630&fmt=jpeg&qlt=95",
+    ],
+    # Split 13"/15" so both sizes don't show the identical stock photo —
+    # user flagged this 2026-07-18 (3 MacBook Air cards all showing the
+    # same image). Both from Apple's real M4 MacBook Air launch article.
+    "apple::macbook air m4 13": [
+        "https://www.apple.com/newsroom/images/2025/03/apple-introduces-the-new-macbook-air-with-the-m4-chip-and-a-sky-blue-color/article/Apple-MacBook-Air-Desk-View-250305_big.jpg.large.jpg",
+    ],
+    "apple::macbook air m4 15": [
+        "https://www.apple.com/newsroom/images/2025/03/apple-introduces-the-new-macbook-air-with-the-m4-chip-and-a-sky-blue-color/article/Apple-MacBook-Air-hero-250305_big.jpg.large.jpg",
+    ],
+    "apple::macbook air": [
+        "https://www.apple.com/v/macbook-air/z/images/meta/macbook_air_mx__ez5y0k5yy7au_og.png",
+    ],
+    "apple::macbook pro": [
+        "https://www.apple.com/v/macbook-pro/ax/images/meta/macbook-pro__difvbgz1plsi_og.png",
     ],
     "apple::apple watch": [
-        "https://www.apple.com/newsroom/images/2024/09/apple-watch-series-10-the-thinnest-apple-watch-ever/article/Apple-Watch-S10-hero-240909_Full-Bleed-Image.jpg.large.jpg",
-        "https://www.apple.com/newsroom/images/2024/09/apple-watch-series-10-the-thinnest-apple-watch-ever/article/Apple-Watch-S10-colors-240909.jpg.large.jpg",
+        "https://www.apple.com/assets-www/en_WW/watch/og/watch_og_1ff2ee953.png",
     ],
     "apple::airpods pro": [
-        "https://www.apple.com/newsroom/images/2022/09/apple-airpods-pro-2nd-generation-available-sep-23/article/Apple-AirPods-Pro-2nd-gen-hero-220907_Full-Bleed-Image.jpg.large.jpg",
-        "https://www.apple.com/newsroom/images/2022/09/apple-airpods-pro-2nd-generation-available-sep-23/article/Apple-AirPods-Pro-2nd-gen-lifestyle-240909_Full-Bleed-Image.jpg.large.jpg",
+        "https://www.apple.com/v/airpods-pro/s/images/meta/og__c0ceegchesom_overview.png",
     ],
     "apple::airpods max": [
-        "https://www.apple.com/newsroom/images/2024/09/apple-introduces-airpods-max-with-usb-c/article/Apple-AirPods-Max-USB-C-hero-240917_Full-Bleed-Image.jpg.large.jpg",
-        "https://www.apple.com/newsroom/images/2024/09/apple-introduces-airpods-max-with-usb-c/article/Apple-AirPods-Max-USB-C-colors-240917.jpg.large.jpg",
+        "https://www.apple.com/v/airpods-max/k/images/meta/airpods-max_overview__c2mz40a3bugm_og.png",
     ],
     "apple::ipad air": [
-        "https://www.apple.com/newsroom/images/2024/03/apple-unveils-the-powerful-new-ipad-air-in-two-sizes/article/Apple-iPad-Air-M2-hero-240508_Full-Bleed-Image.jpg.large.jpg",
-        "https://www.apple.com/newsroom/images/2024/03/apple-unveils-the-powerful-new-ipad-air-in-two-sizes/article/Apple-iPad-Air-M2-colors-240508.jpg.large.jpg",
+        "https://www.apple.com/v/ipad-air/ah/images/meta/ipad-air_overview__bc2fd15uec0y_og.png",
     ],
     "apple::imac": [
-        "https://www.apple.com/newsroom/images/2024/10/apple-introduces-new-imac-with-m4/article/Apple-iMac-M4-hero-241028_Full-Bleed-Image.jpg.large.jpg",
-        "https://www.apple.com/newsroom/images/2024/10/apple-introduces-new-imac-with-m4/article/Apple-iMac-M4-colors-241028.jpg.large.jpg",
+        "https://www.apple.com/v/imac/v/images/meta/imac__d7trotporb6u_og.png",
     ],
     "apple::mac mini": [
-        "https://www.apple.com/newsroom/images/2024/10/apple-introduces-mac-mini-with-m4-and-m4-pro/article/Apple-Mac-mini-M4-hero-241028_Full-Bleed-Image.jpg.large.jpg",
-        "https://www.apple.com/newsroom/images/2024/10/apple-introduces-mac-mini-with-m4-and-m4-pro/article/Apple-Mac-mini-M4-lineup-241028.jpg.large.jpg",
+        "https://www.apple.com/v/mac-mini/aa/images/meta/mac-mini__dvce2jrm11w2_og.jpg",
     ],
     "samsung::galaxy s25 ultra": [
-        "https://images.samsung.com/us/smartphones/galaxy-s25-ultra/buy/gallery/gallery-product-img01.jpg",
-        "https://images.samsung.com/us/smartphones/galaxy-s25-ultra/buy/gallery/gallery-product-img02.jpg",
-        "https://images.samsung.com/us/smartphones/galaxy-s25-ultra/buy/gallery/gallery-product-img03.jpg",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-s938uzbfxaa/gallery/us-galaxy-s25-s938-536276-sm-s938uzbfxaa-548617513",
+    ],
+    "samsung::galaxy s25+": [
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-s936udbaatt/gallery/us-galaxy-s25-s936-536278-sm-s936udbaatt-548474765",
     ],
     "samsung::galaxy s25": [
-        "https://images.samsung.com/us/smartphones/galaxy-s25/buy/gallery/gallery-product-img01.jpg",
-        "https://images.samsung.com/us/smartphones/galaxy-s25/buy/gallery/gallery-product-img02.jpg",
-        "https://images.samsung.com/us/smartphones/galaxy-s25/buy/gallery/gallery-product-img03.jpg",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-s936udbaatt/gallery/us-galaxy-s25-s936-536278-sm-s936udbaatt-548474765",
     ],
 }
 

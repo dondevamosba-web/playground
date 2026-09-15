@@ -44,6 +44,12 @@ RELEVANCE_KEYWORDS = [
     "paid social", "performance marketing", "google ads", "ppc", "sem",
     "digital marketing", "media buyer", "ads manager", "growth marketing",
     "programmatic", "biddable media",
+    # expanded
+    "tiktok ads", "paid advertising", "digital advertising", "demand generation",
+    "campaign manager", "campaign management", "growth hacker", "growth manager",
+    "performance media", "social media advertising", "paid campaigns",
+    "media planning", "media strategist", "acquisition marketing",
+    "user acquisition", "mobile marketing", "app marketing",
 ]
 
 # Phrases that indicate the job is open to LATAM / non-US workers
@@ -469,6 +475,146 @@ def scrape_remotive():
 
 
 # ---------------------------------------------------------------------------
+# Source 6: Arbeitnow (public JSON API)
+# ---------------------------------------------------------------------------
+
+def scrape_arbeitnow():
+    """
+    Public API: https://arbeitnow.com/api/job-board-api
+    Returns remote jobs worldwide, paginated.
+    """
+    jobs = []
+    seen = set()
+    page = 1
+
+    while page <= 3:
+        url = f"https://arbeitnow.com/api/job-board-api?page={page}"
+        print(f"  [Arbeitnow] page={page}")
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=20)
+        except requests.RequestException as e:
+            print(f"    Error: {e}")
+            break
+
+        if r.status_code != 200:
+            print(f"    HTTP {r.status_code}")
+            break
+
+        data = r.json()
+        raw_jobs = data.get("data", [])
+        if not raw_jobs:
+            break
+
+        for item in raw_jobs:
+            job_url = item.get("url", "")
+            if not job_url or job_url in seen:
+                continue
+            seen.add(job_url)
+
+            # Only remote jobs
+            if not item.get("remote", False):
+                continue
+
+            title = item.get("title", "")
+            company = item.get("company_name", "")
+            location = item.get("location", "Remote")
+            desc = strip_html(item.get("description", ""))[:400]
+            created_at = item.get("created_at", "")
+            if isinstance(created_at, int):
+                import datetime as _dt
+                date_posted = _dt.datetime.fromtimestamp(created_at).strftime("%Y-%m-%d")
+            else:
+                date_posted = (created_at or "")[:10]
+
+            jobs.append({
+                "source": "Arbeitnow",
+                "title": title,
+                "company": company,
+                "location": location if location else "Remote",
+                "date_posted": date_posted,
+                "url": job_url,
+                "snippet": desc,
+                "latam_status": latam_status(location, desc),
+                "relevant": is_relevant(title, desc),
+                "emails": "",
+            })
+
+        print(f"    → {len(jobs)} total so far")
+        page += 1
+        time.sleep(2)
+
+    return jobs
+
+
+# ---------------------------------------------------------------------------
+# Source 7: Getonboard (LATAM — public JSON API)
+# ---------------------------------------------------------------------------
+
+def scrape_getonboard():
+    """
+    Public API: https://www.getonboard.com/jobs.json
+    LATAM-focused job board (Chile, Argentina, Colombia, etc.)
+    """
+    jobs = []
+    seen = set()
+    page = 1
+
+    while page <= 3:
+        url = f"https://www.getonboard.com/jobs.json?page={page}&remote=true"
+        print(f"  [Getonboard] page={page}")
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=20)
+        except requests.RequestException as e:
+            print(f"    Error: {e}")
+            break
+
+        if r.status_code != 200:
+            print(f"    HTTP {r.status_code} — stopping")
+            break
+
+        data = r.json()
+        raw_jobs = data if isinstance(data, list) else data.get("jobs", [])
+        if not raw_jobs:
+            break
+
+        for item in raw_jobs:
+            job_url = item.get("url", "") or item.get("job_url", "")
+            if not job_url:
+                # build URL from slug if available
+                slug = item.get("slug", "")
+                if slug:
+                    job_url = f"https://www.getonboard.com/jobs/{slug}"
+            if not job_url or job_url in seen:
+                continue
+            seen.add(job_url)
+
+            title = item.get("title", "") or item.get("name", "")
+            company = item.get("company", {}).get("name", "") if isinstance(item.get("company"), dict) else item.get("company", "")
+            location = item.get("country", "LATAM") or "LATAM"
+            desc = strip_html(item.get("description", ""))[:400]
+            date_posted = (item.get("published_at", "") or "")[:10]
+
+            jobs.append({
+                "source": "Getonboard",
+                "title": title,
+                "company": company,
+                "location": location,
+                "date_posted": date_posted,
+                "url": job_url,
+                "snippet": desc,
+                "latam_status": "open",  # Getonboard is LATAM-native
+                "relevant": is_relevant(title, desc),
+                "emails": "",
+            })
+
+        print(f"    → {len(jobs)} total so far")
+        page += 1
+        time.sleep(2)
+
+    return jobs
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -490,9 +636,15 @@ def run(show_all=False):
     print("\n=== Remotive ===")
     jobs_rem = scrape_remotive()
 
+    print("\n=== Arbeitnow ===")
+    jobs_arb = scrape_arbeitnow()
+
+    print("\n=== Getonboard ===")
+    jobs_gob = scrape_getonboard()
+
     # Merge and deduplicate by URL
     all_jobs = {}
-    for job in jobs_rok + jobs_jcy + jobs_wn + jobs_him + jobs_rem:
+    for job in jobs_rok + jobs_jcy + jobs_wn + jobs_him + jobs_rem + jobs_arb + jobs_gob:
         url = job.get("url", "")
         if url and url not in all_jobs:
             all_jobs[url] = job

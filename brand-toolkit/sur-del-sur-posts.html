@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Sur del Sur — Sierra Field Notes kit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --paper: #EDE3CC;
+    --paper-deep: #E3D6B8;
+    --ink: #231A12;
+    --ink-soft: rgba(35,26,18,.68);
+    --ink-faint: rgba(35,26,18,.4);
+    --copper: #B5541F;
+    --copper-deep: #8C3E14;
+    --forest: #2E3B26;
+    --forest-deep: #1C2417;
+    --gold: #B8860B;
+    --gold-deep: #8A650A;
+
+    --font-display: 'Zilla Slab', serif;
+    --font-mono: 'Space Mono', monospace;
+    --font-sans: 'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; padding:0 0 100px; background:#c9c1ac; font-family:var(--font-sans); }
+
+  .intro{ max-width:1120px; margin:0 auto; padding:50px 24px 10px; text-align:center; }
+  .intro h1{ font-family:var(--font-display); font-weight:700; font-size:26px; margin:0 0 6px; color:#211a10; }
+  .intro p{ color:#5a5342; font-size:13px; margin:0; max-width:720px; margin:0 auto; }
+
+  .row-label{ max-width:1120px; margin:48px auto 14px; padding:0 24px; }
+  .row-label .n{ font-family:var(--font-mono); font-size:12px; font-weight:700; color:#7a6f57; letter-spacing:2px; }
+  .row-label h2{ font-family:var(--font-display); font-size:19px; margin:2px 0 0; color:#211a10; }
+
+  .strip{ max-width:1120px; margin:0 auto; display:flex; gap:20px; overflow-x:auto; padding:0 24px 8px; }
+  .strip.grid2{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; overflow:visible; }
+  .strip.grid5{ display:grid; grid-template-columns:repeat(5,1fr); gap:20px; overflow:visible; max-width:900px; }
+
+  .frame{ flex:none; box-shadow:0 18px 40px rgba(0,0,0,.28); border-radius:6px; overflow:hidden; }
+  .frame.sq{ width:340px; height:340px; }
+  .frame.story{ width:220px; height:391px; }
+  .frame.circle-wrap{ width:170px; height:170px; border-radius:50%; }
+
+  /* ============================================================= */
+  /* Shared post canvas (rendered at 1080x1080 native, shown scaled) */
+  /* ============================================================= */
+  .post{
+    width:1080px; height:1080px; position:relative; background:var(--paper);
+    color:var(--ink); overflow:hidden; transform-origin:top left;
+    font-family:var(--font-sans);
+  }
+  .frame.sq .post{ transform:scale(0.3148); }
+  .story .post{ width:1080px; height:1920px; }
+  .frame.story .post{ transform:scale(0.2037); }
+
+  /* grain texture */
+  .post::before{
+    content:""; position:absolute; inset:0; pointer-events:none; opacity:.5; mix-blend-mode:multiply;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(0,0,0,.03) 0, transparent 3%),
+      radial-gradient(circle at 70% 60%, rgba(0,0,0,.025) 0, transparent 3%),
+      radial-gradient(circle at 40% 80%, rgba(0,0,0,.03) 0, transparent 2%),
+      repeating-linear-gradient(0deg, rgba(0,0,0,.015) 0px, transparent 1px, transparent 3px);
+  }
+  /* contour-line watermark */
+  .contours{ position:absolute; inset:0; z-index:0; opacity:.16; }
+
+  .stamp-tag{
+    position:absolute; font-family:var(--font-mono); font-size:20px; font-weight:700;
+    color:var(--ink-soft); letter-spacing:1px; padding:8px 18px; border:2px dashed var(--ink-faint);
+    border-radius:4px; transform:rotate(-1.4deg); background:rgba(255,255,255,.15);
+  }
+
+  .badge-stamp{
+    width:190px; height:190px; border-radius:48% 52% 45% 55%/50% 45% 55% 50%;
+    border:3px solid var(--ink); display:flex; align-items:center; justify-content:center;
+    text-align:center; transform:rotate(-4deg); position:relative;
+  }
+  .badge-stamp::before{
+    content:""; position:absolute; inset:10px; border-radius:48% 52% 45% 55%/50% 45% 55% 50%;
+    border:1.5px solid var(--ink);
+  }
+  .badge-stamp .t{ font-family:var(--font-mono); font-size:15px; font-weight:700; line-height:1.5; letter-spacing:1.5px; }
+
+  .footer-brand{
+    position:absolute; bottom:64px; left:76px; right:76px; display:flex; justify-content:space-between;
+    align-items:flex-end; font-family:var(--font-mono); font-size:16px; letter-spacing:1px; color:var(--ink-soft);
+  }
+
+  .caption-box{ max-width:1120px; margin:60px auto 0; background:#fff; border-radius:10px; padding:18px 24px;
+    font-size:13px; color:#333; box-shadow:0 4px 14px rgba(0,0,0,.08); }
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>SUR DEL SUR — Sierra Field Notes</h1>
+  <p>Concepto: cuaderno de campo de un cervecero cruzado con la calidez de un bodegón. Papel kraft, tinta, sellos de goma, líneas topográficas de Sierras Bayas, ilustración estilo grabado. Todo escalado a 1080×1080 / 1080×1920 real — mostrado acá en miniatura.</p>
+</div>
+
+<!-- ============ 01. HERO / PROFILE HEADER ============ -->
+<div class="row-label"><span class="n">N.° 000</span><h2>Hero / encabezado de perfil</h2></div>
+<div class="strip">
+  <div class="frame sq">
+    <div class="post" style="display:flex;align-items:center;justify-content:center;">
+      <svg class="contours" viewBox="0 0 1080 1080" preserveAspectRatio="none">
+        <g fill="none" stroke="#231A12" stroke-width="2">
+          <path d="M-20,780 C200,700 350,760 500,700 C650,640 780,700 1100,640"/>
+          <path d="M-20,840 C220,760 380,830 520,760 C660,700 800,760 1100,700"/>
+          <path d="M-20,900 C240,820 400,890 540,820 C680,760 820,820 1100,760"/>
+          <path d="M-20,960 C260,880 420,950 560,880 C700,820 840,880 1100,820"/>
+        </g>
+      </svg>
+      <div style="position:relative;text-align:center;">
+        <div class="badge-stamp" style="width:340px;height:340px;margin:0 auto 30px;">
+          <div class="t" style="font-size:26px;">
+            ✶ SUR DEL SUR ✶<br/>
+            <span style="font-size:15px;opacity:.7;">COMPAÑÍA CERVECERA</span><br/>
+            <span style="font-size:13px;opacity:.55;">SIERRAS BAYAS · EST. 2011</span>
+          </div>
+        </div>
+        <div style="font-family:var(--font-display);font-weight:600;font-size:30px;font-style:italic;color:var(--ink-soft);max-width:640px;margin:0 auto;">
+          cuaderno de campo de una cervecería independiente
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 02. ESPECIMEN SERIES ============ -->
+<div class="row-label"><span class="n">N.° 001–004</span><h2>Serie "Espécimen" (una por cerveza)</h2></div>
+<div class="strip">
+
+  <!-- RUBIA -->
+  <div class="frame sq">
+    <div class="post">
+      <svg class="contours" viewBox="0 0 1080 1080" preserveAspectRatio="none"><g fill="none" stroke="#231A12" stroke-width="2">
+        <path d="M-20,120 C220,180 380,100 520,160 C660,220 820,140 1100,190"/>
+        <path d="M-20,70 C230,130 400,50 540,110 C680,170 830,90 1100,140"/>
+      </g></svg>
+      <div class="stamp-tag" style="top:70px;left:76px;">N.° 001 — RUBIA</div>
+      <div style="position:absolute;top:170px;left:76px;right:76px;">
+        <div style="font-family:var(--font-mono);font-size:16px;letter-spacing:2px;color:var(--gold-deep);margin-bottom:14px;">ESPÉCIMEN · ALE DORADA</div>
+        <svg width="220" height="220" viewBox="0 0 100 100" fill="none" stroke="var(--ink)" stroke-width="2.2" style="margin-bottom:10px;">
+          <path d="M35 20 L65 20 L70 85 Q50 92 30 85 Z"/>
+          <path d="M35 20 L38 30 L62 30 L65 20"/>
+          <path d="M30 85 L70 85" stroke-dasharray="3 4"/>
+          <path d="M40 35 Q50 42 60 35" opacity=".6"/>
+          <path d="M40 45 Q50 52 60 45" opacity=".6"/>
+        </svg>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:56px;line-height:1.05;color:var(--ink);">Rubia<br/>de Sierra</div>
+        <div style="font-family:var(--font-mono);font-size:16px;color:var(--ink-soft);margin-top:18px;">ABV 4.8% · IBU 18<br/>notas: miel, pan tostado, final seco</div>
+      </div>
+      <div class="footer-brand"><span>SUR DEL SUR</span><span>REG. 2011</span></div>
+    </div>
+  </div>
+
+  <!-- IPA -->
+  <div class="frame sq">
+    <div class="post" style="background:var(--copper);color:var(--paper);">
+      <svg class="contours" viewBox="0 0 1080 1080" preserveAspectRatio="none" style="opacity:.22"><g fill="none" stroke="#EDE3CC" stroke-width="2">
+        <path d="M-20,900 C220,830 380,900 520,830 C660,770 820,830 1100,780"/>
+        <path d="M-20,950 C230,880 400,950 540,880 C680,820 830,880 1100,830"/>
+      </g></svg>
+      <div class="stamp-tag" style="top:70px;left:76px;border-color:rgba(237,227,204,.4);color:var(--paper);">N.° 002 — IPA</div>
+      <div style="position:absolute;top:170px;left:76px;right:76px;">
+        <div style="font-family:var(--font-mono);font-size:16px;letter-spacing:2px;color:var(--paper);opacity:.75;margin-bottom:14px;">ESPÉCIMEN · LÚPULO CASCADE</div>
+        <svg width="220" height="220" viewBox="0 0 100 100" fill="none" stroke="var(--paper)" stroke-width="2.2" style="margin-bottom:10px;">
+          <path d="M50 15 C30 25 25 45 35 60 C42 70 50 88 50 88 C50 88 58 70 65 60 C75 45 70 25 50 15 Z"/>
+          <path d="M50 15 L50 88" stroke-dasharray="2 4" opacity=".6"/>
+          <path d="M38 35 Q50 40 62 35" opacity=".6"/>
+          <path d="M36 50 Q50 56 64 50" opacity=".6"/>
+        </svg>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:56px;line-height:1.05;color:var(--paper);">India Pale<br/>de Sierra</div>
+        <div style="font-family:var(--font-mono);font-size:16px;color:var(--paper);opacity:.8;margin-top:18px;">ABV 6.2% · IBU 52<br/>notas: cítrico, resina, amargor franco</div>
+      </div>
+      <div class="footer-brand" style="color:var(--paper);opacity:.8;"><span>SUR DEL SUR</span><span>REG. 2011</span></div>
+    </div>
+  </div>
+
+  <!-- STOUT -->
+  <div class="frame sq">
+    <div class="post" style="background:var(--forest);color:var(--paper);">
+      <svg class="contours" viewBox="0 0 1080 1080" preserveAspectRatio="none" style="opacity:.18"><g fill="none" stroke="#EDE3CC" stroke-width="2">
+        <path d="M-20,150 C230,220 390,140 530,200 C670,260 830,180 1100,230"/>
+      </g></svg>
+      <div class="stamp-tag" style="top:70px;left:76px;border-color:rgba(237,227,204,.4);color:var(--paper);">N.° 003 — STOUT</div>
+      <div style="position:absolute;top:170px;left:76px;right:76px;">
+        <div style="font-family:var(--font-mono);font-size:16px;letter-spacing:2px;color:var(--paper);opacity:.75;margin-bottom:14px;">ESPÉCIMEN · MALTA TOSTADA</div>
+        <svg width="220" height="220" viewBox="0 0 100 100" fill="none" stroke="var(--paper)" stroke-width="2.2" style="margin-bottom:10px;">
+          <path d="M32 22 L68 22 L64 82 Q50 90 36 82 Z"/>
+          <path d="M20 40 Q14 40 14 50 Q14 60 20 60"/>
+          <path d="M36 82 L64 82" stroke-dasharray="3 4"/>
+        </svg>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:56px;line-height:1.05;color:var(--paper);">Stout de<br/>Invierno</div>
+        <div style="font-family:var(--font-mono);font-size:16px;color:var(--paper);opacity:.8;margin-top:18px;">ABV 5.4% · IBU 30<br/>notas: café, cacao, cuerpo denso</div>
+      </div>
+      <div class="footer-brand" style="color:var(--paper);opacity:.8;"><span>SUR DEL SUR</span><span>REG. 2011</span></div>
+    </div>
+  </div>
+
+  <!-- HONEY / SESSION -->
+  <div class="frame sq">
+    <div class="post" style="background:var(--gold);color:var(--ink);">
+      <svg class="contours" viewBox="0 0 1080 1080" preserveAspectRatio="none" style="opacity:.2"><g fill="none" stroke="#231A12" stroke-width="2">
+        <path d="M-20,860 C230,790 390,860 530,790 C670,730 830,790 1100,740"/>
+      </g></svg>
+      <div class="stamp-tag" style="top:70px;left:76px;">N.° 004 — HONEY</div>
+      <div style="position:absolute;top:170px;left:76px;right:76px;">
+        <div style="font-family:var(--font-mono);font-size:16px;letter-spacing:2px;color:var(--ink);opacity:.7;margin-bottom:14px;">ESPÉCIMEN · MIEL DE SIERRA</div>
+        <svg width="220" height="220" viewBox="0 0 100 100" fill="none" stroke="var(--ink)" stroke-width="2.2" style="margin-bottom:10px;">
+          <path d="M30 30 Q50 20 70 30 Q80 50 70 70 Q50 80 30 70 Q20 50 30 30 Z"/>
+          <path d="M40 42 L60 42 M40 50 L60 50 M40 58 L60 58" opacity=".6"/>
+        </svg>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:56px;line-height:1.05;color:var(--ink);">Honey<br/>Session</div>
+        <div style="font-family:var(--font-mono);font-size:16px;color:var(--ink);opacity:.75;margin-top:18px;">ABV 4.2% · IBU 14<br/>notas: miel local, liviana, fácil de tomar</div>
+      </div>
+      <div class="footer-brand"><span>SUR DEL SUR</span><span>REG. 2011</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ 03. REGISTRO DE FUNDACIÓN ============ -->
+<div class="row-label"><span class="n">N.° 005</span><h2>Registro de fundación (historia 2011)</h2></div>
+<div class="strip">
+  <div class="frame sq">
+    <div class="post">
+      <div class="stamp-tag" style="top:70px;left:76px;">REGISTRO N.° 2011-03</div>
+      <div style="position:absolute; top:170px;left:76px;right:76px;">
+        <div style="font-family:var(--font-mono);font-size:15px;letter-spacing:1.5px;color:var(--ink-soft);margin-bottom:20px;">ENTRADA DE CUADERNO — SIERRAS BAYAS</div>
+        <div style="font-family:var(--font-display);font-style:italic;font-weight:600;font-size:38px;line-height:1.4;color:var(--ink);">
+          "Empezamos como un hobbie entre tres amigos. No sabíamos que quince años después íbamos a tener medallas y cien puntos de venta."
+        </div>
+        <div style="font-family:var(--font-mono);font-size:15px;color:var(--copper-deep);margin-top:26px;letter-spacing:1px;">— ÁLVARO, NACHO Y SANTI · FUNDADORES</div>
+      </div>
+      <div class="footer-brand"><span>SUR DEL SUR</span><span>DESDE 2011</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 04. MEDALLA ============ -->
+<div class="row-label"><span class="n">N.° 006</span><h2>Medalla / reconocimiento</h2></div>
+<div class="strip">
+  <div class="frame sq">
+    <div class="post" style="display:flex;align-items:center;justify-content:center;">
+      <div style="position:relative;text-align:center;">
+        <svg width="260" height="320" viewBox="0 0 100 130" fill="none" stroke="var(--ink)" stroke-width="2" style="margin-bottom:6px;">
+          <path d="M35 5 L45 45 M65 5 L55 45" opacity=".7"/>
+          <circle cx="50" cy="70" r="30"/>
+          <circle cx="50" cy="70" r="22"/>
+          <path d="M50 55 L54 66 L66 66 L56 73 L60 85 L50 77 L40 85 L44 73 L34 66 L46 66 Z"/>
+        </svg>
+        <div style="font-family:var(--font-mono);font-size:17px;letter-spacing:2px;color:var(--copper-deep);margin-bottom:10px;">MEDALLA · COPA ARGENTINA DE CERVEZAS</div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:42px;color:var(--ink);max-width:600px;">Entre las mejores<br/>cervecerías del país</div>
+      </div>
+      <div class="footer-brand"><span>SUR DEL SUR</span><span>REG. PREMIO</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 05. MAPA DEL TERRITORIO ============ -->
+<div class="row-label"><span class="n">N.° 007</span><h2>Mapa del territorio</h2></div>
+<div class="strip">
+  <div class="frame sq">
+    <div class="post" style="background:var(--paper-deep);">
+      <svg class="contours" viewBox="0 0 1080 1080" preserveAspectRatio="none" style="opacity:.3"><g fill="none" stroke="#231A12" stroke-width="2">
+        <path d="M-20,300 C200,250 350,320 500,260 C650,200 780,270 1100,220"/>
+        <path d="M-20,360 C220,310 380,380 530,320 C680,260 810,330 1100,280"/>
+        <path d="M-20,420 C240,370 410,440 550,380 C690,320 830,390 1100,340"/>
+      </g></svg>
+      <div class="stamp-tag" style="top:70px;left:76px;">MAPA N.° 1 — SIERRAS BAYAS</div>
+      <svg style="position:absolute;top:200px;right:90px;" width="90" height="90" viewBox="0 0 100 100" fill="none" stroke="var(--ink)" stroke-width="2">
+        <circle cx="50" cy="50" r="42"/>
+        <path d="M50 8 L50 20 M50 80 L50 92 M8 50 L20 50 M80 50 L92 50"/>
+        <path d="M50 50 L65 25 L50 40 Z" fill="var(--ink)"/>
+      </svg>
+      <div style="position:absolute;bottom:280px;left:76px;">
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="var(--copper-deep)"><path d="M12 2C7 2 4 6 4 10c0 6 8 12 8 12s8-6 8-12c0-4-3-8-8-8z"/><circle cx="12" cy="10" r="3" fill="var(--paper-deep)"/></svg>
+      </div>
+      <div style="position:absolute;bottom:64px;left:76px;right:76px;">
+        <div style="font-family:var(--font-display);font-weight:700;font-size:44px;color:var(--ink);">Nos encontrás en<br/>Sierras Bayas, Olavarría</div>
+        <div style="font-family:var(--font-mono);font-size:16px;color:var(--ink-soft);margin-top:16px;">FÁBRICA + TAPROOM · A 15 KM DEL CENTRO</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 06. TAPROOM / BODEGÓN ============ -->
+<div class="row-label"><span class="n">N.° 008</span><h2>Taproom / bodegón (horarios)</h2></div>
+<div class="strip">
+  <div class="frame sq">
+    <div class="post" style="background:var(--ink);color:var(--paper);">
+      <div class="stamp-tag" style="top:70px;left:76px;border-color:rgba(237,227,204,.35);color:var(--paper);">PIZARRA DEL DÍA</div>
+      <div style="position:absolute;top:190px;left:76px;right:76px;">
+        <div style="font-family:var(--font-display);font-weight:700;font-size:64px;line-height:1.15;color:var(--paper);">Vie a dom<br/>desde las 18h<br/><span style="font-style:italic;color:var(--gold);">sin apuro.</span></div>
+        <div style="margin-top:36px;display:flex;gap:16px;">
+          <svg width="46" height="46" viewBox="0 0 100 100" fill="none" stroke="var(--paper)" stroke-width="3"><path d="M30 30h40v50a20 15 0 01-40 0z"/></svg>
+          <svg width="46" height="46" viewBox="0 0 100 100" fill="none" stroke="var(--paper)" stroke-width="3"><rect x="25" y="30" width="50" height="45" rx="3"/><path d="M25 45h50"/></svg>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:16px;color:var(--paper);opacity:.7;margin-top:20px;">BODEGÓN A FUEGO LENTO · BIRRA TIRADA DE FÁBRICA</div>
+      </div>
+      <div class="footer-brand" style="color:var(--paper);opacity:.8;"><span>SUR DEL SUR</span><span>SIERRAS BAYAS</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 07. DISTRIBUCIÓN ============ -->
+<div class="row-label"><span class="n">N.° 009</span><h2>Distribución nacional</h2></div>
+<div class="strip">
+  <div class="frame sq">
+    <div class="post">
+      <div class="stamp-tag" style="top:70px;left:76px;">RUTA DE EXPEDICIÓN</div>
+      <div style="position:absolute;top:180px;left:76px;right:76px;">
+        <div style="font-family:var(--font-mono);font-size:16px;letter-spacing:1.5px;color:var(--ink-soft);">REGISTRO DE DISTRIBUCIÓN</div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:150px;line-height:1;color:var(--copper-deep);margin-top:10px;">+100</div>
+        <div style="font-family:var(--font-display);font-weight:600;font-size:34px;color:var(--ink);margin-top:8px;">puntos de venta<br/>en toda la Argentina</div>
+      </div>
+      <svg style="position:absolute;bottom:180px;left:76px;right:76px;" width="928" height="90" viewBox="0 0 928 90">
+        <path d="M10,60 Q200,20 400,55 T900,30" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 8"/>
+        <circle cx="10" cy="60" r="7" fill="var(--copper-deep)"/>
+        <circle cx="900" cy="30" r="7" fill="var(--ink)"/>
+      </svg>
+      <div class="footer-brand"><span>SUR DEL SUR</span><span>DEL CENTRO BONAERENSE AL PAÍS</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 08. STORY TEMPLATES ============ -->
+<div class="row-label"><span class="n">N.° 010–011</span><h2>Plantillas de historia (1080×1920)</h2></div>
+<div class="strip">
+  <div class="frame story">
+    <div class="post story" style="background:var(--paper);">
+      <div class="stamp-tag" style="top:100px;left:60px;">NOTA DE CAMPO — HOY</div>
+      <div style="position:absolute;top:900px;left:60px;right:60px;">
+        <div style="font-family:var(--font-display);font-style:italic;font-weight:600;font-size:52px;line-height:1.3;color:var(--ink);">
+          espacio para caption manuscrita del día
+        </div>
+        <div style="font-family:var(--font-mono);font-size:20px;color:var(--ink-soft);margin-top:30px;">SUR DEL SUR · SIERRAS BAYAS</div>
+      </div>
+      <svg class="contours" viewBox="0 0 1080 1920" preserveAspectRatio="none" style="opacity:.15"><g fill="none" stroke="#231A12" stroke-width="2">
+        <path d="M-20,1500 C300,1420 500,1500 700,1420 C900,1340 1000,1420 1100,1380"/>
+      </g></svg>
+    </div>
+  </div>
+
+  <div class="frame story">
+    <div class="post story" style="background:var(--forest);color:var(--paper);">
+      <div class="stamp-tag" style="top:100px;left:60px;border-color:rgba(237,227,204,.4);color:var(--paper);">CUENTA REGRESIVA</div>
+      <div style="position:absolute;top:750px;left:60px;right:60px;text-align:center;">
+        <div style="font-family:var(--font-display);font-weight:700;font-size:220px;line-height:1;color:var(--gold);">3</div>
+        <div style="font-family:var(--font-mono);font-size:22px;letter-spacing:2px;color:var(--paper);margin-top:20px;">DÍAS PARA EL TAPROOM</div>
+        <div style="font-family:var(--font-display);font-style:italic;font-size:34px;color:var(--paper);margin-top:30px;">viernes, desde las 18h</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 09. HIGHLIGHT COVERS ============ -->
+<div class="row-label"><span class="n">N.° 012–016</span><h2>Portadas de destacadas</h2></div>
+<div class="strip grid5">
+  <div class="frame circle-wrap" style="border-radius:50%;">
+    <div class="post" style="width:340px;height:340px;transform:scale(0.5);transform-origin:top left;display:flex;align-items:center;justify-content:center;border-radius:50%;">
+      <svg width="140" height="140" viewBox="0 0 100 100" fill="none" stroke="var(--ink)" stroke-width="3"><path d="M35 20 L65 20 L70 85 Q50 92 30 85 Z"/></svg>
+    </div>
+  </div>
+  <div class="frame circle-wrap" style="border-radius:50%;">
+    <div class="post" style="width:340px;height:340px;transform:scale(0.5);transform-origin:top left;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--forest);">
+      <svg width="140" height="140" viewBox="0 0 100 100" fill="none" stroke="var(--paper)" stroke-width="3"><rect x="25" y="30" width="50" height="45" rx="3"/><path d="M25 45h50"/></svg>
+    </div>
+  </div>
+  <div class="frame circle-wrap" style="border-radius:50%;">
+    <div class="post" style="width:340px;height:340px;transform:scale(0.5);transform-origin:top left;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--copper);">
+      <svg width="140" height="140" viewBox="0 0 100 100" fill="none" stroke="var(--paper)" stroke-width="3"><path d="M50 15 C30 25 25 45 35 60 C42 70 50 88 50 88 C50 88 58 70 65 60 C75 45 70 25 50 15 Z"/></svg>
+    </div>
+  </div>
+  <div class="frame circle-wrap" style="border-radius:50%;">
+    <div class="post" style="width:340px;height:340px;transform:scale(0.5);transform-origin:top left;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--gold);">
+      <svg width="140" height="140" viewBox="0 0 100 100" fill="none" stroke="var(--ink)" stroke-width="3"><circle cx="50" cy="70" r="26"/><path d="M35 5 L45 45 M65 5 L55 45" opacity=".7"/></svg>
+    </div>
+  </div>
+  <div class="frame circle-wrap" style="border-radius:50%;">
+    <div class="post" style="width:340px;height:340px;transform:scale(0.5);transform-origin:top left;display:flex;align-items:center;justify-content:center;border-radius:50%;">
+      <svg width="140" height="140" viewBox="0 0 100 100" fill="none" stroke="var(--ink)" stroke-width="3"><circle cx="50" cy="50" r="38"/><path d="M50 12 L50 24 M50 76 L50 88 M12 50 L24 50 M76 50 L88 50"/><path d="M50 50 L62 30 L50 42 Z" fill="var(--ink)"/></svg>
+    </div>
+  </div>
+</div>
+
+<div class="caption-box">
+  <b>Notas de producción:</b> cada post es un <code>.post</code> de 1080×1080 (o 1080×1920 para historias) con textura de grano + líneas topográficas de fondo. El sistema de "espécimen" (N.° + monospace) es el hilo conductor — aparece en casi todos los formatos. El color de acento cambia según el estilo de cerveza (cobre = ale/IPA, verde bosque = stout, ocre = rubia/session), mientras la base de papel se mantiene constante. Ilustraciones en línea simple estilo grabado, sin fotografía de stock.
+</div>
+
+</body>
+</html>

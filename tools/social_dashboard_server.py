@@ -23,8 +23,17 @@ auto-snapshots today's followers/media count on every load, so just using
 the dashboard daily is enough to build history — a cron running
 tools/snapshot_social_stats.py is optional, only useful for days nobody
 opens the page.
+
+The "Pedile algo a Claude Code" box at the bottom shells out to the local
+`claude` CLI (must be on PATH — npm install -g @anthropic-ai/claude-code)
+with --dangerously-skip-permissions, so it edits repo files directly with
+no per-tool approval prompt. That's a deliberate choice (direct edits, no
+review gate) for a single-user local tool — it does NOT auto-commit or
+push, so `git status`/`git diff` after a run before trusting the result.
 """
+import subprocess
 import sys
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
@@ -32,7 +41,7 @@ sys.path.insert(0, str(ROOT))
 
 from flask import Flask, jsonify, request, Response
 
-from tools.claude_call import call_claude
+from tools.claude_call import call_claude, _find_claude_binary
 from tools.post_instagram import ACCOUNT_CONFIG
 from tools.social_stats import (
     DISPLAY_NAMES,
@@ -50,6 +59,8 @@ ACCENT = {
     "fiestas": "#C084FC",
     "storm": "#A3E635",
     "techno": "#E5E7EB",
+    "empleo": "#F97316",
+    "talento": "#F43F5E",
 }
 
 IMPROVE_SCHEMA = {
@@ -150,11 +161,14 @@ def api_improve(account):
     if not data.get("configured"):
         return jsonify({"error": f"{DISPLAY_NAMES[account]} no está configurada en .env"}), 400
 
+    cutoff = (date.today() - timedelta(days=5)).isoformat()
+    recent_posts = [p for p in fetch_recent_media(account, limit=15) if (p.get("timestamp") or "")[:10] >= cutoff]
     posts_summary = "\n".join(
-        f"- \"{p['caption']}\" ({p['media_type']}, {p['like_count']} likes, "
-        f"{p['comments_count']} comentarios, {p['timestamp']})"
-        for p in data["posts"]
-    ) or "(sin posts recientes)"
+        f"- \"{(p.get('caption') or '').strip()[:90]}\" ({p.get('media_type')}, "
+        f"{p.get('like_count', 0)} likes, {p.get('comments_count', 0)} comentarios, "
+        f"{(p.get('timestamp') or '')[:10]})"
+        for p in recent_posts
+    ) or "(sin posts en los últimos 5 días)"
 
     prompt = (
         f"Cuenta: {data['name']} (@{data['username']})\n"
@@ -167,11 +181,40 @@ def api_improve(account):
     try:
         result = call_claude(prompt, system_prompt=IMPROVE_SYSTEM_PROMPT, model="sonnet",
                               as_json=True, schema=IMPROVE_SCHEMA)
-        import json
-        parsed = json.loads(result) if isinstance(result, str) else result
-        return jsonify(parsed)
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": f"call_claude() falló: {e}"}), 500
+
+    import json
+    try:
+        parsed = json.loads(result) if isinstance(result, str) else result
+    except Exception as e:
+        # Show exactly what came back so a bad response is diagnosable from the UI
+        return jsonify({"error": f"No se pudo interpretar la respuesta: {e}\nRespuesta cruda: {result!r}"}), 500
+    return jsonify(parsed)
+
+
+@app.route("/api/claude-code", methods=["POST"])
+def api_claude_code():
+    prompt = (request.get_json(silent=True) or {}).get("prompt", "").strip()
+    if not prompt:
+        return jsonify({"error": "Escribí algo primero."}), 400
+    try:
+        # Resolve the actual binary path (not just "claude") — on Windows, subprocess
+        # doesn't resolve bare command names to the npm-installed .cmd shim the way
+        # a real shell does, so a plain "claude" here raises FileNotFoundError even
+        # when `claude --version` works fine typed directly into PowerShell.
+        claude_bin = _find_claude_binary()
+        # -p = non-interactive; --dangerously-skip-permissions = no per-tool approval gate (see module docstring)
+        result = subprocess.run(
+            [claude_bin, "-p", prompt, "--dangerously-skip-permissions"],
+            cwd=ROOT, capture_output=True, text=True, timeout=600, encoding="utf-8-sig",
+        )
+        output = result.stdout.strip() or result.stderr.strip() or "(sin salida)"
+        return jsonify({"output": output, "ok": result.returncode == 0})
+    except FileNotFoundError:
+        return jsonify({"error": "No se encontró el CLI 'claude'. Instalalo: npm install -g @anthropic-ai/claude-code"}), 500
+    except subprocess.TimeoutExpired:
+        return jsonify({"error": "Se colgó (más de 10 min). Corré el pedido a mano en la terminal: claude -p \"...\""}), 500
 
 
 PAGE_HTML = """<!DOCTYPE html>
@@ -215,11 +258,18 @@ button.improve:disabled { opacity: .5; cursor: default; }
 .wa-card .name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; }
 .wa-card .note { color: #64748B; font-size: 12px; max-width: 480px; }
 a.wa-btn { background: #25D366; color: #05210F; font-weight: 700; text-decoration: none; padding: 10px 16px; border-radius: 10px; font-size: 13px; white-space: nowrap; }
+.cc-card { max-width: 1200px; margin: 20px auto 0; background: #111827; border: 1px solid #1E293B; border-radius: 16px; padding: 20px; }
+.cc-card .name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; margin-bottom: 4px; }
+.cc-card .note { color: #64748B; font-size: 12px; margin-bottom: 12px; }
+.cc-card textarea { width: 100%; min-height: 70px; background: #0B1220; border: 1px solid #1E293B; border-radius: 10px; color: #E2E8F0; font-family: inherit; font-size: 13px; padding: 10px; resize: vertical; }
+.cc-card button { margin-top: 10px; background: #6366F1; color: white; border: none; border-radius: 10px; padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.cc-card button:disabled { opacity: .5; cursor: default; }
+.cc-card pre { margin-top: 12px; white-space: pre-wrap; font-size: 12px; color: #CBD5E1; background: #0B1220; border-radius: 10px; padding: 12px; max-height: 320px; overflow-y: auto; }
 </style>
 </head>
 <body>
 <h1>Panel Social</h1>
-<div class="sub">Crecimiento y actividad de las 4 cuentas — actualiza cada vez que abrís la página.</div>
+<div class="sub">Crecimiento y actividad de las 6 cuentas — actualiza cada vez que abrís la página.</div>
 <div id="grid" class="grid"><div class="sub">Cargando...</div></div>
 
 <div class="wa-card">
@@ -230,8 +280,16 @@ a.wa-btn { background: #25D366; color: #05210F; font-weight: 700; text-decoratio
   <a class="wa-btn" href="https://web.whatsapp.com/" target="_blank" rel="noopener">Abrir WhatsApp Web ↗</a>
 </div>
 
+<div class="cc-card">
+  <div class="name">🔧 Pedile algo a Claude Code</div>
+  <div class="note">Edita los archivos del repo directo, en tu PC — sin pedir permiso por cada cambio. No hace commit ni push solo: revisá con "git status" / "git diff" después de cada corrida antes de confiar en el resultado.</div>
+  <textarea id="cc-prompt" placeholder="Ej: agregá un botón para exportar el panel a PDF"></textarea>
+  <button id="cc-btn" onclick="runClaudeCode()">Enviar</button>
+  <pre id="cc-output" style="display:none"></pre>
+</div>
+
 <script>
-const ACCENT = {ola:'#0EA5E9', fiestas:'#C084FC', storm:'#A3E635', techno:'#E5E7EB'};
+const ACCENT = {ola:'#0EA5E9', fiestas:'#C084FC', storm:'#A3E635', techno:'#E5E7EB', empleo:'#F97316', talento:'#F43F5E'};
 
 function growthBadge(label, val) {
   if (val === null || val === undefined) return `<span class="badge">${label}: —</span>`;
@@ -296,7 +354,9 @@ async function improve(account, btn) {
     if (data.error) {
       box.innerHTML = `<div class="missing">${data.error}</div>`;
     } else {
-      box.innerHTML = '<ul>' + data.suggestions.map(s => `<li>${s}</li>`).join('') + '</ul>';
+      box.innerHTML = '<ul>' + data.suggestions.map(s =>
+        `<li>${s} <a href="#" style="color:#818CF8" onclick="sendSuggestionToClaudeCode(${JSON.stringify(s)}, ${JSON.stringify(account)}); return false;">Implementar →</a></li>`
+      ).join('') + '</ul>';
     }
     box.style.display = 'block';
   } catch (e) {
@@ -306,6 +366,38 @@ async function improve(account, btn) {
     btn.disabled = false;
     btn.textContent = '✨ Mejoras';
   }
+}
+
+async function runClaudeCode() {
+  const box = document.getElementById('cc-prompt');
+  const out = document.getElementById('cc-output');
+  const btn = document.getElementById('cc-btn');
+  const prompt = box.value.trim();
+  if (!prompt) return;
+  btn.disabled = true;
+  btn.textContent = 'Trabajando... (puede tardar varios minutos)';
+  out.style.display = 'block';
+  out.textContent = '';
+  try {
+    const res = await fetch('/api/claude-code', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({prompt}),
+    });
+    const data = await res.json();
+    out.textContent = data.error || data.output;
+  } catch (e) {
+    out.textContent = 'Error: ' + e;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Enviar';
+  }
+}
+
+function sendSuggestionToClaudeCode(text, accountName) {
+  const box = document.getElementById('cc-prompt');
+  box.value = `Para la cuenta de Instagram ${accountName}: ${text}`;
+  box.scrollIntoView({behavior: 'smooth', block: 'center'});
+  box.focus();
 }
 
 loadAccounts();

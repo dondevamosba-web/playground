@@ -100,7 +100,7 @@ def append_rows(sheets, sheet_id: str, rows: list[list]):
 
 
 def run_scraper(script: str, extra_args: list = None) -> list[dict]:
-    cmd = ["python3", str(ROOT / "tools" / script)] + (extra_args or [])
+    cmd = [sys.executable, str(ROOT / "tools" / script)] + (extra_args or [])
     result = subprocess.run(cmd, capture_output=True, text=True, cwd=str(ROOT))
     if result.returncode != 0:
         print(f"  WARN: {script} exited {result.returncode}: {result.stderr.strip()[:300]}")
@@ -127,6 +127,12 @@ def events_to_rows(events: list[dict], source: str) -> list[list]:
     rows = []
     for e in events:
         artists = ", ".join(e.get("artists") or [])
+        # ghost filter: no venue, no lineup AND no source URL means
+        # unverifiable scraper noise ("SIN VENTA", "Sugar Crush Remix") — skip
+        if not (e.get("venue") or "").strip() and not artists \
+                and not (e.get("event_url") or e.get("post_url") or "").strip():
+            print(f"  [ghost] salteado: {e.get('name', '?')[:50]}")
+            continue
         rows.append([
             now_ar(),                          # A Queued At
             source,                            # B Source
@@ -151,6 +157,8 @@ def main():
     parser.add_argument("--city", default=None, help="RA city filter e.g. buenos-aires")
     parser.add_argument("--skip-ig", action="store_true", help="Skip IG account scraping")
     parser.add_argument("--ig-only", action="store_true", help="Skip RA, scrape IG accounts only")
+    parser.add_argument("--skip-tm", action="store_true", help="Skip Ticketmaster AR scraping")
+    parser.add_argument("--skip-passline", action="store_true", help="Skip Passline scraping")
     parser.add_argument("--dry-run", action="store_true", help="Show what would be queued, don't write")
     args = parser.parse_args()
 
@@ -177,7 +185,7 @@ def main():
         if ra_events:
             print("  Generating captions...")
             subprocess.run(
-                ["python3", str(ROOT / "tools" / "generate_event_caption.py"),
+                [sys.executable, str(ROOT / "tools" / "generate_event_caption.py"),
                  "--input", ".tmp/ra_events.json",
                  "--output", ".tmp/ra_events_captioned.json"],
                 cwd=str(ROOT), capture_output=False,
@@ -189,13 +197,50 @@ def main():
             if key not in known and key[0]:
                 all_events.append(("Resident Advisor", e))
 
+    # --- Ticketmaster AR scrape ---
+    if not args.ig_only and not args.skip_tm:
+        tm_api_key = os.getenv("TM_API_KEY", "").strip()
+        if tm_api_key:
+            print("\nScraping Ticketmaster (Argentina, electronic)...")
+            run_scraper("scrape_ticketmaster_ar.py", ["--output", ".tmp/tm_ar_events.json"])
+
+            tm_events = load_json_file(".tmp/tm_ar_events.json")
+            print(f"  {len(tm_events)} Ticketmaster events scraped")
+
+            for e in tm_events:
+                key = (e.get("name", "").strip(), e.get("date", "").strip())
+                if key not in known and key[0]:
+                    all_events.append(("Ticketmaster AR", e))
+                    known.add(key)
+        else:
+            print("\nTicketmaster skipped — set TM_API_KEY in .env to enable.")
+            print("  Get a free key at: https://developer.ticketmaster.com/")
+
+    # --- Passline scrape ---
+    if not args.ig_only and not args.skip_passline:
+        firecrawl_key = os.getenv("FIRECRAWL_API_KEY", "").strip()
+        if firecrawl_key:
+            print("\nScraping Passline (electronic)...")
+            run_scraper("scrape_passline.py", ["--output", ".tmp/passline_events.json"])
+
+            passline_events = load_json_file(".tmp/passline_events.json")
+            print(f"  {len(passline_events)} Passline events scraped")
+
+            for e in passline_events:
+                key = (e.get("name", "").strip(), e.get("date", "").strip())
+                if key not in known and key[0]:
+                    all_events.append(("Passline", e))
+                    known.add(key)
+        else:
+            print("\nPassline skipped — FIRECRAWL_API_KEY not set in .env.")
+
     # --- IG accounts scrape ---
     if not args.skip_ig:
         source_accounts = os.getenv("FIESTAS_IG_SOURCE_ACCOUNTS", "").strip()
         if source_accounts:
             print(f"\nScraping IG accounts: {source_accounts}")
             subprocess.run(
-                ["python3", str(ROOT / "tools" / "scrape_ig_posts.py"),
+                [sys.executable, str(ROOT / "tools" / "scrape_ig_posts.py"),
                  "--output", ".tmp/ig_posts.json"],
                 cwd=str(ROOT), capture_output=False,
             )
@@ -216,7 +261,7 @@ def main():
                     json.dump(event_posts, f, ensure_ascii=False)
 
                 subprocess.run(
-                    ["python3", str(ROOT / "tools" / "generate_event_caption.py"),
+                    [sys.executable, str(ROOT / "tools" / "generate_event_caption.py"),
                      "--input", ".tmp/ig_events.json",
                      "--output", ".tmp/ig_events_captioned.json"],
                     cwd=str(ROOT), capture_output=False,

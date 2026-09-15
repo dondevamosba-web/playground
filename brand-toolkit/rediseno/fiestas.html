@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Fiestas — marco de lineup</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#050505}
+  .poster{position:absolute;top:0;left:0;width:1080px;height:1080px;overflow:hidden;
+    background:#050505;color:#fff;display:flex;flex-direction:column}
+  /* zona superior: acá entra el flyer del venue. El degradado simula esa foto. */
+  .art{flex:1;position:relative;overflow:hidden;
+    background:radial-gradient(120% 90% at 30% 15%,#3B1D6B 0%,#150B29 55%,#050505 100%)}
+  .art::after{content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(115deg,transparent 0 76px,rgba(255,255,255,.04) 76px 82px)}
+  .who{position:absolute;left:64px;right:64px;bottom:56px;
+    font-family:Impact,"Bahnschrift SemiBold Condensed","Arial Narrow",sans-serif;
+    font-size:150px;line-height:.88;text-transform:uppercase;letter-spacing:.005em}
+  .band{border-top:9px solid #C6FF3D;background:#050505;padding:44px 64px;
+    display:flex;justify-content:space-between;align-items:center}
+  .band .d{font-family:Impact,"Bahnschrift SemiBold Condensed",sans-serif;
+    font-size:70px;text-transform:uppercase;letter-spacing:.01em}
+  .band .h{font-family:Consolas,monospace;font-size:26px;letter-spacing:.16em;
+    color:#C6FF3D;text-align:right;line-height:1.6}
+</style></head><body>
+<div class="poster">
+  <div class="art"><div class="who">Kevin<br>de Vries</div></div>
+  <div class="band">
+    <span class="d">26 Sep</span>
+    <span class="h">MANDARINE PARK<br>ENTRADAS EN BIO</span>
+  </div>
+</div>
+</body></html>

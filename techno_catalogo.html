@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Techno Apple OK - Catálogo de Precios</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0a0e27;
+      color: #fff;
+    }
+
+    .banner {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 20px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .header h1 {
+      font-size: 48px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: #999;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      max-width: 500px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 40px 12px 16px;
+      background: #0f1729;
+      border: 2px solid #1a2332;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #667eea;
+      pointer-events: none;
+    }
+
+    .category-tabs {
+      display: flex;
+      gap: 12px;
+      margin: 40px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .category-btn {
+      padding: 10px 20px;
+      background: #0f1729;
+      border: 2px solid #1a2332;
+      color: #999;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .category-btn:hover {
+      border-color: #667eea;
+      color: #667eea;
+    }
+
+    .category-btn.active {
+      background: #667eea;
+      border-color: #667eea;
+      color: #fff;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    .product-card {
+      background: #0f1729;
+      border: 1px solid #1a2332;
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      border-color: #667eea;
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+      transform: translateY(-4px);
+    }
+
+    .product-name {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .product-specs {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .product-colors {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .color-tag {
+      font-size: 11px;
+      background: rgba(102, 126, 234, 0.1);
+      color: #667eea;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 260px;
+      object-fit: contain;
+      display: block;
+      margin: -20px -20px 16px -20px;
+      border-radius: 12px 12px 0 0;
+      background: #ffffff;
+      padding: 12px;
+      box-sizing: border-box;
+    }
+
+    .product-price {
+      background: linear-gradient(135deg, #4caf50, #45a049);
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .price-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .category-section {
+      margin-bottom: 50px;
+    }
+
+    .category-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #667eea;
+    }
+
+    .category-desc {
+      font-size: 14px;
+      color: #999;
+      margin-bottom: 24px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .footer {
+      background: #0f1729;
+      border-top: 1px solid #1a2332;
+      padding: 30px;
+      margin-top: 60px;
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .footer strong {
+      color: #667eea;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 40px 0;
+    }
+
+    .info-card {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+      border: 1px solid #1a2332;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .info-card h3 {
+      color: #667eea;
+      margin-bottom: 8px;
+    }
+
+    .info-card p {
+      font-size: 13px;
+      color: #999;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 { font-size: 32px; }
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="banner">
+    🍎 DIRECTO DE USA APPLE - STOCK ENTREGA INMEDIATA 🚀
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <h1>📱 Techno Apple OK</h1>
+      <p>Catálogo oficial de precios - @techno.apple.ok</p>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>💵 Precios en USD</h3>
+        <p>Importados directo desde USA sin intermediarios</p>
+      </div>
+      <div class="info-card">
+        <h3>📦 Entrega Inmediata</h3>
+        <p>Stock disponible listo para enviar hoy</p>
+      </div>
+      <div class="info-card">
+        <h3>🛡️ Garantía Oficial</h3>
+        <p>Todos los productos con garantía oficial</p>
+      </div>
+      <div class="info-card">
+        <h3>🇦🇷 Local en Olavarría</h3>
+        <p>Retiro en persona o envío a todo el país</p>
+      </div>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Buscar producto (iPhone, MacBook, Samsung...)">
+      <span class="search-icon">🔍</span>
+    </div>
+
+    <div class="category-tabs">
+      <button class="category-btn active" data-category="all">Todos</button>
+      <button class="category-btn" data-category="macbooks">MacBooks</button>
+      <button class="category-btn" data-category="iphones">iPhones</button>
+      <button class="category-btn" data-category="ipads">iPads</button>
+      <button class="category-btn" data-category="watches">Watches</button>
+      <button class="category-btn" data-category="airpods">AirPods</button>
+      <button class="category-btn" data-category="samsung">Samsung</button>
+      <button class="category-btn" data-category="notebooks">Notebooks</button>
+      <button class="category-btn" data-category="accesorios">Accesorios</button>
+    </div>
+
+    <div id="productsContainer"></div>
+  </div>
+
+  <div class="footer">
+    <p>© 2026 Techno Apple OK | Precios sujetos a disponibilidad de stock</p>
+    <p style="margin-top: 12px;">💳 Medios de pago: USD efectivo | USDT | Transferencia en pesos (+4%)</p>
+    <p style="margin-top: 12px;">📱 Contacto: <strong>@techno.apple.ok</strong> en Instagram</p>
+  </div>
+
+  <script>
+    const products = [
+      // MACBOOKS
+      {name: "MacBook NEO 13\" (A18 Pro)", specs: "256GB, 8GB, 6CPU, 5GPU", price: 875, colors: "Citrus, Silver, Blush, Indigo", category: "macbooks", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/mac-neo-2-300x300.jpg"},
+      {name: "MacBook NEO 13\" (A18 Pro)", specs: "512GB, 8GB, 6CPU, 5GPU", price: 1010, colors: "Citrus, Indigo, Blush, Silver", category: "macbooks", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/mac-neo-2-300x300.jpg"},
+      {name: "MacBook Air M4 13\"", specs: "256GB, 16GB, 10CPU, 8GPU", price: 1255, colors: "Midnight, Sky Blue, Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18398_thumb.jpg"},
+      {name: "MacBook Air M4 13\"", specs: "512GB, 16GB, 10CPU, 10GPU", price: 1320, colors: "Sky Blue", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18401_thumb.jpg"},
+      {name: "MacBook Air M4 15\"", specs: "256GB, 16GB, 10CPU, 10GPU", price: 1360, colors: "Sky Blue", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18408_thumb.jpg"},
+      {name: "MacBook Air M4 15\"", specs: "256GB, 16GB, 10CPU, 10GPU", price: 1420, colors: "Midnight, Starlight", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18410_thumb.jpg"},
+      {name: "MacBook Air M4 15\"", specs: "512GB, 16GB, 10CPU, 10GPU", price: 1575, colors: "Gris espacial", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18412_thumb.jpg"},
+      {name: "MacBook Air M4 15\"", specs: "512GB, 24GB, 10CPU, 10GPU", price: 1700, colors: "Gris espacial", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18404_thumb.jpg"},
+      {name: "MacBook Air M5 13\"", specs: "512GB, 16GB, 10CPU, 8GPU", price: 1430, colors: "Starlight, Midnight, Silver, Sky Blue", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18398_thumb.jpg"},
+      {name: "MacBook Air M5 13\"", specs: "1TB, 16GB, 10CPU, 10GPU", price: 1525, colors: "Starlight, Sky Blue, Silver, Midnight", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18401_thumb.jpg"},
+      {name: "MacBook Air M5 13\"", specs: "1TB, 24GB, 10CPU, 10GPU", price: 2030, colors: "Midnight, Starlight, Silver, Sky Blue", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18404_thumb.jpg"},
+      {name: "MacBook Air M5 15\"", specs: "512GB, 16GB, 10CPU, 10GPU", price: 1615, colors: "Starlight, Midnight, Silver, Sky Blue", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18408_thumb.jpg"},
+      {name: "MacBook Air M5 15\"", specs: "1TB, 16GB, 10CPU, 10GPU", price: 1895, colors: "Sky Blue, otros colores", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18410_thumb.jpg"},
+      {name: "MacBook Air M5 15\"", specs: "1TB, 24GB, 10CPU, 10GPU", price: 2285, colors: "Gris espacial", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18408_thumb.jpg"},
+      {name: "MacBook Pro M2 13\"", specs: "256GB, 16GB, 8CPU, 10GPU", price: 1150, colors: "Space Gray", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18414_thumb.jpg"},
+      {name: "MacBook Pro M4 14\"", specs: "512GB, 16GB, 10CPU, 10GPU", price: 1800, colors: "Inglés", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18414_thumb.jpg"},
+      {name: "MacBook Pro M4 Pro 14\"", specs: "512GB, 24GB, 12CPU, 16GPU", price: 2285, colors: "Space Black", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18416_thumb.jpg"},
+      {name: "MacBook Pro M4 Max 14\"", specs: "1TB, 32GB, 14CPU, 32GPU", price: 2780, colors: "Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18416_thumb.jpg"},
+      {name: "MacBook Pro M3 Max 16\"", specs: "1TB, 48GB", price: 3605, colors: "Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18422_thumb.jpg"},
+      {name: "MacBook Pro M4 Max 16\"", specs: "1TB, 36GB, 14CPU, 32GPU", price: 3860, colors: "Space Black", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18422_thumb.jpg"},
+      {name: "MacBook Pro M4 Max 16\"", specs: "1TB, 48GB, 16CPU, 40GPU", price: 4015, colors: "Space Black, Caja Blanca", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18424_thumb.jpg"},
+      {name: "MacBook Pro M5 14\"", specs: "512GB, 16GB, 10CPU, 10GPU", price: 1985, colors: "Space Black, Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18349_thumb.avif"},
+      {name: "MacBook Pro M5 14\"", specs: "1TB, 16GB, 10CPU, 10GPU", price: 2120, colors: "Space Black, Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18352_thumb.avif"},
+      {name: "MacBook Pro M5 14\"", specs: "1TB, 24GB, 10CPU, 10GPU", price: 2370, colors: "Space Black, Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18354_thumb.avif"},
+      {name: "MacBook Pro M5 14\"", specs: "1TB, 32GB, 10CPU, 10GPU", price: 2780, colors: "Inglés, Español", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18349_thumb.avif"},
+      {name: "MacBook Pro M5 Pro 14\"", specs: "1TB, 24GB, 15CPU, 16GPU", price: 2740, colors: "Space Black, Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18349_thumb.avif"},
+      {name: "MacBook Pro M5 Pro 14\"", specs: "1TB, 48GB, 15CPU, 16GPU", price: 3740, colors: "Space Black, Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18352_thumb.avif"},
+      {name: "MacBook Pro M5 Pro 14\"", specs: "1TB, 48GB, 18CPU, 20GPU", price: 3945, colors: "Space Black, Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18354_thumb.avif"},
+      {name: "MacBook Pro M5 Pro 14\"", specs: "1TB, 64GB, 18CPU, 20GPU", price: 4335, colors: "Space Black, Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18349_thumb.avif"},
+      {name: "MacBook Pro M5 Pro 16\"", specs: "1TB, 24GB, 18CPU, 20GPU", price: 3090, colors: "Space Black, Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18422_thumb.jpg"},
+      {name: "MacBook Pro M5 Max 14\"", specs: "2TB, 36GB, 18CPU, 32GPU", price: 4285, colors: "Space Black", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18424_thumb.jpg"},
+      {name: "MacBook Pro M5 Max 14\"", specs: "2TB, 48GB, 18CPU, 40GPU", price: 5355, colors: "Space Black, Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18416_thumb.jpg"},
+      {name: "MacBook Pro M5 Max 16\"", specs: "2TB, 36GB, 18CPU, 32GPU", price: 4590, colors: "Space Black, Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18414_thumb.jpg"},
+      {name: "MacBook Pro M5 Max 16\"", specs: "2TB, 48GB, 18CPU, 40GPU", price: 5100, colors: "Space Black, Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18422_thumb.jpg"},
+      {name: "MacBook Pro M5 Max 16\"", specs: "2TB, 64GB, 18CPU, 40GPU", price: 6275, colors: "Silver", category: "macbooks", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18424_thumb.jpg"},
+      {name: "iMac 24\" M4", specs: "256GB, 16GB, 8CPU, 8GPU", price: 2040, colors: "Silver, Blue", category: "macbooks", image: "https://images.unsplash.com/photo-1563206765-7ac4d715b8c7?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Mac mini M4", specs: "256GB, 16GB, 10CPU, 10GPU", price: 945, colors: "Plateado", category: "macbooks", image: "https://images.unsplash.com/photo-1599153858265-2caf9d2b8b93?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Mac mini M4", specs: "512GB, 16GB, 10CPU, 10GPU", price: 1120, colors: "Plateado", category: "macbooks", image: "https://images.unsplash.com/photo-1599153858265-2caf9d2b8b93?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Mac mini M4 Pro", specs: "512GB, 24GB, 12CPU, 16GPU", price: 2155, colors: "Plateado", category: "macbooks", image: "https://images.unsplash.com/photo-1599153858265-2caf9d2b8b93?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Mac mini M4 Pro", specs: "1TB, 24GB, 12CPU, 16GPU", price: 2605, colors: "Plateado", category: "macbooks", image: "https://images.unsplash.com/photo-1599153858265-2caf9d2b8b93?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Studio Display 27\"", specs: "Standard Glass, soporte ajustable", price: 2985, colors: "Plateado", category: "macbooks", image: "https://images.unsplash.com/photo-1516321318423-f06897d504a4?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+
+      // IPHONES
+      {name: "iPhone 17 Pro", specs: "256GB", price: 1235, colors: "Orange, Blue, Silver", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18317_thumb.avif"},
+      {name: "iPhone 17 Pro", specs: "512GB", price: 1450, colors: "Orange, Blue, Silver", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18320_thumb.avif"},
+      {name: "iPhone 17 Pro Max", specs: "256GB", price: 1345, colors: "Orange, Blue, Silver", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18299_thumb.avif"},
+      {name: "iPhone 17 Pro Max", specs: "256GB SIM+eSIM", price: 1400, colors: "Orange", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18299_thumb.avif"},
+      {name: "iPhone 17 Pro Max", specs: "512GB", price: 1540, colors: "Orange, Blue, Silver", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18310_thumb.avif"},
+      {name: "iPhone 17 Pro Max", specs: "512GB SIM+eSIM", price: 1690, colors: "Silver", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18310_thumb.avif"},
+      {name: "iPhone 17 Pro Max", specs: "1TB", price: 1780, colors: "Orange, Blue, Silver", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18313_thumb.avif"},
+      {name: "iPhone 17 Pro Max", specs: "2TB", price: 2190, colors: "Orange, Blue, Silver", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18315_thumb.avif"},
+      {name: "iPhone 17 Air", specs: "256GB", price: 1090, colors: "Black", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18324_thumb.avif"},
+      {name: "iPhone 17 Air", specs: "512GB", price: 1220, colors: "Blue, Gold, White", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18326_thumb.avif"},
+      {name: "iPhone 17", specs: "256GB NEW", price: 1030, colors: "Black, White, Blue, Lavender, Sage", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18331_thumb.avif"},
+      {name: "iPhone 17", specs: "256GB ACTIVE", price: 995, colors: "Black, White, Blue, Lavender", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18334_thumb.avif"},
+      {name: "iPhone 16 Pro", specs: "256GB", price: 1170, colors: "Natural", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/8321_thumb.jpg"},
+      {name: "iPhone 16 Pro Max", specs: "256GB", price: 1240, colors: "Black, Desert", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/8321_thumb.jpg"},
+      {name: "iPhone 16", specs: "128GB", price: 910, colors: "Black, White, Teal, Ultramarine, Pink", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/8321_thumb.jpg"},
+      {name: "iPhone 15", specs: "128GB", price: 800, colors: "Blue", category: "iphones", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/7604_thumb.jpg"},
+
+      // IPADS
+      {name: "iPad 11ª Gen", specs: "128GB", price: 570, colors: "Blue, Pink, Silver", category: "ipads", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18438_thumb.svg"},
+      {name: "iPad 11ª Gen", specs: "256GB", price: 680, colors: "Silver, Blue, Pink", category: "ipads", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18440_thumb.svg"},
+      {name: "iPad mini 7ª Gen", specs: "128GB", price: 725, colors: "Purple, Starlight, Blue", category: "ipads", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18432_thumb.jpg"},
+      {name: "iPad mini 7ª Gen", specs: "256GB", price: 825, colors: "Space Gray, Purple, Blue, Starlight", category: "ipads", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18434_thumb.jpg"},
+      {name: "iPad Air M4 11\"", specs: "128GB", price: 850, colors: "Starlight, Blue, Space Gray, Purple", category: "ipads", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/16124_thumb.svg"},
+      {name: "iPad Air M4 11\"", specs: "256GB", price: 975, colors: "Blue, Purple, Starlight, Space Gray", category: "ipads", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18444_thumb.svg"},
+      {name: "iPad Air M4 13\"", specs: "128GB", price: 1020, colors: "Blue, Starlight, Purple", category: "ipads", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18446_thumb.svg"},
+      {name: "iPad Air M4 13\"", specs: "256GB", price: 1130, colors: "Blue", category: "ipads", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18448_thumb.svg"},
+      {name: "iPad Pro M5 11\"", specs: "256GB", price: 1270, colors: "Space Black", category: "ipads", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18356_thumb.avif"},
+      {name: "iPad Pro M5 11\"", specs: "512GB", price: 1410, colors: "Space Black, Silver", category: "ipads", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18359_thumb.avif"},
+      {name: "iPad Pro M5 13\"", specs: "256GB", price: 1520, colors: "Space Black, Silver", category: "ipads", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18361_thumb.avif"},
+      {name: "iPad Pro M5 13\"", specs: "512GB", price: 1710, colors: "Space Black", category: "ipads", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18363_thumb.avif"},
+      {name: "Apple Pencil USB-C", specs: "", price: 245, colors: "Blanco", category: "ipads", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/pencil-2-2-1.jpg"},
+      {name: "Apple Pencil Pro", specs: "", price: 270, colors: "Blanco", category: "ipads", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/pencil-2-2-1.jpg"},
+      {name: "Magic Keyboard Folio A16", specs: "", price: 440, colors: "White", category: "ipads", image: "https://images.unsplash.com/photo-1587041957890-2bf761d1a9f0?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Magic Keyboard Air 11\"", specs: "", price: 510, colors: "White", category: "ipads", image: "https://images.unsplash.com/photo-1587041957890-2bf761d1a9f0?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Magic Keyboard Air 13\"", specs: "", price: 570, colors: "White", category: "ipads", image: "https://images.unsplash.com/photo-1587041957890-2bf761d1a9f0?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Magic Keyboard Pro 11\" M4/M5", specs: "", price: 490, colors: "White", category: "ipads", image: "https://images.unsplash.com/photo-1587041957890-2bf761d1a9f0?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Magic Keyboard Pro 13\" M4/M5", specs: "", price: 570, colors: "White, Black", category: "ipads", image: "https://images.unsplash.com/photo-1587041957890-2bf761d1a9f0?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Apple Trackpad", specs: "", price: 280, colors: "Black, White", category: "ipads", image: "https://images.unsplash.com/photo-1527814050087-3793815479db?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Apple Keyboard Touch ID", specs: "", price: 375, colors: "Blanco", category: "ipads", image: "https://images.unsplash.com/photo-1527814050087-3793815479db?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+
+      // AIRPODS
+      {name: "AirPods Pro 3ª Gen", specs: "", price: 335, colors: "Blanco", category: "airpods", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18380_thumb.avif"},
+      {name: "AirPods MAX USB-C 2", specs: "", price: 670, colors: "Orange, Blue, Purple, Midnight, Starlight", category: "airpods", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/6860_thumb.jpg"},
+      {name: "AirPods 4 Sin ANC", specs: "", price: 235, colors: "White", category: "airpods", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/10597_thumb.png"},
+      {name: "AirPods 4 Con ANC", specs: "", price: 300, colors: "White", category: "airpods", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/10597_thumb.png"},
+
+      // WATCHES
+      {name: "Apple Watch Ultra 3", specs: "Black Titanium", price: 860, colors: "Black", category: "watches", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18374_thumb.avif"},
+      {name: "Apple Watch SE3 40MM", specs: "", price: 390, colors: "Midnight, Starlight", category: "watches", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/10299_thumb.png"},
+      {name: "Apple Watch SE3 44MM", specs: "", price: 420, colors: "Midnight, Starlight", category: "watches", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/10299_thumb.png"},
+      {name: "Apple Watch S11 42MM", specs: "", price: 480, colors: "Jet Black, Rose Gold, Silver", category: "watches", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18365_thumb.avif"},
+      {name: "Apple Watch S11 46MM", specs: "", price: 500, colors: "Space Gray, Rose Gold, Jet Black, Silver", category: "watches", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/18368_thumb.avif"},
+
+      // SAMSUNG
+      {name: "Samsung Galaxy A27 5G", specs: "8/256GB", price: 470, colors: "Black, Blue", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/A17-1-300x300.avif"},
+      {name: "Samsung Galaxy A36 5G", specs: "8/256GB", price: 429, colors: "Black", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/Samsung-A36-3-2-300x300.jpg"},
+      {name: "Samsung Galaxy A37 5G", specs: "8/256GB", price: 485, colors: "Charcoal, Grey, Lavender", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/samsung-A26-blanco-2.jpg"},
+      {name: "Samsung Galaxy A57 5G", specs: "8/256GB", price: 540, colors: "Grey, Icy Blue, Navy", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/samsung-A56-gris-oliva-2.png"},
+      {name: "Samsung Galaxy S25 FE", specs: "8/128GB", price: 605, colors: "Black", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/samsung-A56-black-4.png"},
+      {name: "Samsung Galaxy S25 Ultra", specs: "12/256GB", price: 945, colors: "Negro, Azul, Grey, White", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/Samsung-s26-ultra-1-300x300.jpg"},
+      {name: "Samsung Galaxy S25 Ultra", specs: "12/512GB", price: 1009, colors: "Negro, Gris", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/Samsung-s26-ultra-1-300x300.jpg"},
+      {name: "Samsung Galaxy S25 Ultra", specs: "12/1TB", price: 1065, colors: "White", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/Samsung-s26-ultra-1-300x300.jpg"},
+      {name: "Samsung Galaxy S26", specs: "12/256GB", price: 835, colors: "Black, Blue", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/Samsung-s26-3-300x300.jpg"},
+      {name: "Samsung Galaxy S26 Ultra", specs: "12/256GB", price: 1050, colors: "Black", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/Samsung-s26-ultra-1-300x300.jpg"},
+      {name: "Samsung Galaxy S26 Ultra", specs: "12/512GB", price: 1225, colors: "Black, Violet", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/Samsung-s26-ultra-1-300x300.jpg"},
+      {name: "Samsung Galaxy S26 Ultra", specs: "16/1TB", price: 1475, colors: "Blue", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/Samsung-s26-ultra-1-300x300.jpg"},
+      {name: "Samsung Galaxy Z Flip 8", specs: "12/512GB", price: 1415, colors: "Graphite", category: "samsung", image: "https://loquiero.com.ar/wp-content/uploads/2026/06/Samsung-A36-3-2-300x300.jpg"},
+      {name: "Samsung Galaxy Ring", specs: "Titanio", price: 405, colors: "Plateado", category: "samsung", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/10299_thumb.png"},
+      {name: "Samsung Galaxy Watch 6", specs: "", price: 405, colors: "Plateado", category: "samsung", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/10299_thumb.png"},
+      {name: "Samsung Galaxy Buds3 Pro", specs: "", price: 305, colors: "Blanco", category: "samsung", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/10597_thumb.png"},
+      {name: "Samsung Galaxy Fit 3", specs: "", price: 185, colors: "Plateado", category: "samsung", image: "https://s1.a8s7d2k3-admin.ar/sincronizadores/mixerport_export/images/10299_thumb.png"},
+
+      // ACCESORIOS
+      {name: "Adaptador DynamicPower 40W", specs: "1x", price: 135, colors: "Blanco", category: "accesorios", image: "https://images.unsplash.com/photo-1625948515291-69613efd103f?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Adaptador DynamicPower 40W", specs: "5x", price: 160, colors: "Blanco", category: "accesorios", image: "https://images.unsplash.com/photo-1625948515291-69613efd103f?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Adaptador DynamicPower 40W", specs: "10x", price: 280, colors: "Blanco", category: "accesorios", image: "https://images.unsplash.com/photo-1625948515291-69613efd103f?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Adaptador Original 70W", specs: "", price: 195, colors: "Blanco", category: "accesorios", image: "https://images.unsplash.com/photo-1625948515291-69613efd103f?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Adaptador Baseus 30W", specs: "", price: 120, colors: "Blanco", category: "accesorios", image: "https://images.unsplash.com/photo-1625948515291-69613efd103f?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Adaptador Original 20W Arg", specs: "1x", price: 125, colors: "Blanco", category: "accesorios", image: "https://images.unsplash.com/photo-1625948515291-69613efd103f?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Cable USB-C to Lightning", specs: "1x", price: 105, colors: "Blanco", category: "accesorios", image: "https://images.unsplash.com/photo-1625948515291-69613efd103f?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Cable Mallado USB-C to USB-C", specs: "1x", price: 110, colors: "Gris", category: "accesorios", image: "https://images.unsplash.com/photo-1625948515291-69613efd103f?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Cable Mallado USB-C 2M 240W", specs: "1x", price: 125, colors: "Gris", category: "accesorios", image: "https://images.unsplash.com/photo-1625948515291-69613efd103f?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Magic Mouse", specs: "", price: 220, colors: "White, Black", category: "accesorios", image: "https://images.unsplash.com/photo-1527814050087-3793815479db?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Apple TV 4K", specs: "", price: 405, colors: "Negro", category: "accesorios", image: "https://images.unsplash.com/photo-1605559424843-9e4c3ca4628d?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "AirTag 4-Pack", specs: "", price: 210, colors: "Blanco", category: "accesorios", image: "https://images.unsplash.com/photo-1591290621830-5a91d1f1d10b?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+      {name: "Beats Solo 4", specs: "", price: 340, colors: "Negro", category: "accesorios", image: "https://images.unsplash.com/photo-1484704849700-f032a568e944?fm=jpg&q=90&w=600&auto=format&fit=crop"},
+    ];
+
+    let filteredProducts = [...products];
+
+    function renderProducts() {
+      const container = document.getElementById('productsContainer');
+
+      if (filteredProducts.length === 0) {
+        container.innerHTML = '<p style="text-align: center; padding: 40px; color: #999;">No se encontraron productos</p>';
+        return;
+      }
+
+      const html = filteredProducts.map(p => `
+        <div class="product-card">
+          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://images.unsplash.com/photo-1505740420928-5e560c06d30e?fm=jpg&q=85&w=500&auto=format&fit=crop'">` : ''}
+          <div class="product-name">${p.name}</div>
+          ${p.specs ? `<div class="product-specs">${p.specs}</div>` : ''}
+          ${p.colors ? `<div class="product-colors">${p.colors.split(', ').map(c => `<span class="color-tag">${c.trim()}</span>`).join('')}</div>` : ''}
+          <div class="product-price">
+            <div class="price-value">USD ${p.price}</div>
+          </div>
+        </div>
+      `).join('');
+
+      container.innerHTML = html;
+    }
+
+    // Search
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      filteredProducts = products.filter(p =>
+        p.name.toLowerCase().includes(query) ||
+        p.specs.toLowerCase().includes(query)
+      );
+      renderProducts();
+    });
+
+    // Category filter
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const category = btn.dataset.category;
+        if (category === 'all') {
+          filteredProducts = [...products];
+        } else {
+          filteredProducts = products.filter(p => p.category === category);
+        }
+        renderProducts();
+      });
+    });
+
+    renderProducts();
+  </script>
+
+</body>
+</html>

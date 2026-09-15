@@ -63,7 +63,8 @@ Respondé SOLO JSON válido, sin markdown:
   ...
 ]}}"""
 
-    raw = call_claude(prompt)
+    # haiku: structured JSON output following explicit format, mechanical
+    raw = call_claude(prompt, model="haiku")
     cleaned = raw.strip()
     if cleaned.startswith("```"):
         cleaned = "\n".join(cleaned.split("\n")[1:])

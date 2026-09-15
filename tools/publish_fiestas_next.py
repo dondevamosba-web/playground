@@ -1,123 +1,188 @@
 #!/usr/bin/env python3
 """
-Publish the single most urgent approved Fiestas post (nearest Event Date).
-Same posting logic as publish_approved_events.py, but only touches one row
-per run instead of publishing every approved row at once.
-
-Usage:
-  python3 tools/publish_fiestas_next.py
-  python3 tools/publish_fiestas_next.py --dry-run
-  python3 tools/publish_fiestas_next.py --feed-only
-  python3 tools/publish_fiestas_next.py --story-only
+Publish the single most urgent approved Fiestas post, then stop.
+Picks the row whose event date is soonest. Publishes feed only, marks row posted.
 """
-
-import argparse
-import os
-import sys
-from datetime import date, datetime, timezone, timedelta
+import argparse, os, re, subprocess, sys, time
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
-
 from dotenv import load_dotenv
 load_dotenv(ROOT / ".env")
 
+import requests
 from tools.sheets_client import get_services
-from tools.publish_approved_events import (
-    get_approved_rows, update_row, post_to_instagram, col,
-    COL_EVENT_NAME, COL_EVENT_DATE, COL_SOURCE, COL_FEED_CAPTION,
-    COL_STORY_CAPTION, COL_IMAGE_URL, SHEET_ID_ENV,
-)
+from tools.monetize_pipeline import MonetizationConfig
+from tools.notify_discord import notify
+from tools.batch_logger import get_logger
 
+log = get_logger("publish_fiestas")
+
+GRAPH = "https://graph.facebook.com/v19.0"
 AR_TZ = timezone(timedelta(hours=-3))
+COL_SOURCE, COL_NAME, COL_DATE, COL_VENUE, COL_CAPTION = 1, 2, 3, 4, 7
+COL_IMAGE, COL_STATUS, COL_POST_ID, COL_NOTES = 9, 11, 12, 13
 
 
-def parse_event_date(raw: str):
-    raw = (raw or "").strip()[:10]
+def cell(row, idx):
+    return (row[idx] or "").strip() if idx < len(row) else ""
+
+
+def check_dedup(event_name, event_date, venue=""):
     try:
-        return datetime.strptime(raw, "%Y-%m-%d").date()
-    except ValueError:
-        return None  # undated content (e.g. viral reposts) sorts last
+        result = subprocess.run(
+            [sys.executable, "tools/cross_account_dedup.py",
+             "--event", event_name, "--date", event_date,
+             "--venue", venue, "--account", "fiestas"],
+            capture_output=True, timeout=30, cwd=ROOT)
+        return result.returncode == 0
+    except Exception as e:
+        log.info(f"  Dedup check error: {e}")
+        return True
 
 
-def pick_next(approved: list[tuple[int, list]]):
-    today = datetime.now(AR_TZ).date()
+def add_ticket_links(caption):
+    if not caption or "Entradas:" in caption or "entradas:" in caption:
+        return caption
+    patterns = [
+        r"https?://[a-z0-9.-]*ticketmaster[a-z0-9.-]*/[^\s]+",
+        r"https?://[a-z0-9.-]*eventbrite[a-z0-9.-]*/[^\s]+",
+        r"https?://bit\.ly/[a-zA-Z0-9]+",
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, caption, re.IGNORECASE)
+        if match:
+            url = match.group(0)
+            caption = f"{caption}\n\nEntradas: {url}"
+            break
+    return caption
 
-    def sort_key(item):
-        _, row = item
-        d = parse_event_date(col(row, COL_EVENT_DATE))
-        if d is None:
-            return (2, date.max)          # no date: lowest priority
-        if d < today:
-            return (1, d)                 # past event: still queued, low priority
-        return (0, d)                     # upcoming: prioritize by soonest
 
-    return sorted(approved, key=sort_key)[0] if approved else None
+def add_email_cta(caption, event_name):
+    if not caption or "📧" in caption or "Suscrib" in caption:
+        return caption
+    high_value_keywords = ["creamfields", "solomun", "digweed", "charlotte", "hardwell"]
+    if not any(kw in event_name.lower() for kw in high_value_keywords):
+        return caption
+    linktree = os.environ.get("FIESTAS_LINKTREE", "")
+    if linktree:
+        caption = f"{caption}\n\n📧 Eventos exclusivos en bio"
+    return caption
+
+
+def publish(ig_id, token, caption, image_url, video_url):
+    if video_url:
+        payload = {"media_type": "REELS", "video_url": video_url,
+                   "caption": caption, "access_token": token}
+    else:
+        payload = {"image_url": image_url, "caption": caption, "access_token": token}
+
+    res = requests.post(f"{GRAPH}/{ig_id}/media", data=payload, timeout=60).json()
+    if "id" not in res:
+        log.info(f"  ERROR container: {res}")
+        return None
+
+    if video_url:  # reels need server-side processing before publish
+        for _ in range(24):
+            st = requests.get(f"{GRAPH}/{res['id']}",
+                              params={"fields": "status_code", "access_token": token},
+                              timeout=30).json()
+            if st.get("status_code") == "FINISHED":
+                break
+            if st.get("status_code") == "ERROR":
+                log.info(f"  ERROR procesando reel: {st}")
+                return None
+            time.sleep(5)
+
+    time.sleep(2)
+    res2 = requests.post(f"{GRAPH}/{ig_id}/media_publish",
+                         data={"creation_id": res["id"], "access_token": token},
+                         timeout=60).json()
+    if "id" not in res2:
+        log.info(f"  ERROR publish: {res2}")
+        return None
+    return res2["id"]
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Publish the next most urgent approved Fiestas post")
-    parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--feed-only", action="store_true")
-    parser.add_argument("--story-only", action="store_true")
-    args = parser.parse_args()
+    p = argparse.ArgumentParser()
+    p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--only-flyers", action="store_true")
+    args = p.parse_args()
 
-    sheet_id = os.getenv(SHEET_ID_ENV, "").strip()
-    if not sheet_id:
-        print(f"ERROR: {SHEET_ID_ENV} not set in .env")
-        sys.exit(1)
+    sheets, _ = get_services()
+    sid = os.environ["FIESTAS_APPROVAL_SHEET_ID"]
+    ig_id = os.environ["FIESTAS_INSTAGRAM_BUSINESS_ACCOUNT_ID"]
+    token = os.environ["INSTAGRAM_ACCESS_TOKEN"]
 
-    sheets_svc, _ = get_services()
-    approved = get_approved_rows(sheets_svc, sheet_id)
+    rows = sheets.spreadsheets().values().get(
+        spreadsheetId=sid, range="Queue!A2:N600").execute().get("values", [])
 
-    if not approved:
-        print("No approved posts to publish.")
-        return
+    today = date.today().isoformat()
+    stamp = datetime.now(tz=AR_TZ).strftime("%Y-%m-%d %H:%M")
 
-    row_idx, row = pick_next(approved)
-    name      = col(row, COL_EVENT_NAME)
-    event_date = col(row, COL_EVENT_DATE)
-    feed_cap  = col(row, COL_FEED_CAPTION)
-    story_cap = col(row, COL_STORY_CAPTION)
-    image_url = col(row, COL_IMAGE_URL)
-    source    = col(row, COL_SOURCE)
-    is_reel   = "reel" in source.lower()
-    feed_type = "reel" if is_reel else "single"
+    candidates = []
+    for i, r in enumerate(rows):
+        if cell(r, COL_STATUS) != "approved" or cell(r, COL_POST_ID):
+            continue
+        when = cell(r, COL_DATE)
+        if when and when < today:
+            continue
+        if args.only_flyers and "(flyer)" not in cell(r, COL_SOURCE):
+            continue
+        if not cell(r, COL_CAPTION):
+            continue
+        notes = cell(r, COL_NOTES)
+        video = notes[6:].strip() if notes.startswith("VIDEO:") else ""
+        if not cell(r, COL_IMAGE) and not video:
+            continue
+        candidates.append((when or "9999-12-31", i + 2, r, video))
 
-    print(f"Publishing most urgent approved post ({len(approved)} approved total): {name} — {event_date}")
+    if not candidates:
+        log.info(f"[{stamp}] Nada aprobado para publicar.")
+        return 0
 
-    post_ids = []
+    candidates.sort(key=lambda c: (c[0], c[1]))
+    when, sheet_row, r, video = candidates[0]
+    name = cell(r, COL_NAME)
+    venue = cell(r, COL_VENUE)
+    log.info(f"[{stamp}] {len(candidates)} en cola. Publicando fila {sheet_row}: {name} ({when})")
 
-    if not args.story_only:
-        if feed_cap and image_url:
-            print(f"  → Feed post ({feed_type})...")
-            pid = post_to_instagram(feed_type, feed_cap, image_url, args.dry_run, is_video=is_reel)
-            if pid:
-                post_ids.append(f"feed:{pid}")
-        else:
-            print("  SKIP feed — missing caption or image URL")
+    if not check_dedup(name, when, venue):
+        log.info(f"  ⚠️  DUPLICATE found in other account. Skipping.")
+        return 1
 
-    if not args.feed_only:
-        story_text = story_cap or name
-        if image_url:
-            print("  → Story...")
-            pid = post_to_instagram("story", story_text, image_url, args.dry_run)
-            if pid:
-                post_ids.append(f"story:{pid}")
-        else:
-            print("  SKIP story — no image URL")
+    caption = cell(r, COL_CAPTION)
+    caption = add_ticket_links(caption)
+    caption = add_email_cta(caption, name)
 
     if args.dry_run:
-        print("\n[DRY RUN] Sheet not updated.")
-        return
+        log.info("  [dry-run] no se publicó nada")
+        notify(account="fiestas", caption=caption, image_url=cell(r, COL_IMAGE), status="dry-run")
+        return 0
 
-    combined_id = " | ".join(post_ids) if post_ids else "error"
-    status = "posted" if post_ids else "error"
-    update_row(sheets_svc, sheet_id, row_idx, status, combined_id)
-    print(f"\nSheet updated: {status}")
-    print(f"post_id: {combined_id}")
+    monetizer = MonetizationConfig()
+    decisions = monetizer.should_monetize(name)
+    if decisions["email_cta"]:
+        monetizer.log_revenue_event("email", name, 0.0, "linktree_click")
+
+    media_id = publish(ig_id, token, caption, cell(r, COL_IMAGE), video)
+    if not media_id:
+        notify(account="fiestas", caption=caption, image_url=cell(r, COL_IMAGE), status="error")
+        return 1
+
+    sheets.spreadsheets().values().batchUpdate(
+        spreadsheetId=sid,
+        body={"valueInputOption": "RAW", "data": [
+            {"range": f"Queue!L{sheet_row}", "values": [["posted"]]},
+            {"range": f"Queue!M{sheet_row}", "values": [[media_id]]},
+        ]}).execute()
+    log.info(f"  OK {media_id} — quedan {len(candidates) - 1}")
+    notify(account="fiestas", caption=caption, image_url=cell(r, COL_IMAGE), status="posted", post_id=media_id)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

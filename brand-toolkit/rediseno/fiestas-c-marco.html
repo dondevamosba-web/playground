@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Fiestas C — marco hairline</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#0A0A0A}
+  .poster{position:absolute;top:0;left:0;width:1080px;height:1350px;overflow:hidden;background:#0A0A0A}
+  .poster img{width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block}
+  /* marco: lo unico constante en todo el feed */
+  .frame{position:absolute;inset:0;border:7px solid #A96FE8;pointer-events:none}
+  /* firma centrada, montada sobre el borde inferior */
+  .sig{position:absolute;left:50%;transform:translateX(-50%);bottom:0;
+    background:#A96FE8;color:#0A0A0A;font-family:Consolas,monospace;font-size:22px;
+    letter-spacing:.1em;font-weight:700;padding:11px 26px}
+</style></head><body>
+<div class="poster">
+  <img src="flyer-real.jpg" alt="">
+  <div class="frame"></div>
+  <div class="sig">@fiestaselectronicasbuenosaires</div>
+</div>
+</body></html>

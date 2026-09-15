@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>España 3175 — Antes y Después</title>
+<meta name="description" content="La remodelación de España 3175 (Olavarría), ambiente por ambiente: fotos del antes, renders y avances.">
+<meta property="og:title" content="España 3175 · Olavarría — Antes y Después">
+<meta property="og:description" content="La remodelación, ambiente por ambiente: antes, renders y avances.">
+<meta property="og:image" content="https://dondevamosba-web.github.io/casa-espana-3175/img/thumb/1ycOPKpcCGfT1zCebvkzfFbfuVDXnnDbO.jpg">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    --bg:#14110f; --card:#1f1a17; --card-border:#332b24; --accent:#d4a373; --accent2:#8fae94;
+    --text:#f1ece6; --muted:#9a8f85; --danger:#c0392b;
+    --tag-antes:#6b6058; --tag-render:#8fae94; --tag-despues:#d4a373;
+  }
+  * { box-sizing:border-box; margin:0; -webkit-tap-highlight-color:transparent; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:var(--bg); color:var(--text); font-family:Georgia,'Times New Roman',serif;
+    padding:clamp(20px,5vw,48px) clamp(14px,4vw,24px);
+    padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 24px);
+  }
+  header { text-align:center; margin-bottom:20px; }
+  h1 { font-size:clamp(1.6rem,5vw,2.4rem); letter-spacing:.02em; }
+  header p { color:var(--muted); margin-top:8px; font-style:italic; font-size:clamp(.85rem,2.5vw,1rem); }
+
+  nav#indice {
+    position:sticky; top:0; z-index:5; background:var(--bg)ee; backdrop-filter:blur(6px);
+    max-width:1200px; margin:0 auto 24px; padding:10px 0;
+    display:flex; gap:8px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  nav#indice::-webkit-scrollbar { display:none; }
+  nav#indice a {
+    flex:0 0 auto; color:var(--accent); border:1px solid #3a322b; border-radius:999px;
+    padding:7px 14px; text-decoration:none; font-size:.85rem; white-space:nowrap;
+  }
+  nav#indice a:active, nav#indice a:hover { background:var(--card); }
+
+  .room {
+    max-width:1200px; margin:0 auto 40px; background:var(--card); border:1px solid var(--card-border);
+    border-radius:14px; padding:clamp(16px,4vw,28px); scroll-margin-top:64px;
+  }
+  .room h2 { color:var(--accent); font-size:clamp(1.15rem,3.5vw,1.4rem); margin-bottom:4px; }
+  .room .meta { color:var(--muted); font-size:.88rem; margin-bottom:16px; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:14px; }
+  @media(max-width:600px){ .grid { grid-template-columns:1fr; gap:10px; } }
+
+  figure { margin:0; position:relative; }
+  figure img {
+    width:100%; border-radius:10px; display:block; aspect-ratio:4/3; object-fit:cover;
+    background:#2a241f; transition:opacity .15s, transform .15s; cursor:zoom-in;
+  }
+  figure img:hover { opacity:.88; transform:scale(1.01); }
+
+  .tag {
+    position:absolute; top:8px; left:8px; z-index:2; font-size:.62rem; font-family:system-ui,sans-serif;
+    letter-spacing:.08em; text-transform:uppercase; color:#14110f; padding:3px 8px; border-radius:999px;
+    font-weight:600; pointer-events:none;
+  }
+  .tag.antes { background:var(--tag-antes); color:#fff; }
+  .tag.render { background:var(--tag-render); }
+  .tag.despues { background:var(--tag-despues); }
+
+  figure.plano svg { width:100%; height:auto; display:block; }
+  footer { text-align:center; color:var(--muted); font-size:.85rem; padding-top:12px; }
+  .hint { text-align:center; color:var(--muted); font-size:.85rem; margin-bottom:10px; max-width:1200px; margin-inline:auto; }
+
+  #barra {
+    text-align:center; margin-bottom:24px; display:flex; gap:8px; justify-content:center;
+    flex-wrap:wrap; max-width:1200px; margin-inline:auto;
+  }
+  #barra button {
+    background:var(--accent); border:0; border-radius:8px; padding:10px 16px; font-family:inherit;
+    font-size:.9rem; cursor:pointer; min-height:44px;
+  }
+  #barra button.secundario { background:#3a322b; color:#fff; }
+  #aviso { color:var(--accent2); font-size:.85rem; align-self:center; }
+
+  .mark {
+    position:absolute; top:6px; right:6px; z-index:2; background:rgba(0,0,0,.55); color:#fff;
+    border:0; border-radius:50%; width:36px; height:36px; cursor:pointer; font-size:1rem;
+  }
+  .mark:active, .mark:hover { background:var(--danger); }
+  figure.marcada img { opacity:.35; outline:3px solid var(--danger); outline-offset:-3px; }
+  figure.marcada .mark { background:var(--danger); }
+
+  /* Lightbox */
+  #lb { position:fixed; inset:0; background:rgba(0,0,0,.94); display:none; z-index:10;
+        align-items:center; justify-content:center;
+        padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0); }
+  #lb.abierto { display:flex; }
+  #lb img { max-width:94vw; max-height:82vh; border-radius:6px; }
+  #lb .cerrar { position:absolute; top:14px; right:18px; font-size:1.8rem; background:none; border:0; color:#fff; cursor:pointer; padding:10px; }
+  #lb .nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.12);
+             border:0; color:#fff; font-size:1.6rem; padding:16px 18px; border-radius:10px; cursor:pointer; }
+  #lb .nav:hover { background:rgba(255,255,255,.25); }
+  #lb .prev { left:8px; } #lb .next { right:8px; }
+  @media(max-width:600px){ #lb .nav { padding:12px 14px; font-size:1.3rem; } }
+  #lb figcaption { position:absolute; bottom:16px; left:0; right:0; text-align:center; color:var(--muted); font-size:.9rem; padding:0 60px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>España 3175</h1>
+  <p>Olavarría — antes, renders y avances, ambiente por ambiente</p>
+</header>
+<nav id="indice"></nav>
+<p class="hint">Tocá cualquier foto para verla completa. Con la ✕ marcás las que no te gustan.</p>
+<div id="barra"><button onclick="copiarMarcadas()">Copiar IDs para borrar (<span id="nmarcadas">0</span> marcadas)</button> <button class="secundario" onclick="desmarcarTodas()">Desmarcar todas</button> <span id="aviso"></span></div>
+
+<main id="rooms"></main>
+
+<section class="room" id="planos">
+  <h2>Planos</h2>
+  <div class="meta">Vivienda unifamiliar · dos niveles · lote 8,66 × 25 m</div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+    <figure class="plano"><svg viewBox="0 0 430 640" xmlns="http://www.w3.org/2000/svg" style="background:#0d2240;border-radius:10px">
+<defs>
+  <pattern id="dots2" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="#7e96b8"/></pattern>
+  <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M0,9 L9,0" stroke="#5a708e" stroke-width="1"/></pattern>
+  <style>
+    .l{fill:none;stroke:#dde7f3;stroke-width:1.4}
+    .t{fill:#dde7f3;font-family:Georgia,serif;letter-spacing:3px;font-size:13px;text-anchor:middle}
+    .d{fill:#8fa6c4;font-family:Georgia,serif;letter-spacing:1px;font-size:9px;text-anchor:middle}
+    .h{fill:#8fa6c4;font-family:Georgia,serif;letter-spacing:4px;font-size:11px;text-anchor:middle}
+  </style>
+</defs>
+<text x="215" y="34" class="t" style="font-size:17px">PLANTA BAJA</text>
+<text x="215" y="52" class="d">N.P.T. ±0.00 · cotas en metros</text>
+<text x="215" y="86" class="h">▲ JARDÍN / FONDO ▲</text>
+<g transform="translate(68,100)">
+  <rect x="0" y="0" width="294" height="204" fill="url(#dots2)" class="l"/>
+  <text x="147" y="98" class="t">PATIO</text><text x="147" y="114" class="d">8.66 × 6.00</text>
+  <rect x="0" y="204" width="294" height="68" fill="url(#hatch)" class="l"/>
+  <text x="147" y="234" class="d">PATIO DEL LOCAL (VECINO) · 8.66 × 2.00</text>
+  <rect x="0" y="272" width="199" height="204" fill="url(#hatch)" class="l"/>
+  <text x="99" y="366" class="t" style="font-size:12px">LOCAL</text>
+  <text x="99" y="382" class="d">(vecino) · 6.36 × 6.00</text>
+  <rect x="199" y="272" width="95" height="204" class="l"/>
+  <text x="246" y="366" class="t" style="font-size:12px">GARAJE</text>
+  <text x="246" y="382" class="d">2.30 × 6.00</text>
+</g>
+<text x="215" y="606" class="h">▼ CALLE / FRENTE ▼</text>
+<text x="215" y="630" class="d">rayado = superficie del vecino · punteado = jardín/patio</text>
+</svg><figcaption>Planta baja</figcaption></figure>
+    <figure class="plano"><svg viewBox="0 0 430 980" xmlns="http://www.w3.org/2000/svg" style="background:#0d2240;border-radius:10px">
+<defs>
+  <pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="#7e96b8"/></pattern>
+  <style>
+    .l{fill:none;stroke:#dde7f3;stroke-width:1.4}
+    .t{fill:#dde7f3;font-family:Georgia,serif;letter-spacing:3px;font-size:13px;text-anchor:middle}
+    .d{fill:#8fa6c4;font-family:Georgia,serif;letter-spacing:1px;font-size:9px;text-anchor:middle}
+    .h{fill:#8fa6c4;font-family:Georgia,serif;letter-spacing:4px;font-size:11px;text-anchor:middle}
+  </style>
+</defs>
+<text x="215" y="34" class="t" style="font-size:17px">PLANTA ALTA</text>
+<text x="215" y="52" class="d">N.P.T. +3.20 · cotas en metros</text>
+<text x="215" y="86" class="h">▲ JARDÍN / FONDO ▲</text>
+<g transform="translate(68,100)">
+  <rect x="0" y="0" width="294" height="204" fill="url(#dots)" class="l"/>
+  <text x="147" y="98" class="t">JARDÍN</text><text x="147" y="114" class="d">8.66 × 6.00</text>
+  <rect x="0" y="204" width="294" height="102" class="l"/>
+  <text x="147" y="252" class="t">TERRAZA</text><text x="147" y="268" class="d">8.66 × 3.00</text>
+  <rect x="0" y="306" width="136" height="136" class="l"/>
+  <text x="68" y="368" class="t">DORM. 2</text><text x="68" y="384" class="d">3.45 × 3.60</text>
+  <rect x="136" y="306" width="158" height="204" class="l"/>
+  <text x="215" y="400" class="t">COCINA</text><text x="215" y="416" class="d">4.66 × 6.00</text>
+  <rect x="0" y="442" width="68" height="68" class="l"/>
+  <text x="34" y="472" class="d">BAÑO 2</text><text x="34" y="486" class="d">2×2</text>
+  <rect x="0" y="510" width="68" height="68" class="l"/>
+  <text x="34" y="540" class="d">BAÑO 1</text><text x="34" y="554" class="d">2×2</text>
+  <rect x="68" y="442" width="34" height="136" class="l"/>
+  <text x="85" y="516" class="d" transform="rotate(-90 85 516)">PASILLO</text>
+  <rect x="102" y="442" width="34" height="136" class="l"/>
+  <rect x="136" y="510" width="158" height="68" class="l"/>
+  <text x="215" y="540" class="t" style="font-size:11px">ESC ⟶</text><text x="215" y="556" class="d">baja P.B.</text>
+  <rect x="0" y="578" width="136" height="204" class="l"/>
+  <text x="68" y="672" class="t">DORM. 1</text><text x="68" y="688" class="d">3.50 × 4.00</text>
+  <rect x="136" y="578" width="158" height="204" class="l"/>
+  <text x="215" y="672" class="t">LIVING</text><text x="215" y="688" class="d">4.66 × 6.00</text>
+  <rect x="0" y="782" width="294" height="68" class="l"/>
+  <text x="147" y="812" class="t" style="font-size:11px">BALCÓN</text><text x="147" y="828" class="d">8.60 × 2.00</text>
+</g>
+<text x="215" y="972" class="h">▼ CALLE / FRENTE ▼</text>
+</svg><figcaption>Planta alta</figcaption></figure>
+  </div>
+</section>
+
+<footer>v2 · Se actualiza editando el array AMBIENTES de este archivo. Las fotos viven en img/.</footer>
+
+<div id="lb">
+  <button class="cerrar" title="Cerrar">✕</button>
+  <button class="nav prev" title="Anterior">‹</button>
+  <img alt="">
+  <button class="nav next" title="Siguiente">›</button>
+  <figcaption></figcaption>
+</div>
+
+<script>
+// Cada ambiente: antes / render / despues son listas de IDs. Cada ID es img/{id}.jpg (+ img/thumb/{id}.jpg).
+const AMBIENTES = [
+  { nombre: "Living", nota: "6,00 × 4,66 m — ventana de 3,13 m",
+    antes:  ["1Yv5l38hv3aYIWkvyrG9N-8SVkMFIJmKp","1TQDjsXeXERwwCfkdsBP8wdiueGpdzaqT"],
+    render: ["living-render-v8_01","living-render-angulo2_01","living-render-v3_01","living-render-v4_01"],
+    despues: [] },
+  { nombre: "Cocina y comedor", nota: "Isla, horno empotrado, melamina hasta el techo, aire acondicionado",
+    antes:  ["1B0amNkLpmfYntea59aiESHZEMcLfu_db","cocina-antes-v2_01","cocina-antes-v2_02","comedor-antes_01","comedor-antes_02"],
+    render: ["kitchen-render-v6_01","kitchen-render-angulo3_v2","kitchen-render-angulo4_v2","kitchen-render-opuesto_v2"],
+    despues: [] },
+  { nombre: "Baño 1", nota: "Con bañera/ducha — renovación completa, se mantienen los azulejos verdes",
+    antes:  ["bathroom1-antes-v2_01"],
+    render: ["bathroom1-render-v5_01","bathroom1-render-v4_01"],
+    despues: [] },
+  { nombre: "Baño toilet", nota: "Sin ducha — solo inodoro y bacha. Se mantienen los azulejos verdes",
+    antes:  ["bathroom-1_03","bathroom-2_03"],
+    render: ["bathroom1-render-v2_01"],
+    despues: [] },
+  { nombre: "Dormitorio 1 (principal)", nota: "3,50 × 4,00 m — da al balcón del frente",
+    antes:  ["1ZlM2p5Vf5VSxfl1lQEVJv3wfbOcTcFyg"],
+    render: ["bedroom1-render-v3_01","bedroom1-render-v2_01"],
+    despues: [] },
+  { nombre: "Dormitorio 2", nota: "3,45 × 3,60 m — ventanal de 2,10 m, da al patio",
+    antes:  ["1OurIzOhqFDXsoCm_jOg2hK5HSwR_3pHO","17yUgUMXB-DnnSba11vnraGZxNCblAYIb"],
+    render: ["bedroom2-render-v2_01","bedroom2-closet-render_01"],
+    despues: [] },
+  { nombre: "Terraza y pérgola", nota: "Parrilla nueva — incluye lavadero y patio trasero",
+    antes:  ["1YW0e9OZ0feKSC85oPKoHsTyNVri8Mqow","1F64QmA8UJUrI0QNrUBcd4-04RYmHNtH-","laundry-patio_01"],
+    render: ["terraza-render-v2_01","terraza-render-angulo2_01","1wQbTzxpgBj2zto3x5k7tskDDqufuchUk","laundry-patio_render_01"],
+    despues: [] },
+  { nombre: "Jardín", nota: "",
+    antes:  ["15hsf97SHX84kEbFkfD-XlfblDUo651Z_","garden-antes_02"],
+    render: ["1YjlwideILf_yKgEbmZfJVDGo4RpInF8k","garden-render-v2_01"],
+    despues: ["jardin-limpieza_01","jardin-limpieza_02"] },
+  { nombre: "Exterior y fachada", nota: "",
+    antes:  ["facade-antes_01","facade-antes_02"],
+    render: [],
+    despues: [] },
+  { nombre: "Garage y escalera", nota: "Garage de 2,30 m de ancho",
+    antes:  [],
+    render: ["1Z8vRz6NImu9g0QYWK7eYzLSEnu4pzYah","1b7z77bLx0syzv887hexx32YCmiTKkXgD"],
+    despues: [] },
+  { nombre: "Pasillo y hall", nota: "Entrada principal — escalera con pared de mosaico",
+    antes:  ["hall-stairs_01","hall-doors_01"],
+    render: ["hall-stairs_render_01","hall-doors_render_01"],
+    despues: [] },
+];
+
+const thumb = id => `img/thumb/${id}.jpg`;
+const full  = id => `img/${id}.jpg`;
+const slug = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-");
+const TAG_LABEL = { antes:"Antes", render:"Render", despues:"Después" };
+const fig = (id, nombre, key) =>
+  `<figure data-id="${id}" data-desc="${nombre}"><span class="tag ${key}">${TAG_LABEL[key]}</span><button class="mark" title="Marcar para eliminar">✕</button><img src="${thumb(id)}" data-full="${full(id)}" alt="${nombre}" loading="lazy" decoding="async"></figure>`;
+
+const SLOTS = [["antes","Antes"],["render","Render"],["despues","Después"]];
+document.getElementById("rooms").innerHTML = AMBIENTES.map(a => `
+  <section class="room" id="${slug(a.nombre)}">
+    <h2>${a.nombre}</h2>
+    <div class="meta">${a.nota || "&nbsp;"}</div>
+    <div class="grid">${SLOTS.flatMap(([key,label]) => a[key].map(id => fig(id, a.nombre+" — "+label, key))).join("")}</div>
+  </section>`).join("");
+
+// Índice de ambientes
+document.getElementById("indice").innerHTML =
+  AMBIENTES.map(a => `<a href="#${slug(a.nombre)}">${a.nombre}</a>`).join("") +
+  `<a href="#planos">Planos</a>`;
+
+
+// Lightbox
+const lb = document.getElementById("lb"), lbImg = lb.querySelector("img"), lbCap = lb.querySelector("figcaption");
+let lbLista = [], lbIdx = 0;
+function lbMostrar(i) {
+  lbIdx = (i + lbLista.length) % lbLista.length;
+  const f = lbLista[lbIdx];
+  lbImg.src = f.querySelector("img").dataset.full;
+  lbCap.textContent = `${f.dataset.desc} (${lbIdx + 1}/${lbLista.length})`;
+}
+document.getElementById("rooms").addEventListener("click", e => {
+  const img = e.target.closest("figure[data-id] img");
+  if (!img) return;
+  const grid = img.closest(".grid");
+  lbLista = [...grid.querySelectorAll("figure[data-id]")];
+  lb.classList.add("abierto");
+  lbMostrar(lbLista.indexOf(img.closest("figure")));
+});
+lb.querySelector(".prev").onclick = () => lbMostrar(lbIdx - 1);
+lb.querySelector(".next").onclick = () => lbMostrar(lbIdx + 1);
+lb.querySelector(".cerrar").onclick = () => lb.classList.remove("abierto");
+lb.addEventListener("click", e => { if (e.target === lb) lb.classList.remove("abierto"); });
+document.addEventListener("keydown", e => {
+  if (!lb.classList.contains("abierto")) return;
+  if (e.key === "Escape") lb.classList.remove("abierto");
+  if (e.key === "ArrowLeft") lbMostrar(lbIdx - 1);
+  if (e.key === "ArrowRight") lbMostrar(lbIdx + 1);
+});
+let lbX0 = null;
+lbImg.addEventListener("touchstart", e => lbX0 = e.touches[0].clientX);
+lbImg.addEventListener("touchend", e => {
+  if (lbX0 === null) return;
+  const dx = e.changedTouches[0].clientX - lbX0; lbX0 = null;
+  if (Math.abs(dx) > 40) lbMostrar(lbIdx + (dx < 0 ? 1 : -1));
+});
+
+// Marcar fotos para eliminar
+document.addEventListener("click", e => {
+  if (!e.target.classList.contains("mark")) return;
+  const f = e.target.closest("figure");
+  f.classList.toggle("marcada");
+  const key = "del_" + f.dataset.id;
+  f.classList.contains("marcada") ? localStorage.setItem(key, f.dataset.desc) : localStorage.removeItem(key);
+  actualizarBarra();
+});
+function actualizarBarra() {
+  const n = Object.keys(localStorage).filter(k => k.startsWith("del_")).length;
+  document.getElementById("nmarcadas").textContent = n;
+}
+function copiarMarcadas() {
+  const lista = Object.entries(localStorage).filter(([k]) => k.startsWith("del_"))
+    .map(([k,v]) => `${v} (id: ${k.slice(4)})`).join("\n");
+  navigator.clipboard.writeText(lista || "(ninguna marcada)").then(() => {
+    const aviso = document.getElementById("aviso");
+    aviso.textContent = "¡Copiado! Pegame los IDs en el chat y los borro.";
+    setTimeout(() => aviso.textContent = "", 3000);
+  });
+}
+function desmarcarTodas() {
+  Object.keys(localStorage).filter(k => k.startsWith("del_")).forEach(k => localStorage.removeItem(k));
+  document.querySelectorAll("figure.marcada").forEach(f => f.classList.remove("marcada"));
+  actualizarBarra();
+}
+// restaurar marcas guardadas
+document.querySelectorAll("figure[data-id]").forEach(f => {
+  if (localStorage.getItem("del_" + f.dataset.id)) f.classList.add("marcada");
+});
+actualizarBarra();
+</script>
+</body>
+</html>

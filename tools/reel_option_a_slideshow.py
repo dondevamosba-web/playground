@@ -62,7 +62,8 @@ Respondé SOLO JSON válido, sin markdown, sin comentarios:
 ]}}
 bg_variant: dark=#071E2E, mid=#0C4A6E, light=#0EA5E9"""
 
-    raw = call_claude(prompt)
+    # haiku: structured JSON output following explicit format, mechanical
+    raw = call_claude(prompt, model="haiku")
     # Strip markdown fences if present
     cleaned = raw.strip()
     if cleaned.startswith("```"):

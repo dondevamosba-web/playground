@@ -128,12 +128,17 @@ header p {{ font-size: 14px; color: rgba(255,255,255,.65); margin-top: 2px; }}
   position: relative; border: 1px solid var(--border); transition: background .15s;
 }}
 .day-cell.empty {{ background: #0D1321; }}
-.day-cell.today {{ background: #0F1E2E; }}
-.day-cell.has-post {{ background: #0F1A2E; cursor: pointer; }}
-.day-cell.has-post:hover {{ background: #132240; }}
+.day-cell.today {{ background: #0F1E2E; box-shadow: inset 0 0 0 2px var(--accent); }}
+.day-cell.has-post {{ background: #0F1A2E; }}
 .day-num {{ font-size: 12px; font-weight: 600; color: var(--grey); margin-bottom: 6px; }}
-.day-cell.today .day-num {{ color: var(--accent); }}
-.post-card {{ border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }}
+.day-cell.today .day-num {{
+  color: #000; background: var(--accent);
+  display: inline-block; padding: 1px 7px; border-radius: 99px; font-weight: 800;
+}}
+.post-card {{ border-radius: 8px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 5px; cursor: pointer; }}
+.post-card:hover {{ border-color: var(--accent); }}
+.post-card:last-child {{ margin-bottom: 0; }}
+.post-card.is-posted {{ opacity: 0.55; border-color: #4ADE8044; }}
 .post-thumb {{ width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; background: #1E293B; }}
 .post-meta {{ padding: 5px 6px; background: #1E293B; }}
 .post-title {{ font-size: 9px; color: var(--grey); line-height: 1.3;
@@ -141,7 +146,8 @@ header p {{ font-size: 14px; color: rgba(255,255,255,.65); margin-top: 2px; }}
 .post-status {{
   font-size: 9px; font-weight: 700; letter-spacing: .3px; margin-top: 3px;
 }}
-.status-approved {{ color: #4ADE80; }}
+.status-posted {{ color: #4ADE80; }}
+.status-approved {{ color: #60A5FA; }}
 .status-pending {{ color: #FBBF24; }}
 .img-placeholder {{
   width: 100%; height: 52px; display: none;
@@ -237,11 +243,16 @@ header p {{ font-size: 14px; color: rgba(255,255,255,.65); margin-top: 2px; }}
                 if day_posts:
                     extra += " has-post"
                 cells = f'<div class="day-num">{day_num}</div>'
-                for p in day_posts[:1]:
-                    p = {**p, "image_url": resolve_img(p.get("image_url") or p.get("file") or "")}
+                for p in day_posts:
+                    p = {**p, "image_url": resolve_img(p.get("image_url") or p.get("image") or p.get("file") or "")}
                     img = escape(p["image_url"])
-                    status_cls = "status-approved" if p.get("approved") else "status-pending"
-                    status_txt = "Aprobado" if p.get("approved") else "Pendiente"
+                    raw_status = p.get("status", "")
+                    if raw_status == "posted":
+                        status_cls, status_txt, card_extra = "status-posted", "✓ Publicado", " is-posted"
+                    elif p.get("approved"):
+                        status_cls, status_txt, card_extra = "status-approved", "Aprobado", ""
+                    else:
+                        status_cls, status_txt, card_extra = "status-pending", "Pendiente", ""
                     title_txt = escape(p.get("name") or p.get("product") or p.get("label") or "")
                     p_json = json.dumps(p, ensure_ascii=False).replace('</','<\\/')
                     p_json_attr = escape(json.dumps(p, ensure_ascii=False))
@@ -254,7 +265,7 @@ header p {{ font-size: 14px; color: rgba(255,255,255,.65); margin-top: 2px; }}
                     else:
                         thumb_html = f'<div style="position:relative">{placeholder_visible}</div>'
                     cells += f"""
-<div class="post-card" draggable="true" data-post="{p_json_attr}" data-date="{d_str}" onclick="openModal(JSON.parse(this.dataset.post))">
+<div class="post-card{card_extra}" draggable="true" data-post="{p_json_attr}" data-date="{d_str}" onclick="openModal(JSON.parse(this.dataset.post))">
   {thumb_html}
   <div class="post-meta">
     <div class="post-title">{title_txt}</div>
@@ -273,7 +284,7 @@ header p {{ font-size: 14px; color: rgba(255,255,255,.65); margin-top: 2px; }}
     # ── queue ──────────────────────────────────────────────────────────────
     queue_cards = ""
     for p in queue:
-        p = {**p, "image_url": resolve_img(p.get("image_url") or p.get("file") or "")}
+        p = {**p, "image_url": resolve_img(p.get("image_url") or p.get("image") or p.get("file") or "")}
         img = escape(p["image_url"])
         label = escape(p.get("name") or p.get("product") or p.get("label") or "")
         caption_snip = escape((p.get("feed_caption") or p.get("caption") or "")[:80])
@@ -305,13 +316,25 @@ header p {{ font-size: 14px; color: rgba(255,255,255,.65); margin-top: 2px; }}
     # ── JS modal ───────────────────────────────────────────────────────────
     js = """
 function openModal(p) {
-  const img = p.image_url || p.file || '';
+  const img = p.image_url || p.image || p.file || '';
+  const video = p.video_file ? '/tmp/' + p.video_file.replace(/^\\.tmp\\//, '').replace(/^.tmp\\//, '') : '';
   const title = p.name || p.product || p.label || '';
   const caption = p.feed_caption || p.caption || p.story_caption || '';
   const date = p.date || p.schedule_date || '';
   const status = p.approved ? '✓ Aprobado' : '⏳ Pendiente';
-  document.getElementById('m-img').src = img;
-  document.getElementById('m-img').onerror = function(){ this.style.display='none'; };
+  const mImg = document.getElementById('m-img');
+  const mVid = document.getElementById('m-video');
+  if (video) {
+    mImg.style.display = 'none';
+    mVid.style.display = 'block';
+    mVid.src = video;
+    mVid.load();
+  } else {
+    mVid.style.display = 'none'; mVid.src = '';
+    mImg.style.display = 'block';
+    mImg.src = img;
+    mImg.onerror = function(){ this.style.display='none'; };
+  }
   document.getElementById('m-title').textContent = title;
   document.getElementById('m-caption').textContent = caption;
   document.getElementById('m-meta').innerHTML =
@@ -373,6 +396,7 @@ function closeModal(e) {
   <div class="modal">
     <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">✕</button>
     <img class="modal-img" id="m-img" src="" alt="" />
+    <video id="m-video" controls style="display:none;width:100%;border-radius:16px 16px 0 0;max-height:360px;background:#000"></video>
     <div class="modal-body">
       <div class="modal-meta" id="m-meta"></div>
       <h3 id="m-title"></h3>
@@ -495,14 +519,48 @@ def build_storm():
 # ── Techno Apple ───────────────────────────────────────────────────────────
 
 def build_techno():
-    with open(TMP / "tech_posts.json") as f:
-        posts = json.load(f)
+    import sys
+    sys.path.insert(0, str(ROOT))
+    from dotenv import load_dotenv
+    load_dotenv(ROOT / ".env")
+    from tools.sheets_client import get_services
+    sheets, _ = get_services()
+    sheet_id = os.getenv("TECHNO_CONTENT_CALENDAR_SHEET_ID")
+    result = sheets.spreadsheets().values().get(
+        spreadsheetId=sheet_id, range="A2:K500"
+    ).execute()
+    rows = result.get("values", [])
+
+    def col(row, i, default=""):
+        return row[i].strip() if i < len(row) else default
+
+    posts = []
+    for row in rows:
+        date_str = col(row, 0)
+        time_str = col(row, 1)
+        product  = col(row, 3)
+        brand    = col(row, 4)
+        caption  = col(row, 6)
+        media    = col(row, 8)
+        status   = col(row, 9)
+        if not date_str:
+            continue
+        posts.append({
+            "date": date_str,
+            "time": time_str,
+            "product": product,
+            "brand": brand,
+            "caption": caption,
+            "image_url": media,
+            "status": status,
+            "approved": status == "posted",
+        })
 
     posts_by_date = {}
     queue = []
     for p in posts:
-        d = p.get("schedule_date") or p.get("date")
-        if d:  # show all dated posts on calendar regardless of approval
+        d = p.get("date")
+        if d:
             posts_by_date.setdefault(d, []).append(p)
         else:
             queue.append(p)

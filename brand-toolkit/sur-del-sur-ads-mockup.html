@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Sur del Sur — Ads Mockup (Feed + Story)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --ink:#0d0d0b; --amber:#E8720C; --amber-deep:#B8560A; --hot:#FFD400; --cream:#FFF3E2;
+    --font-display:'Archivo Black',sans-serif; --font-sans:'Inter',sans-serif; --font-mono:'Space Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; padding:0 0 100px; background:#c9c1ac; font-family:var(--font-sans); }
+
+  .intro{ max-width:1220px; margin:0 auto; padding:56px 24px 10px; text-align:center; }
+  .intro h1{ font-family:var(--font-display); font-size:24px; margin:0 0 8px; color:#1a1a16; }
+  .intro p{ color:#5a5342; font-size:13px; margin:0 auto; max-width:780px; }
+  .flag{ max-width:1220px; margin:12px auto 0; text-align:center; font-size:12px; color:#8a5a00; font-weight:700; background:#fff3d6; border:1px solid #e0b84a; border-radius:8px; padding:8px 14px; }
+
+  .concept-title{ max-width:1220px; margin:56px auto 16px; padding:0 24px; }
+  .concept-title .n{ font-family:var(--font-mono); font-size:12px; color:#7a6f57; font-weight:700; letter-spacing:2px; }
+  .concept-title h2{ font-family:var(--font-display); font-size:20px; margin:4px 0 0; color:#1a1a16; }
+
+  .row{ max-width:1220px; margin:0 auto; display:flex; gap:24px; padding:0 24px; align-items:flex-start; flex-wrap:wrap; }
+  .frame{ box-shadow:0 20px 44px rgba(0,0,0,.32); border-radius:8px; overflow:hidden; position:relative; flex:none; }
+  .frame.feed{ width:380px; height:380px; }
+  .frame.story{ width:220px; height:391px; }
+  .canvas{ position:absolute; top:0; left:0; color:var(--cream); overflow:hidden; }
+  .frame.feed .canvas{ width:1080px; height:1080px; transform:scale(0.3518); transform-origin:top left; }
+  .frame.story .canvas{ width:1080px; height:1920px; transform:scale(0.2037); transform-origin:top left; }
+
+  .bg{ position:absolute; inset:0; background-size:cover; background-position:center; }
+  .duo{ filter:grayscale(.2) contrast(1.1) brightness(.7); }
+  .scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(13,13,11,.35), rgba(13,13,11,.9)); }
+  .noise{ position:absolute; inset:0; opacity:.12; mix-blend-mode:overlay;
+    background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.08) 0px, transparent 1px, transparent 3px); }
+
+  .badge{ position:absolute; font-family:var(--font-display); font-size:26px; color:var(--ink); background:var(--hot);
+    padding:14px 26px; border-radius:999px; transform:rotate(-6deg); box-shadow:0 8px 18px rgba(0,0,0,.35); }
+
+  .kicker{ position:absolute; top:70px; left:76px; font-family:var(--font-mono); font-weight:700; font-size:20px;
+    letter-spacing:2px; color:var(--amber); text-transform:uppercase; }
+
+  .mega{ position:absolute; font-family:var(--font-display); color:var(--cream); line-height:.95; }
+  .headline{ position:absolute; font-family:var(--font-display); color:var(--cream); line-height:1.05; }
+  .sub{ position:absolute; font-family:var(--font-sans); font-weight:600; color:var(--cream); opacity:.9; }
+  .cta{ position:absolute; background:var(--amber); color:var(--ink); font-family:var(--font-display); text-align:center;
+    border-radius:999px; display:flex; align-items:center; justify-content:center; gap:10px; }
+  .footer-brand{ position:absolute; font-family:var(--font-mono); color:var(--cream); opacity:.7; letter-spacing:1px; }
+  .swipe{ position:absolute; text-align:center; font-family:var(--font-sans); font-weight:700; color:var(--cream); }
+  .swipe .arrow{ font-size:40px; display:block; animation:none; }
+
+  .caption-box{ max-width:1220px; margin:56px auto 0; background:#fff; border-radius:10px; padding:18px 24px;
+    font-size:13px; color:#333; box-shadow:0 4px 14px rgba(0,0,0,.08); }
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>SUR DEL SUR — Ads mockup (Feed + Story)</h1>
+  <p>3 ángulos de ad distintos, cada uno en formato Feed (1080×1080) y Story (1080×1920), con mucho más punch: color sólido, números grandes, CTA agresivo.</p>
+</div>
+<div class="flag">⚠ La oferta "Happy Hour 2x1" del Concepto 1 es un ejemplo hipotético — no es una promo real confirmada. Ajustar precio/condiciones antes de publicar.</div>
+
+<!-- ============ CONCEPT 1: PROMO ============ -->
+<div class="concept-title"><span class="n">CONCEPTO 01</span><h2>Promo puntual — "Happy Hour 2x1"</h2></div>
+<div class="row">
+
+  <div class="frame feed"><div class="canvas">
+    <div class="bg duo" style="background-image:url('assets/sur-del-sur/tap_pour.jpg');"></div>
+    <div class="scrim"></div><div class="noise"></div>
+    <div class="kicker">● SUR DEL SUR</div>
+    <div class="badge" style="top:70px; right:70px;">SOLO HOY</div>
+    <div class="mega" style="top:280px; left:76px; font-size:280px;">2X1</div>
+    <div class="headline" style="top:600px; left:76px; right:76px; font-size:56px;">EN TODA LA<br/>BIRRA TIRADA</div>
+    <div class="sub" style="top:800px; left:76px; font-size:26px;">Lunes a jueves · 18 a 20h · Sierras Bayas</div>
+    <div class="cta" style="bottom:70px; left:76px; width:340px; height:80px; font-size:26px;">RESERVÁ TU MESA →</div>
+  </div></div>
+
+  <div class="frame story"><div class="canvas">
+    <div class="bg duo" style="background-image:url('assets/sur-del-sur/tap_pour.jpg'); background-position:center 30%;"></div>
+    <div class="scrim"></div><div class="noise"></div>
+    <div class="kicker" style="top:90px;">● SUR DEL SUR</div>
+    <div class="badge" style="top:90px; right:60px; font-size:24px;">SOLO HOY</div>
+    <div class="mega" style="top:560px; left:60px; font-size:340px;">2X1</div>
+    <div class="headline" style="top:1020px; left:60px; right:60px; font-size:64px;">EN TODA LA<br/>BIRRA TIRADA</div>
+    <div class="sub" style="top:1280px; left:60px; right:60px; font-size:30px;">Lunes a jueves · 18 a 20h</div>
+    <div class="swipe" style="bottom:100px; left:0; right:0;"><span class="arrow">↑</span>Deslizá para reservar</div>
+  </div></div>
+
+</div>
+
+<!-- ============ CONCEPT 2: EVENTO ============ -->
+<div class="concept-title"><span class="n">CONCEPTO 02</span><h2>Evento / lanzamiento — Festival Sur del Sur</h2></div>
+<div class="row">
+
+  <div class="frame feed"><div class="canvas">
+    <div class="bg duo" style="background-image:url('assets/sur-del-sur/tanks_livemusic.jpg');"></div>
+    <div class="scrim"></div><div class="noise"></div>
+    <div class="kicker">● SUR DEL SUR PRESENTA</div>
+    <div class="headline" style="top:220px; left:76px; right:76px; font-size:96px;">FESTIVAL<br/>SUR DEL SUR</div>
+    <div class="sub" style="top:560px; left:76px; font-size:34px; color:var(--hot);">29 NOV · DESDE LAS 18H</div>
+    <div class="sub" style="top:640px; left:76px; right:200px; font-size:22px; opacity:.85; font-weight:400;">Mateo Laborde · Familia Bermúdez · Koino Yokan · Viajando a Mercurio</div>
+    <div class="badge" style="bottom:170px; right:76px; font-size:20px;">SIERRAS BAYAS</div>
+    <div class="cta" style="bottom:70px; left:76px; width:340px; height:80px; font-size:24px;">ENTRADAS EN BIO →</div>
+  </div></div>
+
+  <div class="frame story"><div class="canvas">
+    <div class="bg duo" style="background-image:url('assets/sur-del-sur/tanks_livemusic.jpg'); background-position:center 40%;"></div>
+    <div class="scrim"></div><div class="noise"></div>
+    <div class="kicker" style="top:90px;">● SUR DEL SUR PRESENTA</div>
+    <div class="mega" style="top:420px; left:60px; font-size:100px; line-height:1;">FALTAN</div>
+    <div class="mega" style="top:540px; left:60px; font-size:320px; color:var(--hot);">12</div>
+    <div class="headline" style="top:920px; left:60px; font-size:56px;">DÍAS</div>
+    <div class="sub" style="top:1040px; left:60px; right:60px; font-size:28px;">Festival Sur del Sur · 29 Nov · 18h</div>
+    <div class="swipe" style="bottom:100px; left:0; right:0;"><span class="arrow">↑</span>Comprá tu entrada</div>
+  </div></div>
+
+</div>
+
+<!-- ============ CONCEPT 3: CONVERSIÓN / PRUEBA SOCIAL ============ -->
+<div class="concept-title"><span class="n">CONCEPTO 03</span><h2>Conversión / prueba social — retargeting</h2></div>
+<div class="row">
+
+  <div class="frame feed"><div class="canvas">
+    <div class="bg" style="background:var(--ink);"></div><div class="noise"></div>
+    <div class="kicker">● SUR DEL SUR</div>
+    <div class="sub" style="top:180px; left:76px; font-size:26px; opacity:.7;">RECONOCIMIENTO NACIONAL</div>
+    <div class="mega" style="top:260px; left:76px; font-size:130px; color:var(--amber);">🏅</div>
+    <div class="headline" style="top:480px; left:76px; right:100px; font-size:64px;">MEDALLA EN LA<br/>COPA ARGENTINA<br/>DE CERVEZAS</div>
+    <div class="sub" style="top:830px; left:76px; font-size:24px; opacity:.75; font-weight:400;">+100 puntos de venta en todo el país. Pedí la tuya cerca tuyo.</div>
+    <div class="cta" style="bottom:70px; left:76px; width:380px; height:80px; font-size:24px;">DÓNDE COMPRAR →</div>
+  </div></div>
+
+  <div class="frame story"><div class="canvas">
+    <div class="bg" style="background:var(--ink);"></div><div class="noise"></div>
+    <div class="kicker" style="top:120px;">● SUR DEL SUR</div>
+    <div class="sub" style="top:280px; left:60px; font-size:28px; opacity:.7;">RECONOCIMIENTO NACIONAL</div>
+    <div class="mega" style="top:380px; left:60px; font-size:170px; color:var(--amber);">🏅</div>
+    <div class="headline" style="top:680px; left:60px; right:60px; font-size:68px;">MEDALLA EN LA<br/>COPA ARGENTINA<br/>DE CERVEZAS</div>
+    <div class="sub" style="top:1120px; left:60px; right:60px; font-size:26px; opacity:.8; font-weight:400;">+100 puntos de venta en todo el país.</div>
+    <div class="swipe" style="bottom:100px; left:0; right:0;"><span class="arrow">↑</span>Encontrá tu punto de venta</div>
+  </div></div>
+
+</div>
+
+<div class="caption-box">
+  <b>Nota:</b> paleta y tipografía distintas a propósito — esto son <i>ads</i> (pauta paga), no contenido orgánico, así que van con más contraste, textos más cortos y CTA más agresivo que el kit editorial. El Concepto 1 usa una oferta de ejemplo; los Conceptos 2 y 3 usan datos reales (festival, medalla, distribución).
+</div>
+
+</body>
+</html>

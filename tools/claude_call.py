@@ -129,7 +129,11 @@ def _cli_call(prompt: str, system_prompt: str | None, model: str, as_json: bool,
     if _CLAUDE_BIN is None:
         _CLAUDE_BIN = _find_claude_binary()
 
-    cmd = [_CLAUDE_BIN, "-p", prompt, "--model", model]
+    # --disable-slash-commands: without it, -p runs inside this repo's cwd and
+    # picks up CLAUDE.md + project skills, so the CLI reasons about which skill
+    # to invoke instead of just answering the prompt (seen 2026-07-18: captions
+    # came back as "run /build-my-voice first" instead of actual copy).
+    cmd = [_CLAUDE_BIN, "-p", prompt, "--model", model, "--disable-slash-commands"]
     if system_prompt:
         cmd += ["--system-prompt", system_prompt]
     if schema:
@@ -137,10 +141,16 @@ def _cli_call(prompt: str, system_prompt: str | None, model: str, as_json: bool,
     elif as_json:
         cmd += ["--output-format", "json"]
 
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    # encoding="utf-8-sig" strips a leading BOM if Windows' claude.cmd emits one —
+    # without this, json.loads() on the output fails with a cryptic "Expecting
+    # value: line 1 column 1 (char 0)" even though the rest of the text is valid JSON.
+    result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8-sig")
     if result.returncode != 0:
         raise RuntimeError(f"Claude CLI call failed:\n{result.stderr.strip()}")
-    return result.stdout.strip()
+    stdout = result.stdout.strip()
+    if not stdout:
+        raise RuntimeError(f"Claude CLI returned no output (exit 0).\nstderr:\n{result.stderr.strip()}")
+    return stdout
 
 
 # ---------------------------------------------------------------------------

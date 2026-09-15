@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helbreath Enchanting Calculator</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 30px 16px;
+  }
+  .container { width: 100%; max-width: 640px; }
+  h1 {
+    text-align: center;
+    color: #c8a84b;
+    font-size: 1.4rem;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+  }
+  .card {
+    background: #16213e;
+    border: 1px solid #2a2a5a;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    color: #c8a84b;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #2a2a5a;
+    padding-bottom: 8px;
+  }
+  .field { margin-bottom: 14px; }
+  label {
+    display: block;
+    font-size: 0.88rem;
+    color: #a0a0c0;
+    margin-bottom: 5px;
+  }
+  select, input[type="number"] {
+    width: 100%;
+    background: #0f3460;
+    border: 1px solid #2a2a7a;
+    border-radius: 4px;
+    color: #e0e0e0;
+    padding: 8px 10px;
+    font-size: 0.95rem;
+    outline: none;
+  }
+  select:focus, input:focus { border-color: #c8a84b; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  button {
+    width: 100%;
+    background: #c8a84b;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  button:hover { background: #e0bf5a; }
+  #result { display: none; }
+  .result-header {
+    font-size: 0.9rem;
+    color: #a0a0c0;
+    margin-bottom: 4px;
+  }
+  .result-value {
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    font-weight: 600;
+  }
+  .result-big {
+    font-size: 1.5rem;
+    color: #c8a84b;
+    font-weight: 700;
+  }
+  .summary-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .summary-box {
+    background: #0f3460;
+    border-radius: 6px;
+    padding: 12px 8px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  th {
+    text-align: left;
+    color: #a0a0c0;
+    font-weight: 600;
+    padding: 8px 10px;
+    border-bottom: 1px solid #2a2a5a;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+  td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #1a1a3e;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1a1a4a; }
+  .lv-badge {
+    display: inline-block;
+    background: #0f3460;
+    border: 1px solid #2a2a7a;
+    border-radius: 3px;
+    padding: 2px 7px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #7ab0e0;
+  }
+  .total-row td {
+    font-weight: 700;
+    color: #c8a84b;
+    border-top: 1px solid #2a2a5a;
+    border-bottom: none;
+  }
+  .error {
+    background: #3a1a1a;
+    border: 1px solid #7a2a2a;
+    color: #f08080;
+    border-radius: 4px;
+    padding: 12px;
+    margin-top: 12px;
+    font-size: 0.9rem;
+  }
+  .stat-preview {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    background: #0a0a1e;
+    border: 1px solid #2a2a5a;
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #a0c0a0;
+  }
+  .stat-preview span { color: #80c880; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>⚔ Helbreath Enchanting Calculator</h1>
+
+  <div class="card">
+    <div class="section-title">Enchantment</div>
+    <div class="field">
+      <label>Enchantment Type</label>
+      <select id="enchantType" onchange="updatePreview()">
+        <optgroup label="Frag Enchants">
+          <option value="hp_rec">Frag - HP Recovery</option>
+          <option value="sp_rec">Frag - SP Recovery</option>
+          <option value="mp_rec">Frag - MP Recovery</option>
+          <option value="hr">Frag - Hit Ratio</option>
+          <option value="dr">Frag - Defense Ratio</option>
+          <option value="mr">Frag - Magic Resistance</option>
+          <option value="pr">Frag - Poison Resistance</option>
+          <option value="exp">Frag - Experience</option>
+          <option value="gold">Frag - Gold</option>
+        </optgroup>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Current Item</div>
+    <div class="row">
+      <div class="field">
+        <label>Current Stat Value</label>
+        <input type="number" id="currentStat" value="58" min="1" oninput="updatePreview()">
+      </div>
+      <div class="field">
+        <label>Desired Stat Value</label>
+        <input type="number" id="desiredStat" value="88" min="1" oninput="updatePreview()">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Is Item Vortexed?</label>
+        <select id="vortexed">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Low Tier Enchanting Bonus</label>
+        <select id="lowTier">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
+    </div>
+    <div id="statPreview" class="stat-preview"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Market Prices</div>
+    <div class="row">
+      <div class="field">
+        <label>Market Frag Level</label>
+        <input type="number" id="marketLevel" value="7" min="1" max="17">
+      </div>
+      <div class="field">
+        <label>Price per Frag (C)</label>
+        <input type="number" id="fragPrice" value="1" min="0">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Vortex & Gem Price (C)</label>
+        <input type="number" id="vortexPrice" value="0" min="0">
+      </div>
+      <div class="field">
+        <label>Base Item Price (C)</label>
+        <input type="number" id="itemPrice" value="0" min="0">
+      </div>
+    </div>
+    <div class="field">
+      <label>Number of Pieces to Upgrade</label>
+      <input type="number" id="numPieces" value="1" min="1" max="20">
+    </div>
+  </div>
+
+  <button onclick="calculate()">Calculate Upgrade Cost</button>
+  <div id="errorMsg"></div>
+
+  <div id="result" class="card" style="margin-top:20px;">
+    <div class="section-title">Upgrade Cost Calculator</div>
+
+    <div id="resultSummaryText" style="margin-bottom:16px; font-size:0.9rem; color:#a0c0a0;"></div>
+
+    <div class="summary-row">
+      <div class="summary-box">
+        <div class="result-header">Frag Cost</div>
+        <div class="result-big" id="fragCost">—</div>
+        <div style="font-size:0.75rem; color:#707090; margin-top:2px;">coins</div>
+      </div>
+      <div class="summary-box">
+        <div class="result-header">Total Frags</div>
+        <div class="result-big" id="totalFrags">—</div>
+        <div style="font-size:0.75rem; color:#707090; margin-top:2px;">units</div>
+      </div>
+      <div class="summary-box">
+        <div class="result-header">Total Cost</div>
+        <div class="result-big" id="totalCost">—</div>
+        <div style="font-size:0.75rem; color:#707090; margin-top:2px;">coins</div>
+      </div>
+    </div>
+
+    <div id="formulaLine" style="text-align:center; font-size:0.85rem; color:#707090; margin-bottom:20px;"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Frag Level</th>
+          <th>Stat Range</th>
+          <th>Count</th>
+          <th>Unit Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="resultTable"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// Stat range per frag level for each enchant type
+// min(level) = step * level, max = step * level + (step - 1)
+const ENCHANT_TYPES = {
+  hp_rec: { name: 'HP Recovery', unit: '%', step: 7 },
+  sp_rec: { name: 'SP Recovery', unit: '%', step: 7 },
+  mp_rec: { name: 'MP Recovery', unit: '%', step: 7 },
+  hr:     { name: 'Hit Ratio',   unit: '',  step: 7 },
+  dr:     { name: 'Defense Ratio', unit: '', step: 7 },
+  mr:     { name: 'Magic Resistance', unit: '', step: 7 },
+  pr:     { name: 'Poison Resistance', unit: '', step: 3 },
+  exp:    { name: 'Experience', unit: '%', step: 5 },
+  gold:   { name: 'Gold', unit: '%', step: 6 },
+};
+
+function getFragLevel(stat, step) {
+  return Math.floor(stat / step);
+}
+
+function getRangeMin(level, step) { return level * step; }
+function getRangeMax(level, step) { return level * step + step - 1; }
+
+function fragsPerLevel(vortexed, lowTier, level) {
+  // Base: 3 for vortexed or level > 5, 2 otherwise
+  if (vortexed === 'yes') return 3;
+  // Non-vortexed: level 5+ needs 2, below needs 3-4
+  if (level >= 5) return 2;
+  return lowTier === 'yes' ? 3 : 4;
+}
+
+function updatePreview() {
+  const type = ENCHANT_TYPES[document.getElementById('enchantType').value];
+  const cur = parseInt(document.getElementById('currentStat').value) || 0;
+  const des = parseInt(document.getElementById('desiredStat').value) || 0;
+  const step = type.step;
+  const curLv = getFragLevel(cur, step);
+  const desLv = getFragLevel(des, step);
+  const preview = document.getElementById('statPreview');
+  if (cur && des) {
+    preview.innerHTML = `
+      <div>Current: <span>${type.name} +${cur}${type.unit}</span> <span style="color:#7ab0e0">(Lv.${curLv})</span></div>
+      <div>→</div>
+      <div>Target: <span>${type.name} +${des}${type.unit}</span> <span style="color:#7ab0e0">(Lv.${desLv})</span></div>
+    `;
+  }
+}
+
+function calculate() {
+  const typeKey = document.getElementById('enchantType').value;
+  const type = ENCHANT_TYPES[typeKey];
+  const currentStat = parseInt(document.getElementById('currentStat').value);
+  const desiredStat = parseInt(document.getElementById('desiredStat').value);
+  const vortexed = document.getElementById('vortexed').value;
+  const lowTier = document.getElementById('lowTier').value;
+  const marketLevel = parseInt(document.getElementById('marketLevel').value);
+  const fragPrice = parseFloat(document.getElementById('fragPrice').value) || 0;
+  const vortexPrice = parseFloat(document.getElementById('vortexPrice').value) || 0;
+  const itemPrice = parseFloat(document.getElementById('itemPrice').value) || 0;
+  const numPieces = parseInt(document.getElementById('numPieces').value) || 1;
+
+  const errorEl = document.getElementById('errorMsg');
+  errorEl.innerHTML = '';
+
+  if (!currentStat || !desiredStat) {
+    errorEl.innerHTML = '<div class="error">Please fill in current and desired stat.</div>';
+    return;
+  }
+  if (desiredStat <= currentStat) {
+    errorEl.innerHTML = '<div class="error">Desired stat must be higher than current stat.</div>';
+    return;
+  }
+
+  const step = type.step;
+  const currentLevel = getFragLevel(currentStat, step);
+  const desiredLevel = getFragLevel(desiredStat, step);
+
+  if (currentLevel === desiredLevel) {
+    errorEl.innerHTML = '<div class="error">Current and desired stat are in the same frag level — no upgrade needed.</div>';
+    return;
+  }
+
+  // Build rows for each level we pass through
+  const rows = [];
+  let totalFragCount = 0;
+  let totalFragCost = 0;
+
+  for (let lv = currentLevel; lv <= desiredLevel; lv++) {
+    const rangeMin = getRangeMin(lv, step);
+    const rangeMax = getRangeMax(lv, step);
+    const baseFrags = fragsPerLevel(vortexed, lowTier, lv);
+
+    let frags;
+    if (lv === currentLevel) {
+      // Partial first level: how many frags remain at this level
+      // Each frag covers (step / baseFrags) units
+      const fragsUsed = Math.floor((currentStat - rangeMin) / (step / baseFrags));
+      frags = baseFrags - fragsUsed;
+    } else if (lv === desiredLevel) {
+      // Partial last level: how many frags to reach desired stat
+      frags = Math.ceil((desiredStat - rangeMin) / (step / baseFrags));
+      if (frags < 1) frags = 1;
+    } else {
+      frags = baseFrags;
+    }
+
+    // Price: doubles for each level above market level
+    const unitPrice = fragPrice * Math.pow(2, lv - marketLevel);
+
+    rows.push({ lv, rangeMin, rangeMax, frags, unitPrice, total: frags * unitPrice });
+    totalFragCount += frags;
+    totalFragCost += frags * unitPrice;
+  }
+
+  const costPerPiece = totalFragCost + vortexPrice + itemPrice;
+  const grandTotal = costPerPiece * numPieces;
+
+  // Render
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('fragCost').textContent = Math.round(totalFragCost * numPieces) + ' C';
+  document.getElementById('totalFrags').textContent = totalFragCount * numPieces;
+  document.getElementById('totalCost').textContent = Math.round(grandTotal) + ' C';
+
+  const pieceLabel = numPieces > 1 ? ` × ${numPieces} piezas` : '';
+  document.getElementById('resultSummaryText').innerHTML =
+    `Current Stat: <b style="color:#80c880">${type.name} +${currentStat}${type.unit}</b> &nbsp;→&nbsp; ` +
+    `Target Stat: <b style="color:#80c880">${type.name} +${desiredStat}${type.unit}</b>` +
+    (numPieces > 1 ? `<br><span style="color:#c8a84b">× ${numPieces} piezas — costo por pieza: ${Math.round(costPerPiece)} C</span>` : '');
+
+  const parts = [Math.round(totalFragCost) + ' C (frags)'];
+  if (vortexPrice > 0) parts.push(vortexPrice + ' C (vortex/gem)');
+  if (itemPrice > 0) parts.push(itemPrice + ' C (item)');
+  const perPieceStr = parts.join(' + ') + (parts.length > 1 ? ` = ${Math.round(costPerPiece)} C/pieza` : '/pieza');
+  document.getElementById('formulaLine').textContent =
+    numPieces > 1 ? `${perPieceStr}  →  Total ${numPieces} piezas = ${Math.round(grandTotal)} C` : perPieceStr;
+
+  const tbody = document.getElementById('resultTable');
+  tbody.innerHTML = '';
+  rows.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="lv-badge">Lv. ${r.lv}</span></td>
+      <td style="color:#a0c0a0">${r.rangeMin}–${r.rangeMax}${type.unit}</td>
+      <td><b>${r.frags}</b></td>
+      <td>${r.unitPrice % 1 === 0 ? r.unitPrice : r.unitPrice.toFixed(2)} C</td>
+      <td style="color:#c8a84b"><b>${Math.round(r.total)} C</b></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Total row (per piece)
+  const totalTr = document.createElement('tr');
+  totalTr.className = 'total-row';
+  totalTr.innerHTML = `
+    <td colspan="2">Por pieza</td>
+    <td>${totalFragCount}</td>
+    <td>—</td>
+    <td>${Math.round(totalFragCost)} C</td>
+  `;
+  tbody.appendChild(totalTr);
+
+  // Grand total row if multiple pieces
+  if (numPieces > 1) {
+    const grandTr = document.createElement('tr');
+    grandTr.className = 'total-row';
+    grandTr.style.color = '#e0bf5a';
+    grandTr.innerHTML = `
+      <td colspan="2">Total ${numPieces} piezas</td>
+      <td>${totalFragCount * numPieces}</td>
+      <td>—</td>
+      <td>${Math.round(totalFragCost * numPieces)} C</td>
+    `;
+    tbody.appendChild(grandTr);
+  }
+}
+
+// Init preview
+updatePreview();
+</script>
+</body>
+</html>

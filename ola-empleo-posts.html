@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>@olavarria.empleo · 9 Posts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #e8e4df;
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: center;
+}
+.label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(30,20,10,0.45);
+  margin-bottom: 10px;
+  align-self: flex-start;
+  width: 1080px;
+}
+.post {
+  width: 1080px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+:root {
+  --navy: #0b1f3a;
+  --blue:  #1a4fd6;
+  --gold:  #f5a623;
+  --cream: #fdf6ec;
+  --white: #ffffff;
+  --muted: #6b7280;
+  --light: #e8f0fe;
+}
+
+/* ── POST 1 — Presentación de la cuenta ── */
+.p1 { background: var(--navy); }
+.p1-inner {
+  position: absolute; inset: 0;
+  padding: 160px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.p1-tag {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 8px 16px; border-radius: 100px;
+  align-self: flex-start;
+}
+.p1-body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 24px; }
+.p1-headline {
+  font-size: 88px; font-weight: 900; line-height: 0.95;
+  color: var(--white); letter-spacing: -0.04em;
+}
+.p1-headline span { color: var(--gold); }
+.p1-sub {
+  font-size: 24px; font-weight: 400; color: rgba(255,255,255,0.65);
+  max-width: 700px; line-height: 1.4;
+}
+.p1-footer {
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.p1-handle { font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.4); }
+.p1-cta {
+  background: var(--blue); color: var(--white);
+  font-size: 17px; font-weight: 700;
+  padding: 16px 32px; border-radius: 12px;
+  letter-spacing: -0.01em;
+}
+
+/* ── POST 2 — Stat: empresas de Olavarría ── */
+.p2 { background: var(--navy); }
+.p2-inner {
+  position: absolute; inset: 0; padding: 160px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.p2-eyebrow {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold);
+}
+.p2-body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
+.p2-stat {
+  font-size: 160px; font-weight: 900; line-height: 1;
+  color: var(--white); letter-spacing: -0.06em;
+}
+.p2-stat span { color: var(--gold); }
+.p2-desc {
+  font-size: 28px; font-weight: 500; color: rgba(255,255,255,0.7);
+  max-width: 700px; line-height: 1.35;
+}
+.p2-footer {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.p2-tag {
+  background: var(--gold); color: var(--navy);
+  font-size: 13px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 8px 16px; border-radius: 100px;
+}
+.p2-handle { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.35); }
+
+/* ── POST 3 — Tip CV ── */
+.p3 { background: var(--navy); }
+.p3-inner {
+  position: absolute; inset: 0; padding: 160px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.p3-num {
+  font-size: 200px; font-weight: 900; line-height: 1;
+  color: rgba(255,255,255,0.08); position: absolute;
+  top: 40px; right: 60px; letter-spacing: -0.06em;
+}
+.p3-tag {
+  background: rgba(255,255,255,0.15); color: var(--white);
+  font-size: 13px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 8px 16px; border-radius: 100px;
+  align-self: flex-start;
+}
+.p3-body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 24px; z-index: 1; }
+.p3-headline {
+  font-size: 72px; font-weight: 900; line-height: 1.0;
+  color: var(--white); letter-spacing: -0.03em;
+}
+.p3-list { display: flex; flex-direction: column; gap: 16px; }
+.p3-item {
+  display: flex; align-items: flex-start; gap: 16px;
+}
+.p3-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0; margin-top: 8px;
+}
+.p3-text { font-size: 22px; font-weight: 500; color: rgba(255,255,255,0.88); line-height: 1.4; }
+.p3-footer {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.p3-handle { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.4); }
+.p3-cta {
+  background: var(--gold); color: var(--navy);
+  font-size: 15px; font-weight: 700;
+  padding: 14px 28px; border-radius: 10px;
+}
+
+/* ── POST 4 — Sectores que contratan ── */
+.p4 { background: var(--cream); }
+.p4-inner {
+  position: absolute; inset: 0; padding: 160px;
+  display: flex; flex-direction: column; gap: 40px;
+}
+.p4-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.p4-title {
+  font-size: 56px; font-weight: 900; color: var(--navy);
+  letter-spacing: -0.03em; line-height: 1.05; max-width: 600px;
+}
+.p4-title span { color: var(--blue); }
+.p4-handle { font-size: 15px; font-weight: 600; color: var(--muted); }
+.p4-grid {
+  flex: 1;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+.p4-card {
+  background: rgba(11,31,58,0.06);
+  border-radius: 20px; padding: 36px 32px;
+  display: flex; flex-direction: column; gap: 12px;
+  border: 1px solid rgba(11,31,58,0.1);
+}
+.p4-icon { font-size: 36px; }
+.p4-sector { font-size: 22px; font-weight: 700; color: var(--navy); }
+.p4-roles { font-size: 15px; color: var(--muted); line-height: 1.4; }
+
+/* ── POST 5 — Cómo postularse ── */
+.p5 { background: var(--cream); }
+.p5-inner {
+  position: absolute; inset: 0; padding: 160px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.p5-eyebrow {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--blue);
+}
+.p5-title {
+  font-size: 68px; font-weight: 900; color: var(--navy);
+  letter-spacing: -0.03em; line-height: 1.0; margin-top: 16px;
+}
+.p5-steps { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 28px; }
+.p5-step { display: flex; align-items: flex-start; gap: 24px; }
+.p5-num {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--blue); color: var(--white);
+  font-size: 22px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.p5-step-text { display: flex; flex-direction: column; gap: 4px; }
+.p5-step-title { font-size: 22px; font-weight: 700; color: var(--navy); }
+.p5-step-desc { font-size: 17px; color: var(--muted); line-height: 1.4; }
+.p5-footer { display: flex; justify-content: space-between; align-items: center; }
+.p5-tag {
+  background: var(--navy); color: var(--gold);
+  font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 100px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.p5-handle { font-size: 16px; font-weight: 600; color: var(--muted); }
+
+/* ── POST 6 — Mito vs Realidad ── */
+.p6 { background: var(--cream); }
+.p6-inner {
+  position: absolute; inset: 0; padding: 160px;
+  display: flex; flex-direction: column; gap: 36px;
+}
+.p6-eyebrow {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--blue);
+}
+.p6-title {
+  font-size: 64px; font-weight: 900; color: var(--navy);
+  letter-spacing: -0.03em; line-height: 1.0;
+}
+.p6-cards { flex: 1; display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+.p6-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.p6-card {
+  border-radius: 20px; padding: 32px 28px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.p6-myth { background: #fde8e8; }
+.p6-fact  { background: #e8f5e9; }
+.p6-badge {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 100px;
+  align-self: flex-start;
+}
+.p6-myth .p6-badge { background: #fca5a5; color: #7f1d1d; }
+.p6-fact .p6-badge { background: #86efac; color: #14532d; }
+.p6-card-text { font-size: 20px; font-weight: 600; color: var(--navy); line-height: 1.35; }
+.p6-footer { display: flex; justify-content: flex-end; }
+.p6-handle { font-size: 15px; font-weight: 600; color: var(--muted); }
+
+/* ── POST 7 — Quote motivacional ── */
+.p7 { background: var(--gold); }
+.p7-inner {
+  position: absolute; inset: 0; padding: 160px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.p7-quote-mark {
+  font-size: 200px; font-weight: 900; color: rgba(0,0,0,0.12);
+  line-height: 1; margin-top: -40px;
+}
+.p7-body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 24px; }
+.p7-quote {
+  font-size: 64px; font-weight: 800; color: var(--navy);
+  letter-spacing: -0.03em; line-height: 1.1;
+}
+.p7-author { font-size: 20px; font-weight: 500; color: rgba(11,31,58,0.6); }
+.p7-footer { display: flex; justify-content: space-between; align-items: center; }
+.p7-handle { font-size: 16px; font-weight: 700; color: rgba(11,31,58,0.5); }
+.p7-tag {
+  background: var(--navy); color: var(--gold);
+  font-size: 13px; font-weight: 700;
+  padding: 10px 20px; border-radius: 10px;
+}
+
+/* ── POST 8 — Perfil buscado (checklist) ── */
+.p8 { background: var(--gold); }
+.p8-inner {
+  position: absolute; inset: 0; padding: 160px;
+  display: flex; flex-direction: column; gap: 40px;
+}
+.p8-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.p8-title {
+  font-size: 58px; font-weight: 900; color: var(--navy);
+  letter-spacing: -0.03em; line-height: 1.05; max-width: 640px;
+}
+.p8-title span { color: var(--blue); }
+.p8-handle { font-size: 15px; font-weight: 600; color: rgba(11,31,58,0.35); }
+.p8-checks { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+.p8-check { display: flex; align-items: center; gap: 20px; }
+.p8-check-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: rgba(11,31,58,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.p8-check-text { font-size: 22px; font-weight: 500; color: var(--navy); }
+.p8-footer {
+  background: var(--navy); border-radius: 16px;
+  padding: 20px 28px;
+  font-size: 18px; font-weight: 600; color: var(--gold);
+  text-align: center;
+}
+
+/* ── POST 9 — CTA seguir la cuenta ── */
+.p9 { background: var(--gold); }
+.p9-inner {
+  position: absolute; inset: 0; padding: 160px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.p9-top { display: flex; justify-content: flex-end; }
+.p9-handle { font-size: 16px; font-weight: 600; color: rgba(11,31,58,0.35); }
+.p9-body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 32px; }
+.p9-emoji { font-size: 80px; }
+.p9-headline {
+  font-size: 80px; font-weight: 900; color: var(--navy);
+  letter-spacing: -0.04em; line-height: 0.95;
+}
+.p9-headline span { color: var(--blue); }
+.p9-sub {
+  font-size: 24px; font-weight: 400; color: rgba(11,31,58,0.65);
+  max-width: 720px; line-height: 1.4;
+}
+.p9-cta {
+  background: var(--navy); color: var(--gold);
+  font-size: 20px; font-weight: 800;
+  padding: 22px 48px; border-radius: 14px;
+  align-self: flex-start; letter-spacing: -0.01em;
+}
+.p9-footer { }
+</style>
+</head>
+<body>
+
+<!-- POST 1 -->
+<div class="label">Post 1 · Presentación (variante WhatsApp)</div>
+<div class="post p1">
+  <div class="p1-inner">
+    <div class="p1-tag">Olavarría · RRHH</div>
+    <div class="p1-body">
+      <div class="p1-headline">Buscás<br><span>trabajo</span><br>en serio?</div>
+      <div class="p1-sub">Somos la consultora de RRHH de Olavarría. Te conectamos directo con las empresas que contratan.</div>
+    </div>
+    <div class="p1-footer">
+      <div class="p1-handle">@olavarria.empleo</div>
+      <div class="p1-cta">Mandá tu CV →</div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 2 -->
+<div class="label">Post 2 · Stat tiempo de búsqueda</div>
+<div class="post p2">
+  <div class="p2-inner">
+    <div class="p2-eyebrow">Nuestra experiencia</div>
+    <div class="p2-body">
+      <div class="p2-stat">30<span>d</span></div>
+      <div class="p2-desc">es lo que tarda en promedio un candidato bien preparado en conseguir entrevistas reales con nosotros.</div>
+    </div>
+    <div class="p2-footer">
+      <div class="p2-tag">Búsqueda activa</div>
+      <div class="p2-handle">@olavarria.empleo</div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 3 -->
+<div class="label">Post 3 · Tips entrevista</div>
+<div class="post p3">
+  <div class="p3-num">3</div>
+  <div class="p3-inner">
+    <div class="p3-tag">Tips para la entrevista</div>
+    <div class="p3-body">
+      <div class="p3-headline">No arruines<br>tu entrevista.</div>
+      <div class="p3-list">
+        <div class="p3-item"><div class="p3-dot"></div><div class="p3-text">Llegá 10 minutos antes, nunca tarde</div></div>
+        <div class="p3-item"><div class="p3-dot"></div><div class="p3-text">Investigá la empresa antes de ir</div></div>
+        <div class="p3-item"><div class="p3-dot"></div><div class="p3-text">Preguntá algo concreto al final</div></div>
+      </div>
+    </div>
+    <div class="p3-footer">
+      <div class="p3-handle">@olavarria.empleo</div>
+      <div class="p3-cta">Más tips →</div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 4 -->
+<div class="label">Post 4 · Qué hace la consultora</div>
+<div class="post p4">
+  <div class="p4-inner">
+    <div class="p4-header">
+      <div class="p4-title">¿Qué hacemos<br>por <span>vos</span>?</div>
+      <div class="p4-handle">@olavarria.empleo</div>
+    </div>
+    <div class="p4-grid">
+      <div class="p4-card">
+        <div class="p4-icon">📝</div>
+        <div class="p4-sector">Revisamos tu CV</div>
+        <div class="p4-roles">Feedback honesto, gratis, en menos de 48h</div>
+      </div>
+      <div class="p4-card">
+        <div class="p4-icon">🤝</div>
+        <div class="p4-sector">Te presentamos</div>
+        <div class="p4-roles">Directo a las empresas que buscan tu perfil</div>
+      </div>
+      <div class="p4-card">
+        <div class="p4-icon">🎯</div>
+        <div class="p4-sector">Preparamos la entrevista</div>
+        <div class="p4-roles">Simulacro y consejos antes de que vayas</div>
+      </div>
+      <div class="p4-card">
+        <div class="p4-icon">📞</div>
+        <div class="p4-sector">Seguimiento</div>
+        <div class="p4-roles">Te acompañamos hasta que consigas el puesto</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 5 -->
+<div class="label">Post 5 · Pasos: primer día</div>
+<div class="post p5">
+  <div class="p5-inner">
+    <div>
+      <div class="p5-eyebrow">Arrancás mañana</div>
+      <div class="p5-title">Tu primer día,<br>sin nervios.</div>
+    </div>
+    <div class="p5-steps">
+      <div class="p5-step">
+        <div class="p5-num">1</div>
+        <div class="p5-step-text">
+          <div class="p5-step-title">Preparate la noche antes</div>
+          <div class="p5-step-desc">Ropa, documentos y el trayecto ya resueltos.</div>
+        </div>
+      </div>
+      <div class="p5-step">
+        <div class="p5-num">2</div>
+        <div class="p5-step-text">
+          <div class="p5-step-title">Escuchá más de lo que hablás</div>
+          <div class="p5-step-desc">El primer día es para entender cómo funciona el equipo.</div>
+        </div>
+      </div>
+      <div class="p5-step">
+        <div class="p5-num">3</div>
+        <div class="p5-step-text">
+          <div class="p5-step-title">Anotá todo</div>
+          <div class="p5-step-desc">Nadie espera que te acuerdes de todo de memoria.</div>
+        </div>
+      </div>
+    </div>
+    <div class="p5-footer">
+      <div class="p5-tag">Te acompañamos</div>
+      <div class="p5-handle">@olavarria.empleo</div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 6 -->
+<div class="label">Post 6 · Mito vs Realidad (sueldo)</div>
+<div class="post p6">
+  <div class="p6-inner">
+    <div class="p6-eyebrow">Mito vs. Realidad</div>
+    <div class="p6-title">Negociar sueldo<br>no es de mala educación.</div>
+    <div class="p6-cards">
+      <div class="p6-row">
+        <div class="p6-card p6-myth">
+          <div class="p6-badge">Mito</div>
+          <div class="p6-card-text">"Si pregunto por el sueldo antes, quedo mal."</div>
+        </div>
+        <div class="p6-card p6-fact">
+          <div class="p6-badge">Realidad</div>
+          <div class="p6-card-text">Preguntar el rango salarial en la primera entrevista es normal y esperado.</div>
+        </div>
+      </div>
+      <div class="p6-row">
+        <div class="p6-card p6-myth">
+          <div class="p6-badge">Mito</div>
+          <div class="p6-card-text">"El primer número que me ofrecen es el final."</div>
+        </div>
+        <div class="p6-card p6-fact">
+          <div class="p6-badge">Realidad</div>
+          <div class="p6-card-text">Casi siempre hay margen. Nosotros te ayudamos a negociarlo.</div>
+        </div>
+      </div>
+    </div>
+    <div class="p6-footer">
+      <div class="p6-handle">@olavarria.empleo</div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 7 -->
+<div class="label">Post 7 · Quote motivacional (constancia)</div>
+<div class="post p7">
+  <div class="p7-inner">
+    <div class="p7-quote-mark">"</div>
+    <div class="p7-body">
+      <div class="p7-quote">Una búsqueda laboral se gana<br>por constancia, no por suerte.</div>
+      <div class="p7-author">— Equipo @olavarria.empleo</div>
+    </div>
+    <div class="p7-footer">
+      <div class="p7-handle">@olavarria.empleo</div>
+      <div class="p7-tag">Seguinos</div>
+    </div>
+  </div>
+</div>
+
+<!-- POST 8 -->
+<div class="label">Post 8 · Perfil buscado (industria)</div>
+<div class="post p8">
+  <div class="p8-inner">
+    <div class="p8-top">
+      <div class="p8-title">¿Tenés perfil<br>técnico o<br><span>industrial?</span></div>
+      <div class="p8-handle">@olavarria.empleo</div>
+    </div>
+    <div class="p8-checks">
+      <div class="p8-check">
+        <div class="p8-check-icon">✅</div>
+        <div class="p8-check-text">Formación técnica o experiencia en planta</div>
+      </div>
+      <div class="p8-check">
+        <div class="p8-check-icon">✅</div>
+        <div class="p8-check-text">Disponibilidad para turnos rotativos</div>
+      </div>
+      <div class="p8-check">
+        <div class="p8-check-icon">✅</div>
+        <div class="p8-check-text">Ganas de aprender procesos nuevos</div>
+      </div>
+      <div class="p8-check">
+        <div class="p8-check-icon">✅</div>
+        <div class="p8-check-text">Compromiso con la seguridad laboral</div>
+      </div>
+    </div>
+    <div class="p8-footer">Loma Negra y Cemento Avellaneda buscan este perfil hoy.</div>
+  </div>
+</div>
+
+<!-- POST 9 -->
+<div class="label">Post 9 · CTA WhatsApp directo</div>
+<div class="post p9">
+  <div class="p9-inner">
+    <div class="p9-top">
+      <div class="p9-handle">@olavarria.empleo</div>
+    </div>
+    <div class="p9-body">
+      <div class="p9-emoji">📲</div>
+      <div class="p9-headline">Mandanos<br>tu CV por<br><span>WhatsApp.</span></div>
+      <div class="p9-sub">Sin formularios largos, sin vueltas. Te respondemos en menos de 24 horas.</div>
+      <div class="p9-cta">Escribinos ahora →</div>
+    </div>
+    <div class="p9-footer"></div>
+  </div>
+</div>
+
+</body>
+</html>

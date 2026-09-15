@@ -130,11 +130,14 @@ def create_draft(to: str, subject: str, body: str, html: bool = False, label_ids
     message_id = draft["message"]["id"]
 
     if label_ids:
-        service.users().messages().modify(
-            userId="me",
-            id=message_id,
-            body={"addLabelIds": label_ids}
-        ).execute()
+        try:
+            service.users().messages().modify(
+                userId="me",
+                id=message_id,
+                body={"addLabelIds": label_ids}
+            ).execute()
+        except Exception:
+            pass  # label assignment is best-effort
 
     return {"draft_id": draft["id"], "message_id": message_id}
 

@@ -117,6 +117,11 @@ def serve_tmp(filename):
     return send_from_directory(TMP, filename)
 
 
+@app.route("/static/<path:filename>")
+def serve_static(filename):
+    return send_from_directory(TMP, filename)
+
+
 @app.route("/img-proxy")
 def img_proxy():
     """Proxy Drive thumbnail/download URLs through the server so browser auth isn't needed."""

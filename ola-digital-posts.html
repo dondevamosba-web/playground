@@ -54,7 +54,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 56px 64px 0;
+  padding: 100px 180px 0;
   flex: 0 0 auto;
 }
 .od-wordmark {
@@ -85,7 +85,7 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 64px;
+  padding: 0 180px;
   min-height: 0;
 }
 
@@ -93,7 +93,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 64px 56px;
+  padding: 0 180px 100px;
   flex: 0 0 auto;
   color: var(--od-muted);
   font-size: 18px;
@@ -271,7 +271,7 @@ html, body {
   background: var(--od-orange);
   color: #1a0c00;
   border-radius: 36px;
-  padding: 56px 64px;
+  padding: 100px 180px;
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -907,7 +907,7 @@ function DCViewport({ children, minScale = 0.1, maxScale = 8, style = {} }) {
           willChange: 'transform',
           width: 'max-content', minWidth: '100%',
           minHeight: '100%',
-          padding: '60px 0 80px',
+          padding: '100px 0 120px',
         }}
       >
         <div style={{ position: 'absolute', inset: -6000, backgroundImage: gridSvg, backgroundSize: '120px 120px', pointerEvents: 'none', zIndex: -1 }} />
@@ -950,7 +950,7 @@ function DCSection({ id, title, subtitle, children, gap = 48 }) {
   return (
     <div data-dc-section={sid}
       style={{ marginBottom: 'calc(80px * var(--dc-inv-zoom, 1))', position: 'relative' }}>
-      <div style={{ padding: '0 60px' }}>
+      <div style={{ padding: '0 110px' }}>
         <div className="dc-sectionhead" style={{ paddingBottom: 36 }}>
           <DCEditable tag="div" value={sec.title ?? title}
             onChange={(v) => ctx && sid && ctx.patchSection(sid, { title: v })}
@@ -958,7 +958,7 @@ function DCSection({ id, title, subtitle, children, gap = 48 }) {
           {subtitle && <div style={{ fontSize: 16, color: DC.subtitle }}>{subtitle}</div>}
         </div>
       </div>
-      <div style={{ display: 'flex', gap, padding: '0 60px', alignItems: 'flex-start', width: 'max-content' }}>
+      <div style={{ display: 'flex', gap, padding: '0 110px', alignItems: 'flex-start', width: 'max-content' }}>
         {order.map((k) => (
           <DCArtboardFrame key={k} sectionId={sid} artboard={byId[k]} order={order}
             label={(sec.labels || {})[k] ?? byId[k].props.label}

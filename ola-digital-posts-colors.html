@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<title>OLA DIGITAL · Posts alternativos</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy:  #0F172A;
+  --blue:  #0EA5E9;
+  --orange:#F97316;
+  --cream: #F8F5F0;
+  --coral: #1E3A5F;  /* deep ocean blue — contrasts cream beautifully */
+  --warm:  #F4EDE4;  /* warm parchment */
+  --muted-dark: rgba(15,23,42,0.55);
+  --muted-cream: rgba(15,23,42,0.45);
+}
+html, body { margin:0; background:#e8e4df; font-family:'Inter',system-ui,sans-serif; }
+.page { display:flex; flex-wrap:wrap; gap:24px; padding:32px; }
+.label { font-size:13px; font-weight:600; color:#888; margin:0 0 6px; text-transform:uppercase; letter-spacing:.08em; }
+.wrap { display:flex; flex-direction:column; }
+
+/* POST SHELL */
+.post {
+  width:1080px; height:1080px;
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column;
+  font-family:'Inter',system-ui,sans-serif;
+  font-feature-settings:'ss01','cv11';
+  letter-spacing:-0.01em;
+}
+
+/* ── SHARED TYPOGRAPHY SCALE (same as dark originals) ── */
+.eyebrow {
+  font-size:18px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+}
+.stat-giant { font-size:270px; font-weight:900; line-height:.82; letter-spacing:-0.06em; }
+.headline-xl { font-size:124px; font-weight:900; line-height:.92; letter-spacing:-0.04em; }
+.body-lg { font-size:32px; font-weight:500; line-height:1.45; }
+.source-sm { font-size:18px; font-weight:500; opacity:.5; }
+.handle-sm { font-size:18px; font-weight:600; opacity:.4; }
+.cta-pill {
+  display:inline-flex; align-items:center;
+  padding:18px 36px; border-radius:999px;
+  font-size:22px; font-weight:700;
+}
+.list-item { display:flex; align-items:flex-start; gap:20px; }
+.dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; margin-top:16px; background:var(--blue); }
+.item-text { font-size:34px; font-weight:700; line-height:1.3; }
+
+/* ── CREAM POSTS (c1–c3) ── */
+.cream { background: var(--cream); color: var(--navy); }
+.cream .eyebrow { color: var(--blue); }
+.cream .stat-giant { color: var(--navy); }
+.cream .stat-giant span { color: var(--blue); }
+.cream .headline-xl { color: var(--navy); }
+.cream .headline-xl span { color: var(--blue); }
+.cream .body-lg { color: rgba(15,23,42,.6); }
+.cream .source-sm { color: var(--navy); }
+.cream .handle-sm { color: var(--navy); }
+.cream .cta-pill { background: var(--navy); color:#fff; }
+.cream .tag {
+  display:inline-block; padding:10px 24px; border-radius:999px;
+  font-size:18px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  background:var(--navy); color:#fff;
+}
+
+/* ── OCEAN BLUE POSTS (b1–b3) ── */
+.ocean { background: #1E3A5F; color:#fff; }
+.ocean .eyebrow { color: var(--blue); }
+.ocean .stat-giant { color:#fff; }
+.ocean .stat-giant span { color: var(--blue); }
+.ocean .headline-xl { color:#fff; }
+.ocean .headline-xl span { color: var(--blue); }
+.ocean .body-lg { color: rgba(255,255,255,.65); }
+.ocean .source-sm { color:#fff; }
+.ocean .handle-sm { color:#fff; }
+.ocean .cta-pill { background: var(--blue); color:#fff; }
+.ocean .tag {
+  display:inline-block; padding:10px 24px; border-radius:999px;
+  font-size:18px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  background:var(--blue); color:#fff;
+}
+.ocean .dot { background: var(--blue); }
+/* placeholder to keep old rule ending */
+.ocean .cta-unused {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:16px 32px; border-radius:999px;
+  background:var(--blue); color:#fff;
+  font-size:20px; font-weight:700;
+}
+.ocean .stat { font-size:120px; font-weight:900; line-height:1; letter-spacing:-0.05em; color:#fff; }
+.ocean .stat span { color:var(--blue); }
+.ocean .list-item { display:flex; align-items:flex-start; gap:16px; }
+.ocean .dot { width:10px; height:10px; border-radius:50%; background:var(--blue); flex-shrink:0; margin-top:12px; }
+.ocean .item-text { font-size:26px; font-weight:600; color:rgba(255,255,255,0.9); line-height:1.4; }
+.ocean .source { font-size:16px; font-weight:500; color:rgba(255,255,255,0.45); }
+
+.inner { position:absolute; inset:0; padding:80px; display:flex; flex-direction:column; justify-content:space-between; }
+.body  { flex:1; display:flex; flex-direction:column; justify-content:center; gap:28px; }
+.footer{ display:flex; justify-content:space-between; align-items:flex-end; }
+.list  { display:flex; flex-direction:column; gap:20px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══════════════════════════════════════════════ CREAM POSTS ══ -->
+
+<div class="wrap">
+  <div class="label">Cream 1 · Stat</div>
+  <div class="post cream" id="c1">
+    <div class="inner">
+      <div><span class="eyebrow">Dato del mes</span></div>
+      <div class="body">
+        <div class="stat-giant">73<span>%</span></div>
+        <div class="body-lg">de los negocios locales pierden clientes por no aparecer en Google cuando los buscan.</div>
+        <div class="source-sm">Fuente: BrightLocal 2025</div>
+      </div>
+      <div class="footer">
+        <div class="handle-sm">@olavarria.digital</div>
+        <div class="tag">Oportunidad</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="label">Cream 2 · Lista</div>
+  <div class="post cream" id="c2">
+    <div class="inner">
+      <div><span class="eyebrow">3 señales</span></div>
+      <div class="body">
+        <div class="headline-xl">Tu web<br>necesita<br><span>un cambio.</span></div>
+        <div style="display:flex;flex-direction:column;gap:22px;margin-top:8px">
+          <div class="list-item"><div class="dot"></div><div class="item-text">Tarda más de 3s en cargar</div></div>
+          <div class="list-item"><div class="dot"></div><div class="item-text">No se ve bien en el celular</div></div>
+          <div class="list-item"><div class="dot"></div><div class="item-text">No genera consultas hace meses</div></div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="handle-sm">@olavarria.digital</div>
+        <div class="cta-pill">Diagnóstico gratis →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="label">Cream 3 · Manifesto</div>
+  <div class="post cream" id="c3">
+    <div class="inner">
+      <div><span class="tag">Resultados reales</span></div>
+      <div class="body">
+        <div class="headline-xl">Más<br>clientes,<br><span>menos gasto.</span></div>
+        <div class="body-lg">Eso pasa cuando el marketing se hace bien. Sin magia — con datos y estrategia.</div>
+      </div>
+      <div class="footer">
+        <div class="handle-sm">@olavarria.digital</div>
+        <div class="cta-pill">Hablemos →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ OCEAN BLUE POSTS ══ -->
+
+<div class="wrap">
+  <div class="label">Ocean 1 · Stat</div>
+  <div class="post ocean" id="b1">
+    <div class="inner">
+      <div><span class="eyebrow">Lo que dicen los números</span></div>
+      <div class="body">
+        <div class="stat-giant">8<span>×</span></div>
+        <div class="body-lg">el retorno promedio de un cliente en los primeros 6 meses de trabajo conjunto.</div>
+        <div class="source-sm">Datos internos · 2025</div>
+      </div>
+      <div class="footer">
+        <div class="handle-sm">@olavarria.digital</div>
+        <div class="tag">ROI</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="label">Ocean 2 · Lista</div>
+  <div class="post ocean" id="b2">
+    <div class="inner">
+      <div><span class="eyebrow">Lo que hacemos</span></div>
+      <div class="body">
+        <div class="headline-xl">Marketing<br>que<br><span>convierte.</span></div>
+        <div style="display:flex;flex-direction:column;gap:22px;margin-top:8px">
+          <div class="list-item"><div class="dot"></div><div class="item-text">Google Ads y SEO local</div></div>
+          <div class="list-item"><div class="dot"></div><div class="item-text">Web optimizada para ventas</div></div>
+          <div class="list-item"><div class="dot"></div><div class="item-text">Redes con contenido real</div></div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="handle-sm">@olavarria.digital</div>
+        <div class="cta-pill">Conocé más →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="label">Ocean 3 · Manifesto</div>
+  <div class="post ocean" id="b3">
+    <div class="inner">
+      <div><span class="tag">Agencia local</span></div>
+      <div class="body">
+        <div class="headline-xl">Trabajamos<br>con vos,<br><span>no para vos.</span></div>
+        <div class="body-lg">Estrategia, ejecución y resultados medibles. Sin intermediarios — directo con quien decide.</div>
+      </div>
+      <div class="footer">
+        <div class="handle-sm">@olavarria.digital</div>
+        <div class="cta-pill">Empezá hoy →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

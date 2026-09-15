@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punch list — España 3175</title>
+<style>
+:root{--bg:#faf8f5;--ink:#2b2620;--mut:#8a7f70;--acc:#b08d57;--ok:#3e7d4f;--card:#fff;--line:#e8e1d6}
+*{margin:0;box-sizing:border-box}
+body{font-family:-apple-system,Georgia,serif;background:var(--bg);color:var(--ink);max-width:760px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;font-weight:600}
+.sub{color:var(--mut);font-size:14px;margin:6px 0 24px}
+.progress{background:var(--line);border-radius:99px;height:10px;margin-bottom:28px;overflow:hidden}
+.progress div{background:var(--ok);height:100%;width:0;transition:width .3s}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}
+summary{cursor:pointer;padding:16px 18px;font-weight:600;font-size:17px;display:flex;justify-content:space-between;align-items:center;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary .count{font-size:13px;color:var(--mut);font-weight:400}
+.item{display:flex;gap:12px;align-items:flex-start;padding:12px 18px;border-top:1px solid var(--line)}
+.item input[type=checkbox]{width:20px;height:20px;margin-top:2px;accent-color:var(--ok)}
+.item.done label{text-decoration:line-through;color:var(--mut)}
+.item label{flex:1;font-size:15px;line-height:1.45;cursor:pointer}
+.item .foto{font-size:12px;color:var(--acc);text-decoration:none;white-space:nowrap;cursor:pointer}
+.item.has-photo .foto{color:var(--ok)}
+.item img.evid{display:block;max-width:140px;border-radius:8px;margin-top:8px}
+.toolbar{display:flex;gap:10px;margin:24px 0}
+button{background:var(--ink);color:#fff;border:none;border-radius:99px;padding:10px 20px;font-size:14px;cursor:pointer}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.addrow{display:flex;gap:8px;padding:12px 18px;border-top:1px solid var(--line)}
+.addrow input{flex:1;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:14px}
+.addrow button{padding:8px 16px}
+</style>
+</head>
+<body>
+<h1>Punch list · España 3175</h1>
+<p class="sub">Checklist por ambiente con evidencia fotográfica. Se guarda en este navegador (localStorage). Usá “Exportar” para respaldar o compartir el estado.</p>
+<div class="progress"><div id="bar"></div></div>
+<div id="rooms"></div>
+<div class="toolbar">
+  <button onclick="exportState()">Exportar estado (JSON)</button>
+  <button class="ghost" onclick="importState()">Importar</button>
+</div>
+
+<script>
+const DEFAULT_TASKS = {
+  "Living": ["Pintura paredes y techo", "Piso: pulido/reemplazo", "Aberturas: revisar cierres y burletes", "Instalación eléctrica: tomas y llaves nuevas"],
+  "Cocina": ["Mesada instalada y sellada", "Bacha y grifería sin pérdidas", "Alacenas niveladas", "Campana/extracción funcionando", "Revestimiento terminado"],
+  "Baños": ["Sanitarios fijados y sellados", "Grifería sin pérdidas", "Cerámicos y juntas terminadas", "Ventilación/extractor"],
+  "Dormitorios": ["Pintura terminada", "Placares: puertas e interiores", "Tomas y luces por dormitorio"],
+  "Terraza/Pérgola": ["Parrilla terminada", "Pérgola: estructura y techo", "Piso exterior nivelado y con pendiente", "Desagües probados con lluvia"],
+  "Iluminación": ["Plan de luminarias por ambiente", "Dimmers donde corresponde", "Exterior: luces fachada y terraza"],
+  "Exterior/Fachada": ["Frente: revoque y pintura", "Balcón 8,60 m: baranda firme", "Portón garage 2,30 m funcionando", "Veredas y canteros"],
+  "General": ["Limpieza final de obra", "Llaves: copias de todas las puertas", "Manual: garantías y contactos de gremios", "Fotos finales para galería"]
+};
+const KEY = "punchlist-espana3175";
+let state = JSON.parse(localStorage.getItem(KEY) || "null") || {};
+for (const [room, tasks] of Object.entries(DEFAULT_TASKS)) {
+  state[room] = state[room] || tasks.map(t => ({t, done:false, photo:null}));
+}
+
+function save(){ localStorage.setItem(KEY, JSON.stringify(state)); render(); }
+
+function render(){
+  const el = document.getElementById("rooms"); el.innerHTML = "";
+  let total=0, done=0;
+  for (const [room, items] of Object.entries(state)){
+    total += items.length; done += items.filter(i=>i.done).length;
+    const d = document.createElement("details"); d.open = items.some(i=>!i.done);
+    d.innerHTML = `<summary>${room}<span class="count">${items.filter(i=>i.done).length}/${items.length}</span></summary>`;
+    items.forEach((it,i)=>{
+      const row = document.createElement("div");
+      row.className = "item" + (it.done?" done":"") + (it.photo?" has-photo":"");
+      row.innerHTML = `<input type="checkbox" ${it.done?"checked":""}>
+        <label>${it.t}${it.photo?`<img class="evid" src="${it.photo}">`:""}</label>
+        <a class="foto">${it.photo?"✓ foto":"+ foto"}</a>`;
+      row.querySelector("input").onchange = e=>{ it.done = e.target.checked; save(); };
+      row.querySelector(".foto").onclick = ()=>{
+        const inp = document.createElement("input"); inp.type="file"; inp.accept="image/*";
+        inp.onchange = ()=>{ const r=new FileReader();
+          r.onload=()=>{ it.photo=r.result; save(); }; r.readAsDataURL(inp.files[0]); };
+        inp.click();
+      };
+      d.appendChild(row);
+    });
+    const add = document.createElement("div"); add.className="addrow";
+    add.innerHTML = `<input placeholder="Agregar tarea…"><button>+</button>`;
+    add.querySelector("button").onclick = ()=>{
+      const v = add.querySelector("input").value.trim();
+      if(v){ items.push({t:v,done:false,photo:null}); save(); }
+    };
+    d.appendChild(add);
+    el.appendChild(d);
+  }
+  document.getElementById("bar").style.width = total? (100*done/total)+"%" : "0";
+}
+
+function exportState(){
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:"application/json"}));
+  a.download = "punchlist-espana3175.json"; a.click();
+}
+function importState(){
+  const inp = document.createElement("input"); inp.type="file"; inp.accept=".json";
+  inp.onchange = ()=>{ const r=new FileReader();
+    r.onload=()=>{ state = JSON.parse(r.result); save(); }; r.readAsText(inp.files[0]); };
+  inp.click();
+}
+render();
+</script>
+</body>
+</html>

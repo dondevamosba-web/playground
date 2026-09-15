@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 500" role="img" aria-labelledby="t d" preserveAspectRatio="xMidYMid meet">
+  <title id="t">Zona de entrega en mano: Olavarría, Azul y Tandil</title>
+  <desc id="d">Mapa del corredor de la Ruta Nacional 226 en el centro de la provincia de Buenos Aires, con las tres ciudades donde Techno entrega en mano y un área de cobertura alrededor.</desc>
+
+  <style>
+    .map {
+      --paper:  #FFFFFF;
+      --ink:    #14181D;
+      --muted:  #737D88;
+      --hair:   #C9D0D7;
+    }
+    @media (prefers-color-scheme: dark) {
+      .map {
+        --paper:  #14181C;
+        --ink:    #E8ECEF;
+        --muted:  #8E98A3;
+        --hair:   #39424B;
+      }
+    }
+    .map text {
+      font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+      fill: var(--ink);
+    }
+    .city {
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: .09em;
+    }
+    .small {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .13em;
+      fill: var(--muted);
+    }
+    .tiny {
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: .1em;
+      fill: var(--muted);
+    }
+    .halo   { fill: none; stroke: var(--ink); stroke-width: 150; opacity: .075;
+              stroke-linecap: round; stroke-linejoin: round; }
+    .route  { fill: none; stroke: var(--ink); stroke-width: 2.5;
+              stroke-linecap: round; stroke-linejoin: round; }
+    .ring   { fill: none; stroke: var(--ink); stroke-width: 1.25; opacity: .34; }
+    .knock  { fill: var(--paper); }
+    .dot    { fill: var(--ink); }
+    .rule   { stroke: var(--muted); stroke-width: 1.25; }
+    .tick   { stroke: var(--muted); stroke-width: 1.25; }
+  </style>
+
+  <g class="map">
+
+    <text class="small" x="44" y="42">ZONA DE ENTREGA EN MANO</text>
+
+    <!-- área de cobertura -->
+    <path class="halo" d="M 170 181 Q 246 145 331 130 Q 465 230 583 371"/>
+
+    <!-- corredor RN 226 -->
+    <path class="route" d="M 170 181 Q 246 145 331 130 Q 465 230 583 371"/>
+
+    <text class="tiny" x="472" y="229" transform="rotate(44 472 229)" text-anchor="middle">RN 226</text>
+    <text class="tiny" x="450" y="252" transform="rotate(44 450 252)" text-anchor="middle">≈ 110 km</text>
+    <text class="tiny" x="244" y="137" transform="rotate(-18 244 137)" text-anchor="middle">≈ 50 km</text>
+
+    <!-- Olavarría -->
+    <g>
+      <circle class="ring"  cx="170" cy="181" r="15"/>
+      <circle class="knock" cx="170" cy="181" r="9"/>
+      <circle class="dot"   cx="170" cy="181" r="5.5"/>
+      <text class="city" x="152" y="187" text-anchor="end">OLAVARRÍA</text>
+    </g>
+
+    <!-- Azul -->
+    <g>
+      <circle class="ring"  cx="331" cy="130" r="15"/>
+      <circle class="knock" cx="331" cy="130" r="9"/>
+      <circle class="dot"   cx="331" cy="130" r="5.5"/>
+      <text class="city" x="331" y="106" text-anchor="middle">AZUL</text>
+    </g>
+
+    <!-- Tandil -->
+    <g>
+      <circle class="ring"  cx="583" cy="371" r="15"/>
+      <circle class="knock" cx="583" cy="371" r="9"/>
+      <circle class="dot"   cx="583" cy="371" r="5.5"/>
+      <text class="city" x="601" y="377" text-anchor="start">TANDIL</text>
+    </g>
+
+    <!-- pie: escala y envíos -->
+    <line class="rule" x1="44" y1="470" x2="143" y2="470"/>
+    <line class="tick" x1="44"  y1="465" x2="44"  y2="475"/>
+    <line class="tick" x1="143" y1="465" x2="143" y2="475"/>
+    <text class="tiny" x="151" y="474">25 KM</text>
+
+    <text class="tiny" x="676" y="474" text-anchor="end">Al resto del país, por correo</text>
+
+  </g>
+</svg>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo completo — Techno</title>
+<meta name="description" content="Los más de 100 modelos de Techno, con precio en USD y en pesos actualizado con el dólar blue del día.">
+<meta name="theme-color" content="#14653F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF; --card:#FFFFFF; --ink:#1A1815; --muted:#6E675E;
+  --rule:#E4DED5; --accent:#14653F; --accent-ink:#FFFFFF; --accent-soft:#14653F14;
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --wrap:1180px;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --paper:#1D1B17; --card:#1D1B17; --ink:#F0EDE7; --muted:#A19A8E;
+         --rule:#33302A; --accent:#3FA97A; --accent-ink:#0B1F16; --accent-soft:#3FA97A1A; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+     font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--rule)}
+.bar .wrap{display:flex;align-items:center;gap:16px;padding-top:11px;padding-bottom:11px}
+.brand{font-family:var(--display);font-weight:800;font-size:1.1rem;letter-spacing:-.03em;text-decoration:none}
+.brand span{font-family:var(--mono);font-size:.6rem;font-weight:500;letter-spacing:.13em;
+            color:var(--muted);display:block;text-transform:uppercase;margin-top:-2px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+     font-weight:600;font-size:.92rem;padding:9px 16px;border:2px solid var(--accent);
+     text-decoration:none;margin-left:auto;white-space:nowrap}
+.btn.sm{padding:8px 12px;font-size:.78rem;width:100%;justify-content:center}
+
+.dollar-bar{background:var(--card);border-bottom:1px solid var(--rule)}
+.dollar-bar .wrap{display:flex;align-items:baseline;gap:10px;padding:10px 20px;flex-wrap:wrap}
+.dollar-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.dollar-value{font-family:var(--mono);font-weight:600;font-size:1rem;font-variant-numeric:tabular-nums}
+.dollar-time{font-family:var(--mono);font-size:.68rem;color:var(--muted);margin-left:auto}
+
+.head{padding:32px 0 4px}
+.eyebrow{font-family:var(--mono);font-size:.68rem;font-weight:600;letter-spacing:.16em;
+         text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+h1{font-family:var(--display);font-weight:800;letter-spacing:-.02em;font-size:clamp(1.5rem,4vw,2.1rem);margin:0 0 8px}
+.lede{color:var(--muted);max-width:60ch;margin:0}
+.back{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-decoration:none}
+.back:hover{color:var(--ink)}
+
+.tabs{position:sticky;top:58px;z-index:40;background:var(--paper);
+      display:flex;gap:8px;overflow-x:auto;padding:16px 20px;margin:0 auto;max-width:var(--wrap);
+      border-bottom:1px solid var(--rule);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{font-family:var(--mono);font-size:.76rem;font-weight:600;letter-spacing:.03em;
+     padding:8px 16px;border:1.5px solid var(--rule);border-radius:999px;background:var(--card);
+     color:var(--muted);white-space:nowrap;cursor:pointer;flex:none}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;padding:26px 0 70px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr);gap:18px}}
+@media(min-width:1000px){.grid{grid-template-columns:repeat(4,1fr)}}
+
+.card{background:var(--card);border:1px solid var(--rule);padding:12px;display:flex;flex-direction:column;gap:8px}
+.card .thumb{aspect-ratio:1;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card .thumb img{max-width:100%;max-height:100%;object-fit:contain}
+.card .thumb.empty{background:var(--accent-soft);flex-direction:column;gap:4px}
+.card .thumb.empty span{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;color:var(--muted);text-align:center;padding:0 10px}
+.card h3{font-size:.88rem;line-height:1.25;margin:0}
+.card .spec{font-size:.72rem;color:var(--muted);margin:-4px 0 0}
+
+.price-block{margin-top:auto;padding-top:6px;border-top:1px dashed var(--rule);
+             display:flex;flex-direction:column;gap:2px}
+.price-row{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.price-row .k{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.02em}
+.price-row .v{font-family:var(--mono);font-size:.72rem;font-variant-numeric:tabular-nums}
+.price-row.main .v{font-size:1rem;font-weight:600}
+.price-row.main .k{font-size:.64rem;text-transform:uppercase}
+
+.empty-state{padding:60px 20px;text-align:center;color:var(--muted);display:none}
+.empty-state.show{display:block}
+
+footer{border-top:1px solid var(--rule);padding:28px 0 40px;font-size:.82rem;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">Techno<span>Catálogo completo</span></a>
+    <a class="back" href="index.html" style="margin-right:auto">← Volver</a>
+    <a class="btn" href="https://wa.me/5491162310105?text=Hola%20Guido%2C%20estaba%20viendo%20el%20cat%C3%A1logo.%20Quer%C3%ADa%20consultarte%20por..." target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</header>
+
+<div class="dollar-bar">
+  <div class="wrap">
+    <span class="dollar-label">Dólar blue</span>
+    <span class="dollar-value" id="dollarValue">cargando…</span>
+    <span class="dollar-time" id="dollarTime"></span>
+  </div>
+</div>
+
+<div class="wrap head">
+  <p class="eyebrow">Más de 100 modelos</p>
+  <h1>Todo lo que traigo, con precio de hoy.</h1>
+  <p class="lede">Los precios en pesos se recalculan solos con la cotización del dólar blue. Si preferís, siempre podés escribirme directo por WhatsApp.</p>
+</div>
+
+<nav class="tabs" id="tabs"></nav>
+
+<div class="wrap">
+  <div class="grid" id="grid"></div>
+  <p class="empty-state" id="emptyState">No hay productos en esta categoría todavía.</p>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Techno</span>
+    <a href="https://instagram.com/techno.apple.ok" target="_blank" rel="noopener">@techno.apple.ok</a>
+    <a href="https://wa.me/5491162310105" target="_blank" rel="noopener">WhatsApp +54 9 11 6231-0105</a>
+    <span>Olavarría, Buenos Aires</span>
+  </div>
+</footer>
+
+<script>
+/*
+  Confirmado por Guido 2026-08-10: 4% de recargo de transferencia.
+  Aplicado a las dos lineas (pesos y USD) — dijo "pone 4%" sin distinguir
+  entre ambas, así que se usa el mismo numero en las dos.
+*/
+const RECARGO_TRANSF_ARS = 0.04;
+const RECARGO_TRANSF_USD = 0.04;
+
+const CATS = [
+  { id: "todos", label: "Todos" },
+  { id: "iphones", label: "iPhone" },
+  { id: "macbooks", label: "MacBooks" },
+  { id: "ipads", label: "iPad" },
+  { id: "samsung", label: "Samsung" },
+  { id: "watches", label: "Watch" },
+  { id: "airpods", label: "AirPods" },
+  { id: "accesorios", label: "Accesorios" },
+];
+
+const PRODUCTS = [{"n":"MacBook NEO 13\" (A18 Pro)","s":"256GB, 8GB, 6CPU, 5GPU","c":"macbooks","p":875,"verified":false,"img":null},{"n":"MacBook NEO 13\" (A18 Pro)","s":"512GB, 8GB, 6CPU, 5GPU","c":"macbooks","p":1010,"verified":false,"img":null},{"n":"MacBook Air M4 13\"","s":"256GB, 16GB, 10CPU, 8GPU","c":"macbooks","p":1330,"verified":true,"img":"img/macbook-air-m4-13in.jpg","priced_vs_competitor":true},{"n":"MacBook Air M4 13\"","s":"512GB, 16GB, 10CPU, 10GPU","c":"macbooks","p":1320,"verified":true,"img":"img/macbook-air-m4-13in.jpg"},{"n":"MacBook Air M4 15\"","s":"256GB, 16GB, 10CPU, 10GPU","c":"macbooks","p":1435,"verified":true,"img":"img/macbook-air-m4-15in.jpg","priced_vs_competitor":true},{"n":"MacBook Air M4 15\"","s":"256GB, 16GB, 10CPU, 10GPU","c":"macbooks","p":1420,"verified":true,"img":"img/macbook-air-m4-15in.jpg"},{"n":"MacBook Air M4 15\"","s":"512GB, 16GB, 10CPU, 10GPU","c":"macbooks","p":1575,"verified":true,"img":"img/macbook-air-m4-15in.jpg"},{"n":"MacBook Air M4 15\"","s":"512GB, 24GB, 10CPU, 10GPU","c":"macbooks","p":1700,"verified":true,"img":"img/macbook-air-m4-15in.jpg"},{"n":"MacBook Air M5 13\"","s":"512GB, 16GB, 10CPU, 8GPU","c":"macbooks","p":1500,"verified":true,"img":"img/macbook-air-m5-13in.jpg","priced_vs_competitor":true},{"n":"MacBook Air M5 13\"","s":"1TB, 16GB, 10CPU, 10GPU","c":"macbooks","p":1525,"verified":true,"img":"img/macbook-air-m5-13in.jpg"},{"n":"MacBook Air M5 13\"","s":"1TB, 24GB, 10CPU, 10GPU","c":"macbooks","p":2030,"verified":true,"img":"img/macbook-air-m5-13in.jpg"},{"n":"MacBook Air M5 15\"","s":"512GB, 16GB, 10CPU, 10GPU","c":"macbooks","p":1615,"verified":true,"img":"img/macbook-air-m4-15in.jpg"},{"n":"MacBook Air M5 15\"","s":"1TB, 16GB, 10CPU, 10GPU","c":"macbooks","p":1895,"verified":true,"img":"img/macbook-air-m4-15in.jpg"},{"n":"MacBook Air M5 15\"","s":"1TB, 24GB, 10CPU, 10GPU","c":"macbooks","p":2285,"verified":true,"img":"img/macbook-air-m4-15in.jpg"},{"n":"MacBook Pro M2 13\"","s":"256GB, 16GB, 8CPU, 10GPU","c":"macbooks","p":1150,"verified":false,"img":null},{"n":"MacBook Pro M4 14\"","s":"512GB, 16GB, 10CPU, 10GPU","c":"macbooks","p":1800,"verified":false,"img":null},{"n":"MacBook Pro M4 Pro 14\"","s":"512GB, 24GB, 12CPU, 16GPU","c":"macbooks","p":2285,"verified":false,"img":null},{"n":"MacBook Pro M4 Max 14\"","s":"1TB, 32GB, 14CPU, 32GPU","c":"macbooks","p":2780,"verified":false,"img":null},{"n":"MacBook Pro M3 Max 16\"","s":"1TB, 48GB","c":"macbooks","p":3605,"verified":false,"img":null},{"n":"MacBook Pro M4 Max 16\"","s":"1TB, 36GB, 14CPU, 32GPU","c":"macbooks","p":3860,"verified":false,"img":null},{"n":"MacBook Pro M4 Max 16\"","s":"1TB, 48GB, 16CPU, 40GPU","c":"macbooks","p":4015,"verified":false,"img":null},{"n":"MacBook Pro M5 14\"","s":"512GB, 16GB, 10CPU, 10GPU","c":"macbooks","p":1985,"verified":false,"img":null},{"n":"MacBook Pro M5 14\"","s":"1TB, 16GB, 10CPU, 10GPU","c":"macbooks","p":2120,"verified":false,"img":null},{"n":"MacBook Pro M5 14\"","s":"1TB, 24GB, 10CPU, 10GPU","c":"macbooks","p":2370,"verified":false,"img":null},{"n":"MacBook Pro M5 14\"","s":"1TB, 32GB, 10CPU, 10GPU","c":"macbooks","p":2780,"verified":false,"img":null},{"n":"MacBook Pro M5 Pro 14\"","s":"1TB, 24GB, 15CPU, 16GPU","c":"macbooks","p":2740,"verified":false,"img":null},{"n":"MacBook Pro M5 Pro 14\"","s":"1TB, 48GB, 15CPU, 16GPU","c":"macbooks","p":3740,"verified":false,"img":null},{"n":"MacBook Pro M5 Pro 14\"","s":"1TB, 48GB, 18CPU, 20GPU","c":"macbooks","p":3945,"verified":false,"img":null},{"n":"MacBook Pro M5 Pro 14\"","s":"1TB, 64GB, 18CPU, 20GPU","c":"macbooks","p":4335,"verified":false,"img":null},{"n":"MacBook Pro M5 Pro 16\"","s":"1TB, 24GB, 18CPU, 20GPU","c":"macbooks","p":3090,"verified":false,"img":null},{"n":"MacBook Pro M5 Max 14\"","s":"2TB, 36GB, 18CPU, 32GPU","c":"macbooks","p":4285,"verified":false,"img":null},{"n":"MacBook Pro M5 Max 14\"","s":"2TB, 48GB, 18CPU, 40GPU","c":"macbooks","p":5355,"verified":false,"img":null},{"n":"MacBook Pro M5 Max 16\"","s":"2TB, 36GB, 18CPU, 32GPU","c":"macbooks","p":4590,"verified":false,"img":null},{"n":"MacBook Pro M5 Max 16\"","s":"2TB, 48GB, 18CPU, 40GPU","c":"macbooks","p":5100,"verified":false,"img":null},{"n":"MacBook Pro M5 Max 16\"","s":"2TB, 64GB, 18CPU, 40GPU","c":"macbooks","p":6275,"verified":false,"img":null},{"n":"iMac 24\" M4","s":"256GB, 16GB, 8CPU, 8GPU","c":"macbooks","p":2125,"verified":true,"img":"img/imac-24in-m4.jpg","priced_vs_competitor":true},{"n":"Mac mini M4","s":"256GB, 16GB, 10CPU, 10GPU","c":"macbooks","p":980,"verified":true,"img":"img/mac-mini-m4-256gb.jpg","priced_vs_competitor":true},{"n":"Mac mini M4","s":"512GB, 16GB, 10CPU, 10GPU","c":"macbooks","p":1120,"verified":true,"img":"img/mac-mini-m4-256gb.jpg"},{"n":"Mac mini M4 Pro","s":"512GB, 24GB, 12CPU, 16GPU","c":"macbooks","p":2155,"verified":true,"img":"img/mac-mini-pro.jpg"},{"n":"Mac mini M4 Pro","s":"1TB, 24GB, 12CPU, 16GPU","c":"macbooks","p":2605,"verified":true,"img":"img/mac-mini-pro.jpg"},{"n":"Studio Display 27\"","s":"Standard Glass, soporte ajustable","c":"macbooks","p":2985,"verified":true,"img":"img/studio-display-27in.jpg"},{"n":"iPhone 17 Pro","s":"256GB","c":"iphones","p":1235,"verified":true,"img":"img/iphone-17-pro-256gb.jpg"},{"n":"iPhone 17 Pro","s":"512GB","c":"iphones","p":1450,"verified":true,"img":"img/iphone-17-pro-256gb.jpg"},{"n":"iPhone 17 Pro Max","s":"256GB","c":"iphones","p":1345,"verified":true,"img":"img/iphone-17-pro-max.jpg"},{"n":"iPhone 17 Pro Max","s":"256GB SIM+eSIM","c":"iphones","p":1400,"verified":true,"img":"img/iphone-17-pro-max.jpg"},{"n":"iPhone 17 Pro Max","s":"512GB","c":"iphones","p":1540,"verified":true,"img":"img/iphone-17-pro-max.jpg"},{"n":"iPhone 17 Pro Max","s":"512GB SIM+eSIM","c":"iphones","p":1690,"verified":true,"img":"img/iphone-17-pro-max.jpg"},{"n":"iPhone 17 Pro Max","s":"1TB","c":"iphones","p":1780,"verified":true,"img":"img/iphone-17-pro-max.jpg"},{"n":"iPhone 17 Pro Max","s":"2TB","c":"iphones","p":2190,"verified":true,"img":"img/iphone-17-pro-max.jpg"},{"n":"iPhone 17 Air","s":"256GB","c":"iphones","p":1090,"verified":true,"img":"img/iphone-17-air.jpg"},{"n":"iPhone 17 Air","s":"512GB","c":"iphones","p":1220,"verified":true,"img":"img/iphone-17-air.jpg"},{"n":"iPhone 17","s":"256GB NEW","c":"iphones","p":1030,"verified":true,"img":"img/iphone-17-256gb.jpg"},{"n":"iPhone 17","s":"256GB ACTIVE","c":"iphones","p":995,"verified":true,"img":"img/iphone-17-256gb.jpg"},{"n":"iPhone 16 Pro","s":"256GB","c":"iphones","p":1180,"verified":false,"img":null,"priced_vs_competitor":true},{"n":"iPhone 16 Pro Max","s":"256GB","c":"iphones","p":1280,"verified":false,"img":null,"priced_vs_competitor":true},{"n":"iPhone 16","s":"128GB","c":"iphones","p":920,"verified":true,"img":"img/iphone-16-128gb.jpg","priced_vs_competitor":true},{"n":"iPhone 15","s":"128GB","c":"iphones","p":820,"verified":false,"img":null,"priced_vs_competitor":true},{"n":"iPad 11\u00aa Gen","s":"128GB","c":"ipads","p":580,"verified":true,"img":"img/ipad-11a-gen-128gb.jpg","priced_vs_competitor":true},{"n":"iPad 11\u00aa Gen","s":"256GB","c":"ipads","p":680,"verified":true,"img":"img/ipad-11a-gen-128gb.jpg"},{"n":"iPad mini 7\u00aa Gen","s":"128GB","c":"ipads","p":725,"verified":true,"img":"img/ipad-mini-7.jpg"},{"n":"iPad mini 7\u00aa Gen","s":"256GB","c":"ipads","p":825,"verified":true,"img":"img/ipad-mini-7.jpg"},{"n":"iPad Air M4 11\"","s":"128GB","c":"ipads","p":870,"verified":true,"img":"img/ipad-air-m4-11in.jpg","priced_vs_competitor":true},{"n":"iPad Air M4 11\"","s":"256GB","c":"ipads","p":975,"verified":true,"img":"img/ipad-air-m4-11in.jpg"},{"n":"iPad Air M4 13\"","s":"128GB","c":"ipads","p":1100,"verified":true,"img":"img/ipad-air-m4-13in.jpg","priced_vs_competitor":true},{"n":"iPad Air M4 13\"","s":"256GB","c":"ipads","p":1130,"verified":true,"img":"img/ipad-air-m4-13in.jpg"},{"n":"iPad Pro M5 11\"","s":"256GB","c":"ipads","p":1270,"verified":true,"img":"img/ipad-pro-11in.jpg"},{"n":"iPad Pro M5 11\"","s":"512GB","c":"ipads","p":1410,"verified":true,"img":"img/ipad-pro-11in.jpg"},{"n":"iPad Pro M5 13\"","s":"256GB","c":"ipads","p":1520,"verified":true,"img":"img/ipad-pro-13in.jpg"},{"n":"iPad Pro M5 13\"","s":"512GB","c":"ipads","p":1710,"verified":true,"img":"img/ipad-pro-13in.jpg"},{"n":"Apple Pencil USB-C","s":"","c":"ipads","p":180,"verified":false,"img":null,"priced_vs_competitor":true},{"n":"Apple Pencil Pro","s":"","c":"ipads","p":215,"verified":false,"img":null,"priced_vs_competitor":true},{"n":"Magic Keyboard Folio A16","s":"","c":"ipads","p":440,"verified":false,"img":null},{"n":"Magic Keyboard Air 11\"","s":"","c":"ipads","p":510,"verified":false,"img":null},{"n":"Magic Keyboard Air 13\"","s":"","c":"ipads","p":570,"verified":false,"img":null},{"n":"Magic Keyboard Pro 11\" M4/M5","s":"","c":"ipads","p":490,"verified":false,"img":null},{"n":"Magic Keyboard Pro 13\" M4/M5","s":"","c":"ipads","p":570,"verified":false,"img":null},{"n":"Apple Trackpad","s":"","c":"ipads","p":280,"verified":false,"img":null},{"n":"Apple Keyboard Touch ID","s":"","c":"ipads","p":375,"verified":false,"img":null},{"n":"AirPods Pro 3\u00aa Gen","s":"","c":"airpods","p":310,"verified":true,"img":"img/airpods-pro-3a-gen.jpg","priced_vs_competitor":true},{"n":"AirPods MAX USB-C 2","s":"","c":"airpods","p":670,"verified":true,"img":"img/airpods-max-2.jpg"},{"n":"AirPods 4 Sin ANC","s":"","c":"airpods","p":220,"verified":true,"img":"img/airpods-4.jpg","priced_vs_competitor":true},{"n":"AirPods 4 Con ANC","s":"","c":"airpods","p":300,"verified":true,"img":"img/airpods-4.jpg"},{"n":"Apple Watch Ultra 3","s":"Black Titanium","c":"watches","p":860,"verified":true,"img":"img/apple-watch-ultra-3.jpg"},{"n":"Apple Watch SE3 40MM","s":"","c":"watches","p":390,"verified":true,"img":"img/apple-watch-se3.jpg"},{"n":"Apple Watch SE3 44MM","s":"","c":"watches","p":420,"verified":true,"img":"img/apple-watch-se3.jpg"},{"n":"Apple Watch S11 42MM","s":"","c":"watches","p":480,"verified":true,"img":"img/apple-watch-s11-42mm.jpg"},{"n":"Apple Watch S11 46MM","s":"","c":"watches","p":500,"verified":true,"img":"img/apple-watch-s11-42mm.jpg"},{"n":"Samsung Galaxy A27 5G","s":"8/256GB","c":"samsung","p":470,"verified":true,"img":"img/samsung-a27.jpg"},{"n":"Samsung Galaxy A36 5G","s":"8/256GB","c":"samsung","p":400,"verified":true,"img":"img/samsung-a36.jpg","priced_vs_competitor":true},{"n":"Samsung Galaxy A37 5G","s":"8/256GB","c":"samsung","p":485,"verified":false,"img":null},{"n":"Samsung Galaxy A57 5G","s":"8/256GB","c":"samsung","p":540,"verified":false,"img":null},{"n":"Samsung Galaxy S25 FE","s":"8/128GB","c":"samsung","p":605,"verified":false,"img":null},{"n":"Samsung Galaxy S25 Ultra","s":"12/256GB","c":"samsung","p":945,"verified":false,"img":null},{"n":"Samsung Galaxy S25 Ultra","s":"12/512GB","c":"samsung","p":1009,"verified":false,"img":null},{"n":"Samsung Galaxy S25 Ultra","s":"12/1TB","c":"samsung","p":1065,"verified":false,"img":null},{"n":"Samsung Galaxy S26","s":"12/256GB","c":"samsung","p":835,"verified":false,"img":null},{"n":"Samsung Galaxy S26 Ultra","s":"12/256GB","c":"samsung","p":1050,"verified":false,"img":null},{"n":"Samsung Galaxy S26 Ultra","s":"12/512GB","c":"samsung","p":1225,"verified":false,"img":null},{"n":"Samsung Galaxy S26 Ultra","s":"16/1TB","c":"samsung","p":1475,"verified":false,"img":null},{"n":"Samsung Galaxy Z Flip 8","s":"12/512GB","c":"samsung","p":1415,"verified":false,"img":null},{"n":"Samsung Galaxy Ring","s":"Titanio","c":"samsung","p":405,"verified":false,"img":null},{"n":"Samsung Galaxy Watch 6","s":"","c":"samsung","p":405,"verified":false,"img":null},{"n":"Samsung Galaxy Buds3 Pro","s":"","c":"samsung","p":305,"verified":false,"img":null},{"n":"Samsung Galaxy Fit 3","s":"","c":"samsung","p":185,"verified":false,"img":null},{"n":"Adaptador DynamicPower 40W","s":"1x","c":"accesorios","p":135,"verified":false,"img":null},{"n":"Adaptador DynamicPower 40W","s":"5x","c":"accesorios","p":160,"verified":false,"img":null},{"n":"Adaptador DynamicPower 40W","s":"10x","c":"accesorios","p":280,"verified":false,"img":null},{"n":"Adaptador Original 70W","s":"","c":"accesorios","p":195,"verified":false,"img":null},{"n":"Adaptador Baseus 30W","s":"","c":"accesorios","p":120,"verified":false,"img":null},{"n":"Adaptador Original 20W Arg","s":"1x","c":"accesorios","p":125,"verified":false,"img":null},{"n":"Cable USB-C to Lightning","s":"1x","c":"accesorios","p":105,"verified":false,"img":null},{"n":"Cable Mallado USB-C to USB-C","s":"1x","c":"accesorios","p":110,"verified":false,"img":null},{"n":"Cable Mallado USB-C 2M 240W","s":"1x","c":"accesorios","p":125,"verified":false,"img":null},{"n":"Magic Mouse","s":"","c":"accesorios","p":220,"verified":false,"img":null},{"n":"Apple TV 4K","s":"","c":"accesorios","p":405,"verified":false,"img":null},{"n":"AirTag 4-Pack","s":"","c":"accesorios","p":210,"verified":true,"img":"img/airtag-4pack.jpg"},{"n":"Beats Solo 4","s":"","c":"accesorios","p":340,"verified":false,"img":null}];
+
+const fmtUSD = (n) => "U$D " + n.toLocaleString("es-AR");
+const fmtARS = (n) => "$ " + Math.round(n).toLocaleString("es-AR");
+
+let dollarRate = null;
+
+function waLink(p) {
+  const lines = [
+    `Hola! Quiero consultar por ${p.n}${p.s ? " (" + p.s + ")" : ""}.`,
+    "",
+    `Precio USD: ${fmtUSD(p.p)}`,
+  ];
+  if (dollarRate) {
+    lines.push(`Precio pesos: ${fmtARS(p.p * dollarRate)}`);
+    lines.push(`Transferencia pesos (+${RECARGO_TRANSF_ARS * 100}%): ${fmtARS(p.p * dollarRate * (1 + RECARGO_TRANSF_ARS))}`);
+  }
+  return "https://wa.me/5491162310105?text=" + encodeURIComponent(lines.join("\n"));
+}
+
+function cardHTML(p) {
+  const thumb = p.img
+    ? `<div class="thumb"><img src="${p.img}" alt="${p.n}" loading="lazy"></div>`
+    : `<div class="thumb empty"><span>Foto a confirmar</span></div>`;
+
+  let priceRows = `
+    <div class="price-row main"><span class="k">USD</span><span class="v">${fmtUSD(p.p)}</span></div>`;
+  if (dollarRate) {
+    const ars = p.p * dollarRate;
+    priceRows += `
+    <div class="price-row"><span class="k">ARS ref.</span><span class="v">${fmtARS(ars)}</span></div>
+    <div class="price-row"><span class="k">Transf. +${RECARGO_TRANSF_ARS * 100}%</span><span class="v">${fmtARS(ars * (1 + RECARGO_TRANSF_ARS))}</span></div>`;
+  }
+
+  return `
+    <article class="card" data-cat="${p.c}">
+      ${thumb}
+      <h3>${p.n}</h3>
+      ${p.s ? `<p class="spec">${p.s}</p>` : ""}
+      <div class="price-block">${priceRows}</div>
+      <a class="btn sm" href="${waLink(p)}" target="_blank" rel="noopener">Consultar</a>
+    </article>`;
+}
+
+function render(activeCat) {
+  const grid = document.getElementById("grid");
+  const visible = PRODUCTS.filter((p) => activeCat === "todos" || p.c === activeCat);
+  grid.innerHTML = visible.map(cardHTML).join("");
+  document.getElementById("emptyState").classList.toggle("show", visible.length === 0);
+}
+
+function buildTabs() {
+  const nav = document.getElementById("tabs");
+  const counts = { todos: PRODUCTS.length };
+  PRODUCTS.forEach((p) => { counts[p.c] = (counts[p.c] || 0) + 1; });
+  const usable = CATS.filter((c) => c.id === "todos" || counts[c.id]);
+  nav.innerHTML = usable
+    .map((c, i) => `<button class="tab" data-cat="${c.id}" aria-selected="${i === 0}">${c.label} (${counts[c.id] || 0})</button>`)
+    .join("");
+  nav.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tab");
+    if (!btn) return;
+    nav.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", "false"));
+    btn.setAttribute("aria-selected", "true");
+    render(btn.dataset.cat);
+  });
+}
+
+async function loadDollar() {
+  try {
+    const r = await fetch("https://dolarapi.com/v1/dolares/blue");
+    const d = await r.json();
+    dollarRate = d.venta;
+    document.getElementById("dollarValue").textContent = "$" + d.venta.toLocaleString("es-AR");
+    const t = new Date(d.fechaActualizacion);
+    document.getElementById("dollarTime").textContent =
+      "Actualizado " + t.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" });
+  } catch (e) {
+    document.getElementById("dollarValue").textContent = "no disponible";
+  }
+  render(document.querySelector('.tab[aria-selected="true"]')?.dataset.cat || "todos");
+}
+
+buildTabs();
+render("todos");
+loadDollar();
+</script>
+
+</body>
+</html>

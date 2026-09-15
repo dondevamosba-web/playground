@@ -1,361 +1,553 @@
 #!/usr/bin/env python3
 """
-Daily Fiestas orchestrator: RA events + IG reposts from configured accounts,
-branded 1080x1080 images uploaded to Drive, rows written straight to
-Status="approved" (no manual review step — see workflows/fiestas/scrape_and_queue.md
-for the reviewed/"pending" version, queue_event_posts.py).
+Auto-queue Fiestas posts from two sources:
+  1. RA queue sheet (events scraped daily by queue_event_posts.py)
+  2. 11 IG source accounts (scraped live via IG unofficial API)
 
-Sources:
-  - Resident Advisor Argentina (upcoming events)
-  - Event-listing IG accounts (FIESTAS_REPOST_ACCOUNTS / default list below)
-  - Viral/media IG accounts (FIESTAS_VIRAL_ACCOUNTS / default list below)
+Generates branded 1080x1080 images, uploads to Drive, and adds to the
+unified approval sheet as "approved" with 4-5 time slots per day.
+
+Skips: past events, already-queued posts, junk/noise events.
+Prioritizes: big venues, events within 21 days.
 
 Usage:
-  python3 tools/auto_fiestas_queue.py
-  python3 tools/auto_fiestas_queue.py --skip-ra --skip-ig
-  python3 tools/auto_fiestas_queue.py --dry-run
-  python3 tools/auto_fiestas_queue.py --limit 6   # posts checked per IG account
+  python3 tools/auto_fiestas_queue.py            # RA + all IG sources
+  python3 tools/auto_fiestas_queue.py --ra-only  # skip IG scraping
+  python3 tools/auto_fiestas_queue.py --dry-run  # preview without writing
 """
 
 import argparse
 import io
 import json
 import os
+import re
 import sys
 import time
+import urllib.request
+from collections import defaultdict
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-import instaloader
-import requests as req_lib
-from dotenv import load_dotenv
-from PIL import Image, ImageDraw, ImageFont
+import requests
+from PIL import Image, ImageDraw, ImageEnhance, ImageFont
 
 ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
+
+from dotenv import load_dotenv
 load_dotenv(ROOT / ".env")
 
 from tools.sheets_client import get_services
-from tools.queue_event_posts import (
-    get_or_create_sheet, existing_event_keys, append_rows, now_ar,
+from tools import ig_fetch
+
+QUEUE_SHEET   = "1eZxvQyhU_wBRRbF_ACPHufybg4JOv0mL_DfKGoXhOd0"
+UNIFIED_SHEET = os.environ["UNIFIED_APPROVAL_SHEET_ID"]
+AR_TZ         = timezone(timedelta(hours=-3))
+
+# IG accounts to scrape for events
+IG_SOURCES = [
+    "electronicmusictickets",
+    "infoticketsarg",
+    "baires.electronica",
+    "technobuenosaires",
+    "wearebombo",
+    "ems_arg",
+    "moonparkoficial",
+    "nisfernandez",
+]
+
+# IG accounts for viral rave culture content (no event date required)
+IG_VIRAL_SOURCES = [
+    "mixmag",
+    "technomistery_",
+    "rave.archive",
+    "ravehistory",
+    "techno.community",
+    "underground.techno",
+    "djmag",
+    "boilerroom",
+    "residentadvisor",
+    "xlr8r",
+    "electronicbeats",
+    "factmag",
+    "ra_co",
+    "fabriclondon",
+    "electronicmusicarg",
+    "ravediary",
+    "technoarchive_",
+    "scenelatina",
+]
+
+VIRAL_KW = re.compile(
+    r"\b(rave|techno|house|dj|electronic|acid|underground|goa|ibiza|berghain|"
+    r"carl.?cox|prodigy|daft.?punk|tomorrowland|burning.?man|historia|history|"
+    r"años 9|the 9|años 8|illegal|penaliz|criminal|castillo|castle|cultura|"
+    r"open.to.close|set|mix|reel|viral|archive|footage)\b",
+    re.IGNORECASE,
 )
-from tools.generate_event_caption import generate_caption
-from tools.repost_ig import (
-    looks_like_event, get_or_create_drive_folder, upload_to_drive,
-    download_media, DRIVE_FOLDER,
-)
-from tools.claude_call import call_claude
 
-MEDIA_TMP = ROOT / ".tmp" / "auto_fiestas_media"
-BRAND_FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
-BRAND_TAG = "@fiestas.electronicas"  # bottom-corner watermark; adjust to the real handle
+IG_HDRS = {
+    "x-ig-app-id": "936619743392459",
+    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125 Safari/537.36",
+}
 
-# --- IG scrape ramp-up ------------------------------------------------------
-# Instagram blocks scraping from datacenter IPs. Rather than guess a safe
-# per-account post limit, start at 1 and add 1 more each calendar day; freeze
-# the limit the moment Instagram signals a block instead of pushing further.
-RAMP_STATE_FILE = ROOT / ".tmp" / "fiestas_ig_ramp_state.json"
-RAMP_START = 1
-RAMP_STEP = 1
-RAMP_MAX = 10
-
-BLOCK_EXCEPTIONS = (
-    instaloader.exceptions.TooManyRequestsException,
-    instaloader.exceptions.LoginRequiredException,
-    instaloader.exceptions.ConnectionException,
+IG_EVENT_KW = re.compile(
+    r"\b(fiesta|party|evento|dj|techno|house|electroni|ticket|entrada|club|boliche|"
+    r"lineup|presenta|pres\.|open to close|festival|rave|arena|showcase|after)\b",
+    re.IGNORECASE,
 )
 
+# Date patterns to extract from IG captions
+DATE_PATTERNS = [
+    # "Sábado 21 de junio", "viernes 20 de Julio"
+    re.compile(r"(?:lunes|martes|miércoles|miercoles|jueves|viernes|sábado|sabado|domingo)"
+               r"\s+(\d{1,2})\s+de\s+"
+               r"(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)",
+               re.IGNORECASE),
+    # "Sep 12", "Sept 12", "September 12"
+    re.compile(r"\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|"
+               r"enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)"
+               r"\.?\s+(\d{1,2})\b", re.IGNORECASE),
+    # "12/09", "12-09-2026"
+    re.compile(r"\b(\d{1,2})[/\-](\d{1,2})(?:[/\-](\d{2,4}))?\b"),
+]
 
-class InstagramBlockedError(Exception):
-    def __init__(self, handle: str, reason: str):
-        self.handle = handle
-        self.reason = reason
-        super().__init__(f"@{handle}: {reason}")
+MONTH_MAP = {
+    "enero":1,"january":1,"jan":1,
+    "febrero":2,"february":2,"feb":2,
+    "marzo":3,"march":3,"mar":3,
+    "abril":4,"april":4,"apr":4,
+    "mayo":5,"may":5,
+    "junio":6,"june":6,"jun":6,
+    "julio":7,"july":7,"jul":7,
+    "agosto":8,"august":8,"aug":8,
+    "septiembre":9,"september":9,"sep":9,"sept":9,
+    "octubre":10,"october":10,"oct":10,
+    "noviembre":11,"november":11,"nov":11,
+    "diciembre":12,"december":12,"dec":12,
+}
+
+# Events with these strings in the name are junk (scraper noise)
+JUNK_NAMES = {"Gabber", "Islamic Dance", "Capybara", "TechnoViking", "WHAAAAT",
+               "Russian Kid", "Suit Guy", "SIN VENTA", "Gabber Defqon",
+               "WHAAAAT Rave", "Capybara Techno", "Atmosphere pres. Lucas Batcher"}
+
+# Big venues get priority slot 1
+BIG_VENUES = {"movistar arena", "mandarine", "crobar", "palacio alsina", "la biblioteca",
+               "teatro vorterix", "avant garten", "under club", "club araoz"}
+
+# Post 4-5 times per day on weekends, 2-3 on weekdays
+WEEKEND_SLOTS = ["10:00", "13:00", "16:00", "19:00", "22:00"]
+WEEKDAY_SLOTS = ["12:00", "18:00", "21:00"]
+
+DRIVE_FOLDER = os.environ.get("DRIVE_FOLDER_ID", "root")
 
 
-def is_blocking_error(e: Exception) -> bool:
-    if isinstance(e, BLOCK_EXCEPTIONS):
-        return True
-    msg = str(e).lower()
-    return any(kw in msg for kw in ("429", "checkpoint", "rate limit", "please wait", "login required", "log in"))
+# ── Image generation ─────────────────────────────────────────────────────────
 
-
-def load_ramp_state() -> dict:
-    if RAMP_STATE_FILE.exists():
+def _font(size: int):
+    for path in ["/System/Library/Fonts/Supplemental/Arial Black.ttf",
+                 "/System/Library/Fonts/Supplemental/Impact.ttf",
+                 "/System/Library/Fonts/Supplemental/Arial Bold.ttf"]:
         try:
-            return json.loads(RAMP_STATE_FILE.read_text())
+            return ImageFont.truetype(path, size)
+        except OSError:
+            pass
+    return ImageFont.load_default()
+
+
+def generate_event_image(event: dict) -> Path | None:
+    """Download artist photo, apply branded overlay, save to .tmp/. Returns path or None."""
+    img_url = event.get("image_url", "")
+    artist  = (event.get("lineup") or event.get("name") or "").split(",")[0].strip()[:30]
+    venue   = (event.get("venue") or "").split(",")[0].strip()[:25]
+    ev_date = event.get("date", "")
+    name    = event.get("name", "")[:60]
+
+    # Safe filename
+    safe = re.sub(r"[^\w]", "_", artist or name)[:40]
+    out  = ROOT / ".tmp" / f"fiestas_{safe}_{ev_date}.jpg"
+
+    W, H = 1080, 1080
+    BAR = 58
+    BLACK, WHITE, GOLD, GREY = (0,0,0), (255,255,255), (210,168,40), (150,150,150)
+
+    # Download flyer image
+    photo = None
+    if img_url:
+        try:
+            r = requests.get(img_url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+            if r.status_code == 200 and len(r.content) > 5000:
+                photo = Image.open(io.BytesIO(r.content)).convert("RGB")
         except Exception:
             pass
-    return {"date": None, "limit": RAMP_START, "flagged": False, "flagged_at": None, "flagged_reason": None}
 
-
-def save_ramp_state(state: dict):
-    RAMP_STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    RAMP_STATE_FILE.write_text(json.dumps(state, indent=2))
-
-
-def get_daily_limit() -> int:
-    """Today's per-account post limit: ramps up by RAMP_STEP/day, frozen after the first block."""
-    state = load_ramp_state()
-    today = now_ar()[:10]
-
-    if state["flagged"]:
-        print(f"IG ramp: frozen at limit={state['limit']} since first block on "
-              f"{state['flagged_at']} (@{state.get('flagged_handle', '?')}: {state['flagged_reason']}). "
-              f"Reset .tmp/fiestas_ig_ramp_state.json to resume ramping.")
-        return state["limit"]
-
-    if state["date"] != today:
-        if state["date"] is not None:
-            state["limit"] = min(state["limit"] + RAMP_STEP, RAMP_MAX)
-        state["date"] = today
-        save_ramp_state(state)
-
-    print(f"IG ramp: day's per-account limit = {state['limit']} (not yet flagged)")
-    return state["limit"]
-
-
-def record_flag(handle: str, reason: str):
-    state = load_ramp_state()
-    if not state["flagged"]:
-        state["flagged"] = True
-        state["flagged_at"] = now_ar()
-        state["flagged_handle"] = handle
-        state["flagged_reason"] = reason
-        save_ramp_state(state)
-    print(f"\n*** FIRST FLAG HIT: @{handle} — {reason} ***")
-    print(f"*** Ramp frozen at limit={state['limit']}. Stopping IG scraping for this run. ***")
-
-DEFAULT_EVENT_ACCOUNTS = [
-    "electronicmusictickets", "infoticketsarg", "baires.electronica",
-    "technobuenosaires", "wearebombo", "ems_arg", "moonparkoficial", "nisfernandez",
-]
-
-DEFAULT_VIRAL_ACCOUNTS = [
-    "mixmag", "boilerroom", "factmag", "rave.archive", "techno.community",
-    # Remaining accounts from the daily brief — fill in the exact 19 handles here.
-    # Left short deliberately: the prompt only named 5 of the 19 "viral" accounts.
-]
-
-VIRAL_CAPTION_SYSTEM = """Sos un copywriter para una cuenta de Instagram de fiestas electrónicas en Argentina.
-Tu voz es underground, directa, no corporativa. Escribís en español rioplatense.
-
-Este es un post viral de una cuenta internacional de la escena electrónica (medio, sello, o cuenta de cultura rave).
-No es un evento local — es contenido de interés general para la audiencia (noticia, clip, meme, dato).
-Escribí un caption corto adaptado a la audiencia de Buenos Aires, manteniendo la atribución.
-
-Reglas de estilo:
-- Nunca empieces una oración con ¿ (sin signo de apertura de interrogación)
-- Formato fechas argentino si aplica
-- Tono: conciso, con onda
-- Terminá el feed caption con la atribución: "Vía @{source_account}"
-- Agregá 3-5 hashtags en una línea aparte
-
-Para el story caption: 1 línea muy corta. Sin hashtags.
-
-Respondé SOLO con JSON válido:
-{{"feed_caption": "...", "story_caption": "..."}}"""
-
-
-def brand_image(local_path: Path) -> Path:
-    """Resize/crop to 1080x1080 and stamp a bottom-corner watermark."""
-    img = Image.open(local_path).convert("RGB")
-    w, h = img.size
-    side = min(w, h)
-    left = (w - side) // 2
-    top = (h - side) // 2
-    img = img.crop((left, top, left + side, top + side)).resize((1080, 1080), Image.LANCZOS)
-
-    draw = ImageDraw.Draw(img, "RGBA")
-    draw.rectangle([(0, 1000), (1080, 1080)], fill=(0, 0, 0, 140))
+    # Format date
     try:
-        font = ImageFont.truetype(BRAND_FONT, 34)
+        dt = datetime.strptime(ev_date, "%Y-%m-%d")
+        months_es = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"]
+        date_str = f"{dt.day} {months_es[dt.month-1]} {dt.year}"
     except Exception:
-        font = ImageFont.load_default()
-    draw.text((24, 1020), BRAND_TAG, font=font, fill=(255, 255, 255, 255))
+        date_str = ev_date
 
-    out_path = local_path.with_name(local_path.stem + "_branded.jpg")
-    img.save(out_path, "JPEG", quality=90)
-    return out_path
+    if not photo:
+        return None
+
+    # Use the original RA flyer as-is — crop to 1080x1080 square (center crop)
+    ow, oh = photo.size
+    scale = max(W / ow, H / oh)
+    photo = photo.resize((int(ow * scale) + 1, int(oh * scale) + 1), Image.LANCZOS)
+    nw, nh = photo.size
+    photo = photo.crop(((nw - W) // 2, (nh - H) // 2, (nw - W) // 2 + W, (nh - H) // 2 + H))
+    photo.save(str(out), quality=92)
+    return out
 
 
-def queue_ra_events(sheets, sheet_id, known, dry_run) -> list[list]:
-    print("\nScraping Resident Advisor Argentina...")
-    tmp = ROOT / ".tmp" / "auto_fiestas_ra.json"
-    tmp.parent.mkdir(parents=True, exist_ok=True)
-    import subprocess
-    result = subprocess.run(
-        ["python3", str(ROOT / "tools" / "scrape_ra_events.py"), "--output", str(tmp)],
-        cwd=str(ROOT), capture_output=True, text=True,
-    )
-    if result.returncode != 0:
-        print(f"  WARN scrape_ra_events.py failed: {result.stderr.strip()[:300]}")
+def extract_date_from_caption(caption: str) -> str | None:
+    """Try to extract an event date from an IG caption. Returns ISO date or None."""
+    today = date.today()
+    year  = today.year
+
+    # Spanish "Sábado 21 de junio"
+    m = re.search(
+        r"(?:lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo)\s+(\d{1,2})\s+de\s+"
+        r"(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)",
+        caption, re.IGNORECASE)
+    if m:
+        day   = int(m.group(1))
+        month = MONTH_MAP.get(m.group(2).lower(), 0)
+        if month:
+            d = date(year, month, day)
+            if d < today:
+                d = date(year + 1, month, day)
+            return d.isoformat()
+
+    # English "Jul 12" / "September 12"
+    m = re.search(
+        r"\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec|"
+        r"january|february|march|april|june|july|august|september|october|november|december)"
+        r"\.?\s+(\d{1,2})\b", caption, re.IGNORECASE)
+    if m:
+        month = MONTH_MAP.get(m.group(1).lower().rstrip("t"), 0)
+        day   = int(m.group(2))
+        if month:
+            d = date(year, month, day)
+            if d < today:
+                d = date(year + 1, month, day)
+            return d.isoformat()
+
+    return None
+
+
+def scrape_ig_viral(handle: str, limit: int = 15) -> list[dict]:
+    """Pull recent reels/posts from a viral culture account — no event date required."""
+    try:
+        data = ig_fetch.fetch_user(handle, limit)
+    except ig_fetch.IGFetchError as e:
+        print(f"  @{handle}: fetch failed — {e}")
         return []
 
-    events = json.loads(tmp.read_text()) if tmp.exists() else []
-    print(f"  {len(events)} RA events scraped")
+    edges = data.get("edge_owner_to_timeline_media", {}).get("edges", [])[:limit]
+    posts = []
+    today = date.today()
 
-    rows = []
-    for ev in events:
-        key = (ev.get("name", "").strip(), ev.get("date", "").strip())
-        if not key[0] or key in known:
+    for edge in edges:
+        n = edge["node"]
+        caption = ""
+        ce = n.get("edge_media_to_caption", {}).get("edges")
+        if ce:
+            caption = ce[0].get("node", {}).get("text", "")
+
+        if not caption or not VIRAL_KW.search(caption):
             continue
-        try:
-            captioned = generate_caption(ev)
-        except Exception as e:
-            print(f"    Caption error for {ev.get('name')}: {e}")
-            captioned = ev
 
-        image_url = captioned.get("image_url", "")
-        if image_url and not dry_run:
-            try:
-                MEDIA_TMP.mkdir(parents=True, exist_ok=True)
-                local = MEDIA_TMP / f"ra_{abs(hash(key))}.jpg"
-                download_media(image_url, local)
-                branded = brand_image(local)
-                _, drive_svc = get_services()
-                folder_id = get_or_create_drive_folder(drive_svc, DRIVE_FOLDER)
-                image_url = upload_to_drive(drive_svc, branded, folder_id)
-            except Exception as e:
-                print(f"    WARN branding/upload failed, keeping original image URL: {e}")
+        is_video = n.get("is_video", False)
+        img_url = n.get("display_url", "")
+        for r in n.get("thumbnail_resources", []):
+            if r.get("config_width", 0) >= 640:
+                img_url = r["src"]
+                break
 
-        rows.append([
-            now_ar(), "Resident Advisor", ev.get("name", ""), ev.get("date", ""),
-            ev.get("venue", ""), ev.get("city", "Buenos Aires"),
-            ", ".join(ev.get("artists") or []),
-            captioned.get("feed_caption", ""), captioned.get("story_caption", ""),
-            image_url, ev.get("event_url", ""),
-            "approved", "", "Auto-queued (daily pipeline)",
-        ])
-        known.add(key)
-    return rows
+        shortcode = n.get("shortcode", "")
+        hook = caption.split("\n")[0].strip()[:100]
+
+        posts.append({
+            "source":    f"IG @{handle} ({'reel' if is_video else 'post'})",
+            "name":      shortcode,  # use shortcode as dedup key
+            "date":      today.isoformat(),  # post today
+            "caption":   caption[:800],
+            "hook":      hook,
+            "image_url": img_url,
+            "post_url":  f"https://www.instagram.com/p/{shortcode}/",
+            "viral":     True,
+        })
+
+    print(f"  @{handle}: {len(posts)} viral posts de {len(edges)} posts")
+    return posts
 
 
-def queue_ig_account(L, drive_svc, folder_id, handle, limit, is_event_account, known) -> list[list]:
-    handle = handle.lstrip("@")
-    print(f"  Scraping @{handle}...")
-    rows = []
+def scrape_ig_source(handle: str, limit: int = 12) -> list[dict]:
+    """Pull recent posts from a public IG account and return event-like ones."""
     try:
-        profile = instaloader.Profile.from_username(L.context, handle)
-    except Exception as e:
-        if is_blocking_error(e):
-            raise InstagramBlockedError(handle, str(e)[:200]) from e
-        print(f"    FAIL @{handle}: {e}")
-        return rows
+        data = ig_fetch.fetch_user(handle, limit)
+    except ig_fetch.IGFetchError as e:
+        print(f"  @{handle}: fetch failed — {e}")
+        return []
 
-    count = 0
-    for post in profile.get_posts():
-        if count >= limit:
-            break
-        caption_text = post.caption or ""
-        if is_event_account and not looks_like_event(caption_text):
-            time.sleep(1)
+    edges = data.get("edge_owner_to_timeline_media", {}).get("edges", [])[:limit]
+    events = []
+    today  = date.today()
+
+    for edge in edges:
+        n       = edge["node"]
+        caption = ""
+        ce      = n.get("edge_media_to_caption", {}).get("edges")
+        if ce:
+            caption = ce[0].get("node", {}).get("text", "")
+
+        if not IG_EVENT_KW.search(caption):
             continue
 
-        sc = post.shortcode
-        key = (sc, str(post.date.date()))
-        if key in known:
-            time.sleep(1)
-            continue
+        img_url  = n.get("display_url", "")
+        # prefer higher-res thumbnail
+        for r in n.get("thumbnail_resources", []):
+            if r.get("config_width", 0) >= 640:
+                img_url = r["src"]
+                break
 
-        MEDIA_TMP.mkdir(parents=True, exist_ok=True)
+        ts       = n.get("taken_at_timestamp", 0)
+        post_date = date.fromtimestamp(ts) if ts else today
+        ev_date  = extract_date_from_caption(caption) or post_date.isoformat()
+
+        # Skip if event date already passed
         try:
-            url = post.video_url if post.is_video else post.url
-            ext = ".mp4" if post.is_video else ".jpg"
-            local = MEDIA_TMP / f"{sc}{ext}"
-            download_media(url, local)
-            if not post.is_video:
-                local = brand_image(local)
-            image_url = upload_to_drive(drive_svc, local, folder_id)
-        except Exception as e:
-            if is_blocking_error(e):
-                raise InstagramBlockedError(handle, str(e)[:200]) from e
-            print(f"    WARN media failed for {sc}: {e}")
-            time.sleep(1)
-            continue
+            if date.fromisoformat(ev_date) < today:
+                continue
+        except ValueError:
+            pass
 
-        if is_event_account:
-            system = f"""Sos un copywriter para una cuenta de Instagram de fiestas electrónicas en Argentina.
-Reescribí este post de @{handle} como repost propio, tono underground rioplatense.
-Terminá con \"Vía @{handle}\" y hashtags en línea aparte.
-Respondé SOLO con JSON: {{{{"feed_caption": "...", "story_caption": "..."}}}}"""
-        else:
-            system = VIRAL_CAPTION_SYSTEM.replace("{source_account}", handle)
+        shortcode = n.get("shortcode", "")
+        events.append({
+            "source":    f"@{handle}",
+            "name":      caption[:80].split("\n")[0].strip(),
+            "date":      ev_date,
+            "venue":     "",
+            "lineup":    caption[:40],
+            "caption":   caption,
+            "image_url": img_url,
+            "post_url":  f"https://www.instagram.com/p/{shortcode}/",
+        })
 
-        try:
-            raw = call_claude(f"Caption original:\n\n{caption_text[:800]}", system_prompt=system)
-            captions = json.loads(raw)
-        except Exception:
-            captions = {"feed_caption": caption_text[:200], "story_caption": ""}
+    print(f"  @{handle}: {len(events)} eventos de {len(edges)} posts")
+    return events
 
-        rows.append([
-            now_ar(), f"IG @{handle}" + (" (event)" if is_event_account else " (viral)"),
-            sc, str(post.date.date()), "", "Buenos Aires", "",
-            captions.get("feed_caption", ""), captions.get("story_caption", ""),
-            image_url, f"https://www.instagram.com/p/{sc}/",
-            "approved", "", f"Auto-queued (daily pipeline). Original: {caption_text[:200]}",
-        ])
-        known.add(key)
-        count += 1
-        time.sleep(2)
 
-    print(f"    {count} posts queued from @{handle}")
-    return rows
+def upload_image(drive, path: Path) -> str:
+    from googleapiclient.http import MediaFileUpload
+    f = drive.files().create(
+        body={"name": path.name, "parents": [DRIVE_FOLDER]},
+        media_body=MediaFileUpload(str(path), mimetype="image/jpeg"),
+        fields="id",
+    ).execute()
+    fid = f["id"]
+    drive.permissions().create(fileId=fid, body={"type": "anyone", "role": "reader"}).execute()
+    return f"https://drive.google.com/uc?export=download&id={fid}"
 
+
+# ── Main ─────────────────────────────────────────────────────────────────────
 
 def main():
-    parser = argparse.ArgumentParser(description="Auto-queue + auto-approve Fiestas posts (RA + IG reposts)")
-    parser.add_argument("--skip-ra", action="store_true")
-    parser.add_argument("--skip-ig", action="store_true")
-    parser.add_argument("--limit", type=int, default=None,
-                         help="Posts checked per IG account (default: ramps up 1/day, see get_daily_limit)")
-    parser.add_argument("--dry-run", action="store_true")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run",  action="store_true")
+    parser.add_argument("--ra-only",  action="store_true")
+    parser.add_argument("--days-ahead", type=int, default=21)
     args = parser.parse_args()
 
-    sheets_svc, drive_svc = get_services()
-    sheet_id = get_or_create_sheet(sheets_svc, drive_svc)
-    known = existing_event_keys(sheets_svc, sheet_id)
-    print(f"Sheet has {len(known)} existing entries.")
+    sheets, drive = get_services()
+    today  = date.today()
+    cutoff = today + timedelta(days=args.days_ahead)
 
-    all_rows = []
+    # Load already-queued captions to avoid dups
+    existing = sheets.spreadsheets().values().get(
+        spreadsheetId=UNIFIED_SHEET, range="'Fiestas'!B2:B500"
+    ).execute().get("values", [])
+    existing_caps = {r[0][:40] for r in existing if r}
 
-    if not args.skip_ra:
-        all_rows += queue_ra_events(sheets_svc, sheet_id, known, args.dry_run)
+    # Captions get re-worded every run, so caption matching alone re-queues
+    # old events (2026-07-06: Deborah De Luca announced 3x). Also dedup by
+    # event NAME against the Queue sheet ledger, any status.
+    queue_names = sheets.spreadsheets().values().get(
+        spreadsheetId=QUEUE_SHEET, range="Queue!C2:C500"
+    ).execute().get("values", [])
+    unified_names = sheets.spreadsheets().values().get(
+        spreadsheetId=UNIFIED_SHEET, range="'Fiestas'!F2:F500"
+    ).execute().get("values", [])
+    existing_names = {r[0].strip()[:40].lower()
+                      for rows_ in (queue_names, unified_names) for r in rows_
+                      if r and r[0].strip()}
 
-    if not args.skip_ig:
-        event_accounts = [a.strip() for a in os.getenv("FIESTAS_REPOST_ACCOUNTS", "").split(",") if a.strip()] or DEFAULT_EVENT_ACCOUNTS
-        viral_accounts = [a.strip() for a in os.getenv("FIESTAS_VIRAL_ACCOUNTS", "").split(",") if a.strip()] or DEFAULT_VIRAL_ACCOUNTS
-        limit = args.limit if args.limit is not None else get_daily_limit()
+    seen: set[str] = set()
+    by_date: dict[str, list] = defaultdict(list)
 
-        L = instaloader.Instaloader(
-            quiet=True, download_pictures=False, download_videos=False,
-            download_video_thumbnails=False, save_metadata=False,
-        )
-        folder_id = get_or_create_drive_folder(drive_svc, DRIVE_FOLDER)
+    def add_event(ev: dict):
+        ev_date = ev.get("date", "")
+        name    = ev.get("name", "")
+        caption = ev.get("caption", "")
+        img_url = ev.get("image_url", "")
+        venue   = ev.get("venue", "")
 
-        print(f"\nScraping {len(event_accounts)} event accounts + {len(viral_accounts)} viral accounts "
-              f"(limit={limit}/account)...")
+        if not ev_date or not caption or not img_url:
+            return
         try:
-            for handle in event_accounts:
-                all_rows += queue_ig_account(L, drive_svc, folder_id, handle, limit, True, known)
-            for handle in viral_accounts:
-                all_rows += queue_ig_account(L, drive_svc, folder_id, handle, limit, False, known)
-        except InstagramBlockedError as e:
-            record_flag(e.handle, e.reason)
+            d = date.fromisoformat(ev_date)
+        except ValueError:
+            return
+        if d < today or d > cutoff:
+            return
+        if any(j.lower() in name.lower() for j in JUNK_NAMES):
+            return
+        key = name[:40]
+        if key in seen or caption[:40] in existing_caps or key.strip().lower() in existing_names:
+            return
+        seen.add(key)
 
-    if not all_rows:
-        print("\nNo new posts to queue.")
+        priority = any(bv in venue.lower() for bv in BIG_VENUES)
+        by_date[ev_date].append({**ev, "priority": priority})
+
+    # ── Source 1: RA queue sheet ─────────────────────────────────────────────
+    print("Scraping RA queue sheet…")
+    queue_rows = sheets.spreadsheets().values().get(
+        spreadsheetId=QUEUE_SHEET, range="Queue!A2:K500"
+    ).execute().get("values", [])
+
+    def gq(r, i): return r[i].strip() if i < len(r) else ""
+
+    for r in queue_rows:
+        m = re.search(r"ra\.co/events/(\d+)", gq(r, 10))
+        add_event({
+            "source":    "RA",
+            "name":      gq(r, 2),
+            "date":      gq(r, 3),
+            "venue":     gq(r, 4),
+            "lineup":    gq(r, 6),
+            "caption":   gq(r, 7),
+            "image_url": gq(r, 9),
+            "ra_id":     m.group(1) if m else "",
+        })
+    print(f"  RA: {sum(len(v) for v in by_date.values())} eventos únicos hasta ahora")
+
+    # ── Source 2: IG event accounts ─────────────────────────────────────────
+    if not args.ra_only:
+        print("\nScraping cuentas IG…")
+        for handle in IG_SOURCES:
+            for ev in scrape_ig_source(handle):
+                if not ev.get("caption"):
+                    continue
+                lines = ev["caption"].split("\n")
+                ev["name"]    = re.sub(r"[🔥🎵🎶💥✨🌟⚡]", "", lines[0]).strip()[:70]
+                ev["caption"] = ev["caption"][:800]
+                add_event(ev)
+            time.sleep(1.5)
+
+    # ── Source 3: IG viral culture accounts ─────────────────────────────────
+    viral_rows = []
+    if not args.ra_only:
+        print("\nScraping cuentas virales…")
+        for handle in IG_VIRAL_SOURCES:
+            for post in scrape_ig_viral(handle):
+                shortcode = post["name"]  # used as dedup key
+                if shortcode in existing_names or shortcode in seen:
+                    continue
+                if not post.get("image_url"):
+                    continue
+                seen.add(shortcode)
+                hook = post.get("hook", post["caption"].split("\n")[0])[:100]
+                viral_rows.append([
+                    datetime.now(AR_TZ).strftime("%Y-%m-%d %H:%M"),
+                    post["source"],
+                    shortcode,
+                    date.today().isoformat(),
+                    "",  # venue
+                    "",  # city
+                    "",  # lineup
+                    post["caption"][:800],
+                    hook,
+                    post["image_url"],
+                    post["post_url"],
+                    "approved",
+                ])
+                print(f"  [viral] {hook[:60]}")
+            time.sleep(1.5)
+
+    if not by_date and not viral_rows:
+        print("Nothing new to queue.")
         return
 
-    print(f"\n{len(all_rows)} new posts (auto-approved):")
-    for r in all_rows:
-        print(f"  [{r[1]}] {r[2]} — {r[3]}")
+    # Sort each day: priority first, then alphabetical
+    new_rows = []
+    alt_counter = 0  # feed mix: alternate official flyer / our own branded card
+    for ev_date in sorted(by_date):
+        d       = date.fromisoformat(ev_date)
+        is_wknd = d.weekday() in (4, 5, 6)
+        slots   = WEEKEND_SLOTS if is_wknd else WEEKDAY_SLOTS
+        events  = sorted(by_date[ev_date], key=lambda e: (not e["priority"], e["name"]))[:len(slots)]
 
-    if args.dry_run:
-        print("\n[DRY RUN] Not writing to sheet.")
-        return
+        for idx, ev in enumerate(events):
+            slot = slots[idx]
+            img_url = ev["image_url"]
 
-    append_rows(sheets_svc, sheet_id, all_rows)
-    print(f"\nQueued {len(all_rows)} posts (Status=approved) → https://docs.google.com/spreadsheets/d/{sheet_id}/edit")
+            alt_counter += 1
+            if alt_counter % 2 == 0 and not args.dry_run:
+                try:
+                    from tools.fiestas_card import make_card, ra_artist_photo
+                    # prefer the DJ's public profile photo; fall back to the flyer
+                    photo = ra_artist_photo(ev["ra_id"]) if ev.get("ra_id") else None
+                    if not photo:
+                        photo = requests.get(img_url, timeout=15,
+                                             headers={"User-Agent": "Mozilla/5.0"}).content
+                    card = make_card({"name": ev["name"], "date": ev_date,
+                                      "venue": ev.get("venue", ""),
+                                      "lineup": ev.get("lineup", "")}, photo)
+                    img_url = upload_image(drive, card)
+                    print(f"  [card propia] {ev['name'][:40]}")
+                except Exception as e:
+                    print(f"  card propia falló ({str(e)[:60]}), uso flyer oficial")
+
+            row = [
+                datetime.now(AR_TZ).strftime("%Y-%m-%d %H:%M"),
+                ev["caption"],
+                img_url,
+                f"{ev_date} {slot}",
+                "approved",
+                ev["name"][:50],
+                "",
+            ]
+            new_rows.append(row)
+            tag = "BIG" if ev["priority"] else "   "
+            print(f"  [{tag}] {ev_date} {slot} — {ev['name'][:50]}")
+
+    if not args.dry_run and new_rows:
+        sheets.spreadsheets().values().append(
+            spreadsheetId=UNIFIED_SHEET,
+            range="'Fiestas'!A1",
+            valueInputOption="RAW",
+            body={"values": new_rows},
+        ).execute()
+        print(f"\n{len(new_rows)} eventos aprobados y listos para publicar.")
+    elif args.dry_run:
+        print(f"\n[DRY RUN] {len(new_rows)} eventos a encolar.")
+
+    # Write viral content to Fiestas Queue sheet
+    if not args.dry_run and viral_rows:
+        sheets.spreadsheets().values().append(
+            spreadsheetId=QUEUE_SHEET,
+            range="Queue!A1",
+            valueInputOption="RAW",
+            body={"values": viral_rows},
+        ).execute()
+        print(f"{len(viral_rows)} posts virales agregados a la cola.")
+    elif args.dry_run and viral_rows:
+        print(f"[DRY RUN] {len(viral_rows)} posts virales a encolar.")
 
 
 if __name__ == "__main__":

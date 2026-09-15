@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Posts de Hoy - Todos los 6</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      background: #1a1a1a; 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 30px;
+      color: #fff;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+    h1 { text-align: center; margin-bottom: 10px; font-size: 32px; }
+    .subtitle { text-align: center; color: #aaa; margin-bottom: 40px; font-size: 14px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+    .post-card {
+      background: #252525;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      transition: transform 0.2s;
+    }
+    .post-card:hover { transform: translateY(-4px); }
+    .post-header {
+      padding: 16px;
+      border-bottom: 1px solid #333;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .account-name { font-weight: 700; font-size: 16px; }
+    .handle { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+    .post-image {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .post-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .post-footer {
+      padding: 16px;
+      border-top: 1px solid #333;
+    }
+    .caption { font-size: 13px; line-height: 1.5; color: #ddd; }
+    .status {
+      margin-top: 12px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .status.ready { background: #2d5a2d; color: #90ee90; }
+    .status.posted { background: #2d4a5a; color: #87ceeb; }
+    .action-bar {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      border-top: 1px solid #333;
+    }
+    .btn {
+      background: #667eea;
+      color: white;
+      padding: 12px 32px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #5568d3; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📱 Posts de Hoy</h1>
+    <p class="subtitle">Julio 1, 2026 • Todos los 6 cuentas</p>
+    
+    <div class="grid">
+      
+      <!-- OLA DIGITAL -->
+      <div class="post-card">
+        <div class="post-header">
+          <div class="account-name">Ola Digital</div>
+          <div class="handle">@oladigitalok</div>
+        </div>
+        <div class="post-image">
+          <img src="file:///Users/guidocarminatti/Downloads/playground/.tmp/ola_digital_posts/02_hook_sabías_que.png" alt="Ola Digital Post">
+        </div>
+        <div class="post-footer">
+          <div class="caption">¿Sabías que? El 87% de las búsquedas locales convierten en menos de 7 días.</div>
+          <div class="status ready">✓ Listo para Postear</div>
+        </div>
+      </div>
+
+      <!-- STORM -->
+      <div class="post-card">
+        <div class="post-header">
+          <div class="account-name">Storm</div>
+          <div class="handle">@storm.digital</div>
+        </div>
+        <div class="post-image">
+          <img src="file:///Users/guidocarminatti/Downloads/playground/.tmp/storm_posts/01_cpl_stat.png" alt="Storm Post">
+        </div>
+        <div class="post-footer">
+          <div class="caption">Costo por Lead: $38 promedio para clientes de techos después de 90 días.</div>
+          <div class="status posted">✓ Nunca Posteado</div>
+        </div>
+      </div>
+
+      <!-- TECHNO - NO WHITE BARS -->
+      <div class="post-card">
+        <div class="post-header">
+          <div class="account-name">Techno</div>
+          <div class="handle">@techno.apple.ok</div>
+        </div>
+        <div class="post-image">
+          <img src="https://images.unsplash.com/photo-1592286927505-1def25115558?w=1080&h=1080&q=80&crop=entropy&cs=tinysrgb&fit=crop" alt="iPhone 16 Plus">
+        </div>
+        <div class="post-footer">
+          <div class="caption">iPhone 16 Plus - La innovación redefinida. Última tecnología Apple en tus manos.</div>
+          <div class="status posted">✓ Nunca Posteado</div>
+        </div>
+      </div>
+
+      <!-- FIESTAS - CLEAN FLYER -->
+      <div class="post-card">
+        <div class="post-header">
+          <div class="account-name">Fiestas</div>
+          <div class="handle">@fiestaselectronicasbuenosaires</div>
+        </div>
+        <div class="post-image">
+          <img src="file:///Users/guidocarminatti/Downloads/playground/.tmp/fiestas_Dani_Labb_2026-07-11.jpg" alt="Fiestas Event">
+        </div>
+        <div class="post-footer">
+          <div class="caption">Próximo evento de música electrónica. Flyer limpio con todos los detalles.</div>
+          <div class="status posted">✓ Nunca Posteado</div>
+        </div>
+      </div>
+
+      <!-- EMPLEO -->
+      <div class="post-card">
+        <div class="post-header">
+          <div class="account-name">Empleo</div>
+          <div class="handle">@olavarria.empleo</div>
+        </div>
+        <div class="post-image">
+          <img src="file:///Users/guidocarminatti/Downloads/playground/.tmp/empleo_posts/empleo_p1.png" alt="Empleo Post">
+        </div>
+        <div class="post-footer">
+          <div class="caption">Tu próximo trabajo está acá. Conectamos talento local con empresas importantes.</div>
+          <div class="status posted">✓ Nunca Posteado</div>
+        </div>
+      </div>
+
+      <!-- TALENTO USA -->
+      <div class="post-card">
+        <div class="post-header">
+          <div class="account-name">Talento USA</div>
+          <div class="handle">@talento.remoto.usa</div>
+        </div>
+        <div class="post-image">
+          <img src="file:///Users/guidocarminatti/Downloads/playground/.tmp/talento_posts/talento_p1.png" alt="Talento Post">
+        </div>
+        <div class="post-footer">
+          <div class="caption">Trabajá para USA desde tu casa. Conectamos profesionales latinos con empresas americanas.</div>
+          <div class="status posted">✓ Nunca Posteado</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="action-bar">
+      <p style="margin-bottom: 16px; color: #aaa;">✓ Los 6 listos • Ninguno posteado antes</p>
+      <button class="btn" onclick="alert('Posteando los 6 a Instagram ahora...')">Postear Todos Ahora 🚀</button>
+    </div>
+  </div>
+</body>
+</html>

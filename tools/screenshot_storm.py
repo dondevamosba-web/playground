@@ -15,6 +15,8 @@ import asyncio
 import http.server
 import json
 import re
+import subprocess
+import sys
 import threading
 from pathlib import Path
 
@@ -114,6 +116,15 @@ def main():
     args = parser.parse_args()
 
     asyncio.run(export_artboards(args.filter, args.out))
+
+    # Auto-generate story versions (1080x1920) alongside the feed PNGs
+    import subprocess
+    subprocess.run([
+        sys.executable, str(ROOT / "tools" / "make_story_versions.py"),
+        "--dir", str(args.out),
+        "--bg", "#0c0817",
+        "--skip-existing",
+    ])
 
 
 if __name__ == "__main__":

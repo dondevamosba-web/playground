@@ -68,7 +68,8 @@ Rules:
 
 Return only the caption text, nothing else."""
 
-    return call_claude(prompt)
+    # haiku: caption with explicit rules and constraints, mechanical execution
+    return call_claude(prompt, model="haiku")
 
 
 def main():

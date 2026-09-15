@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Sur del Sur — Manifesto Editorial</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500;1,9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --ink:#0c0c0a; --paper:#f4f1ea; --gold:#c9a24b;
+    --font-serif:'Fraunces',serif; --font-sans:'Space Grotesk',sans-serif; --font-body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; padding:0 0 100px; background:#c9c1ac; font-family:var(--font-body); }
+
+  .intro{ max-width:1180px; margin:0 auto; padding:56px 24px 10px; text-align:center; }
+  .intro h1{ font-family:var(--font-sans); font-weight:700; font-size:26px; margin:0 0 8px; color:#1a1a16; }
+  .intro p{ color:#5a5342; font-size:13px; margin:0 auto; max-width:760px; }
+
+  .grid{ max-width:1180px; margin:40px auto 0; display:grid; grid-template-columns:repeat(3, 340px); gap:20px; padding:0 24px; justify-content:center; }
+  .frame{ box-shadow:0 20px 44px rgba(0,0,0,.32); border-radius:8px; overflow:hidden; width:340px; height:425px; position:relative; }
+  .card{ width:1080px; height:1350px; position:absolute; top:0; left:0; overflow:hidden; transform:scale(0.3148); transform-origin:top left; color:var(--paper); font-family:var(--font-body); }
+
+  .bg{ position:absolute; inset:0; background-size:cover; background-position:center; }
+  .bg.dark-only{ background:var(--ink); }
+  .duo{ filter:grayscale(.15) contrast(1.08) brightness(.85) saturate(1.05); }
+  .scrim{ position:absolute; inset:0; }
+  .scrim.bottom{ background:linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.55) 65%, rgba(0,0,0,.92) 100%); }
+  .scrim.full{ background:linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.7)); }
+  .grain{ position:absolute; inset:0; opacity:.18; mix-blend-mode:overlay;
+    background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.07) 0px, transparent 1px, transparent 3px); }
+
+  .eyebrow{ position:absolute; top:70px; left:76px; display:flex; align-items:center; gap:10px;
+    font-family:var(--font-sans); font-size:19px; font-weight:600; letter-spacing:.5px; color:var(--paper); opacity:.92; }
+  .eyebrow .dot{ width:9px; height:9px; border-radius:50%; background:var(--gold); }
+
+  .headline{ position:absolute; left:76px; right:76px; bottom:280px; font-family:var(--font-sans); font-weight:700;
+    font-size:64px; line-height:1.08; letter-spacing:-.01em; }
+  .headline i{ font-family:var(--font-serif); font-style:italic; font-weight:500; color:var(--gold); }
+  .sub{ position:absolute; left:76px; right:120px; bottom:210px; font-size:22px; line-height:1.5; color:rgba(244,241,234,.78); font-weight:400; }
+
+  .pill{ position:absolute; left:76px; bottom:100px; background:var(--paper); color:var(--ink);
+    font-family:var(--font-sans); font-weight:600; font-size:20px; padding:20px 34px; border-radius:999px;
+    display:inline-flex; align-items:center; gap:10px; }
+
+  .foot{ position:absolute; bottom:70px; right:76px; font-family:var(--font-sans); font-size:17px; letter-spacing:1px; color:rgba(244,241,234,.6); }
+
+  .caption-box{ max-width:1180px; margin:50px auto 0; background:#fff; border-radius:10px; padding:18px 24px;
+    font-size:13px; color:#333; box-shadow:0 4px 14px rgba(0,0,0,.08); }
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>SUR DEL SUR — Manifesto Editorial</h1>
+  <p>Mismo lenguaje visual del ejemplo: fotografía moody a página completa, overline en sans bold, headline que mezcla sans + serif itálica dorada como acento, botón píldora blanco, todo con más aire y menos ruido que el resto del kit.</p>
+</div>
+
+<div class="grid">
+
+  <!-- 1: tap pour -->
+  <div class="frame"><div class="card">
+    <div class="bg duo" style="background-image:url('assets/sur-del-sur/tap_pour.jpg');"></div>
+    <div class="scrim bottom"></div><div class="grain"></div>
+    <div class="eyebrow"><span class="dot"></span>SUR DEL SUR</div>
+    <div class="headline">Servida<br/>como <i>corresponde.</i></div>
+    <div class="sub">Tirada de barril, sin apuro, en Sierras Bayas.</div>
+    <div class="pill">Ver el menú →</div>
+  </div></div>
+
+  <!-- 2: manifesto (no photo, pure editorial) -->
+  <div class="frame"><div class="card">
+    <div class="bg dark-only"></div>
+    <div class="grain"></div>
+    <div class="eyebrow"><span class="dot"></span>UN MANIFIESTO QUIETO</div>
+    <div class="headline" style="bottom:340px;">Más allá del <i>apuro,</i><br/>construimos lo <i>eterno.</i></div>
+    <div class="sub" style="bottom:270px;">Quince años haciendo cerveza como se debe: despacio, entre amigos, en Sierras Bayas.</div>
+    <div class="pill">Leé el manifiesto →</div>
+    <div class="foot">DESDE 2011</div>
+  </div></div>
+
+  <!-- 3: lifestyle can -->
+  <div class="frame"><div class="card">
+    <div class="bg duo" style="background-image:url('assets/sur-del-sur/lifestyle_can.jpg'); background-position:center 25%;"></div>
+    <div class="scrim full"></div><div class="grain"></div>
+    <div class="eyebrow"><span class="dot"></span>SABOR EN SU FORMA</div>
+    <div class="headline"><i>Más pura.</i></div>
+    <div class="sub">Sin atajos. Sin apuro. Cerveza artesanal, de fábrica propia.</div>
+    <div class="pill">Conocé la fábrica →</div>
+  </div></div>
+
+  <!-- 4: real logo box -->
+  <div class="frame"><div class="card">
+    <div class="bg duo" style="background-image:url('assets/sur-del-sur/real_logo_box.jpg'); background-position:25% 30%; transform:scale(1.25);"></div>
+    <div class="scrim bottom"></div><div class="grain"></div>
+    <div class="eyebrow"><span class="dot"></span>SUR DEL SUR</div>
+    <div class="headline">Conocelo<br/><i>todo.</i></div>
+    <div class="sub">Compañía cervecera independiente. Sierras Bayas, Olavarría.</div>
+    <div class="pill">Nuestra historia →</div>
+  </div></div>
+
+  <!-- 5: tanks + live music -->
+  <div class="frame"><div class="card">
+    <div class="bg duo" style="background-image:url('assets/sur-del-sur/tanks_livemusic.jpg');"></div>
+    <div class="scrim full"></div><div class="grain"></div>
+    <div class="eyebrow"><span class="dot"></span>TAPROOM · SIERRAS BAYAS</div>
+    <div class="headline">Foco en lo<br/><i>que importa.</i></div>
+    <div class="sub">Buena banda, buena birra, viernes a domingo desde las 18h.</div>
+    <div class="pill">Reservá tu lugar →</div>
+  </div></div>
+
+  <!-- 6: distribution stat, editorial style, no photo -->
+  <div class="frame"><div class="card">
+    <div class="bg dark-only"></div>
+    <div class="grain"></div>
+    <div class="eyebrow"><span class="dot"></span>REGISTRO DE EXPANSIÓN</div>
+    <div class="headline" style="font-size:150px; bottom:420px;">+100</div>
+    <div class="headline" style="bottom:280px; font-size:52px;">puntos de venta,<br/><i>un solo origen.</i></div>
+    <div class="pill">Dónde comprar →</div>
+    <div class="foot">TODA LA ARGENTINA</div>
+  </div></div>
+
+</div>
+
+<div class="caption-box">
+  <b>Nota:</b> esta dirección es deliberadamente más silenciosa que "Sierra Field Notes" — menos sellos y menos texto de catálogo, más foto + una frase. Funciona mejor para posts "hero" o de portada; para contenido educativo/informativo (maridajes, procesos) el sistema de espécimen sigue siendo más claro.
+</div>
+
+</body>
+</html>

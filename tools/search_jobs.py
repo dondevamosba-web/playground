@@ -32,7 +32,13 @@ HEADERS = {
     "Accept-Language": "en-US,en;q=0.9",
 }
 
-RELEVANCE_KEYWORDS = ["meta", "facebook", "instagram", "fb ads", "lead generation", "leads", "paid social", "paid media", "media buyer", "paid analyst"]
+RELEVANCE_KEYWORDS = [
+    "meta", "facebook", "instagram", "fb ads", "lead generation", "leads",
+    "paid social", "paid media", "media buyer", "paid analyst",
+    "tiktok ads", "paid advertising", "performance marketing", "google ads",
+    "campaign manager", "growth marketing", "digital advertising", "ppc",
+    "acquisition marketing", "user acquisition", "demand generation",
+]
 
 LINKEDIN_SEARCHES = [
     {"q": "paid media specialist meta", "location": "United States", "country": "US"},
@@ -46,6 +52,20 @@ LINKEDIN_SEARCHES = [
     {"q": "meta ads specialist", "location": "Canada", "country": "CA"},
     {"q": "facebook ads specialist", "location": "Canada", "country": "CA"},
     {"q": "media buyer meta ads", "location": "Canada", "country": "CA"},
+    # expanded queries
+    {"q": "performance marketing manager remote", "location": "United States", "country": "US"},
+    {"q": "tiktok ads specialist remote", "location": "United States", "country": "US"},
+    {"q": "paid social manager remote", "location": "United States", "country": "US"},
+    {"q": "digital advertising specialist remote", "location": "United States", "country": "US"},
+    {"q": "growth marketing manager meta", "location": "United States", "country": "US"},
+    {"q": "demand generation manager remote", "location": "United States", "country": "US"},
+    {"q": "campaign manager paid media remote", "location": "United States", "country": "US"},
+    {"q": "user acquisition manager remote", "location": "United States", "country": "US"},
+    # agency-targeted queries — marketing agencies hiring paid ads roles
+    {"q": "media buyer marketing agency remote", "location": "United States", "country": "US"},
+    {"q": "paid ads specialist agency remote", "location": "United States", "country": "US"},
+    {"q": "ppc specialist digital agency remote", "location": "United States", "country": "US"},
+    {"q": "meta ads manager agency", "location": "United States", "country": "US"},
 ]
 
 REMOTIVE_SEARCHES = [

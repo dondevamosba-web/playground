@@ -1,3 +1,37 @@
+# Model Routing
+
+Use the cheapest model that can do the job. Default in `tools/claude_call.py` is already `haiku`.
+
+- **haiku**: parsing, formatting, deduplication, structured JSON output, captions with explicit rules, email subjects
+- **sonnet**: brand voice copy, creative captions, anomaly interpretation, community management replies, outreach email bodies
+- **opus**: reserved for genuine judgment calls: which account to scale, reading a creative for brand fit, flagging an anomaly with ambiguous data
+
+When adding a new `call_claude()` call, always pass `model=` explicitly and add a one-line comment explaining why.
+
+---
+
+# Adversarial Verification Before Acting on Money
+
+Before any step that proposes a budget change, pause/activate, or bid edit on a live account:
+1. Run the proposed action through an adversarial Claude call (see `budget_pacer.py` for the pattern).
+2. The adversary's job is to REFUTE the action by default — assume it's wrong until proven otherwise.
+3. If the adversary returns REFUTED: hold the action, send a [HELD] draft for manual review, and log the refutation.
+4. If the adversary returns PASSED: proceed, and append the refutation log to the draft.
+
+This applies to both automated scripts and to me (Claude Code) when I suggest budget or campaign changes mid-session.
+
+---
+
+# Token Efficiency Rules
+
+- **Use /compact proactively** when the conversation has been running long or context feels heavy. Don't wait to be asked.
+- **No agent spawning for simple lookups.** Use Bash/Read/Grep directly for single-file reads, quick greps, or known-path operations. Only spawn agents for open-ended multi-file exploration.
+- **Don't re-derive.** If a fact was established earlier in the conversation, use it — don't re-run the tool to confirm.
+- **Short responses by default.** One sentence for status updates. No trailing summaries. No narrating what you're about to do.
+- **Keep sessions short.** Long sessions (8h+) are the #1 token drain. When a task is done, end the session. Start fresh next time.
+
+---
+
 # Agent Instructions
 
 You're working inside the **WAT framework** (Workflows, Agents, Tools). This architecture separates concerns so that probabilistic AI handles reasoning while deterministic code handles execution. That separation is what makes this system reliable.

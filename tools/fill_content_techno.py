@@ -15,6 +15,7 @@ import json
 import os
 import random
 import sys
+import time
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -48,10 +49,33 @@ def load_catalog() -> dict:
         return json.load(f)
 
 
-def pick_product(products: list, used: list) -> dict:
-    """Weighted random pick, avoids repeating same brand twice in a row."""
+def get_recently_posted(sheets, sheet_id: str, days: int = 21) -> set:
+    """Return product names posted in the last N days."""
+    cutoff = (date.today() - timedelta(days=days)).isoformat()
+    rows = sheets.spreadsheets().values().get(
+        spreadsheetId=sheet_id, range="A2:K500"
+    ).execute().get("values", [])
+    posted = set()
+    for r in rows:
+        status = r[9].strip() if len(r) > 9 else ""
+        d = r[0].strip() if r else ""
+        name = r[3].strip() if len(r) > 3 else ""
+        if status == "posted" and d >= cutoff and name:
+            posted.add(name)
+    return posted
+
+
+def pick_product(products: list, used: list, skip_names: set = None) -> dict:
+    """Weighted random pick, avoids same brand twice in a row and recently-posted products."""
+    skip_names = skip_names or set()
     last_brand = used[-1]["brand"] if used else None
-    pool = [p for p in products if p["brand"] != last_brand] or products
+    # Exclude recently posted and same brand in a row; fall back to just skip_names if needed
+    pool = [p for p in products
+            if p["brand"] != last_brand and p.get("product", p["brand"]) not in skip_names]
+    if not pool:
+        pool = [p for p in products if p.get("product", p["brand"]) not in skip_names]
+    if not pool:
+        pool = products  # last resort
     weights = [p["weight"] for p in pool]
     return random.choices(pool, weights=weights, k=1)[0]
 
@@ -92,49 +116,69 @@ Reglas:
 
 Devolvé solo el caption, sin comillas."""
 
-    return call_claude(prompt, model="haiku")
+    for attempt in range(3):
+        try:
+            result = call_claude(prompt, model="haiku")
+            time.sleep(0.4)
+            return result
+        except Exception as e:
+            if attempt < 2:
+                wait = (attempt + 1) * 5
+                print(f"    ⚠ Retry {attempt+1} after {wait}s ({e})")
+                time.sleep(wait)
+            else:
+                raise
 
 
-def build_rows(start: date, weeks: int, catalog: dict, dry_run: bool) -> list[list]:
+def build_rows(start: date, weeks: int, catalog: dict, dry_run: bool,
+               recently_posted: set = None) -> list[list]:
     products = catalog["products"]
     slots = catalog["schedule"]["slots"]
     aesthetic = catalog["aesthetic"]
+    recently_posted = recently_posted or set()
     used = []
     rows = []
 
-    for week in range(weeks):
-        for slot in slots:
-            weekday = slot["weekday"]
-            time_str = slot["time"]
-            days_offset = (week * 7) + (weekday - start.weekday()) % 7
-            post_date = start + timedelta(days=days_offset)
+    # Build (date, time) pairs day-by-day
+    schedule_pairs = []
+    for day_offset in range(weeks * 7):
+        current_day = start + timedelta(days=day_offset)
+        day_slots = [s["time"] for s in slots if s["weekday"] == current_day.weekday()]
+        for t in day_slots:
+            schedule_pairs.append((current_day, t))
 
-            product = pick_product(products, used)
-            used.append(product)
+    # Products to skip: recently posted + already queued this run
+    skip_names = set(recently_posted)
 
-            if dry_run:
-                caption = f"[{product['type'].upper()}] {product.get('product', product['brand'])}"
-            else:
-                label = product.get('product') or product['brand']
-                print(f"  [{post_date} {time_str}] {label} ({product['type']})...")
-                caption = generate_caption(product, aesthetic)
+    for post_date, time_str in schedule_pairs:
+        product = pick_product(products, used, skip_names=skip_names)
+        used.append(product)
+        # Add to skip so the same product doesn't appear twice in this batch
+        skip_names.add(product.get("product", product["brand"]))
 
-            brand_tags = BRAND_HASHTAGS.get(product["brand"], "")
-            hashtags = f"{brand_tags} {HASHTAGS_BASE}".strip()
+        if dry_run:
+            caption = f"[{product['type'].upper()}] {product.get('product', product['brand'])}"
+        else:
+            label = product.get('product') or product['brand']
+            print(f"  [{post_date} {time_str}] {label} ({product['type']})...")
+            caption = generate_caption(product, aesthetic)
 
-            rows.append([
-                post_date.isoformat(),
-                time_str,
-                post_date.strftime("%A"),
-                product.get("product", product["brand"]),
-                product["brand"],
-                product["type"],
-                caption,
-                hashtags,
-                "",         # Media URL — user fills this
-                "pending",
-                "",         # Post ID
-            ])
+        brand_tags = BRAND_HASHTAGS.get(product["brand"], "")
+        hashtags = f"{brand_tags} {HASHTAGS_BASE}".strip()
+
+        rows.append([
+            post_date.isoformat(),
+            time_str,
+            post_date.strftime("%A"),
+            product.get("product", product["brand"]),
+            product["brand"],
+            product["type"],
+            caption,
+            hashtags,
+            "",         # Media URL — user fills this
+            "pending",
+            "",         # Post ID
+        ])
 
     rows.sort(key=lambda r: r[0] + r[1])
     return rows
@@ -151,8 +195,17 @@ def main():
     start = date.today() + timedelta(days=1)
     total = args.weeks * len(catalog["schedule"]["slots"])
 
+    sheets, drive = get_services()
+    sheet_id = args.sheet_id or os.getenv(SHEET_ENV_KEY)
+
+    recently_posted = set()
+    if sheet_id and not args.dry_run:
+        recently_posted = get_recently_posted(sheets, sheet_id)
+        if recently_posted:
+            print(f"Skipping {len(recently_posted)} recently-posted products.")
+
     print(f"Generating {total} posts over {args.weeks} weeks (from {start})...")
-    rows = build_rows(start, args.weeks, catalog, args.dry_run)
+    rows = build_rows(start, args.weeks, catalog, args.dry_run, recently_posted)
 
     if args.dry_run:
         print("\n── Preview ─────────────────────────────────────────────")
@@ -161,9 +214,6 @@ def main():
             print(f"    {r[6][:80]}")
         print(f"\n  Total: {len(rows)} posts")
         return
-
-    sheets, drive = get_services()
-    sheet_id = args.sheet_id or os.getenv(SHEET_ENV_KEY)
 
     if not sheet_id:
         print(f"Creating Google Sheet: '{SHEET_TITLE}'...")
