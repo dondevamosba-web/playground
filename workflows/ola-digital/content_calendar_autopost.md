@@ -70,9 +70,11 @@ python3 tools/auto_post_from_calendar.py --force    # post all pending regardles
 ```
 
 Reads every row where:
-- Status == "pending"
+- Status == "approved" (rows in "pending" or "preview_sent" wait for your approval)
 - Media URL is set
-- Post datetime ≤ now (Argentina time)
+- Post datetime ≤ now (Argentina time) and no more than 24 h late — an older approved row is skipped so a backlog never posts in one burst; change its date if it should still go out
+
+(Before 2026-09-26 this doc said "pending"; the code already required "approved". The 24 h cap was added the same day, matching Techno.)
 
 Posts via `post_instagram.py`, then marks the row as "posted" with the Post ID.
 

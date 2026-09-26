@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-Read the Ola Digital content calendar (Google Sheet) and publish any pending posts that are due.
+Read the Punto Digital (ex Ola Digital) content calendar (Google Sheet) and publish any approved posts that are due.
+Rows more than MAX_LATE late are skipped so an old backlog never posts in one burst (same rule as Techno).
 Updates each row's Status → "posted" and records the Post ID.
 
 Usage:
-  python3 tools/auto_post_from_calendar.py            # post all due pending items
+  python3 tools/auto_post_from_calendar.py            # post all due approved items
   python3 tools/auto_post_from_calendar.py --dry-run  # show what would be posted
   python3 tools/auto_post_from_calendar.py --force    # post regardless of scheduled time
 """
@@ -26,6 +27,7 @@ from tools.sheets_client import get_services
 
 SHEET_ENV_KEY = "CONTENT_CALENDAR_SHEET_ID"
 AR_TZ = timezone(timedelta(hours=-3))
+MAX_LATE = timedelta(hours=24)
 
 # Column indices (0-based), matching fill_content_calendar.py
 COL_DATE      = 0
@@ -125,7 +127,7 @@ def main():
         if col(row, COL_STATUS) == "approved"
         and col(row, COL_DATE)
         and col(row, COL_TIME)
-        and (args.force or parse_dt(col(row, COL_DATE), col(row, COL_TIME)) <= now)
+        and (args.force or now - MAX_LATE <= parse_dt(col(row, COL_DATE), col(row, COL_TIME)) <= now)
     ]
 
     if not due:
