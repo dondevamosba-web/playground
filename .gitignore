@@ -26,3 +26,6 @@ venv/
 # Dependencies
 node_modules/
 muscle-app/dist/
+
+# Graphify output (knowledge graph, regenerable)
+graphify-out/

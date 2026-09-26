@@ -174,3 +174,11 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+
+## Reglas de trabajo (DevEx)
+
+- **Grafo antes que archivos.** Si existe `graphify-out/`, consultá el grafo (`graphify query "..."` o `graphify-out/GRAPH_REPORT.md`) para ubicar lo relevante antes de abrir archivos. No releas archivos que ya leíste en la sesión.
+- **Flujo para tareas no triviales:** spec → plan → build → test → review → ship. Usá la skill de cada etapa si está instalada (`/spec`, `/plan`, `/build`, `/test`, `/review`, `/ship`) y dejá el entregable de cada etapa (spec escrita, plan con pasos verificables, diff, tests corridos, hallazgos de review, commit/PR).
+- **Código mínimo.** Justificá cada archivo o función nueva en una línea. Nada de abstracciones sin un segundo uso real.
+- **Modelo según la tarea.** Decisiones de arquitectura: Claude (el modelo más fuerte). Implementación mecánica, boilerplate o tests simples: se pueden derivar a un modelo más barato vía OmniRoute cuando esté configurado.
+- **Salidas largas, resumidas.** Filtrá con `grep`, `head` o `tail`, o resumí la salida de herramientas en vez de volcarla entera al contexto.
