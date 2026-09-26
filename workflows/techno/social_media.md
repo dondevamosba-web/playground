@@ -105,7 +105,7 @@ python3 tools/fill_content_techno.py             # genera el sheet + captions co
 python3 tools/fill_content_techno.py --dry-run   # preview sin escribir
 ```
 
-Crea el sheet "Techno — Content Calendar" y guarda el ID en `.env` como `TECHNO_CONTENT_CALENDAR_SHEET_ID`. Misma estructura de columnas que el calendario de Ola Digital: vos completás **Media URL** y dejás Status en `pending`.
+Crea el sheet "Techno — Content Calendar" y guarda el ID en `.env` como `TECHNO_CONTENT_CALENDAR_SHEET_ID`. Misma estructura de columnas que el calendario de Ola Digital: vos completás **Media URL** y, cuando el posteo esté listo para salir, pasás Status a `approved` (desde la planilla o aprobándolo en la Mesa de Posteos). Las filas en `pending` no se publican.
 
 ### Paso 2 — Auto-publicar
 
@@ -115,6 +115,8 @@ python3 tools/auto_post_techno.py --dry-run  # preview
 ```
 
 Ya corre automáticamente por cron a las 9:30 y 18:30 (hora AR); log en `.tmp/cron_autopost.log`. Para saltear un post, poné Status = `skip` en el sheet.
+
+**Regla de publicación (desde 2026-09-26):** igual que Punto Digital (ex Ola Digital), solo sale lo que está en `approved` y cuya fecha/hora ya llegó. Un posteo aprobado con más de 24 h de atraso **no** se publica, para que un atraso acumulado no salga todo junto; si igual lo querés, cambiale la fecha. Antes el script publicaba `pending` e ignoraba `approved`: por eso quedaron 34 aprobados de julio–septiembre sin salir.
 
 ## Setup inicial (una sola vez)
 

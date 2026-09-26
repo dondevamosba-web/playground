@@ -21,7 +21,7 @@ CALENDARS = {
     "Techno": dict(
         sheet_id=os.environ.get("TECHNO_CONTENT_CALENDAR_SHEET_ID", "1QTJ81L7WVFjOglHeUbOLAjKYrqoYxwym-mx8RzFKvEI"),
         date=0, time=1, caption=6, media=8, status=9, thumb=12,
-        publishes="pending"),  # auto_post_techno.py posts "pending" rows, never "approved"
+        publishes="approved"),  # auto_post_techno.py posts "approved" rows (up to 24h late)
 }
 
 # Statuses that still need a human decision

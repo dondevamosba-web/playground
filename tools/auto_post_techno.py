@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-Read the Techno content calendar (Google Sheet) and publish any pending posts that are due.
+Read the Techno content calendar (Google Sheet) and publish any approved posts that are due.
+Same rule as the Ola Digital / Punto Digital calendar: only rows with Status "approved" go out.
+Rows more than MAX_LATE late are skipped so an old backlog never posts in one burst.
 Updates each row's Status → "posted" and records the Post ID.
 
 Usage:
-  python3 tools/auto_post_techno.py            # post all due pending items
+  python3 tools/auto_post_techno.py            # post all due approved items
   python3 tools/auto_post_techno.py --dry-run  # show what would be posted
-  python3 tools/auto_post_techno.py --force    # post all pending regardless of time
+  python3 tools/auto_post_techno.py --force    # post all approved regardless of time
 """
 
 import argparse
@@ -26,6 +28,7 @@ from tools.sheets_client import get_services
 
 SHEET_ENV_KEY = "TECHNO_CONTENT_CALENDAR_SHEET_ID"
 AR_TZ = timezone(timedelta(hours=-3))
+MAX_LATE = timedelta(hours=24)
 
 COL_DATE      = 0
 COL_TIME      = 1
@@ -125,11 +128,11 @@ def main():
     due = [
         (i, row, parse_dt(col(row, COL_DATE), col(row, COL_TIME)))
         for i, row in enumerate(rows)
-        if col(row, COL_STATUS) == "pending"
+        if col(row, COL_STATUS) == "approved"
         and col(row, COL_DATE)
         and col(row, COL_TIME)
         and col(row, COL_MEDIA_URL)
-        and (args.force or parse_dt(col(row, COL_DATE), col(row, COL_TIME)) <= now)
+        and (args.force or now - MAX_LATE <= parse_dt(col(row, COL_DATE), col(row, COL_TIME)) <= now)
     ]
 
     if not due:
