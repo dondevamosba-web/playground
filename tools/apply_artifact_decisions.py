@@ -8,7 +8,8 @@ The artifact saves decisions in its own store and exports them as a JSON file
   - source "approval": unified approval sheet, tab = account. Matched on
     Queued At + first 60 chars of the caption. Writes Status and Comments.
   - source "calendar": the account's content calendar (first sheet). Matched on
-    Date + Time + first 60 chars of the caption. Writes Status.
+    Date + Time + first 60 chars of the caption. Writes Status; an approval is
+    written as the status that account's autoposter publishes (Techno: "pending").
 Rows already decided (approved/rejected/posted/skip) are left alone.
 
 Usage:
@@ -79,7 +80,9 @@ def main():
                 continue
             st = col_letter(c["status"])
             if cal_account:
-                upd = {"range": f"{st}{row_num}", "values": [[d["status"]]]}
+                # Approving writes whatever status this account's autoposter publishes
+                new = c["publishes"] if d["status"] == "approved" else d["status"]
+                upd = {"range": f"{st}{row_num}", "values": [[new]]}
             else:
                 upd = {"range": f"{prefix}{st}{row_num}:{col_letter(c['comment'])}{row_num}",
                        "values": [[d["status"], d.get("comment", "")]]}
