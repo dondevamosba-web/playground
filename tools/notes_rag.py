@@ -33,6 +33,9 @@ from pathlib import Path
 ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 
+from dotenv import load_dotenv
+load_dotenv(ROOT / ".env")   # WHATSAPP_BRIDGE_DB etc. — also for the MCP server, which imports this module
+
 from tools import whatsapp_digest as wd
 
 DATA = ROOT / ".tmp" / "notes_rag"
