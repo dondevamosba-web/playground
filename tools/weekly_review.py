@@ -7,7 +7,7 @@ Notes review — the one command that keeps everything up to date and proposes w
   3. Sync with Notion (if NOTION_TOKEN is set): pull "Hecho", push new tasks
   4. Proposals → .tmp/notes_rag/review-YYYY-MM-DD.md (+ macOS notification)
 
-Scheduled by tools/notes_schedule.sh (Sunday 10:00). Also run by the /whatsapp command.
+Scheduled by tools/notes_schedule.sh (Mac) or tools/windows_setup.py schedule (Windows), Sunday 10:00. Also run by the /whatsapp command.
 
 Usage:
   python3 tools/weekly_review.py            # free: rule-based proposals only
@@ -37,6 +37,12 @@ EXPORTS_DIR = Path(os.environ.get("WHATSAPP_EXPORTS_DIR", "~/Downloads/whatsapp"
 def notify(title, text):
     if shutil.which("osascript"):
         subprocess.run(["osascript", "-e", f'display notification "{text}" with title "{title}"'], check=False)
+    elif os.name == "nt":
+        ps = ("Add-Type -AssemblyName System.Windows.Forms; $n = New-Object System.Windows.Forms.NotifyIcon; "
+              "$n.Icon = [System.Drawing.SystemIcons]::Information; $n.Visible = $true; "
+              f"$n.ShowBalloonTip(10000, '{title}', '{text}', 'Info'); Start-Sleep 11; $n.Dispose()")
+        subprocess.Popen(["powershell", "-NoProfile", "-WindowStyle", "Hidden", "-Command", ps],
+                         creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
 
 
 def main():

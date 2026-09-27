@@ -41,6 +41,24 @@ Exports .zip (~/Downloads/whatsapp)┴─► notes_rag.py ─► .tmp/notes_rag/
 3. `bash tools/notes_schedule.sh install`.
 4. Abrir Claude Code en el repo y aprobar el MCP "notas" la primera vez.
 
+## Puesta en marcha (Windows, PowerShell en la carpeta del repo)
+```powershell
+python -m pip install -r requirements.txt
+python tools\windows_setup.py check           # qué falta
+python tools\windows_setup.py env             # pide el token de Notion (oculto) y escribe .env sin BOM
+python tools\notion_sync.py --dry-run         # prueba: ~60 filas, 0 creadas
+python tools\windows_setup.py schedule        # Programador de tareas: domingo 10:00 + sync cada hora
+# Opcional, bridge de WhatsApp (necesita Git, Go y gcc de MSYS2; el script dice qué instalar con winget):
+python tools\windows_setup.py bridge-install
+python tools\windows_setup.py bridge-link     # QR
+python tools\windows_setup.py bridge-start    # oculto, y arranca en cada inicio de sesión
+```
+- Las tareas programadas usan `pythonw.exe` (sin ventana) + `tools/run_logged.py`: la salida y los errores
+  quedan en `.tmp/notes_rag/logs/<script>.log`.
+- La notificación de Windows es un globo en la bandeja del sistema.
+- `.mcp.json` usa `python` (en Windows `python3` suele ser el acceso directo a la Microsoft Store).
+- `tools/devex_setup.sh` es bash: en Windows se corre desde Git Bash.
+
 ## Reglas
 - `--llm` hace una llamada paga a Claude: solo cuando lo pido.
 - Solo se crean en Notion tareas anotadas desde el 28/9/2026: lo anterior se cargó a mano.
@@ -54,4 +72,8 @@ Exports .zip (~/Downloads/whatsapp)┴─► notes_rag.py ─► .tmp/notes_rag/
 - go-sqlite3 guarda los timestamps como `2026-09-27 15:04:05-03:00`. Se usa la hora local tal cual.
 - Instagram suele bloquear las lecturas anónimas: esos links quedan "sin título" y se reintentan a los 7 días.
 - La búsqueda usa FTS5 con `remove_diacritics`, así que "panaderia" encuentra "panadería".
-- Tests: `python3 -m unittest discover tests` (27 tests, con datos inventados: nada personal en el repo).
+- Tests: `python3 -m unittest discover tests` (36 tests, con datos inventados: nada personal en el repo).
+- Windows: `/TR` de schtasks admite hasta 261 caracteres; por eso `run_logged.py` arma la ruta del log solo.
+  Un `.env` escrito con `Out-File` sin `-Encoding ascii` lleva BOM y rompe la primera clave:
+  `windows_setup.py env` lo escribe sin BOM.
+- En Windows el bridge necesita CGO (`CGO_ENABLED=1`) y el gcc de MSYS2 (`C:\msys64\ucrt64\bin`) para go-sqlite3.
