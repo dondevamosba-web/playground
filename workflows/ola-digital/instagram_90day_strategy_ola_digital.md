@@ -1,4 +1,4 @@
-# Ola Digital — Estrategia Instagram 90 Días
+# Punto Digital Olavarría — Estrategia Instagram 90 Días
 
 **Fecha:** 2026-05-21  
 **Mercado:** Olavarría, Buenos Aires, Argentina  
@@ -10,9 +10,9 @@
 
 ## Punto de partida
 
-Ola Digital tiene **cero presencia SEO visible** — Instagram es el canal más crítico de los primeros 12 meses. El objetivo no es viralizarse: es que el dueño de la pizzería o la clínica dental de Olavarría vea el perfil, piense *"estos saben lo que hacen"* y mande un DM.
+Punto Digital Olavarría tiene **cero presencia SEO visible** — Instagram es el canal más crítico de los primeros 12 meses. El objetivo no es viralizarse: es que el dueño de la pizzería o la clínica dental de Olavarría vea el perfil, piense *"estos saben lo que hacen"* y mande un DM.
 
-El insight clave del research: **ningún competidor local usa Instagram bien**. Studio Concept y 3D Gráfica no generan contenido de performance. Ola Digital puede ganarle a sus competidores *en el mismo canal que vende como servicio*. Eso es credibilidad instantánea.
+El insight clave del research: **ningún competidor local usa Instagram bien**. Studio Concept y 3D Gráfica no generan contenido de performance. Punto Digital Olavarría puede ganarle a sus competidores *en el mismo canal que vende como servicio*. Eso es credibilidad instantánea.
 
 ---
 
@@ -68,8 +68,8 @@ Usar **15–20 hashtags** por publicación. No usar hashtags de millones de publ
 
 **Categoría 1 — Marca propia (2 hashtags)**
 Siempre incluir en cada publicación:
-- `#OlaDigital`
-- `#OlaDigitalOlavarría`
+- `#PuntoDigitalOlavarria`
+- `#PuntoDigitalOlavarria`
 
 *Por qué:* Construye un archivo buscable. En 6 meses, quien busque la marca ve todo el historial de trabajo.
 
@@ -114,7 +114,7 @@ Si es sobre salud/dental:
 ### Formato 1: "Antes y Después" — Resultados reales
 **Concepto:** Video de 30–45 segundos mostrando un resultado concreto de un cliente. Estructura: "Este negocio estaba gastando $X en publicidad y no convertía. Hicimos 3 cambios. Resultado: Y leads en 30 días."
 
-**Por qué funciona:** En B2B local, la prueba social es la herramienta de cierre más poderosa. Un dueño de bar ve el resultado del bar del barrio de al lado y llama. También posiciona a Ola Digital como orientada a resultados — diferenciándose de agencias que solo "hacen el diseño".
+**Por qué funciona:** En B2B local, la prueba social es la herramienta de cierre más poderosa. Un dueño de bar ve el resultado del bar del barrio de al lado y llama. También posiciona a Punto Digital Olavarría como orientada a resultados — diferenciándose de agencias que solo "hacen el diseño".
 
 **Frecuencia:** 1 por semana mientras haya casos para mostrar. En el mes 1, usar resultados propios o de pruebas piloto.
 
@@ -156,7 +156,7 @@ Si es sobre salud/dental:
 ### Formato 5: "Caso Local Spotlight" — Contenido de comunidad
 **Concepto:** Destacar a un negocio local (que ya sea cliente o sea un cliente objetivo) mostrando algo que hacen bien. "Este restaurante de Olavarría creció X% en reservas usando una sola táctica en Instagram."
 
-**Por qué funciona:** Doble efecto: (a) el negocio mencionado comparte el Reel a sus propios seguidores — alcance gratuito a una audiencia de dueños de negocios locales, (b) posiciona a Ola Digital como parte de la comunidad empresarial local, no como un proveedor externo. En una ciudad de 110k, la red de referencias vale más que cualquier ad.
+**Por qué funciona:** Doble efecto: (a) el negocio mencionado comparte el Reel a sus propios seguidores — alcance gratuito a una audiencia de dueños de negocios locales, (b) posiciona a Punto Digital Olavarría como parte de la comunidad empresarial local, no como un proveedor externo. En una ciudad de 110k, la red de referencias vale más que cualquier ad.
 
 **Frecuencia:** 2 veces por mes.
 
@@ -176,7 +176,7 @@ Total estimado: **45–60 minutos/día**, idealmente por la mañana antes de pub
 - Dejar **comentarios genuinos** (2–3 líneas, no "hermoso post") en su último Reel o carrusel
 - Si tienen una pregunta sin responder, contestarla con valor
 
-*Por qué funciona:* Los dueños de negocio ven quién comenta en su contenido. Un comentario útil de @oladigital crea curiosidad, visitan el perfil, y se convierte en follower calificado. Es prospección sin spam.
+*Por qué funciona:* Los dueños de negocio ven quién comenta en su contenido. Un comentario útil de puntodigitalolavarria.com.ar crea curiosidad, visitan el perfil, y se convierte en follower calificado. Es prospección sin spam.
 
 ### Bloque 3 — Stories propias (10 min)
 - Publicar mínimo 1 pieza de Stories por día: encuesta, pregunta, resultado del día, mención a un cliente, detrás de cámara
@@ -205,7 +205,7 @@ Total estimado: **45–60 minutos/día**, idealmente por la mañana antes de pub
 
 **Qué "bien" significa aquí:** Publicaste 4 veces por semana sin saltarte. Probaste los 5 formatos de Reel al menos una vez. Tienes datos para saber qué día/hora funciona mejor. No importa el número de seguidores todavía — importa la consistencia.
 
-**Acción clave:** Optimizar la bio. Debe incluir: qué hace Ola Digital, a quién ayuda, y un CTA claro a WhatsApp. Ejemplo: *"Hacemos crecer negocios de Olavarría con publicidad digital y estrategia en redes. 👇 Hablemos."* + link de WhatsApp.
+**Acción clave:** Optimizar la bio. Debe incluir: qué hace Punto Digital Olavarría, a quién ayuda, y un CTA claro a WhatsApp. Ejemplo: *"Hacemos crecer negocios de Olavarría con publicidad digital y estrategia en redes. 👇 Hablemos."* + link de WhatsApp.
 
 ---
 

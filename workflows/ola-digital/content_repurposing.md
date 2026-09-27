@@ -88,7 +88,7 @@ If you prefer to add captions in the app (Instagram's built-in captions):
 python3 tools/repurpose_video.py --input video.mp4 --no-captions
 ```
 
-## Best Posting Times (EST) — Ola Digital
+## Best Posting Times (EST) — Punto Digital Olavarría
 | Day       | Slots                  |
 |-----------|------------------------|
 | Monday    | 9:00 AM, 6:00 PM       |

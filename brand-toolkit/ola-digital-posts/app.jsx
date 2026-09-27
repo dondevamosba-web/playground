@@ -1,4 +1,4 @@
-// Ola Digital — Main canvas app
+// Punto Digital Olavarría — Main canvas app
 // Uses DesignCanvas + DCSection + DCArtboard from design-canvas.jsx.
 // Imports Post component, SINGLES, CAROUSELS from window.
 
@@ -35,7 +35,7 @@ const StyleTile = () => (
   }}>
     <div style={{ gridColumn: '1 / -1' }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 16 }}>
-        <div style={{ fontWeight: 900, fontSize: 36, letterSpacing: '-0.02em' }}>OLA DIGITAL</div>
+        <div style={{ fontWeight: 900, fontSize: 36, letterSpacing: '-0.02em' }}>PUNTO DIGITAL OLAVARRÍA</div>
         <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.18em', color: '#64748b', textTransform: 'uppercase' }}>Master Style Tile · v1</div>
       </div>
       <div style={{ marginTop: 8, fontSize: 16, color: '#64748b', maxWidth: 720 }}>
@@ -89,7 +89,7 @@ const StyleTile = () => (
         <div style={{ fontSize: 13, fontWeight: 800, letterSpacing: '0.2em', color: '#64748b', textTransform: 'uppercase', marginBottom: 12 }}>Reglas de uso</div>
         <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 12, padding: 16, fontSize: 14, lineHeight: 1.55, color: '#334155' }}>
           <div>• Naranja: <b>solo</b> en el dato hero o CTA. Nunca en cuerpo.</div>
-          <div>• Wordmark “OLA DIGITAL” siempre top-left con dot azul.</div>
+          <div>• Wordmark “PUNTO DIGITAL OLAVARRÍA” siempre top-left con dot azul.</div>
           <div>• Cada post tiene <b>una</b> idea fuerte. Si hay dos, son dos posts.</div>
           <div>• Stats con `tabular-nums`. Sin decimales innecesarios.</div>
         </div>
@@ -131,7 +131,7 @@ const App = () => {
   return (
     <>
       <DesignCanvas
-        title="OLA DIGITAL — 40 posts para Instagram"
+        title="PUNTO DIGITAL OLAVARRÍA — 40 posts para Instagram"
         subtitle="Olavarría · agencia de marketing digital · v1 · 16 single feed + 6 carousels × 4 slides"
       >
         <DCSection id="style-tile" title="Master Style Tile" subtitle="Colores, tipografía, reglas. Para replicar el sistema en cualquier post nuevo.">

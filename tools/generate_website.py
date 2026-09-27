@@ -1,5 +1,5 @@
 """
-Generates the complete OLA Digital static website.
+Generates the complete Punto Digital Olavarría static website.
 Outputs: website/index.html, website/assets/logo.svg,
          website/assets/favicon.svg, website/assets/css/custom.css
 Usage: python tools/generate_website.py
@@ -9,10 +9,10 @@ import os
 from pathlib import Path
 
 BRAND = {
-    "name": "OLA Digital",
+    "name": "Punto Digital Olavarría",
     "tagline": "Hacemos crecer negocios en Olavarría.",
     "subheadline": "Agencia de marketing digital en Olavarría — ayudamos a negocios locales a crecer en internet.",
-    "email": "hola@oladigital.com.ar",
+    "email": "hola@puntodigitalolavarria.com.ar",
     "whatsapp_number": "5491162310105",
     "whatsapp_display": "+54 9 11 6231-0105",
     "whatsapp_message": "Hola%2C%20me%20gustar%C3%ADa%20consultar%20sobre%20sus%20servicios.",
@@ -70,19 +70,19 @@ PROCESS_STEPS = [
 
 OWNER = {
     "name": "Guido Carminatti",
-    "role": "Fundador & Director, OLA Digital",
+    "role": "Fundador & Director, Punto Digital Olavarría",
     "photo_url": "https://media.licdn.com/dms/image/v2/D4D35AQF7ESb05deNeA/profile-framedphoto-shrink_800_800/profile-framedphoto-shrink_800_800/0/1705868515569?e=1779807600&v=beta&t=ysaBPCyjysKj9xZeKHAUUECOhNd_uTgqUrP5-E4RIow",
     "bio": (
-        "Soy Guido, fundador de OLA Digital. Nací y crecí en Olavarría, y vi de primera mano cómo los negocios locales perdían clientes "
+        "Soy Guido, fundador de Punto Digital Olavarría. Nací y crecí en Olavarría, y vi de primera mano cómo los negocios locales perdían clientes "
         "frente a competidores que simplemente tenían mejor presencia digital.<br/><br/>"
-        "Creé OLA Digital para resolver ese problema: traer marketing digital de calidad directamente a los negocios de la ciudad, "
+        "Creé Punto Digital Olavarría para resolver ese problema: traer marketing digital de calidad directamente a los negocios de la ciudad, "
         "sin precios de agencia porteña ni resultados genéricos. Cada cliente es un vecino — eso cambia cómo trabajamos."
     ),
 }
 
 TESTIMONIALS = [
     {
-        "quote": "OLA Digital transformó nuestra presencia en Instagram. Pasamos de postear cuando podíamos a tener una comunidad cervecera activa que comparte, comenta y viene al local.",
+        "quote": "Punto Digital Olavarría transformó nuestra presencia en Instagram. Pasamos de postear cuando podíamos a tener una comunidad cervecera activa que comparte, comenta y viene al local.",
         "name": "Sur del Sur",
         "business": "Compañía Cervecera · Olavarría",
         "instagram": "https://www.instagram.com/sur.del.sur/",
@@ -276,7 +276,7 @@ def build_favicon_svg(brand):
 
 
 def build_custom_css(brand):
-    return f'''/* OLA Digital — custom styles */
+    return f'''/* Punto Digital Olavarría — custom styles */
 
 html {{
   scroll-behavior: smooth;
@@ -391,17 +391,17 @@ def build_head(brand):
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OLA Digital | Agencia de Marketing Digital en Olavarría</title>
+  <title>Punto Digital Olavarría | Agencia de Marketing Digital en Olavarría</title>
   <meta name="description" content="Agencia de marketing digital en Olavarría, Buenos Aires. Redes sociales, SEO local, Google Ads y diseño web para negocios locales. Consultá gratis."/>
   <meta name="keywords" content="marketing digital Olavarría, agencia digital Olavarría, SEO Olavarría, redes sociales Olavarría, Google Ads Buenos Aires"/>
-  <link rel="canonical" href="https://oladigital.com.ar/"/>
+  <link rel="canonical" href="https://puntodigitalolavarria.com.ar/"/>
 
   <!-- Open Graph -->
   <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://oladigital.com.ar/"/>
-  <meta property="og:title" content="OLA Digital — Marketing Digital en Olavarría"/>
+  <meta property="og:url" content="https://puntodigitalolavarria.com.ar/"/>
+  <meta property="og:title" content="Punto Digital Olavarría — Marketing Digital en Olavarría"/>
   <meta property="og:description" content="Hacemos crecer negocios locales en internet. Redes sociales, SEO, Google Ads y más."/>
-  <meta property="og:image" content="https://oladigital.com.ar/assets/og-image.png"/>
+  <meta property="og:image" content="https://puntodigitalolavarria.com.ar/assets/og-image.png"/>
   <meta name="twitter:card" content="summary_large_image"/>
 
   <!-- Schema.org LocalBusiness -->
@@ -409,11 +409,11 @@ def build_head(brand):
   {{
     "@context": "https://schema.org",
     "@type": "MarketingAgency",
-    "name": "OLA Digital",
+    "name": "Punto Digital Olavarría",
     "description": "Agencia de marketing digital en Olavarría, Buenos Aires.",
-    "url": "https://oladigital.com.ar",
+    "url": "https://puntodigitalolavarria.com.ar",
     "telephone": "+54-9-11-6231-0105",
-    "email": "hola@oladigital.com.ar",
+    "email": "hola@puntodigitalolavarria.com.ar",
     "address": {{
       "@type": "PostalAddress",
       "addressLocality": "Olavarría",
@@ -476,7 +476,7 @@ def build_nav(brand):
   <div class="max-w-6xl mx-auto flex items-center justify-between">
     <!-- Logo: colour on white, switches to white version on dark scroll bg -->
     <a href="#" class="flex-shrink-0">
-      <img id="nav-logo" src="assets/logo.svg" alt="OLA Digital" class="h-9 w-auto"/>
+      <img id="nav-logo" src="assets/logo.svg" alt="Punto Digital Olavarría" class="h-9 w-auto"/>
     </a>
 
     <!-- Desktop nav -->
@@ -795,7 +795,7 @@ def build_about(brand):
         </div>
         <!-- Badge -->
         <div class="absolute -bottom-4 -right-4 bg-brand-blue text-white rounded-2xl px-4 py-2 shadow-lg">
-          <div class="font-heading font-bold text-sm leading-tight">OLA Digital</div>
+          <div class="font-heading font-bold text-sm leading-tight">Punto Digital Olavarría</div>
           <div class="font-body text-blue-100 text-xs">Olavarría, BA</div>
         </div>
       </div>
@@ -928,7 +928,7 @@ def build_floating_whatsapp(brand):
     return f'''
 <a href="https://wa.me/{brand['whatsapp_number']}?text={brand['whatsapp_message']}"
    target="_blank" rel="noopener"
-   aria-label="Chateá con OLA Digital por WhatsApp"
+   aria-label="Chateá con Punto Digital Olavarría por WhatsApp"
    class="whatsapp-pulse fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] hover:bg-[#1ebe5a] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group">
   <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
@@ -947,7 +947,7 @@ def build_footer(brand):
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
       <!-- Brand -->
       <div class="sm:col-span-2 lg:col-span-1">
-        <img src="assets/logo-white.svg" alt="OLA Digital" class="h-10 w-auto mb-3"/>
+        <img src="assets/logo-white.svg" alt="Punto Digital Olavarría" class="h-10 w-auto mb-3"/>
         <div class="w-8 h-0.5 bg-brand-blue mb-4 rounded"></div>
         <p class="font-body text-slate-400 text-sm leading-relaxed mb-5">{brand['tagline']}<br/>Olavarría, Buenos Aires, Argentina.</p>
         <div class="flex gap-3">
@@ -996,7 +996,7 @@ def build_footer(brand):
       </div>
     </div>
     <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-      <p class="font-body text-slate-500 text-sm">© 2025 OLA Digital — Olavarría, Buenos Aires, Argentina.</p>
+      <p class="font-body text-slate-500 text-sm">© 2025 Punto Digital Olavarría, Buenos Aires, Argentina.</p>
       <p class="font-body text-slate-600 text-xs">Hecho con ❤️ en Olavarría</p>
     </div>
   </div>

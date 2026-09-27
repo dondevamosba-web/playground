@@ -1,4 +1,4 @@
-/* OLA Digital — 3 new carousels (5 slides each = 15 artboards)
+/* Punto Digital Olavarría — 3 new carousels (5 slides each = 15 artboards)
    1. Cómo aparecer primero en Google en Olavarría
    2. Antes y después: negocios que crecieron con marketing digital
    3. ¿Cuánto cuesta NO tener presencia online?

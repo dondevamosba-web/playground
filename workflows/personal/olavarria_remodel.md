@@ -44,4 +44,4 @@ Cuando aparezca algo lindo (Pinterest, IG, una nota): pegar el link o descripci�
 
 ## 5. Ángulo de contenido (opcional)
 
-La remodelación es material de contenido local perfecto ("compré una casa en Olavarría con USD 10k de presupuesto"): reels de antes/después documentando el proceso. Sirve de portfolio vivo para Ola Digital. Si se activa, usar el flujo estándar de `workflows/ola-digital/content_calendar_autopost.md`.
+La remodelación es material de contenido local perfecto ("compré una casa en Olavarría con USD 10k de presupuesto"): reels de antes/después documentando el proceso. Sirve de portfolio vivo para Punto Digital Olavarría. Si se activa, usar el flujo estándar de `workflows/ola-digital/content_calendar_autopost.md`.

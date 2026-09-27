@@ -1,4 +1,4 @@
-/* OLA Digital — Stories (1080×1920), more logos, email headers */
+/* Punto Digital Olavarría — Stories (1080×1920), more logos, email headers */
 
 // ════════════════════════════════════════════════════════════════════════
 // STORIES (5 vertical 1080×1920)
@@ -42,7 +42,7 @@ function StoryHeader({ dark = true, label }) {
         </div>
       </div>
       <div>
-        <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: 24, color: dark ? "#FFFFFF" : COL.navy, letterSpacing: "-0.01em" }}>oladigital</div>
+        <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: 24, color: dark ? "#FFFFFF" : COL.navy, letterSpacing: "-0.01em" }}>puntodigitalolavarria</div>
         <div style={{ fontSize: 16, color: dark ? COL.cool : COL.slate, marginTop: 2 }}>{label || "Olavarría · ahora"}</div>
       </div>
     </div>
@@ -327,7 +327,7 @@ function LogoEmailSig() {
         </div>
         <span style={{ marginLeft: 18, paddingLeft: 18, borderLeft: "1px solid #CBD5E1", fontSize: 14, color: COL.slate, fontFamily: "'Inter', sans-serif", lineHeight: 1.5 }}>
           Hacemos crecer negocios en internet.<br />
-          <span style={{ color: COL.primary, fontWeight: 600 }}>oladigital.com.ar</span> · hola@oladigital.com.ar
+          <span style={{ color: COL.primary, fontWeight: 600 }}>puntodigitalolavarria.com.ar</span> · hola@puntodigitalolavarria.com.ar
         </span>
       </div>
       <div style={{ marginTop: 28, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: 11, color: COL.cool, letterSpacing: "0.18em" }}>
@@ -424,7 +424,7 @@ function EmailFrame({ children }) {
         <div style={{ display: "flex", alignItems: "center", gap: 14, paddingBottom: 16, borderBottom: "1px solid #E2E8F0" }}>
           <div style={{ width: 36, height: 36, borderRadius: 999, background: GRAD }}></div>
           <div>
-            <div style={{ fontWeight: 700, color: COL.navy, fontSize: 16 }}>OLA Digital <span style={{ color: COL.slate, fontWeight: 400 }}>&lt;hola@oladigital.com.ar&gt;</span></div>
+            <div style={{ fontWeight: 700, color: COL.navy, fontSize: 16 }}>Punto Digital Olavarría <span style={{ color: COL.slate, fontWeight: 400 }}>&lt;hola@puntodigitalolavarria.com.ar&gt;</span></div>
             <div style={{ fontSize: 13, color: COL.slate }}>para vos · hoy 09:14</div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 """
-Generates a complete OLA Digital brand toolkit as a standalone HTML file.
+Generates a complete Punto Digital Olavarría brand toolkit as a standalone HTML file.
 Outputs: brand-toolkit/index.html
 Usage: python3 tools/generate_brand_toolkit.py
 Run generate_logo_ai.py first to populate AI-generated images.
@@ -13,9 +13,9 @@ TOOLKIT_DIR = ROOT / "brand-toolkit"
 ASSETS_DIR = TOOLKIT_DIR / "assets"
 
 BRAND = {
-    "name": "OLA Digital",
+    "name": "Punto Digital Olavarría",
     "tagline": "Hacemos crecer negocios en Olavarría.",
-    "email": "hola@oladigital.com.ar",
+    "email": "hola@puntodigitalolavarria.com.ar",
     "whatsapp": "+54 9 11 6231-0105",
     "city": "Olavarría, Buenos Aires",
     "version": "1.0",
@@ -115,7 +115,7 @@ def _logo_preview(src, bg, label, border=False):
     return (
         f'<div class="logo-preview" style="background:{bg};{border_style}">'
         f'<img src="assets/logo{"" if bg == "#ffffff" or bg == "#F0F9FF" else "-white"}.svg" '
-        f'     alt="OLA Digital logo on {label}" />'
+        f'     alt="Punto Digital Olavarría logo on {label}" />'
         f'<span class="preview-label">{label}</span>'
         f'</div>'
     )
@@ -205,7 +205,7 @@ def build_toolkit_html():
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>OLA Digital — Brand Toolkit v{BRAND["version"]}</title>
+  <title>Punto Digital Olavarría — Brand Toolkit v{BRAND["version"]}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -384,7 +384,7 @@ def build_toolkit_html():
 <!-- Sidebar -->
 <aside class="sidebar">
   <div class="sidebar-logo">
-    <img src="assets/logo-white.svg" alt="OLA Digital"/>
+    <img src="assets/logo-white.svg" alt="Punto Digital Olavarría"/>
   </div>
   <div class="sidebar-section">Brand Toolkit</div>
   <nav>
@@ -410,10 +410,10 @@ def build_toolkit_html():
   <!-- Cover -->
   <div class="cover" id="cover">
     <div class="cover-logo">
-      <img src="assets/logo-white.svg" alt="OLA Digital"/>
+      <img src="assets/logo-white.svg" alt="Punto Digital Olavarría"/>
     </div>
     <h1>Brand<br/>Toolkit</h1>
-    <p class="cover-sub">Todo lo que necesitás para usar la marca OLA Digital de forma consistente y profesional.</p>
+    <p class="cover-sub">Todo lo que necesitás para usar la marca Punto Digital Olavarría de forma consistente y profesional.</p>
     <div class="cover-meta">
       <div><strong>Versión</strong>{BRAND["version"]}</div>
       <div><strong>Año</strong>{BRAND["year"]}</div>
@@ -425,7 +425,7 @@ def build_toolkit_html():
   <section class="section" id="logo">
     <div class="section-tag">Identidad visual</div>
     <h2 class="section-title">El logo</h2>
-    <p class="section-desc">El logo de OLA Digital está compuesto por el wave mark (badge con tres ondas) y el wordmark (OLA + DIGITAL). No se deben usar por separado salvo el ícono en contextos muy reducidos.</p>
+    <p class="section-desc">El logo de Punto Digital Olavarría está compuesto por el wave mark (badge con tres ondas) y el wordmark (OLA + DIGITAL). No se deben usar por separado salvo el ícono en contextos muy reducidos.</p>
 
     <h3>Variantes en diferentes fondos</h3>
     <div class="logo-grid">
@@ -452,7 +452,7 @@ def build_toolkit_html():
   <section class="section" id="colors">
     <div class="section-tag">Paleta de color</div>
     <h2 class="section-title">Colores</h2>
-    <p class="section-desc">La paleta de OLA Digital está inspirada en el océano — del azul profundo al cian brillante. El naranja mandarina aporta energía y urgencia.</p>
+    <p class="section-desc">La paleta de Punto Digital Olavarría está inspirada en el océano — del azul profundo al cian brillante. El naranja mandarina aporta energía y urgencia.</p>
 
     <h3>Gradiente de marca</h3>
     <div class="gradient-bar"></div>
@@ -492,7 +492,7 @@ def build_toolkit_html():
   <section class="section" id="voice">
     <div class="section-tag">Comunicación</div>
     <h2 class="section-title">Voz de marca</h2>
-    <p class="section-desc">Cómo habla OLA Digital. Cuatro atributos que definen el tono en redes, web y comunicaciones.</p>
+    <p class="section-desc">Cómo habla Punto Digital Olavarría. Cuatro atributos que definen el tono en redes, web y comunicaciones.</p>
     <div class="voice-grid">
       {voice_cards}
     </div>

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ola Digital — Reel Generator
+Punto Digital Olavarría — Reel Generator
 Produces 5 Instagram Reels (1080x1920) using kinetic typography.
 No camera footage required. Output: .tmp/reels/
 """
@@ -177,7 +177,7 @@ def reel_1():
         {'text': 'que necesita más clientes?',       'size': 66, 'color': C_WHITE, 'y': H//2 - 70,  'delay': 0.2},
         {'text': 'Link en bio',                      'size': 84, 'color': C_TEAL,  'y': H//2 + 120, 'delay': 1.2},
         {'text': 'hablemos por WhatsApp',             'size': 52, 'color': C_GREY,  'y': H//2 + 250, 'delay': 1.9},
-        {'text': 'Ola Digital',                      'size': 48, 'color': C_WHITE, 'y': H - 200,    'delay': 2.6},
+        {'text': 'Punto Digital Olavarría',                      'size': 48, 'color': C_WHITE, 'y': H - 200,    'delay': 2.6},
     ], C_DARK, 10.0))
 
     return concatenate_videoclips(scenes)
@@ -234,7 +234,7 @@ def reel_2():
 
     # CTA
     scenes.append(scene_static([
-        {'text': 'Ola Digital',  'x': W//2, 'y': H//2 - 70, 'size': 96, 'color': C_WHITE, 'align': 'c'},
+        {'text': 'Punto Digital Olavarría',  'x': W//2, 'y': H//2 - 70, 'size': 96, 'color': C_WHITE, 'align': 'c'},
         {'text': 'Link en bio',  'x': W//2, 'y': H//2 + 90, 'size': 68, 'color': C_TEAL,  'align': 'c'},
     ], C_DARK, 3.0))
 
@@ -314,7 +314,7 @@ def reel_3():
         {'text': 'en Olavarría?',                     'size': 60, 'color': C_WHITE, 'y': H//2 - 80,  'delay': 0.2},
         {'text': 'Hacemos lo mismo para vos.',        'size': 66, 'color': C_TEAL,  'y': H//2 + 80,  'delay': 1.0},
         {'text': 'WhatsApp en bio',                   'size': 74, 'color': C_YELLOW,'y': H//2 + 230, 'delay': 1.8},
-        {'text': 'Ola Digital',                       'size': 50, 'color': C_GREY,  'y': H - 200,    'delay': 2.5},
+        {'text': 'Punto Digital Olavarría',                       'size': 50, 'color': C_GREY,  'y': H - 200,    'delay': 2.5},
     ], C_DARK, 7.0))
 
     return concatenate_videoclips(scenes)
@@ -337,7 +337,7 @@ def reel_4():
 
     scenes.append(scene_slide_up([
         {'text': 'Respondé en los comentarios', 'y': H//2 - 40,  'size': 72, 'color': C_TEAL,  'delay': 0.1},
-        {'text': 'Ola Digital',                 'y': H//2 + 110, 'size': 50, 'color': C_GREY,  'delay': 0.5},
+        {'text': 'Punto Digital Olavarría',                 'y': H//2 + 110, 'size': 50, 'color': C_GREY,  'delay': 0.5},
     ], C_DARK, 3.0))
 
     return concatenate_videoclips(scenes)
@@ -399,7 +399,7 @@ def reel_5():
     scenes.append(scene_seq([
         {'text': 'Olavarría hace bien las cosas.', 'size': 60, 'color': C_WHITE, 'y': H//2 - 120, 'delay': 0.2},
         {'text': 'Un tip de',                       'size': 50, 'color': C_GREY,  'y': H//2 + 60,  'delay': 1.2},
-        {'text': 'Ola Digital',                     'size': 86, 'color': C_TEAL,  'y': H//2 + 200, 'delay': 1.5},
+        {'text': 'Punto Digital Olavarría',                     'size': 86, 'color': C_TEAL,  'y': H//2 + 200, 'delay': 1.5},
     ], C_DARK, 5.0))
 
     return concatenate_videoclips(scenes)

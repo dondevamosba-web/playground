@@ -1,4 +1,4 @@
-# Prompts para Reels sin Cámara — Ola Digital
+# Prompts para Reels sin Cámara — Punto Digital Olavarría
 
 Estos prompts se usan directamente con Claude. Cada uno genera un guión visual completo listo para armar en CapCut, Canva, o similar. Los assets visuales se generan con IA (Midjourney, Runway, Kling, Pika) o se usan imágenes de stock animadas.
 
@@ -14,7 +14,7 @@ Estos prompts se usan directamente con Claude. Cada uno genera un guión visual 
 
 ```
 Sos un director creativo especializado en contenido de video para redes sociales.
-Necesito el guión visual completo de un Reel de Instagram de 30–40 segundos para Ola Digital, 
+Necesito el guión visual completo de un Reel de Instagram de 30–40 segundos para Punto Digital Olavarría, 
 una agencia de marketing digital en Olavarría, Argentina.
 
 El Reel muestra el resultado de un cliente real (o caso hipotético realista). 
@@ -48,7 +48,7 @@ El tono es: confiante, directo, local. No corporativo. Hablar como habla un port
 
 ```
 Sos un director creativo especializado en contenido educativo para redes sociales.
-Necesito el guión visual de un Reel de Instagram de 25–35 segundos para Ola Digital,
+Necesito el guión visual de un Reel de Instagram de 25–35 segundos para Punto Digital Olavarría,
 agencia de marketing digital en Olavarría, Argentina.
 
 El tema es: "[ERROR ESPECÍFICO, ej: 'Por qué tus ads de Meta no convierten aunque gastes plata']"
@@ -86,7 +86,7 @@ Vos sabés lo que ellos no saben, pero lo explicás como un consejo de un colega
 
 ```
 Sos un director creativo y copywriter especializado en contenido B2B para Instagram.
-Necesito el guión visual de un Reel de 35–45 segundos para Ola Digital,
+Necesito el guión visual de un Reel de 35–45 segundos para Punto Digital Olavarría,
 agencia de marketing digital en Olavarría, Argentina.
 
 El Reel desmitifica cómo funciona una campaña de Meta Ads real.
@@ -125,7 +125,7 @@ Entregame:
 
 ```
 Sos un estratega de contenido para redes sociales.
-Necesito el guión visual de un Reel corto de 10–18 segundos para Ola Digital,
+Necesito el guión visual de un Reel corto de 10–18 segundos para Punto Digital Olavarría,
 agencia de marketing digital en Olavarría, Argentina.
 
 El objetivo único de este Reel es generar comentarios de dueños de pymes locales.
@@ -158,12 +158,12 @@ Tono: cercano, de igual a igual. Como un vecino que sabe de marketing, no como u
 
 ```
 Sos un director creativo especializado en storytelling para marcas locales.
-Necesito el guión visual de un Reel de 30–40 segundos para Ola Digital,
+Necesito el guión visual de un Reel de 30–40 segundos para Punto Digital Olavarría,
 agencia de marketing digital en Olavarría, Argentina.
 
 El Reel destaca a un negocio local de Olavarría que usó una táctica de marketing digital 
 y obtuvo un resultado concreto. El objetivo es que el negocio featured lo comparta en sus Stories,
-exponiendo Ola Digital a su audiencia de dueños de negocios locales.
+exponiendo Punto Digital Olavarría a su audiencia de dueños de negocios locales.
 
 **Datos del negocio a destacar:**
 - Nombre: [NOMBRE DEL NEGOCIO]
@@ -182,7 +182,7 @@ Entregame:
    - Texto overlay (qué dice cada slide, cuántos segundos)
    - Transición entre escenas
 3. **Escena de resultado** — cómo mostrar el número de forma visual e impactante
-4. **Escena final** con mención a Ola Digital (sin que parezca un ad — que parezca un reconocimiento)
+4. **Escena final** con mención a Punto Digital Olavarría (sin que parezca un ad — que parezca un reconocimiento)
 5. **Caption** que etiquete al negocio y use hashtags locales de Olavarría
 6. **DM template** para enviarle al dueño del negocio antes de publicar 
    ("Che, hicimos un Reel sobre lo que lograste, ¿te parece si lo subimos?")

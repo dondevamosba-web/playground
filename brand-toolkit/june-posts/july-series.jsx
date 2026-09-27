@@ -1,4 +1,4 @@
-/* OLA Digital — July Series
+/* Punto Digital Olavarría — July Series
    10 single posts (J–S) · 1080×1080 · same flat dark-navy system as June
    Reuses J / JFrame / JLogo / JCTA / JEyebrow / Ico from june-series.jsx
    (must be loaded AFTER june-series.jsx in the host html)
@@ -472,7 +472,7 @@ function PostS() {
       <div style={{ position: "absolute", inset: 32, background: `radial-gradient(ellipse 60% 50% at 50% 55%, ${J.blue}1F 0%, transparent 65%)`, pointerEvents: "none" }}></div>
 
       <div style={{ position: "absolute", top: 80, left: 80, right: 80, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <JEyebrow>OLA DIGITAL · OLAVARRÍA</JEyebrow>
+        <JEyebrow>PUNTO DIGITAL OLAVARRÍA</JEyebrow>
         <div style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: 12, color: J.muted, letterSpacing: "0.22em" }}>EST. 2024</div>
       </div>
 

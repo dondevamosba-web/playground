@@ -1,4 +1,4 @@
-// Ola Digital — reusable post layouts
+// Punto Digital Olavarría — reusable post layouts
 // Each template takes a `post` object + optional `scale` ("normal" | "scream") and an `accent` ("blue" | "orange").
 // Posts render inside a fixed 1080x1080 or 1080x1350 board, so we use raw px units —
 // the artboard's CSS transform handles fitting.
@@ -11,7 +11,7 @@ const WaIcon = () => (
 
 const Header = ({ tag }) => (
   <div className="od-head">
-    <div className="od-wordmark"><span className="dot"></span>OLA DIGITAL</div>
+    <div className="od-wordmark"><span className="dot"></span>PUNTO DIGITAL OLAVARRÍA</div>
     {tag ? <div className="od-tag">{tag}</div> : null}
   </div>
 );
@@ -40,7 +40,7 @@ const TplStat = ({ post, scale = 'normal', accent = 'blue' }) => (
       <div className="od-h3" style={{ maxWidth: 880 }}>{post.headline}</div>
       {post.sub ? <p className="od-lede">{post.sub}</p> : null}
     </div>
-    <Foot left={post.foot || 'oladigital.com.ar'} right={post.pagenum || ''} />
+    <Foot left={post.foot || 'puntodigitalolavarria.com.ar'} right={post.pagenum || ''} />
   </div>
 );
 
@@ -79,7 +79,7 @@ const TplBold = ({ post, scale = 'normal', accent = 'blue' }) => (
       </h2>
       {post.sub ? <p className="od-lede">{post.sub}</p> : null}
     </div>
-    <Foot left={post.foot || 'Ola Digital · Olavarría'} right={post.pagenum || ''} />
+    <Foot left={post.foot || 'Punto Digital Olavarría'} right={post.pagenum || ''} />
   </div>
 );
 
@@ -105,7 +105,7 @@ const TplList = ({ post, scale = 'normal', accent = 'blue' }) => (
         ))}
       </ol>
     </div>
-    <Foot left={post.foot || 'oladigital.com.ar'} right={post.pagenum || ''} />
+    <Foot left={post.foot || 'puntodigitalolavarria.com.ar'} right={post.pagenum || ''} />
   </div>
 );
 
@@ -164,7 +164,7 @@ const TplVersus = ({ post, scale = 'normal', accent = 'blue' }) => (
       </div>
       {post.sub ? <p className="od-body-text" style={{ margin: 0 }}>{post.sub}</p> : null}
     </div>
-    <Foot left={post.foot || 'oladigital.com.ar'} right={post.pagenum || ''} />
+    <Foot left={post.foot || 'puntodigitalolavarria.com.ar'} right={post.pagenum || ''} />
   </div>
 );
 
@@ -184,14 +184,14 @@ const TplCTA = ({ post, scale = 'normal', accent = 'orange', showWa = true }) =>
         <div className="od-cta-label">Escribinos por WhatsApp</div>
         <div className="od-cta-title">{post.ctaTitle || 'Diagnóstico gratis de tu marketing.'}</div>
         <div className="od-cta-row">
-          <div className="od-cta-handle">@oladigital.ok</div>
+          <div className="od-cta-handle">puntodigitalolavarria.com.ar</div>
           {showWa ? (
             <div className="od-wa-pill">
               <WaIcon />
               <span>+54 9 2284 · escribir</span>
             </div>
           ) : (
-            <div className="od-wa-pill" style={{ background: '#0F172A' }}>oladigital.com.ar</div>
+            <div className="od-wa-pill" style={{ background: '#0F172A' }}>puntodigitalolavarria.com.ar</div>
           )}
         </div>
       </div>

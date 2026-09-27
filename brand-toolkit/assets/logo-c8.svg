@@ -43,7 +43,7 @@
     text-anchor="middle"
     letter-spacing="3">D</text>
 
-  <!-- OLA DIGITAL brand label below diamond -->
+  <!-- PUNTO DIGITAL OLAVARRÍA brand label below diamond -->
   <text
     x="60" y="100"
     font-family="'Inter', sans-serif"
@@ -51,7 +51,7 @@
     font-weight="600"
     fill="#64748B"
     text-anchor="middle"
-    letter-spacing="4">OLA DIGITAL</text>
+    letter-spacing="4">PUNTO DIGITAL OLAVARRÍA</text>
 
   <!-- Orange accent dots at diamond corners -->
   <circle cx="60" cy="8"  r="3" fill="#F97316"/>

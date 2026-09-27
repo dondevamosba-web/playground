@@ -1,7 +1,7 @@
-# Workflow: OLA Digital Website
+# Workflow: Punto Digital Olavarría Website
 
 ## Objective
-Generate and maintain the OLA Digital static website — a complete, production-ready site for the digital marketing agency targeting businesses in Olavarría, Buenos Aires, Argentina.
+Generate and maintain the Punto Digital Olavarría static website — a complete, production-ready site for the digital marketing agency targeting businesses in Olavarría, Buenos Aires, Argentina.
 
 ## Prerequisites
 - Python 3.8+
@@ -41,7 +41,7 @@ Edit the `BRAND` dict at the top of `tools/generate_website.py`:
 ```python
 BRAND = {
     "whatsapp_number": "5491162310105",   # +54 9 11 6231-0105
-    "email": "hola@oladigital.com.ar",
+    "email": "hola@puntodigitalolavarria.com.ar",
     "color_primary": "#0EA5E9",           # main blue
     "color_accent": "#F97316",            # orange CTAs
     ...
@@ -86,7 +86,7 @@ The `website/` folder is the deploy root. Any static host works:
 | **GitHub Pages** | Push `website/` contents to a `gh-pages` branch |
 | **FTP / cPanel** | Upload all files in `website/` to `public_html/` |
 
-**Custom domain:** Point `oladigital.com.ar` to the host and update the canonical URL and OG tags in `build_head()`.
+**Custom domain:** Point `puntodigitalolavarria.com.ar` to the host and update the canonical URL and OG tags in `build_head()`.
 
 ## Contact Form
 

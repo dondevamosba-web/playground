@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Read the Techno content calendar (Google Sheet) and publish any approved posts that are due.
-Same rule as the Ola Digital / Punto Digital calendar: only rows with Status "approved" go out.
+Same rule as the Punto Digital Olavarría / Punto Digital calendar: only rows with Status "approved" go out.
 Rows more than MAX_LATE late are skipped so an old backlog never posts in one burst.
 Updates each row's Status → "posted" and records the Post ID.
 

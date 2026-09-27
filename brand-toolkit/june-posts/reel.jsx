@@ -1,4 +1,4 @@
-/* OLA Digital — 15s Reel storyboard
+/* Punto Digital Olavarría — 15s Reel storyboard
    4 keyframes at 1080×1920 representing scenes 0-3s, 3-8s, 8-13s, 13-15s.
    Each artboard renders the FRAME content + a timeline footer with timing & motion notes. */
 
@@ -246,7 +246,7 @@ function Reel4() {
               <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 38, color: "#38BDF8", letterSpacing: "0.32em" }}>DIGITAL</span>
             </div>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 30, color: "#E0F2FE", marginTop: 8 }}>
-              <span style={{ borderBottom: "2px solid #38BDF8", paddingBottom: 4 }}>oladigital.com.ar</span>
+              <span style={{ borderBottom: "2px solid #38BDF8", paddingBottom: 4 }}>puntodigitalolavarria.com.ar</span>
             </div>
           </div>
 

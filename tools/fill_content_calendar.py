@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Create or update the Ola Digital content calendar in Google Sheets.
+Create or update the Punto Digital Olavarría content calendar in Google Sheets.
 Generates posts for the next N weeks with Claude-written captions.
 
 Usage:
@@ -38,13 +38,13 @@ WEEKLY_SLOTS = [
 ]
 
 HASHTAGS = (
-    "#OlaDigital #OlaDigitalOlavarría #Olavarría #OlavarríaBsAs "
+    "#PuntoDigitalOlavarria #Olavarría #OlavarríaBsAs "
     "#PymesOlavarría #NegociosOlavarría #MarketingDigital #MarketingArgentina "
     "#AgenciaDigital #RedesSociales #SEOLocal #GoogleAds #Emprendedores #PymeArgentina"
 )
 
 BRAND_CONTEXT = """
-Ola Digital es una agencia de marketing digital en Olavarría, Buenos Aires, Argentina.
+Punto Digital Olavarría es una agencia de marketing digital en Olavarría, Buenos Aires, Argentina.
 Audiencia: dueños de pymes locales (gastronomía, comercios, clínicas, servicios profesionales).
 Tono: profesional pero cercano, en español rioplatense (vos, ustedes).
 Meta: generar leads y establecer autoridad en marketing digital local.
@@ -52,7 +52,7 @@ Meta: generar leads y establecer autoridad en marketing digital local.
 
 
 def generate_caption(content_type: str, post_number: int) -> str:
-    prompt = f"""Escribí un caption para Instagram de Ola Digital.
+    prompt = f"""Escribí un caption para Instagram de Punto Digital Olavarría.
 
 {BRAND_CONTEXT}
 

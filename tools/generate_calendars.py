@@ -531,7 +531,7 @@ def build_techno():
     print(f"✓ {out}")
 
 
-# ── Ola Digital ────────────────────────────────────────────────────────────────
+# ── Punto Digital Olavarría ────────────────────────────────────────────────────────────────
 
 def build_ola():
     with open(TMP / "ola_schedule.json") as f:
@@ -557,8 +557,8 @@ def build_ola():
             queue.append(p)
 
     html = build_html(
-        title="Ola Digital — Content Calendar",
-        subtitle="Lun / Mié / Vie · 10:00 AM (ART) · @oladigitalok",
+        title="Punto Digital Olavarría — Content Calendar",
+        subtitle="Lun / Mié / Vie · 10:00 AM (ART) · puntodigitalolavarria.com.ar",
         accent="#0EA5E9",
         accent2="#0369A1",
         bg="#0A0F1E",

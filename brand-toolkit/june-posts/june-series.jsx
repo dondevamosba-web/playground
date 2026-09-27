@@ -1,11 +1,11 @@
-/* OLA Digital — June Series
+/* Punto Digital Olavarría — June Series
    33 pieces · 1080×1080 · #0F172A navy · #0EA5E9 blue · #F97316 orange
    9 single posts (A–I) + 6 carousels × 4 slides (24)
 
    Hard rules applied to every piece:
    - Background #0F172A (no gradients on these — flat)
    - Body text white, highlights in blue or orange
-   - "OLA DIGITAL" wordmark bottom-right (small)
+   - "PUNTO DIGITAL OLAVARRÍA" wordmark bottom-right (small)
    - WhatsApp CTA on every piece
 */
 
@@ -301,7 +301,7 @@ function PostE() {
         </div>
         <div style={{ background: "rgba(14,165,233,.08)", border: `1px solid ${J.blue}`, borderRadius: 14, padding: 28, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 16 }}>
           <Ico.Store s={72} c={J.blue} />
-          <div style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: 13, color: J.blueLite, letterSpacing: "0.18em" }}>CON OLA DIGITAL</div>
+          <div style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: 13, color: J.blueLite, letterSpacing: "0.18em" }}>CON PUNTO DIGITAL OLAVARRÍA</div>
           <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: 22, color: J.white }}>Entran y compran</div>
         </div>
       </div>
@@ -617,7 +617,7 @@ function C2S2() {
           </div>
         </div>
         <div style={{ background: "rgba(14,165,233,.10)", border: `1px solid ${J.blue}`, borderRadius: 16, padding: 28 }}>
-          <div style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: 13, color: J.blueLite, letterSpacing: "0.18em" }}>CON OLA DIGITAL</div>
+          <div style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: 13, color: J.blueLite, letterSpacing: "0.18em" }}>CON PUNTO DIGITAL OLAVARRÍA</div>
           <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 16 }}>
             {["Perfil que vende", "Agenda activa", "Consultas todos los días"].map(t => (
               <div key={t} style={{ display: "flex", gap: 12, alignItems: "center" }}>

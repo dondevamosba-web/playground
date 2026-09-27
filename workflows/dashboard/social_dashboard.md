@@ -1,6 +1,6 @@
 # Workflow: Panel Social (dashboard local)
 
-**Qué es:** Dashboard local de una sola página con las 4 cuentas (Ola Digital, Storm, Fiestas, Techno): seguidores y crecimiento día/semana/mes, últimos posteos, botón de sugerencias con Claude, y acceso rápido a WhatsApp Web.
+**Qué es:** Dashboard local de una sola página con las 4 cuentas (Punto Digital Olavarría, Storm, Fiestas, Techno): seguidores y crecimiento día/semana/mes, últimos posteos, botón de sugerencias con Claude, y acceso rápido a WhatsApp Web.
 
 **Trigger:** Manual — abrilo cuando quieras ver cómo van las cuentas.
 

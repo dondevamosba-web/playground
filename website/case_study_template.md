@@ -155,5 +155,5 @@
 - [ ] La cita del cliente está aprobada por escrito (WhatsApp sirve)
 - [ ] Las imágenes están optimizadas (<200KB cada una)
 - [ ] El nombre del cliente está bien escrito en todos lados
-- [ ] La URL del caso es legible (ej: oladigital.com.ar/casos/la-esquina)
+- [ ] La URL del caso es legible (ej: puntodigitalolavarria.com.ar/casos/la-esquina)
 - [ ] Hay un CTA al final ("¿Querés resultados parecidos? Hablanos por WhatsApp")

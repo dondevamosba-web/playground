@@ -105,7 +105,7 @@ python3 tools/fill_content_techno.py             # genera el sheet + captions co
 python3 tools/fill_content_techno.py --dry-run   # preview sin escribir
 ```
 
-Crea el sheet "Techno — Content Calendar" y guarda el ID en `.env` como `TECHNO_CONTENT_CALENDAR_SHEET_ID`. Misma estructura de columnas que el calendario de Ola Digital: vos completás **Media URL** y, cuando el posteo esté listo para salir, pasás Status a `approved` (desde la planilla o aprobándolo en la Mesa de Posteos). Las filas en `pending` no se publican.
+Crea el sheet "Techno — Content Calendar" y guarda el ID en `.env` como `TECHNO_CONTENT_CALENDAR_SHEET_ID`. Misma estructura de columnas que el calendario de Punto Digital Olavarría: vos completás **Media URL** y, cuando el posteo esté listo para salir, pasás Status a `approved` (desde la planilla o aprobándolo en la Mesa de Posteos). Las filas en `pending` no se publican.
 
 ### Paso 2 — Auto-publicar
 

@@ -1,4 +1,4 @@
-/* OLA Digital — Instagram feed posts (3 standalone 1080×1080) + 5-slide carousel
+/* Punto Digital Olavarría — Instagram feed posts (3 standalone 1080×1080) + 5-slide carousel
    All rendered as 1080×1080 inside design canvas artboards. */
 
 const COL = {
@@ -68,7 +68,7 @@ function CTAButton({ label = "Escribinos por WhatsApp", size = 1 }) {
   );
 }
 
-// Small "OLA Digital" footer logo
+// Small "Punto Digital Olavarría" footer logo
 function FooterLogo({ light = true }) {
   const fg = light ? "#FFFFFF" : COL.navy;
   return (

@@ -1,4 +1,4 @@
-/* OLA Digital — 5 NEW feed posts (1080×1080), all animated via .ola-anim
+/* Punto Digital Olavarría — 5 NEW feed posts (1080×1080), all animated via .ola-anim
    Topics:
    1. ¿Cuántos clientes perdés porque no tenés web?
    2. Google Ads: plata que se convierte en clientes

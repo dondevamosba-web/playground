@@ -24,7 +24,7 @@ python3 tools/fill_content_storm.py             # generate sheet + captions
 python3 tools/fill_content_storm.py --dry-run   # preview without writing
 ```
 
-Creates the "Storm — Content Calendar" sheet and saves the ID to `.env` as `STORM_CONTENT_CALENDAR_SHEET_ID`. Same column layout as the Ola Digital calendar (see `workflows/ola-digital/content_calendar_autopost.md`): you fill **Media URL** (column H), leave Status as `pending`.
+Creates the "Storm — Content Calendar" sheet and saves the ID to `.env` as `STORM_CONTENT_CALENDAR_SHEET_ID`. Same column layout as the Punto Digital Olavarría calendar (see `workflows/ola-digital/content_calendar_autopost.md`): you fill **Media URL** (column H), leave Status as `pending`.
 
 ---
 

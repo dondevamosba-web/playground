@@ -1,5 +1,5 @@
 """
-Content posting scheduler for Ola Digital.
+Content posting scheduler for Punto Digital Olavarría.
 
 Generates a weekly posting schedule based on best-time-to-post benchmarks
 and lists which videos/content to post on each day.
@@ -142,7 +142,7 @@ def main():
     if args.draft:
         sys.path.insert(0, os.path.join(ROOT, "tools"))
         from gmail_draft import create_draft
-        subject = f"Ola Digital — Content Schedule {start.strftime('%B %d')}–{(start + timedelta(days=6)).strftime('%d, %Y')}"
+        subject = f"Punto Digital Olavarría — Content Schedule {start.strftime('%B %d')}–{(start + timedelta(days=6)).strftime('%d, %Y')}"
         body = build_draft_body(slots, start)
         result = create_draft(to="carminattiguido@gmail.com", subject=subject, body=body)
         print(f"\n  Gmail draft → ID: {result.get('draft_id')}")

@@ -82,7 +82,7 @@ It skips any event where (Event Name + Event Date) already exists in the sheet.
 
 ## Related Tools (unified approval sheet)
 
-These work against the multi-account approval sheet (`UNIFIED_APPROVAL_SHEET_ID` in `.env`, tabs: Ola Digital / Storm / Fiestas / Techno):
+These work against the multi-account approval sheet (`UNIFIED_APPROVAL_SHEET_ID` in `.env`, tabs: Punto Digital Olavarría / Storm / Fiestas / Techno):
 
 - `tools/create_unified_approval_sheet.py` — create the unified sheet (one-time setup)
 - `tools/seed_approval_sheet.py` — seed it with draft rows

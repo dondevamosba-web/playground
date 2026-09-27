@@ -7,8 +7,8 @@
     <tspan font-size="26" font-weight="800">O</tspan><tspan font-size="18" font-weight="700" baseline-shift="-1">D</tspan>
   </text>
 
-  <!-- OLA DIGITAL label -->
-  <text x="60" y="83" text-anchor="middle" font-family="'Inter', sans-serif" font-size="9.5" font-weight="600" letter-spacing="4" fill="#64748B">OLA DIGITAL</text>
+  <!-- PUNTO DIGITAL OLAVARRÍA label -->
+  <text x="60" y="83" text-anchor="middle" font-family="'Inter', sans-serif" font-size="9.5" font-weight="600" letter-spacing="4" fill="#64748B">PUNTO DIGITAL OLAVARRÍA</text>
 
   <!-- Wave accent -->
   <path d="M40,93 Q50,87 60,93 Q70,99 80,93" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

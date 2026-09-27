@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>OLA DIGITAL · 40 posts Instagram</title>
+<title>PUNTO DIGITAL OLAVARRÍA · 40 posts Instagram</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
 <style>
-/* Ola Digital — Instagram post design tokens */
+/* Punto Digital Olavarría — Instagram post design tokens */
 :root {
   --od-bg: #0F172A;
   --od-bg-2: #0B1220;
@@ -1937,7 +1937,7 @@ Object.assign(window, {
 /* ============================================================
    templates.jsx
    ============================================================ */
-// Ola Digital — reusable post layouts
+// Punto Digital Olavarría — reusable post layouts
 // Each template takes a `post` object + optional `scale` ("normal" | "scream") and an `accent` ("blue" | "orange").
 // Posts render inside a fixed 1080x1080 or 1080x1350 board, so we use raw px units —
 // the artboard's CSS transform handles fitting.
@@ -1950,7 +1950,7 @@ const WaIcon = () => (
 
 const Header = ({ tag }) => (
   <div className="od-head">
-    <div className="od-wordmark"><span className="dot"></span>OLA DIGITAL</div>
+    <div className="od-wordmark"><span className="dot"></span>PUNTO DIGITAL OLAVARRÍA</div>
     {tag ? <div className="od-tag">{tag}</div> : null}
   </div>
 );
@@ -1979,7 +1979,7 @@ const TplStat = ({ post, scale = 'normal', accent = 'blue' }) => (
       <div className="od-h3" style={{ maxWidth: 880 }}>{post.headline}</div>
       {post.sub ? <p className="od-lede">{post.sub}</p> : null}
     </div>
-    <Foot left={post.foot || 'oladigital.com.ar'} right={post.pagenum || ''} />
+    <Foot left={post.foot || 'puntodigitalolavarria.com.ar'} right={post.pagenum || ''} />
   </div>
 );
 
@@ -2018,7 +2018,7 @@ const TplBold = ({ post, scale = 'normal', accent = 'blue' }) => (
       </h2>
       {post.sub ? <p className="od-lede">{post.sub}</p> : null}
     </div>
-    <Foot left={post.foot || 'Ola Digital · Olavarría'} right={post.pagenum || ''} />
+    <Foot left={post.foot || 'Punto Digital Olavarría'} right={post.pagenum || ''} />
   </div>
 );
 
@@ -2044,7 +2044,7 @@ const TplList = ({ post, scale = 'normal', accent = 'blue' }) => (
         ))}
       </ol>
     </div>
-    <Foot left={post.foot || 'oladigital.com.ar'} right={post.pagenum || ''} />
+    <Foot left={post.foot || 'puntodigitalolavarria.com.ar'} right={post.pagenum || ''} />
   </div>
 );
 
@@ -2103,7 +2103,7 @@ const TplVersus = ({ post, scale = 'normal', accent = 'blue' }) => (
       </div>
       {post.sub ? <p className="od-body-text" style={{ margin: 0 }}>{post.sub}</p> : null}
     </div>
-    <Foot left={post.foot || 'oladigital.com.ar'} right={post.pagenum || ''} />
+    <Foot left={post.foot || 'puntodigitalolavarria.com.ar'} right={post.pagenum || ''} />
   </div>
 );
 
@@ -2123,14 +2123,14 @@ const TplCTA = ({ post, scale = 'normal', accent = 'orange', showWa = true }) =>
         <div className="od-cta-label">Escribinos por WhatsApp</div>
         <div className="od-cta-title">{post.ctaTitle || 'Diagnóstico gratis de tu marketing.'}</div>
         <div className="od-cta-row">
-          <div className="od-cta-handle">@oladigital.ok</div>
+          <div className="od-cta-handle">puntodigitalolavarria.com.ar</div>
           {showWa ? (
             <div className="od-wa-pill">
               <WaIcon />
               <span>+54 9 2284 · escribir</span>
             </div>
           ) : (
-            <div className="od-wa-pill" style={{ background: '#0F172A' }}>oladigital.com.ar</div>
+            <div className="od-wa-pill" style={{ background: '#0F172A' }}>puntodigitalolavarria.com.ar</div>
           )}
         </div>
       </div>
@@ -2163,7 +2163,7 @@ Object.assign(window, { Post, TEMPLATES, TplStat, TplHook, TplBold, TplList, Tpl
 /* ============================================================
    posts-data.jsx
    ============================================================ */
-// Ola Digital — 40 Instagram posts
+// Punto Digital Olavarría — 40 Instagram posts
 // 16 single feed posts (1080x1080) + 6 carousels × 4 slides (1080x1350) = 40
 // All copy is rioplatense Spanish (vos/ustedes).
 
@@ -2197,7 +2197,7 @@ const SINGLES = [
       { text: 'no existís.' },
     ],
     sub: 'Duele. Pero así piensan tus clientes hoy.',
-    foot: 'Ola Digital · Olavarría',
+    foot: 'Punto Digital Olavarría',
   },
   // 04 — List
   {
@@ -2276,7 +2276,7 @@ const SINGLES = [
       { text: 'están en el celu.', hi: true },
       { text: '¿Y tu negocio?' },
     ],
-    foot: 'Ola Digital · Olavarría',
+    foot: 'Punto Digital Olavarría',
   },
   // 12 — Hook
   {
@@ -2326,7 +2326,7 @@ const SINGLES = [
     stat: '17', unit: '/mes',
     headline: 'Consultas perdidas al mes en pymes sin web. Promedio Olavarría.',
     sub: 'No las recuperás. Se las lleva quien sí está online.',
-    foot: 'Auditorías Ola Digital · 2024',
+    foot: 'Auditorías Punto Digital Olavarría · 2024',
   },
 ];
 
@@ -2345,7 +2345,7 @@ const CAROUSELS = [
         headlineHi: 'Google no te muestra',
         headlinePost: 'a tus clientes en Olavarría.',
         sub: 'Deslizá →   3 razones + cómo arreglarlo.',
-        foot: 'Ola Digital · SEO Local',
+        foot: 'Punto Digital Olavarría · SEO Local',
       },
       {
         id: 'C1-2', template: 'stat', accent: 'blue', category: 'Carrusel · 2/4', pagenum: '02 / 04',
@@ -2469,7 +2469,7 @@ const CAROUSELS = [
         stat: '17', unit: '/mes',
         headline: 'Consultas perdidas al mes en pymes sin sitio web.',
         sub: 'Gente que te googleó, no te encontró, y compró en otro lado.',
-        foot: 'Auditorías Ola Digital 2024',
+        foot: 'Auditorías Punto Digital Olavarría 2024',
       },
       {
         id: 'C4-3', template: 'list', accent: 'blue', category: 'Carrusel · 3/4', pagenum: '03 / 04',
@@ -2576,7 +2576,7 @@ Object.assign(window, { SINGLES, CAROUSELS });
 /* ============================================================
    app.jsx
    ============================================================ */
-// Ola Digital — Main canvas app
+// Punto Digital Olavarría — Main canvas app
 // Uses DesignCanvas + DCSection + DCArtboard from design-canvas.jsx.
 // Imports Post component, SINGLES, CAROUSELS from window.
 
@@ -2613,7 +2613,7 @@ const StyleTile = () => (
   }}>
     <div style={{ gridColumn: '1 / -1' }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 16 }}>
-        <div style={{ fontWeight: 900, fontSize: 36, letterSpacing: '-0.02em' }}>OLA DIGITAL</div>
+        <div style={{ fontWeight: 900, fontSize: 36, letterSpacing: '-0.02em' }}>PUNTO DIGITAL OLAVARRÍA</div>
         <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.18em', color: '#64748b', textTransform: 'uppercase' }}>Master Style Tile · v1</div>
       </div>
       <div style={{ marginTop: 8, fontSize: 16, color: '#64748b', maxWidth: 720 }}>
@@ -2667,7 +2667,7 @@ const StyleTile = () => (
         <div style={{ fontSize: 13, fontWeight: 800, letterSpacing: '0.2em', color: '#64748b', textTransform: 'uppercase', marginBottom: 12 }}>Reglas de uso</div>
         <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 12, padding: 16, fontSize: 14, lineHeight: 1.55, color: '#334155' }}>
           <div>• Naranja: <b>solo</b> en el dato hero o CTA. Nunca en cuerpo.</div>
-          <div>• Wordmark “OLA DIGITAL” siempre top-left con dot azul.</div>
+          <div>• Wordmark “PUNTO DIGITAL OLAVARRÍA” siempre top-left con dot azul.</div>
           <div>• Cada post tiene <b>una</b> idea fuerte. Si hay dos, son dos posts.</div>
           <div>• Stats con `tabular-nums`. Sin decimales innecesarios.</div>
         </div>
@@ -2709,7 +2709,7 @@ const App = () => {
   return (
     <>
       <DesignCanvas
-        title="OLA DIGITAL — 40 posts para Instagram"
+        title="PUNTO DIGITAL OLAVARRÍA — 40 posts para Instagram"
         subtitle="Olavarría · agencia de marketing digital · v1 · 16 single feed + 6 carousels × 4 slides"
       >
         <DCSection id="style-tile" title="Master Style Tile" subtitle="Colores, tipografía, reglas. Para replicar el sistema en cualquier post nuevo.">

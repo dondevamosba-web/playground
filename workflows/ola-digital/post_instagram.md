@@ -107,7 +107,7 @@ Publish or schedule content (single image, carousel, or reel) to an Instagram Bu
 
 ---
 
-## Content Strategy for Ola Digital
+## Content Strategy for Punto Digital Olavarría
 - Single images: brand announcements, quotes, single product shots
 - Carousels: tutorials, feature walkthroughs, before/after comparisons (3–10 slides)
 - Reels: short demos, behind-the-scenes, trend-based content

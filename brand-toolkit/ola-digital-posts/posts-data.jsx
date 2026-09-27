@@ -1,4 +1,4 @@
-// Ola Digital — 40 Instagram posts
+// Punto Digital Olavarría — 40 Instagram posts
 // 16 single feed posts (1080x1080) + 6 carousels × 4 slides (1080x1350) = 40
 // All copy is rioplatense Spanish (vos/ustedes).
 
@@ -32,7 +32,7 @@ const SINGLES = [
       { text: 'no existís.' },
     ],
     sub: 'Duele. Pero así piensan tus clientes hoy.',
-    foot: 'Ola Digital · Olavarría',
+    foot: 'Punto Digital Olavarría',
   },
   // 04 — List
   {
@@ -111,7 +111,7 @@ const SINGLES = [
       { text: 'están en el celu.', hi: true },
       { text: '¿Y tu negocio?' },
     ],
-    foot: 'Ola Digital · Olavarría',
+    foot: 'Punto Digital Olavarría',
   },
   // 12 — Hook
   {
@@ -161,7 +161,7 @@ const SINGLES = [
     stat: '17', unit: '/mes',
     headline: 'Consultas perdidas al mes en pymes sin web. Promedio Olavarría.',
     sub: 'No las recuperás. Se las lleva quien sí está online.',
-    foot: 'Auditorías Ola Digital · 2024',
+    foot: 'Auditorías Punto Digital Olavarría · 2024',
   },
 ];
 
@@ -180,7 +180,7 @@ const CAROUSELS = [
         headlineHi: 'Google no te muestra',
         headlinePost: 'a tus clientes en Olavarría.',
         sub: 'Deslizá →   3 razones + cómo arreglarlo.',
-        foot: 'Ola Digital · SEO Local',
+        foot: 'Punto Digital Olavarría · SEO Local',
       },
       {
         id: 'C1-2', template: 'stat', accent: 'blue', category: 'Carrusel · 2/4', pagenum: '02 / 04',
@@ -304,7 +304,7 @@ const CAROUSELS = [
         stat: '17', unit: '/mes',
         headline: 'Consultas perdidas al mes en pymes sin sitio web.',
         sub: 'Gente que te googleó, no te encontró, y compró en otro lado.',
-        foot: 'Auditorías Ola Digital 2024',
+        foot: 'Auditorías Punto Digital Olavarría 2024',
       },
       {
         id: 'C4-3', template: 'list', accent: 'blue', category: 'Carrusel · 3/4', pagenum: '03 / 04',

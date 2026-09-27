@@ -68,8 +68,8 @@ a.card .dot { width: 10px; height: 10px; border-radius: 50%; margin-bottom: 8px;
   <div class="grid">
     <a class="card" href="/calendar/ola">
       <div class="dot" style="background:#0EA5E9"></div>
-      <div class="name">Ola Digital</div>
-      <div class="handle">@oladigital</div>
+      <div class="name">Punto Digital Olavarría</div>
+      <div class="handle">puntodigitalolavarria.com.ar</div>
     </a>
     <a class="card" href="/calendar/fiestas">
       <div class="dot" style="background:#C084FC"></div>

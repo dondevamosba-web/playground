@@ -1,4 +1,4 @@
-/* OLA Digital — Motion specification card
+/* Punto Digital Olavarría — Motion specification card
    Single artboard explaining the CSS keyframe system used across animated feeds + covers. */
 
 function MotionSpec() {

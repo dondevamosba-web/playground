@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Fetch the next 3 posts (not already in the sheet) for Ola Digital, Storm, and Techno
+Fetch the next 3 posts (not already in the sheet) for Punto Digital Olavarría, Storm, and Techno
 and append them as draft rows to the unified approval sheet.
 """
 

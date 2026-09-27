@@ -1,4 +1,4 @@
-/* OLA Digital — Logo variations
+/* Punto Digital Olavarría — Logo variations
    4 concepts × 3 background contexts (color on light, white on dark, reversed/mono)
    Each artboard renders at 600×400 in the canvas. */
 

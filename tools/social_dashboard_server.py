@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Local social dashboard — one page, 4 accounts (Ola Digital, Storm, Fiestas,
+Local social dashboard — one page, 4 accounts (Punto Digital Olavarría, Storm, Fiestas,
 Techno): followers, day/week/month growth, what's been posted, and a
 "Mejoras" button that asks Claude for concrete next actions per account.
 

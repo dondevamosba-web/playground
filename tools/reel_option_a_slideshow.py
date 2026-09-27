@@ -50,7 +50,7 @@ FPS = 30
 
 
 def generate_script(topic: str) -> list[dict]:
-    prompt = f"""Sos estratega de contenido para Ola Digital, agencia digital de Olavarría, Buenos Aires, Argentina.
+    prompt = f"""Sos estratega de contenido para Punto Digital Olavarría, agencia digital de Olavarría, Buenos Aires, Argentina.
 Generá un reel de Instagram de 5 slides sobre: {topic}
 
 Tono: profesional, directo, bonaerense. Usá 'vos'.

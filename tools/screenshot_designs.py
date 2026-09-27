@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Screenshot each artboard from the OLA Digital design canvas at native resolution.
+Screenshot each artboard from the Punto Digital Olavarría design canvas at native resolution.
 Saves PNGs to .tmp/posts/ ready for Drive upload and Instagram posting.
 
 Usage:

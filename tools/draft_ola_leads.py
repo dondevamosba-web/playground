@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Pull new Ola Digital website lead submissions from Netlify and create Gmail drafts.
+Pull new Punto Digital Olavarría website lead submissions from Netlify and create Gmail drafts.
 Each draft is addressed TO the lead — ready for Guido to review and send.
 
 Usage:
@@ -40,7 +40,7 @@ OLA_SIGNATURE_HTML = """
             font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
   <p style="margin:0;font-size:14px;font-weight:600;color:#0E1116;">Guido Carminatti</p>
   <p style="margin:4px 0 0;font-size:13px;color:#6b7280;">
-    <a href="https://oladigital.com.ar" style="color:#0EA5E9;text-decoration:none;">OLA Digital</a>
+    <a href="https://puntodigitalolavarria.com.ar" style="color:#0EA5E9;text-decoration:none;">Punto Digital Olavarría</a>
     &nbsp;·&nbsp; Olavarría, Buenos Aires
     &nbsp;·&nbsp;
     <a href="https://wa.me/5491162310105" style="color:#6b7280;text-decoration:none;">WhatsApp</a>
@@ -88,7 +88,7 @@ def build_email_html(lead: dict) -> str:
     paragraphs = [
         f"Hola {first},",
         "",
-        f"Vi que completaste el formulario en oladigital.com.ar{service_line} — gracias por escribir.",
+        f"Vi que completaste el formulario en puntodigitalolavarria.com.ar{service_line} — gracias por escribir.",
         "",
         "Me gustaría entender mejor tu negocio para ver cómo podemos ayudarte a crecer. "
         "¿Podemos coordinar una llamada corta de 20 minutos esta semana?",
@@ -143,7 +143,7 @@ def main():
         if not args.dry_run:
             result = create_draft(
                 to=lead["email"],
-                subject="Re: Tu consulta en OLA Digital",
+                subject="Re: Tu consulta en Punto Digital Olavarría",
                 body=build_email_html(lead),
                 html=True,
             )

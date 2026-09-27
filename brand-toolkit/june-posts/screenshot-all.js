@@ -1,4 +1,4 @@
-// Puppeteer screenshot script — renders every OLA Digital brand asset
+// Puppeteer screenshot script — renders every Punto Digital Olavarría brand asset
 // and saves them as PNG files in /brand-toolkit/ola-digital-assets/
 //
 // Run: node screenshot-all.js

@@ -24,10 +24,10 @@ from googleapiclient.http import MediaFileUpload
 AR_TZ = timezone(timedelta(hours=-3))
 TODAY = datetime.now(tz=AR_TZ).strftime('%Y-%m-%d')
 SHEET_ID = os.getenv('CONTENT_CALENDAR_SHEET_ID')
-DRIVE_FOLDER = 'Ola Digital/Junio-Julio 2026'
+DRIVE_FOLDER = 'Punto Digital Olavarría/Junio-Julio 2026'
 
 HASHTAGS = (
-    '#OlaDigital #OlaDigitalOlavarría #Olavarría #OlavarríaBsAs '
+    '#PuntoDigitalOlavarria #Olavarría #OlavarríaBsAs '
     '#PymesOlavarría #NegociosOlavarría #MarketingDigital #MarketingArgentina '
     '#AgenciaDigital #RedesSociales #SEOLocal #GoogleAds #Emprendedores #PymeArgentina'
 )

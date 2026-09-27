@@ -1,4 +1,4 @@
-# Ola Digital — 5 Guiones de Reels Listos para Producir
+# Punto Digital Olavarría — 5 Guiones de Reels Listos para Producir
 
 Sin cámara. Sin voz. Solo texto animado + imágenes IA + clips IA cortos.
 Armar en CapCut. Assets visuales: Adobe Firefly (gratis) o Midjourney.
@@ -83,8 +83,8 @@ que necesita más clientes?
 
 👇 Link en bio → hablemos por WhatsApp
 ```
-- Fondo: color sólido marca Ola Digital (definir color principal — sugerido: `#0D1B2A` azul oscuro)
-- Logo Ola Digital esquina inferior derecha
+- Fondo: color sólido marca Punto Digital Olavarría (definir color principal — sugerido: `#0D1B2A` azul oscuro)
+- Logo Punto Digital Olavarría esquina inferior derecha
 - Animación: texto central hace fade in completo, logo aparece último
 - Tipografía: línea 1 mediana blanca / línea 2 pequeña gris claro / línea 3 grande verde
 
@@ -105,7 +105,7 @@ No fue magia. Fue segmentación correcta + un mensaje que le habló a la gente d
 
 Si tenés un negocio en Olavarría y querés resultados parecidos, el link en bio va directo a WhatsApp.
 
-#OlaDigital #OlaDigitalOlavarría #MarketingDigitalArgentina #PymesOlavarría #NegociosOlavarría #MetaAdsArgentina #RestaurantesOlavarría #AgenciaDigital #MarketingParaPymes #EmprendedoresBA
+#PuntoDigitalOlavarria #MarketingDigitalArgentina #PymesOlavarría #NegociosOlavarría #MetaAdsArgentina #RestaurantesOlavarría #AgenciaDigital #MarketingParaPymes #EmprendedoresBA
 ```
 
 ---
@@ -184,7 +184,7 @@ una acción clara.
 ### Escena 5 — CTA (29–32 seg)
 **Texto en pantalla:**
 ```
-Ola Digital
+Punto Digital Olavarría
 Hacemos que tus redes
 te generen clientes.
 → Link en bio
@@ -223,7 +223,7 @@ Sin eso, estás entreteniendo a desconocidos gratis.
 
 ¿Querés que revisemos tu perfil? Link en bio, te respondemos en el día.
 
-#OlaDigital #OlavarríaNegocios #MarketingDigitalArgentina #PymesOlavarría #RedesSocialesNegocios #MarketingParaPymes #EmprendedoresArgentina #NegociosLocales #AgenciaDigital #PymeArgentina
+#PuntoDigitalOlavarria #OlavarríaNegocios #MarketingDigitalArgentina #PymesOlavarría #RedesSocialesNegocios #MarketingParaPymes #EmprendedoresArgentina #NegociosLocales #AgenciaDigital #PymeArgentina
 ```
 
 ---
@@ -323,7 +323,7 @@ en Olavarría?
 Hacemos lo mismo para vos.
 👇 WhatsApp en bio.
 ```
-- Fondo: `#0D1B2A` + logo Ola Digital
+- Fondo: `#0D1B2A` + logo Punto Digital Olavarría
 - Animación: texto fade in, logo con leve scale up al final
 
 ---
@@ -343,7 +343,7 @@ No fue suerte. Fue configuración correcta + creatividad que conecta con la real
 
 Si tenés un consultorio, clínica o servicio de salud y querés resultados parecidos, escribinos. Link en bio.
 
-#OlaDigital #MarketingOdontológico #ClínicasArgentina #MetaAdsArgentina #PymesOlavarría #OlavarríaNegocios #AgenciaDigital #PublicidadEnRedes #MarketingDigitalArgentina #NegociosOlavarría
+#PuntoDigitalOlavarria #MarketingOdontológico #ClínicasArgentina #MetaAdsArgentina #PymesOlavarría #OlavarríaNegocios #AgenciaDigital #PublicidadEnRedes #MarketingDigitalArgentina #NegociosOlavarría
 ```
 
 ---
@@ -414,7 +414,7 @@ Si no la sabés, es difícil saber si tu inversión en marketing está funcionan
 
 Respondé abajo 👇 — y si querés que te ayudemos a calcularlo, escribinos por DM.
 
-#OlaDigital #PymesOlavarría #NegociosOlavarría #EmprendedoresArgentina #MarketingDigitalArgentina #PymeArgentina #AgenciaDigital #NegociosLocales #OlavarríaBsAs #MarketingParaPymes
+#PuntoDigitalOlavarria #PymesOlavarría #NegociosOlavarría #EmprendedoresArgentina #MarketingDigitalArgentina #PymeArgentina #AgenciaDigital #NegociosLocales #OlavarríaBsAs #MarketingParaPymes
 ```
 
 ---
@@ -486,12 +486,12 @@ Inversión extra: $0
 
 ---
 
-### Escena 5 — Cierre con mención Ola Digital (31–36 seg)
+### Escena 5 — Cierre con mención Punto Digital Olavarría (31–36 seg)
 **Texto en pantalla:**
 ```
 📍 Olavarría hace bien las cosas.
 
-Un tip de @oladigital
+Un tip de puntodigitalolavarria.com.ar
 ```
 - Tipografía: línea 1 blanca mediana / línea 2 pequeña gris con @handle
 - Fondo: color sólido oscuro + logo pequeño
@@ -521,14 +521,14 @@ Felicitamos a [Nombre del Gym] por el trabajo 🙌
 — — —
 ¿Querés que armemos una estrategia así para tu negocio? Link en bio.
 
-#OlaDigital #OlavarríaNegocios #GimnasioOlavarría #NegociosOlavarría #EmprendedoresArgentina #MarketingDigitalArgentina #PymesOlavarría #RedesSocialesNegocios #NegociosLocales #AgenciaDigital
+#PuntoDigitalOlavarria #OlavarríaNegocios #GimnasioOlavarría #NegociosOlavarría #EmprendedoresArgentina #MarketingDigitalArgentina #PymesOlavarría #RedesSocialesNegocios #NegociosLocales #AgenciaDigital
 ```
 
 ---
 
 ### DM template para enviarle al dueño antes de publicar
 ```
-Hola [Nombre]! Soy [tu nombre] de Ola Digital.
+Hola [Nombre]! Soy [tu nombre] de Punto Digital Olavarría.
 
 Estamos haciendo una serie de Reels destacando negocios de Olavarría 
 que están haciendo bien las cosas en redes.

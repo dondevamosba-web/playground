@@ -18,7 +18,7 @@ Canva (design) → Export PNG/MP4 → .tmp/posts/ → upload_to_drive.py → pos
    - **Carousel slides:** 1080×1080 px each (up to 10 slides)
    - **Reel cover:** 1080×1920 px (vertical)
 
-2. Use Ola Digital brand colors:
+2. Use Punto Digital Olavarría brand colors:
    - Primary: `#0EA5E9`
    - Accent: `#F97316`
    - Dark: `#0F172A`
@@ -84,7 +84,7 @@ python tools/post_instagram.py \
   --type single \
   --image-url "https://drive.google.com/uc?export=download&id=abc123" \
   --caption "Tu caption aquí" \
-  --hashtags MarketingDigital OlavarríaNegocios OlaDigital
+  --hashtags MarketingDigital OlavarríaNegocios PuntoDigitalOlavarria
 
 # Single image — scheduled
 python tools/post_instagram.py \

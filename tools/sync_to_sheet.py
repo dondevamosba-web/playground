@@ -196,10 +196,10 @@ def sync_fiestas(post: dict, unapprove: bool = False):
     print(f"[sync_fiestas] WARNING — event not found in sheet: {event_name[:50]}")
 
 
-# ── Ola Digital ────────────────────────────────────────────────────────────────
+# ── Punto Digital Olavarría ────────────────────────────────────────────────────────────────
 
 def sync_ola(post: dict, unapprove: bool = False):
-    """Update the Ola Digital sheet row status when approved/unapproved via calendar."""
+    """Update the Punto Digital Olavarría sheet row status when approved/unapproved via calendar."""
     sheets, _ = get_services()
     sheet_id = os.getenv("CONTENT_CALENDAR_SHEET_ID")
 

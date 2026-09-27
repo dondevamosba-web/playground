@@ -1,5 +1,5 @@
 """
-Generates OLA Digital logo variants using Claude (Anthropic API via claude_call.py).
+Generates Punto Digital Olavarría logo variants using Claude (Anthropic API via claude_call.py).
 Produces polished SVG files — vector, scalable, professional quality.
 Outputs: website/assets/logo-*.svg and brand-toolkit/assets/logo-*.svg
 Usage: python3 tools/generate_logo_ai.py
@@ -17,7 +17,7 @@ ASSETS  = ROOT / "website" / "assets"
 TOOLKIT = ROOT / "brand-toolkit" / "assets"
 
 BRAND_BRIEF = """
-Brand: OLA Digital
+Brand: Punto Digital Olavarría
 Type: Digital marketing agency, Olavarría, Buenos Aires, Argentina
 Meaning: "OLA" = wave in Spanish — connects to ocean, momentum, energy
 Colors: deep ocean blue #0C4A6E, sky blue #0EA5E9, bright cyan #06B6D4, teal #38BDF8, orange accent #F97316
@@ -126,7 +126,7 @@ Design a geometric hexagon mark logo (inspired by the diamond B7 style but using
 - Inside the hexagon: "OLA" font-size 20px, font-weight 800, Plus Jakarta Sans, fill #0EA5E9, text-anchor middle, y=52
 - Small single-hump wave path inside hex below "OLA": stroke #F97316, stroke-width 2, fill none
 - To the right of hexagon (x starting ~90):
-  "OLA Digital" on one line: "OLA" font-size 28px, font-weight 800, fill #0F172A + "Digital" font-size 18px, font-weight 400, fill #64748B
+  "Punto Digital Olavarría" on one line: "OLA" font-size 28px, font-weight 800, fill #0F172A + "Digital" font-size 18px, font-weight 400, fill #64748B
   Baseline y=52
 - Below the text line: thin line full width of text, stroke #E2E8F0, stroke-width 1, y=58
 - ViewBox 0 0 240 88, white/light background assumed
@@ -165,7 +165,7 @@ Design a shield/crest shaped logo mark — authoritative and trustworthy:
   Below: a 2-hump wave path centered at y=56, stroke white, stroke-width 2, fill none, opacity 0.7
   Thin line at y=62, x=26 to x=94, stroke rgba(255,255,255,0.3), stroke-width 0.8
   "OD" very small text y=74, font-size 9px, fill rgba(255,255,255,0.5), letter-spacing 3px, text-anchor middle
-- Below the shield (y=100): "OLA DIGITAL" font-size 10px, font-weight 600, Inter, letter-spacing 4px, fill #64748B, text-anchor middle
+- Below the shield (y=100): "PUNTO DIGITAL OLAVARRÍA" font-size 10px, font-weight 600, Inter, letter-spacing 4px, fill #64748B, text-anchor middle
 - ViewBox 0 0 120 112
 
 Return ONLY valid SVG starting with <svg and ending with </svg>.
@@ -179,7 +179,7 @@ Return ONLY valid SVG starting with <svg and ending with </svg>.
 
 This is a refined evolution of logo B7 (diamond monogram). Improve on it significantly:
 
-B7 was: simple diamond outline, OD text inside, OLA DIGITAL below, orange wave. It was too plain.
+B7 was: simple diamond outline, OD text inside, PUNTO DIGITAL OLAVARRÍA below, orange wave. It was too plain.
 
 This version:
 - Diamond shape M60,8 L100,48 L60,88 L20,48 Z
@@ -190,7 +190,7 @@ This version:
   Large "O" font-size 38px, font-weight 800, Plus Jakarta Sans, fill white, text-anchor middle, y=44
   Small underline wave inside the O hollow space area: a short wave path, stroke #F97316, stroke-width 2, fill none, centered at y=52
   "D" font-size 14px, font-weight 700, Inter, fill rgba(255,255,255,0.65), letter-spacing 3px, text-anchor middle, y=68
-- Below diamond (y=100): "OLA DIGITAL" 10px, 600, Inter, letter-spacing 4px, fill #64748B, text-anchor middle
+- Below diamond (y=100): "PUNTO DIGITAL OLAVARRÍA" 10px, 600, Inter, letter-spacing 4px, fill #64748B, text-anchor middle
 - Small orange dot circles (r=3, fill #F97316) at the 4 diamond corners (top, bottom, left, right points)
 - ViewBox 0 0 120 112
 
@@ -319,12 +319,12 @@ Return ONLY valid SVG code starting with <svg and ending with </svg>.
         "prompt": f"""
 {BRAND_BRIEF}
 
-Design a monogram logo using the initials "OD" (OLA Digital):
+Design a monogram logo using the initials "OD" (Punto Digital Olavarría):
 - A diamond shape (rotated square) 60×60, stroke #0EA5E9, stroke-width 2.5, fill none
 - Inside the diamond: "OD" text, font-size 22px, font-weight 800, Plus Jakarta Sans, fill #0EA5E9, text-anchor middle
   "O" slightly larger or bolder than "D" — the O dominates
-- Below the diamond: "OLA DIGITAL" in font-size 10px, font-weight 600, Inter, letter-spacing 4px, fill #64748B, text-anchor middle
-- A small wave path (single hump) below the "OLA DIGITAL" text: stroke #F97316, stroke-width 2, fill none, centered
+- Below the diamond: "PUNTO DIGITAL OLAVARRÍA" in font-size 10px, font-weight 600, Inter, letter-spacing 4px, fill #64748B, text-anchor middle
+- A small wave path (single hump) below the "PUNTO DIGITAL OLAVARRÍA" text: stroke #F97316, stroke-width 2, fill none, centered
 - ViewBox: 0 0 120 100, centered composition
 - Clean geometric brand mark, works at any size
 

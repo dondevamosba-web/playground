@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ola Digital — Reel Generator v2
+Punto Digital Olavarría — Reel Generator v2
 Bigger, bolder, more animations. Reels 6–10.
 1080×1920 · 30fps · no camera footage required.
 """
@@ -87,7 +87,7 @@ def wave_points(y_center, scale):
     return [(int(x), int(y)) for x, y in pts]
 
 def render_logo(target_w=300):
-    """Render the Ola Digital logo as a PIL RGBA image."""
+    """Render the Punto Digital Olavarría logo as a PIL RGBA image."""
     svg_w, svg_h = 248, 68
     scale = target_w / svg_w
     lw    = int(svg_w * scale)
@@ -570,7 +570,7 @@ def reel_10():
     ], C_DARK, 5.0))
 
     # CTA
-    scenes.append(scene_cta('Podés empezar hoy.', 'Ola Digital — Olavarría.'))
+    scenes.append(scene_cta('Podés empezar hoy.', 'Punto Digital Olavarría.'))
 
     return concatenate_videoclips(scenes)
 

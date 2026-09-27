@@ -1,4 +1,4 @@
-# Ola Digital — Competitive & Market Research Report
+# Punto Digital Olavarría — Competitive & Market Research Report
 
 *Prepared 2026-05-20. Olavarría, Buenos Aires Province, Argentina.*
 
@@ -6,15 +6,15 @@
 
 ## Important caveat upfront
 
-**Ola Digital's own digital presence could not be verified** through web searches (in English or Spanish), Instagram handles, LinkedIn, or Argentine domain lookups (`oladigital.com.ar`, `oladigital.ar`, `ola.digital`, etc.). The closest namesakes are agencies in Peru, Mexico, Colombia, Brazil, Australia — none of them in Olavarría.
+**Punto Digital Olavarría's own digital presence could not be verified** through web searches (in English or Spanish), Instagram handles, LinkedIn, or Argentine domain lookups (`puntodigitalolavarria.com.ar`, `oladigital.ar`, `ola.digital`, etc.). The closest namesakes are agencies in Peru, Mexico, Colombia, Brazil, Australia — none of them in Olavarría.
 
-This likely means Ola Digital is:
+This likely means Punto Digital Olavarría is:
 - Very new, OR
 - Operates almost entirely via Instagram/WhatsApp without SEO presence, OR
 - Uses a different legal/trade name, OR
 - Sub-scale enough not to be indexed
 
-**The analysis below assumes Ola Digital is a small (1–5 person) early-stage local agency.** Confirm or correct this and I'll re-run.
+**The analysis below assumes Punto Digital Olavarría is a small (1–5 person) early-stage local agency.** Confirm or correct this and I'll re-run.
 
 ---
 
@@ -76,7 +76,7 @@ This likely means Ola Digital is:
 | **Strengths** | Physical office, 10+ year reputation, multi-service breadth, broad SMB rolodex |
 | **Weaknesses** | Marketing services (paid social, SEO, e-commerce, analytics) underdeveloped; design-led not results-led; no performance reporting visible |
 | **Likely next moves** | Defend installed base; price-down on commodities; slow to hire paid-media specialist |
-| **How Ola Digital wins** | **1.** Lead every sale with a monthly KPI dashboard (leads, CPL, ROAS). **2.** Productize Meta Ads + WhatsApp lead-flow for retail/services. **3.** Two-week landing-page launches vs. their multi-month design cycles. |
+| **How Punto Digital Olavarría wins** | **1.** Lead every sale with a monthly KPI dashboard (leads, CPL, ROAS). **2.** Productize Meta Ads + WhatsApp lead-flow for retail/services. **3.** Two-week landing-page launches vs. their multi-month design cycles. |
 
 ### Battlecard B: 3D Gráfica
 
@@ -87,7 +87,7 @@ This likely means Ola Digital is:
 | **Strengths** | Brand-identity craft, ~10 years of local trust, comfortable with SMB owners |
 | **Weaknesses** | No clear monthly retainers; thin on paid acquisition + e-commerce + analytics; dated site; no conversion-optimization practice |
 | **Likely next moves** | Continue branding + WordPress combos; defensive pricing; unlikely to invest in new disciplines |
-| **How Ola Digital wins** | **1.** Sell "Crecimiento Mensual" retainers (content + ads + report) vs. their one-time projects. **2.** Own a vertical (gastronomy or dental clinics) with case studies. **3.** Weekly Instagram reels showing the work — beat them on their own medium. |
+| **How Punto Digital Olavarría wins** | **1.** Sell "Crecimiento Mensual" retainers (content + ads + report) vs. their one-time projects. **2.** Own a vertical (gastronomy or dental clinics) with case studies. **3.** Weekly Instagram reels showing the work — beat them on their own medium. |
 
 ---
 
@@ -127,7 +127,7 @@ Targeting 8–15% share of SAM:
 | Likely | AR$ 110M (~USD 110k) | 25–30 |
 | Best | AR$ 200M (~USD 200k) | 45–55 |
 
-### What this means for Ola Digital
+### What this means for Punto Digital Olavarría
 The Olavarría agency market is **small in absolute terms (low-to-mid six figures USD) but structurally underserved at the SMB level** — incumbents are print/branding-led with weak performance benches. A focused productized retainer offer (paid social + WhatsApp funnels + monthly reporting) can plausibly reach ~AR$ 100M/year in three years on 25–30 accounts. **The constraint is talent supply and packaging discipline, not demand.**
 
 ---

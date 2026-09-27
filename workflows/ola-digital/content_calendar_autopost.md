@@ -1,7 +1,7 @@
 # Ola Digital — Content Calendar & Auto-Post
 
 ## Objective
-Maintain a Google Sheets content calendar for Ola Digital's Instagram and Facebook, auto-generate captions with Claude, and automatically post content when it's due. Also capture website leads and draft follow-up emails.
+Maintain a Google Sheets content calendar for Punto Digital Olavarría's Instagram and Facebook, auto-generate captions with Claude, and automatically post content when it's due. Also capture website leads and draft follow-up emails.
 
 ---
 

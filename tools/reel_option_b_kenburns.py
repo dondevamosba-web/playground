@@ -52,7 +52,7 @@ MOTIONS = ["zoom_in", "zoom_out", "pan_left", "pan_right"]
 
 
 def generate_script(topic: str) -> list[dict]:
-    prompt = f"""Sos estratega de contenido para Ola Digital, agencia digital de Olavarría, Buenos Aires, Argentina.
+    prompt = f"""Sos estratega de contenido para Punto Digital Olavarría, agencia digital de Olavarría, Buenos Aires, Argentina.
 Generá un reel cinematográfico de 4 escenas sobre: {topic}
 
 Tono: impactante, profesional, bonaerense. Usá 'vos'. Cada escena tiene máximo impacto visual.
@@ -133,7 +133,7 @@ def make_cinematic_frame(palette_idx: int, hook: str, caption: str) -> np.ndarra
     # Logo top-left
     draw.rounded_rectangle([70, 70, 218, 138], radius=18, fill=(*accent, 230))
     draw.text((144, 104), "O", font=logo_font, fill=(255, 255, 255), anchor="mm")
-    draw.text((236, 104), "OLA Digital", font=small_font, fill=(255, 255, 255), anchor="lm")
+    draw.text((236, 104), "Punto Digital Olavarría", font=small_font, fill=(255, 255, 255), anchor="lm")
 
     # Hook — wrap
     hook_up = hook.upper()
