@@ -46,6 +46,8 @@ class EnrichTest(unittest.TestCase):
         self.assertEqual(el.topic_of("Cómo usar Claude Code con MCP", "https://youtu.be/abc"), "🤖 IA y código")
         self.assertEqual(el.topic_of("Ideas de cocina y deco", "https://blog.example.com"), "🏠 Casa y deco")
         self.assertEqual(el.topic_of("", "https://www.instagram.com/reel/X/"), "🔗 Otros (instagram.com)")
+        self.assertEqual(el.topic_of("club: Techno rave all night DJ set", "https://www.instagram.com/reel/Y/"),
+                         "🎉 Fiestas y eventos")
 
     def test_enrich_caches_and_makes_titles_searchable(self):
         with tempfile.TemporaryDirectory() as tmp:

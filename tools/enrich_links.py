@@ -48,6 +48,8 @@ TOPICS = {
     "📣 Marketing y ads": ["ads", "marketing", "meta", "ugc", "seo", "funnel", "leads", "ventas", "brand", "marca",
                           "anuncio", "copy", "creativ"],
     "🎨 Diseño y web": ["design", "diseño", "web", "landing", "ui", "ux", "figma", "framer", "logo", "font"],
+    "🎉 Fiestas y eventos": ["rave", "techno", "fiesta", "party", "dj ", "dj set", "boiler room", "ra.co",
+                              "lineup", "line up", "festival", "club", "evento"],
     "🏠 Casa y deco": ["casa", "cocina", "deco", "interior", "mueble", "arquitect", "baño", "living", "reforma"],
     "💪 Salud y fitness": ["gym", "fitness", "entren", "workout", "dieta", "salud", "protein", "running", "ski"],
     "🧠 Psicología": ["psicolog", "pareja", "terapia", "ansiedad", "vínculo", "relación", "duelo", "apego"],
@@ -119,7 +121,7 @@ def report(db):
     for r in db.execute("SELECT * FROM links"):
         it = items.get(r["url"])
         if it and "link_sin_nota" in it["flags"]:
-            groups[r["topic"]].append((it["date"], r["title"], r["url"], it["chat"]))
+            groups[topic_of(r["title"] or "", r["url"])].append((it["date"], r["title"], r["url"], it["chat"]))
     lines = [f"# Links sin nota por tema — {datetime.now():%Y-%m-%d}", "",
              "Decidí por grupo: ¿lo voy a usar esta semana? Si no, borralo del chat.", ""]
     for topic, rows in sorted(groups.items(), key=lambda kv: -len(kv[1])):
