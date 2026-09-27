@@ -29,3 +29,6 @@ muscle-app/dist/
 
 # Graphify output (knowledge graph, regenerable)
 graphify-out/
+
+# Claude Code local overrides (per machine)
+.claude/settings.local.json
