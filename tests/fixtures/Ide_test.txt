@@ -1,0 +1,6 @@
+Los mensajes y las llamadas están cifrados de extremo a extremo.
+[9/1/26, 12:00:00 PM] Tú: https://www.instagram.com/reel/AAA/?igsh=x
+[9/1/26, 12:01:00 PM] Tú: https://x.com/alguien/status/1 postear este
+[9/2/26, 8:00:00 PM] - Tú cambió el nombre del grupo a "Ide 🎁"
+[9/2/26, 8:30:00 PM] Tú: #cliente mandar propuesta a la panadería
+[9/3/26, 9:00:00 AM] Tú: Hacer landing para el cliente nuevo

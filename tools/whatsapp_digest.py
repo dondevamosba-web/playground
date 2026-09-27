@@ -18,6 +18,7 @@ Usage:
   python3 tools/whatsapp_digest.py *.zip --since 2026-09-01
 """
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -230,6 +231,33 @@ def unchecked_items(items):
     return out
 
 
+def task_key(title):
+    """Stable id for a task, so the same task noted twice (or in two chats) is one task."""
+    norm = re.sub(r"[^\w\s]", "", title.lower())
+    return hashlib.sha1(re.sub(r"\s+", " ", norm).strip().encode()).hexdigest()[:12]
+
+
+def pending_items(items):
+    """Open checklist lines (latest copy) + loose tasks, deduplicated by task_key."""
+    out, seen = [], set()
+    by_date = {it["date"]: it for it in items}
+    for header, title, date in unchecked_items(items):
+        src = by_date[date]
+        out.append({"title": title, "tag": (src["tags"] or [""])[0], "chat": src["chat"],
+                    "date": date, "source": header})
+    for it in items:
+        if it["kind"] == "task" and "☐" not in it["note"]:
+            out.append({"title": it["note"].splitlines()[0][:120].strip(), "tag": (it["tags"] or [""])[0],
+                        "chat": it["chat"], "date": it["date"], "source": "mensaje"})
+    result = []
+    for p in out:
+        p["key"] = task_key(p["title"])
+        if p["key"] not in seen:
+            seen.add(p["key"])
+            result.append(p)
+    return result
+
+
 # ── Report ─────────────────────────────────────────────────────────────────────
 
 def build_markdown(items):
@@ -299,6 +327,8 @@ def main():
             print(f"  ⚠ '{title}': chat name must start with Psi / Ide / Vida, skipped")
             continue
         msgs = parse_chat(text)
+        if not msgs and text.strip():
+            print(f"  ⚠ '{title}': 0 mensajes leídos — ¿cambió el formato del export de WhatsApp?")
         if args.since:
             since = datetime.strptime(args.since, "%Y-%m-%d")
             msgs = [m for m in msgs if m["ts"] >= since]

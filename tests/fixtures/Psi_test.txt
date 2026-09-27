@@ -1,0 +1,9 @@
+Los mensajes y las llamadas están cifrados de extremo a extremo.
+[9/1/26, 3:10:00 AM] Tú: Soñé algo raro, hablarlo en terapia
+[9/1/26, 10:00:00 AM] Tú: Comprar bicarbonato
+[9/2/26, 11:00:00 AM] Tú: Eliminaste este mensaje.
+[9/2/26, 11:05:00 AM] Tú: <imagen omitida>
+[9/3/26, 9:00:00 AM] Tú: Borrador largo para mandar
+segunda línea del borrador
+[9/4/26, 9:00:00 AM] Tú: Borrador largo para mandar
+segunda línea del borrador
