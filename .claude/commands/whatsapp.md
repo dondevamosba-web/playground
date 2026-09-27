@@ -5,7 +5,7 @@ argument-hint: "[--llm] [días]"
 
 Seguí `workflows/personal/notes_system.md`. Pasos:
 
-1. Corré `python3 tools/weekly_review.py --days ${1:-7}` (agregá `--llm` solo si $ARGUMENTS lo incluye: es una llamada paga).
+1. Corré `python tools/weekly_review.py --days ${1:-7}` (en Mac, `python3`; no chequees cuál existe: probá `python` y si falla, `python3`) (agregá `--llm` solo si $ARGUMENTS lo incluye: es una llamada paga).
    - Si dice "Sin fuentes nuevas", preguntame si exporté los chats a `~/Downloads/whatsapp/` o si el bridge está corriendo
      (`bash tools/whatsapp_bridge.sh status`).
    - Si dice "0 mensajes leídos", WhatsApp cambió el formato del export: avisame y no sigas.
