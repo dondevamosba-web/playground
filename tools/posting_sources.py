@@ -16,11 +16,11 @@ APPROVAL_COLS = dict(queued=0, caption=1, media=2, status=4, comment=5, thumb=8)
 CALENDARS = {
     "Ola Digital": dict(
         sheet_id=os.environ.get("CONTENT_CALENDAR_SHEET_ID", "1fJ87Ho6r7FaL20JrxAMXM7LespS0qlvWZ_wVVhyKqsA"),
-        date=0, time=1, caption=5, media=7, status=8, thumb=10,
+        date=0, time=1, day=2, title=3, type=4, caption=5, hashtags=6, media=7, status=8, thumb=10,
         publishes="approved"),  # auto_post_from_calendar.py posts "approved" rows
     "Techno": dict(
         sheet_id=os.environ.get("TECHNO_CONTENT_CALENDAR_SHEET_ID", "1QTJ81L7WVFjOglHeUbOLAjKYrqoYxwym-mx8RzFKvEI"),
-        date=0, time=1, caption=6, media=8, status=9, thumb=12,
+        date=0, time=1, day=2, title=3, brand=4, type=5, caption=6, hashtags=7, media=8, status=9, thumb=12,
         publishes="approved"),  # auto_post_techno.py posts "approved" rows (up to 24h late)
 }
 

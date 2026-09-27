@@ -7,6 +7,10 @@ The artifact saves decisions in its own store and exports them as a JSON file
 ("Exportar decisiones"). Each decision says where its row lives:
   - source "approval": unified approval sheet, tab = account. Matched on
     Queued At + first 60 chars of the caption. Writes Status and Comments.
+  - source "proposal": a new post proposed in the artifact. If approved, it is
+    appended as a new row to the account's content calendar (status = what that
+    autoposter publishes; Media URL left empty for you to fill). Rejected ones
+    are not written. Skipped if a row with the same date, time and caption exists.
   - source "calendar": the account's content calendar (first sheet). Matched on
     Date + Time + first 60 chars of the caption. Writes Status; an approval is
     written as the status that account's autoposter publishes (Techno: "pending").
@@ -38,6 +42,36 @@ def read(sheets, sheet_id, rng):
     return [r + [""] * (26 - len(r)) for r in rows]
 
 
+def append_proposals(sheets, proposals, dry_run):
+    """Append approved proposals as new calendar rows. Returns how many were appended."""
+    total = 0
+    for account in sorted({d["account"] for d in proposals}):
+        c = CALENDARS[account]
+        existing = {(r[c["date"]], r[c["time"]], r[c["caption"]][:60]) for r in read(sheets, c["sheet_id"], "A1:Z2000")[1:]}
+        new_rows = []
+        for d in (d for d in proposals if d["account"] == account):
+            if d["status"] != "approved":
+                print(f"{account} (propuesta) {d['date']}: rechazada, no se agrega")
+                continue
+            if (d["date"], d["time"], d["caption"][:60]) in existing:
+                print(f"SKIP {account} (propuesta) {d['date']}: ya está en el calendario")
+                continue
+            row = [""] * (max(v for k, v in c.items() if isinstance(v, int)) + 1)
+            for field, value in [("date", d["date"]), ("time", d["time"]), ("day", d.get("day", "")),
+                                 ("title", d.get("title", "")), ("brand", d.get("brand", "")), ("type", d.get("postType", "")),
+                                 ("caption", d["caption"]), ("hashtags", d.get("hashtags", "")), ("status", c["publishes"])]:
+                if field in c:
+                    row[c[field]] = value
+            new_rows.append(row)
+            print(f"{account} (propuesta) {d['date']} {d['time']}: se agrega  {d['caption'][:40]}")
+        if new_rows and not dry_run:
+            sheets.spreadsheets().values().append(
+                spreadsheetId=c["sheet_id"], range="A1", valueInputOption="RAW",
+                insertDataOption="INSERT_ROWS", body={"values": new_rows}).execute()
+        total += len(new_rows)
+    return total
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("file", help="JSON exported from the artifact")
@@ -48,6 +82,9 @@ def main():
     sheets, _ = get_services()
     updates = {}  # sheet_id -> list of range updates
     skipped = []
+
+    appended = append_proposals(sheets, [d for d in decisions if d["source"] == "proposal"], args.dry_run)
+    decisions = [d for d in decisions if d["source"] != "proposal"]
 
     # Group by (sheet, tab) so each sheet is read once
     groups = {}
@@ -98,7 +135,8 @@ def main():
                 spreadsheetId=sheet_id, body={"valueInputOption": "RAW", "data": data}
             ).execute()
     n = sum(len(v) for v in updates.values())
-    print(f"\n{n} fila(s) {'a actualizar (dry-run)' if args.dry_run else 'actualizadas'}, {len(skipped)} salteada(s).")
+    print(f"\n{n} fila(s) {'a actualizar (dry-run)' if args.dry_run else 'actualizadas'}, "
+          f"{appended} propuesta(s) {'a agregar' if args.dry_run else 'agregadas'}, {len(skipped)} salteada(s).")
 
 
 if __name__ == "__main__":
