@@ -110,5 +110,19 @@ class SyncTest(unittest.TestCase):
         self.assertEqual(res["created"], 2)
 
 
+class ErrorTest(unittest.TestCase):
+    def test_errors_are_explained(self):
+        import requests
+
+        def http_error(code):
+            resp = requests.Response()
+            resp.status_code = code
+            return requests.HTTPError(response=resp)
+
+        self.assertIn("token", ns.explain_error(http_error(401)))
+        self.assertIn("Conexiones", ns.explain_error(http_error(404)))
+        self.assertIn("proxy", ns.explain_error(requests.exceptions.ProxyError("403")))
+
+
 if __name__ == "__main__":
     unittest.main()

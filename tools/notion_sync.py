@@ -104,6 +104,19 @@ def sync(db, session, token, db_id, dry_run=False):
     return {"notion_rows": len({t['page_id'] for t in state['tasks'].values()}), "done": done, "created": len(new)}
 
 
+def explain_error(e):
+    """Turn network / API failures into one actionable line."""
+    status = getattr(getattr(e, "response", None), "status_code", None)
+    if status == 401:
+        return "✗ Notion rechazó el token (401): revisá NOTION_TOKEN en .env o regeneralo."
+    if status == 404:
+        return ("✗ Notion no encuentra la base (404): compartila con la integración "
+                "(página → ⋯ → Conexiones) y revisá NOTION_PENDIENTES_DB.")
+    if isinstance(e, (requests.exceptions.ProxyError, requests.exceptions.ConnectionError)):
+        return f"✗ Sin conexión a api.notion.com (red o proxy bloqueado): {type(e).__name__}"
+    return f"✗ Error de Notion: {e}"
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
@@ -118,7 +131,10 @@ def main():
     rag.wd.load_config()
     db = rag.connect()
     rag.refresh_from_bridge(db)
-    res = sync(db, requests.Session(), token, db_id, args.dry_run)
+    try:
+        res = sync(db, requests.Session(), token, db_id, args.dry_run)
+    except requests.RequestException as e:
+        sys.exit(explain_error(e))
     print(f"  Notion: {res['notion_rows']} filas, {res['done']} hechas · creadas ahora: {res['created']}"
           + (" (dry-run)" if args.dry_run else ""))
 
