@@ -132,6 +132,7 @@ def report(db):
 
 
 def main():
+    rag.wd.utf8_io()
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--all", action="store_true", help="also links that already have a note")
     ap.add_argument("--limit", type=int)

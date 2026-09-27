@@ -220,6 +220,8 @@ def main():
     ap.add_argument("cmd", choices=COMMANDS)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
+    for stream in (sys.stdout, sys.stderr):
+        stream.reconfigure(encoding="utf-8", errors="replace")
     DRY = args.dry_run
     if os.name != "nt" and not DRY:
         sys.exit("Esto es para Windows (en Mac: notes_schedule.sh / whatsapp_bridge.sh). Probá con --dry-run.")

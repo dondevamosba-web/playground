@@ -95,5 +95,26 @@ class RunLoggedTest(unittest.TestCase):
             self.assertIn("ValueError: falló", log)
 
 
+class EncodingTest(unittest.TestCase):
+    """Simulate a Windows pipe (cp1252): output with emojis must not crash."""
+    def run_tool(self, *args, stdin=None):
+        env = {**__import__("os").environ, "PYTHONIOENCODING": "cp1252"}
+        return subprocess.run([sys.executable, *args], cwd=ROOT, env=env, input=stdin,
+                              capture_output=True)
+
+    def test_cli_tools_print_emojis_through_cp1252_pipe(self):
+        fix = str(ROOT / "tests" / "fixtures" / "Vida_test.txt")
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.dict("os.environ", {}):
+            r = self.run_tool("tools/whatsapp_digest.py", fix)
+            self.assertEqual(r.returncode, 0, r.stderr.decode("utf-8", "replace"))
+            self.assertIn("Vida 🏠💪", r.stdout.decode("utf-8"))
+
+    def test_mcp_server_answers_with_emojis_through_cp1252_pipe(self):
+        req = '{"jsonrpc":"2.0","id":1,"method":"tools/list"}\n'.encode()
+        r = self.run_tool("tools/notes_mcp.py", stdin=req)
+        self.assertEqual(r.returncode, 0, r.stderr.decode("utf-8", "replace"))
+        self.assertIn("buscar_notas", r.stdout.decode("utf-8"))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -87,6 +87,7 @@ def handle(db, req):
 
 
 def main():
+    rag.wd.utf8_io()
     rag.wd.load_config()
     db = rag.connect()
     for line in sys.stdin:

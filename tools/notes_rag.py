@@ -259,6 +259,7 @@ def propose_llm(db, days=7):
 # ── CLI ────────────────────────────────────────────────────────────────────────
 
 def main():
+    wd.utf8_io()
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("ingest"); p.add_argument("inputs", nargs="*"); p.add_argument("--bridge", action="store_true")

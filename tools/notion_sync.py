@@ -118,6 +118,7 @@ def explain_error(e):
 
 
 def main():
+    rag.wd.utf8_io()
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()

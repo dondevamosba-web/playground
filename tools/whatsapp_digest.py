@@ -313,11 +313,19 @@ def build_markdown(items):
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
+def utf8_io():
+    """Windows pipes default to cp1252, which can't print emojis (🏠 💭): force UTF-8 on stdio."""
+    for stream in (sys.stdin, sys.stdout, sys.stderr):
+        if stream is not None and hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="replace")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("inputs", nargs="+", help="WhatsApp export .zip, chat .txt, or folder")
     ap.add_argument("--since", help="only messages from this date (YYYY-MM-DD)")
     args = ap.parse_args()
+    utf8_io()
     load_config()
 
     items = []

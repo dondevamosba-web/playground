@@ -46,6 +46,7 @@ def notify(title, text):
 
 
 def main():
+    rag.wd.utf8_io()
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--days", type=int, default=7)
     ap.add_argument("--llm", action="store_true", help="add Claude proposals (paid API call)")
